@@ -1,26 +1,11 @@
 
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+
 </template>
 
-<script>
-import {ref, onMounted} from "vue"
-
-const count = ref(0)
-function increment() {
-  count.value++
-}
-
-onMounted(() => {
-  console.log("组合式API initial count is ${count.value}")
-})
-
-
-
+<script setup>
 
 </script>
-
 
 <style>
 #app {
