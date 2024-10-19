@@ -1,0 +1,167 @@
+import asyncio
+import socket
+import struct
+from redis import DataError
+
+import databasetool
+
+
+SERVERADDRESS = ("192.168.179.1", 8081)    # 服务端地址
+CLIENTADDRESS = ("192.168.179.1", 8080)    # 客户端地址
+
+
+BROADCAST = ("", 8082)                  # 配置UDP广播地址
+MULTICAST = ("224.0.0.0", 8083)         # 配置UDP组播地址
+
+ENCODING = "utf-8"                           # 编码格式
+RECVSIZE = 1024                              # 最大数据量
+MAXCONNNUM = 50                              # 最大连接数
+TIMEOUT = 3                                  # 超时等待时间
+TIMERLIST = {}                               # 客户端连接状态
+DATABASE = databasetool.RedisConn            # Redis数据库
+
+
+class Communication:
+    def __init__(self):
+        self.udp_protocol = UPD()
+        self.udp_protocol.run()
+        
+        
+        
+class UPD:
+    """
+        # 监听客户端连接状态
+        # 向客户端发送软件清单
+    """
+    # RECEPTION_TASK_LIST = []
+    
+    def __init__(self):
+        self.init_udp_socket() 
+        
+        self.loop = asyncio.get_event_loop()
+        
+        self.add_tasks()
+        
+    def add_tasks(self):
+        # 创建模块任务
+        self.loop.create_task(self.reception())
+        
+    def init_udp_socket(self):
+        # 初始化UDP套接字
+        self.udp_socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)  # 声明UDP协议
+        self.udp_socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)   # 允许地址复用
+        self.udp_socket.bind(SERVERADDRESS)
+        # self.__set_multicast()
+        
+    
+    def __set_multicast(self):
+        # 组播发送软件清单 -- 暂定
+        group = socket.inet_aton(MULTICAST[0])
+        mreq = struct.pack("4sL", group, socket.INADDR_ANY)
+        self.udp_socket.setsockopt(socket.IPPROTO_IP, socket.IP_ADD_MEMBERSHIP, mreq)
+        
+
+    async def reception(self):   # 加载数据连接模块
+        self.recloop = asyncio.new_event_loop()
+        self.loop.run_in_executor(None, Reception, self.recloop, self.udp_socket)
+        
+
+    def run(self):
+        try:    # 事件循环
+            self.loop.run_forever()
+        except KeyboardInterrupt:
+            pass
+        finally:
+            self.loop.close()
+            self.udp_socket.close()
+    
+
+    
+class Reception:
+    CONNECTNUM = 0  # 标记当前正在等待客户端连接的任务数量
+    
+    
+    def __init__(self, 
+                 loop: asyncio.BaseEventLoop,
+                 sock: socket.socket
+                 ):
+        
+        self.loop = loop
+        self.udp_socket = sock
+      
+        self.loop.create_task(self.reception())
+        
+        try:
+            self.loop.run_forever()
+        except KeyboardInterrupt:
+            pass
+        finally:
+            self.loop.close()
+  
+            
+    async def reception(self):
+        # 创建接收任务
+        while True:
+            while len(TIMERLIST) > MAXCONNNUM:
+                continue
+            
+            self.loop.create_task(self.__reception())
+            self.CONNECTNUM += 1
+            await asyncio.sleep(0.1)    
+     
+
+    async def __reception(self):
+        # 等待客户端发送数据
+        rec = await self.loop.sock_recvfrom(self.udp_socket, RECVSIZE)
+        self.CONNECTNUM -= 10
+        
+        # 解析数据
+        data = rec[0].decode(ENCODING)
+        print(data, rec)
+        ip, port = rec[1]
+        
+        # 保存心跳包数据
+        DATABASE.hset("client_message", mapping={ip: data}) # ip地址和心跳包数据
+        # data = DATABASE.hgetall("client_message")
+        # print(type(data), data[ip.encode()].decode())
+        
+        # 校验客户端连接状态
+        await self.__check_connection(ip, data)
+
+
+    async def recv(self):
+        return self.udp_socket.recvfrom(RECVSIZE)
+
+
+    async def __check_connection(self, ip, data):
+        if ip in TIMERLIST:
+            # 校验当前客户端是否正在连接
+            TIMERLIST[ip].cancel()
+        
+        # 创建计时器，并保存在CHECK_CONNSTART中
+        timer = asyncio.create_task(self.__timer(ip))
+        TIMERLIST[ip] = timer
+        
+        # 启动计时器
+        try:
+            await timer
+        except asyncio.CancelledError:
+            print("重置计时器")
+        
+
+    async def __timer(self, ip):
+        # 等待3秒后 删除客户端连接缓存 or 先标记为断线 等待服务端关闭后清空
+        await asyncio.sleep(3)
+        TIMERLIST.pop(ip)
+        print(f"The IP {ip} user is disconnected")
+
+
+class SendSoftList:
+    pass
+
+    def sendtoclient(self):
+        pass
+
+        
+if __name__ == "__main__":
+    Communication()

@@ -1,0 +1,28 @@
+<xml version="1.0">
+    <url>localhost:8000</url>
+    <list>
+        <software_checklist>
+            <!-- 软件清单 -->
+            <!-- 
+            <args>software</args>
+                ...
+            -->
+        </software_checklist>
+
+        <redis_config>
+            <host>localhost</host>
+            <port>6379</port>
+            <datas>
+                <lr>client-message</lr>
+            </datas>
+        </redis_config>
+
+        <servers>
+            <!-- 服务管理 -->
+            <uvicorn>uvicorn core.api:app --reload</uvicorn>
+            <listening>python ./core/upd.py</listening>
+            <control>python ./core/updcontrol.py</control>
+            <redis>redis-server</redis>
+        </servers>
+    </list>
+</xml>
