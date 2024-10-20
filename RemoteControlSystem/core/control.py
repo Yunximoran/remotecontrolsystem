@@ -26,8 +26,7 @@ class Control:
             子进程启动tcp连接客户端发送shell_control
         """
         [MESSAGEQUEUE.put(client.decode()) for client in DATABASE.hgetall("client_message")]
-        # print(type(MESSAGEQUEUE.qsize))
-        
+
         while MESSAGEQUEUE.qsize() > 0:
             print(shell_control)
             p = multiprocessing.Process(target=self.connect_client, args=(shell_control, MESSAGEQUEUE.get()))
@@ -39,6 +38,3 @@ class Control:
         conn = TCP()
         conn.send(shell_control, client)
         conn.close()
-    
-    def dump(self, msg):
-        return json.dumps(msg)

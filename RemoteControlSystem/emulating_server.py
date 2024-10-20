@@ -22,7 +22,7 @@ class Server:
         
         while True:
             print("enter api server")
-            self.controler.sendtoclient("hello this is message from server")
+            self.controler.sendtoclient('{"address":"127.0.0.1:8080", "label": "Server"}')
     
     def udp_server(self):
         udp_server = udp.UPD()

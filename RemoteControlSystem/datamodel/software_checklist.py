@@ -4,5 +4,6 @@ from pydantic import BaseModel
 
 
 class SoftWareCheckList(BaseModel):
-    None
+    name: str
+    
     

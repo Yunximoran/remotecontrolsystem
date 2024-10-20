@@ -28,7 +28,7 @@ class TCP:
                 server_sock, address = self.sock.accept()
                 data = server_sock.recv(1024)
                 print("control shell:", data)
-                return data
+                return data.decode()
             except TimeoutError:
                 # print("time out")
                 pass

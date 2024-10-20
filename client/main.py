@@ -1,6 +1,15 @@
-# 客户端代码
+"""
+需要保存的数据
+    shell
+    softwarelist
+"""
 
+# 客户端代码
+import os
+import sys
+from pathlib import Path
 import time
+import json
 import subprocess
 import multiprocessing
 from typing import Annotated
@@ -18,6 +27,7 @@ SOFTWARTLIST = []
 class Client:
     ALLSERVER = []
     def __init__(self):
+        # 启动Client服务
         self.start_connect_server()
         self.start_select_server()
         
@@ -50,15 +60,25 @@ class Client:
         except subprocess.CalledProcessError:
             return False
         
-    
+    def find_software(self, filename, search_path):
+        for root, dirs, files in os.walk(search_path):
+            if filename in files or search_path in dirs:
+                print(f"找到文件{filename}")
+                
+                os.path.join(root, filename)
     def select(self):
         """
             监听tcp， 接受server发送的shell指令并启动
         """
         tcp_conn = TCP()
-        # data = tcp_conn.listening()
         while True:
-            data = tcp_conn.listening()
+            data = json.loads(tcp_conn.listening())
+            with open("data.json", 'a', encoding="utf-8") as f:
+                # for d in json.load(f):
+                #     if d['label'] != data['label']:
+                #         json.dump(data, f, ensure_ascii=False, indent=4)
+                json.dump(data, f, ensure_ascii=False, indent=4)
+                    # print("repeating data commit ignore")
             
             
     

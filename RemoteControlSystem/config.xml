@@ -20,7 +20,7 @@
         <servers>
             <!-- 服务管理 -->
             <uvicorn>uvicorn core.api:app --reload</uvicorn>
-            <listening>python ./core/upd.py</listening>
+            <listening>python ./core/udp.py</listening>
             <control>python ./core/control.py</control>
             <redis>redis-server</redis>
         </servers>

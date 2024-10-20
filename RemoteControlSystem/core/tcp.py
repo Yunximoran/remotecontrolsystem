@@ -24,9 +24,13 @@ class TCP:
         #     self.tcp_socket.connect(CLIENTADDRESS)      # clie
         # except:
         #     pass
-        self.tcp_socket.connect(CLIENTADDRESS)
-        self.tcp_socket.sendall(shell.encode())
-        self.tcp_socket.close()
+        try:
+            self.tcp_socket.connect(CLIENTADDRESS)
+            self.tcp_socket.sendall(shell.encode())
+        except ConnectionRefusedError:
+            print("当前无连接")
+        finally:
+            self.tcp_socket.close()
     
     def close(self):
         self.tcp_socket.close()
