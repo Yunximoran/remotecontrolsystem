@@ -1,9 +1,28 @@
 
 <template>
 
+<button @click="getMessage">{{ msg }}</button>
 </template>
 
-<script setup>
+<script>
+import axios from 'axios';
+
+export default{
+  data(){
+    return {
+      msg: "Hello World"
+    }
+  },
+
+  methods: {  
+      getMessage() {
+        axios.post("/send").then((res) => {
+          this.msg = res.data;        
+        });
+    }, 
+    
+  }
+}
 
 </script>
 
