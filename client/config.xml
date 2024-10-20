@@ -1,3 +1,15 @@
 <base ip="192.168.6.1" mac="0x929c5e7db600">
+    <port>
+        <single></single>
+        <broket></broket>
+        <multi></multi>
+    </port>
 
+    <data>
+        <software>software.json</software>
+    </data>
+
+    <server ip="none" port="none">
+
+    </server>
 </base>
