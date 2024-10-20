@@ -21,7 +21,7 @@
             <!-- 服务管理 -->
             <uvicorn>uvicorn core.api:app --reload</uvicorn>
             <listening>python ./core/upd.py</listening>
-            <control>python ./core/updcontrol.py</control>
+            <control>python ./core/control.py</control>
             <redis>redis-server</redis>
         </servers>
     </list>

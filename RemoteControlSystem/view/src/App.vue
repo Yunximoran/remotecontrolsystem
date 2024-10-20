@@ -1,7 +1,11 @@
 
 <template>
 
-<button @click="getMessage">{{ msg }}</button>
+<button @click="getMessage">第一个按钮</button>
+<p>{{ msg }}</p>
+
+
+<button @click="sendshell">shell msg: {{ shell }}</button>
 </template>
 
 <script>
@@ -10,16 +14,27 @@ import axios from 'axios';
 export default{
   data(){
     return {
-      msg: "Hello World"
+      msg: "Hello World",
+      shell: null
     }
   },
 
   methods: {  
       getMessage() {
-        axios.post("/send").then((res) => {
-          this.msg = res.data;        
-        });
+        axios.get("/testapi/").then((res) => {
+          this.msg = res.data
+        })
     }, 
+    sendshell(){
+      axios.put("/servers/send_control_shell", [
+        {
+          name: "first",
+          shell: "Hello server"
+        }
+      ]).then((res) => {
+        this.shell = res.data
+      })
+    }
     
   }
 }

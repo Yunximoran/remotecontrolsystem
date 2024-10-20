@@ -17,33 +17,56 @@ import time
 from typing import Annotated
 
 import uvicorn
+from fastapi.middleware.cors import CORSMiddleware
 from fastapi import (
         FastAPI,
         Path,
         Depends
     )
 
-import control
+from core import control
+from projectdesposetool.start_server import SERVERMANAGE
+from databasetool import RedisConn as DATABASE
 from datamodel import (
     HeartPkgs,
     SoftWareCheckList,
     ShellList
     )
-from projectdesposetool.start_server import SERVERMANAGE
-from databasetool import RedisConn as DATABASE
 
 
+
+CONTROL = control.Control()
+ORIGINS = [
+    "https://localhost:8080",
+    "http://localhost:8080"
+]
 
 app = FastAPI()
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=ORIGINS,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"]
+)
+
 server = uvicorn.Server(uvicorn.Config(app))
-CONTROL = control.Control()
+
+
 
 # Server API
 
+@app.get("/testapi/")
+async def tapi():
+    pass
+    return {"msg": "Hello Server, There is Control"}
+
 @app.put("/servers/send_control_shell")         # 发送shell指令
 async def send_control_shell(shell_list: list[ShellList]):
-    CONTROL.sendtoclient(",".join(shell_list))
-    return "send shell to current clients"
+    for shell_msg in shell_list:
+    
+        CONTROL.sendtoclient(shell_msg.model_dump_json())
+    return shell_list# "send shell to current clients"
 
 @app.put("/servers/send_software_checklist")    # 发送软件清单
 async def send_software_checklist(checklist: Annotated[SoftWareCheckList, None]):
