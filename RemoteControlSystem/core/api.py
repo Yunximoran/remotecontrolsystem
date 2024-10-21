@@ -14,6 +14,7 @@ API 接收请求 处理请求内容 返回响应数据
 
 
 import time
+import json
 from typing import Annotated
 
 import uvicorn
@@ -25,6 +26,7 @@ from fastapi import (
     )
 
 from core import control
+from core.udp import MultiCast
 from projectdesposetool.start_server import SERVERMANAGE
 from databasetool import RedisConn as DATABASE
 from datamodel import (
@@ -35,7 +37,7 @@ from datamodel import (
 
 
 
-CONTROL = control.Control()
+
 ORIGINS = [
     "https://localhost:8080",
     "http://localhost:8080"
@@ -52,6 +54,9 @@ app.add_middleware(
 
 server = uvicorn.Server(uvicorn.Config(app))
 
+controlor = control.Control()
+
+
 
 
 # Server API
@@ -64,12 +69,14 @@ async def tapi():
 @app.put("/servers/send_control_shell")         # 发送shell指令
 async def send_control_shell(shell_list: list[ShellList]):
     for shell_msg in shell_list:
-    
-        CONTROL.sendtoclient(shell_msg.model_dump_json())
-    return shell_list# "send shell to current clients"
+        controlor.sendtoclient(shell_msg.model_dump_json())
+    return {"ok": "send a shell to client"}
 
 @app.put("/servers/send_software_checklist")    # 发送软件清单
-async def send_software_checklist(checklist: Annotated[SoftWareCheckList, None]):
+async def send_software_checklist(checklist: SoftWareCheckList):
+    softwarelist = checklist.model_dump()
+    print(type(softwarelist))
+    MultiCast().send(json.dumps(softwarelist["software"]))  
     return checklist
 
 

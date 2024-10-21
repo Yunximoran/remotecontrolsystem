@@ -2,6 +2,8 @@
 
 ## Start：启动入口
 
+    读取配置文件，启动项目依赖
+
 ## Core：核心
 
 * [api模块](Core/api.py)
@@ -13,8 +15,6 @@
 
   * UDP
 
-    * async def register(self)
-    * async def activate(self)
     * def run(self)
   * Reception
 
@@ -60,13 +60,16 @@
 
     async def __timer(self, ip)[-](Core/udp.py)
     等待3秒后，删除客户端连接
-  * Timer: 重构Reception中计时器代码（为完成）(取消)
+  * MultiCast: 实现组播UDP，向client发送软件清单
 * ### [control模块](Core/control.py)
 
 
   * sendtoclient(): api接口触发后从数据库中提取正在连接的客户端地址
     通过tcp将处理后的shell列表发送至client
 * ### tcp模块
+
+## view：系统控制台
+
 
 ## DataBaseTool： 数据库工具
 

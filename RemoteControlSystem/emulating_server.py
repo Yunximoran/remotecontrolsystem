@@ -21,8 +21,9 @@ class Server:
         # api接口被触发后control通过tcp向client发送shell
         
         while True:
-            print("enter api server")
+            # print("enter api server")
             self.controler.sendtoclient('{"address":"127.0.0.1:8080", "label": "Server"}')
+            self.multi_manage.send("hello the is multicast message")
     
     def udp_server(self):
         udp_server = udp.UPD()
@@ -31,6 +32,7 @@ class Server:
     def load_pluging(self):
         # 导入插件
         self.controler = control.Control()
+        self.multi_manage = udp.MultiCast()
         
     def start_server(self):
         # 启动服务端

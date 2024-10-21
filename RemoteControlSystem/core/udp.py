@@ -1,7 +1,6 @@
 import asyncio
 import socket
 import struct
-from redis import DataError
 
 import databasetool
 
@@ -11,7 +10,7 @@ CLIENTADDRESS = ("192.168.179.1", 8080)    # 客户端地址
 
 
 BROADCAST = ("", 8082)                  # 配置UDP广播地址
-MULTICAST = ("224.0.0.0", 8083)         # 配置UDP组播地址
+MULTICAST = ("224.25.25.1", 8083)          # 配置UDP组播地址
 
 ENCODING = "utf-8"                           # 编码格式
 RECVSIZE = 1024                              # 最大数据量
@@ -37,9 +36,7 @@ class UPD:
     
     def __init__(self):
         self.init_udp_socket() 
-        
         self.loop = asyncio.get_event_loop()
-        
         self.add_tasks()
         
     def add_tasks(self):
@@ -48,18 +45,10 @@ class UPD:
         
     def init_udp_socket(self):
         # 初始化UDP套接字
-        self.udp_socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)  # 声明UDP协议
+        self.udp_socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)      # 声明UDP协议
         self.udp_socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)   # 允许地址复用
-        self.udp_socket.bind(SERVERADDRESS)
-        # self.__set_multicast()
-        
-    
-    def __set_multicast(self):
-        # 组播发送软件清单 -- 暂定
-        group = socket.inet_aton(MULTICAST[0])
-        mreq = struct.pack("4sL", group, socket.INADDR_ANY)
-        self.udp_socket.setsockopt(socket.IPPROTO_IP, socket.IP_ADD_MEMBERSHIP, mreq)
-        
+        self.udp_socket.setsockopt(socket.SOL_SOCKET, socket.SO_BROADCAST, 1)   # 允许地址复用
+        self.udp_socket.bind(BROADCAST)     # 绑定本机地址
 
     async def reception(self):   # 加载数据连接模块
         self.recloop = asyncio.new_event_loop()
@@ -88,7 +77,6 @@ class Reception:
         
         self.loop = loop
         self.udp_socket = sock
-      
         self.loop.create_task(self.reception())
         
         try:
@@ -104,33 +92,29 @@ class Reception:
         while True:
             while len(TIMERLIST) > MAXCONNNUM:
                 continue
-            
             self.loop.create_task(self.__reception())
             self.CONNECTNUM += 1
             await asyncio.sleep(0.1)    
      
 
     async def __reception(self):
-        # 等待客户端发送数据
+        # 等待客户端发送数据(心跳包)
         rec = await self.loop.sock_recvfrom(self.udp_socket, RECVSIZE)
+        # print(rec)
         self.CONNECTNUM -= 10
         
         # 解析数据
         data = rec[0].decode(ENCODING)
-        print(data, rec)
         ip, port = rec[1]
         
         # 保存心跳包数据
-        DATABASE.hset("client_message", mapping={ip: data}) # ip地址和心跳包数据
+        DATABASE.hset("heart_packages", mapping={ip: data}) # ip地址和心跳包数据
         # data = DATABASE.hgetall("client_message")
         # print(type(data), data[ip.encode()].decode())
         
         # 校验客户端连接状态
         await self.__check_connection(ip, data)
 
-
-    async def recv(self):
-        return self.udp_socket.recvfrom(RECVSIZE)
 
 
     async def __check_connection(self, ip, data):
@@ -146,7 +130,8 @@ class Reception:
         try:
             await timer
         except asyncio.CancelledError:
-            print("重置计时器")
+            pass
+            # print("重置计时器")
         
 
     async def __timer(self, ip):
@@ -156,12 +141,24 @@ class Reception:
         print(f"The IP {ip} user is disconnected")
 
 
-class SendSoftList:
-    pass
-
-    def sendtoclient(self):
-        pass
-
+class MultiCast:
+    def __init__(self):
+        self.multi = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+        # self.multi.bind(("", MULTICAST[1]))   # 绑定组播端口
+    
+    def settings(self):
         
+        # 接受数据前加入组播组
+        group = socket.inet_aton(MULTICAST[0])
+        merq = struct.pack("4sL", group, socket.INADDR_ANY)
+        self.multi.setsockopt(socket.IPPROTO_IP, socket.IP_ADD_MEMBERSHIP, merq)
+        
+        
+    
+    def send(self, data):
+        self.multi.sendto(data.encode(), MULTICAST)
+        
+
+
 if __name__ == "__main__":
     Communication()

@@ -3,7 +3,7 @@ import time
 import json
 
 from databasetool import RedisConn as DATABASE
-from .tcp import TCP
+from core.tcp import TCP
 
 
 

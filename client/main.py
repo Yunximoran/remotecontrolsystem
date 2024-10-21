@@ -14,7 +14,7 @@ import subprocess
 import multiprocessing
 from typing import Annotated
 
-from protocol import UDP, TCP
+from protocol import BroadCast, TCP, MultiCast
 
 
 COMMUNICATION = multiprocessing.Queue()
@@ -30,6 +30,7 @@ class Client:
         # 启动Client服务
         self.start_connect_server()
         self.start_select_server()
+        self.start_listing_server()
         
         for p in self.ALLSERVER:
             p.join()
@@ -45,7 +46,12 @@ class Client:
         connect_server = multiprocessing.Process(target=self.connect, args=())
         connect_server.start()
         self.ALLSERVER.append(connect_server)
-        
+    
+    
+    def start_listing_server(self):
+        listen_server = multiprocessing.Process(target=self.listing_multi, args=())
+        listen_server.start()
+        self.ALLSERVER.append(listen_server)
     
     
     def run_shell(self, control: Annotated[list, None]):
@@ -60,12 +66,15 @@ class Client:
         except subprocess.CalledProcessError:
             return False
         
+        
     def find_software(self, filename, search_path):
         for root, dirs, files in os.walk(search_path):
             if filename in files or search_path in dirs:
                 print(f"找到文件{filename}")
                 
                 os.path.join(root, filename)
+              
+                
     def select(self):
         """
             监听tcp， 接受server发送的shell指令并启动
@@ -80,11 +89,13 @@ class Client:
                 json.dump(data, f, ensure_ascii=False, indent=4)
                     # print("repeating data commit ignore")
             
-            
+    def listing_multi(self):
+        multi_conn = MultiCast()
+        multi_conn.recv()
     
     def connect(self):
         # 每秒广播心跳包数据
-        udp_conn = UDP()
+        udp_conn = BroadCast()
         while True:
             time.sleep(1)
             # print("send a connection information to the server")
