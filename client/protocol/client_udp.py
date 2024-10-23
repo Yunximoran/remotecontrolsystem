@@ -1,13 +1,11 @@
 import socket
 import struct
 
+from despose import CONFIG
 
 
-CLIENTADDRESS = ("192.168.179.1", 8080)
-
-SERVER_UDP_ADDRESS = ("192.168.179.1", 8081)     # 单播地址 & 服务端地址
-BROADCAST = ("<broadcast>", 8082)                # 广播地址
-MULTICAST = ("224.25.25.1", 8083)                  # 组播地址
+BROADCAST = ("<broadcast>", CONFIG.UBPORT)                # 广播地址
+MULTICAST = ("224.25.25.1", CONFIG.UMPORT)                  # 组播地址
 
 class UDP:
     def __init__(self):
@@ -30,12 +28,11 @@ class UDP:
     
     
 class BroadCast(UDP):
-    def __init__(self, address=CLIENTADDRESS):
+    def __init__(self):
         super().__init__() 
 
     def init(self):
         self.localhost, self.port = BROADCAST
-        # self.sock.bind(("", self.port))       # 本机测试存在错误端口冲突，转移后可以  
         
     
     def settings(self):
@@ -44,7 +41,7 @@ class BroadCast(UDP):
         
     
     def send(self, data):
-        self.sock.sendto(f"1: {data}".encode(), BROADCAST)
+        self.sock.sendto(data.encode(), BROADCAST)
 
 
 class MultiCast(UDP):
@@ -69,5 +66,6 @@ class MultiCast(UDP):
     def recv(self):
         while True:
             data, addr = self.sock.recvfrom(1024)
+            # 唯一能获取服务端ip的地方， 可能有用
             print(data.decode())
     

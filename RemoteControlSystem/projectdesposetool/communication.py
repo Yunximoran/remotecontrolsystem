@@ -7,8 +7,6 @@ MESSAGEQUEUE = multiprocessing()
 class Communication:
     def __init__(self):
         self.queue = multiprocessing.Queue()
-        
-    
     
     def __send(self, *args):
         pass

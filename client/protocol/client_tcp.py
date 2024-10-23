@@ -1,8 +1,9 @@
 import socket
 
+from despose import CONFIG
 
-CLIENTADDRESS = ("192.168.179.1", 8085)
-SERVERADDRESS = ("192.168.179.1", 9095)
+
+CLIENTADDRESS = (CONFIG.IP, CONFIG.TCPORT)
 
 
 class TCP:
@@ -27,7 +28,6 @@ class TCP:
             try:
                 server_sock, address = self.sock.accept()
                 data = server_sock.recv(1024)
-                print("control shell:", data)
                 return data.decode()
             except TimeoutError:
                 # print("time out")

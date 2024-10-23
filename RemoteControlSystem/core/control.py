@@ -25,16 +25,19 @@ class Control:
             加载redis中保存的client message
             子进程启动tcp连接客户端发送shell_control
         """
-        [MESSAGEQUEUE.put(client.decode()) for client in DATABASE.hgetall("client_message")]
-
+        for client  in DATABASE.hgetall("heart_packages").values():
+            info = json.loads(client.decode())
+            MESSAGEQUEUE.put(info['ip'])
+            
         while MESSAGEQUEUE.qsize() > 0:
             print(shell_control)
-            p = multiprocessing.Process(target=self.connect_client, args=(shell_control, MESSAGEQUEUE.get()))
+            p = multiprocessing.Process(target=self.sendtoshell, args=(shell_control, MESSAGEQUEUE.get()))
             p.start()
             p.join()
             
                 
-    def connect_client(self, shell_control, client):
+    def sendtoshell(self, shell_control, ip):
         conn = TCP()
-        conn.send(shell_control, client)
+        print(ip)
+        conn.send(shell_control, ip)
         conn.close()

@@ -64,5 +64,8 @@ class LinuxSystem(BaseSystem):
 class MacOSSytem(BaseSystem):
     def __init__(self, *args):
         super().__init__(*args)
-e = Init()
-
+        
+        
+        
+if __name__ == "__main__":
+    print(IP)

@@ -15,7 +15,7 @@ import multiprocessing
 from typing import Annotated
 
 from protocol import BroadCast, TCP, MultiCast
-
+from despose import CONFIG
 
 COMMUNICATION = multiprocessing.Queue()
 SOFTWARTLIST = [] 
@@ -25,7 +25,7 @@ SOFTWARTLIST = []
 # tcp_conn = TCP()
 
 class Client:
-    ALLSERVER = []
+    ALLSERVER: list[multiprocessing.Process] = []
     def __init__(self):
         # 启动Client服务
         self.start_connect_server()
@@ -82,12 +82,10 @@ class Client:
         tcp_conn = TCP()
         while True:
             data = json.loads(tcp_conn.listening())
+            print(data)
             with open("data.json", 'a', encoding="utf-8") as f:
-                # for d in json.load(f):
-                #     if d['label'] != data['label']:
-                #         json.dump(data, f, ensure_ascii=False, indent=4)
                 json.dump(data, f, ensure_ascii=False, indent=4)
-                    # print("repeating data commit ignore")
+    
             
     def listing_multi(self):
         multi_conn = MultiCast()
@@ -99,13 +97,24 @@ class Client:
         while True:
             time.sleep(1)
             # print("send a connection information to the server")
-            udp_conn.send("id 000001 is connection 云曦墨染")
+            heart_pkgs = self.get_heart_packages()
+            udp_conn.send(json.dumps(heart_pkgs))
             
+    def get_heart_packages(self):
+        return {
+            "mac": CONFIG.MAC,
+            "ip": CONFIG.IP,
+            "software": {
+                "key1": "value1",
+                "key2": "value2"
+            }
+        }
             
 
 
 if __name__ == "__main__":
     Client()
+    
 """
 有个数据库，应该保存什么数据
 """

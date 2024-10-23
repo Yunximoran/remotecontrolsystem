@@ -27,8 +27,6 @@ from fastapi import (
 
 from core import control
 from core.udp import MultiCast
-from projectdesposetool.start_server import SERVERMANAGE
-from databasetool import RedisConn as DATABASE
 from datamodel import (
     HeartPkgs,
     SoftWareCheckList,

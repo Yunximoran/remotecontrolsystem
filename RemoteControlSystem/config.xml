@@ -1,13 +1,18 @@
 <xml version="1.0">
-    <url>localhost:8000</url>
-    <list>
-        <software_checklist>
-            <!-- 软件清单 -->
-            <!-- 
-            <args>software</args>
-                ...
-            -->
-        </software_checklist>
+    <base ip="192.168.6.1">
+        <connect>
+            <udp>
+                <client>8080</client>
+                <server>8081</server>
+                <broad>8082</broad>
+                <multi>8083</multi>       
+            </udp>
+
+            <tcp>
+                <server>9095</server>
+                <client>8085</client>
+            </tcp>
+        </connect>
 
         <redis_config>
             <host>localhost</host>
@@ -24,5 +29,5 @@
             <control>python ./core/control.py</control>
             <redis>redis-server</redis>
         </servers>
-    </list>
+    </base>
 </xml>

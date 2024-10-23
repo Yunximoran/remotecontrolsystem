@@ -1,9 +1,9 @@
 from redis import Redis, ConnectionPool
 
-from projectdesposetool import Parse
+from projectdesposetool import CONFIG
 
 
-REDIS_CONF = Parse.parseConfig("redis_config")
+REDIS_CONF = CONFIG.parseConfig("redis_config")
 
 
 RedisConn = Redis(host=REDIS_CONF['host'], port=REDIS_CONF['port'], db=0)

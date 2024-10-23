@@ -1,15 +1,16 @@
 <base ip="192.168.6.1" mac="0x929c5e7db600">
-    <port>
-        <single></single>
-        <broket></broket>
-        <multi></multi>
-    </port>
+    <connect>
+        <udp>
+            <client>8080</client>
+            <server>8081</server>
+            <broadcast>8082</broadcast>
+            <multicast>8083</multicast>       
+        </udp>
 
-    <data>
-        <software>software.json</software>
-    </data>
-
-    <server ip="none" port="none">
-
-    </server>
+        <tcp>
+            <server>9095</server>
+            <client>8085</client>
+        </tcp>
+    </connect>
+    
 </base>

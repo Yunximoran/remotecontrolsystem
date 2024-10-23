@@ -2,7 +2,7 @@ import logging
 import os
 
 
-from .parse import Parse
+from .parse import CONFIG
 from .start_server import SERVERMANAGE
 
 
@@ -34,8 +34,8 @@ class LogManage:
         logging.critical("the critical")
 
 
-Parse = Parse()
-LogManage = LogManage(savedir=Parse.CWD)
+
+# LogManage = LogManage(savedir=Parse.CWD)
 
 
 # logging.basicConfig(

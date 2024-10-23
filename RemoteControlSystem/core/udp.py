@@ -3,15 +3,16 @@ import socket
 import struct
 
 import databasetool
+from projectdesposetool import CONFIG
 
 
-SERVERADDRESS = ("192.168.179.1", 8081)    # 服务端地址
-CLIENTADDRESS = ("192.168.179.1", 8080)    # 客户端地址
+SERVERADDRESS = (CONFIG.IP, CONFIG.USPORT)    # 服务端地址
 
 
-BROADCAST = ("", 8082)                  # 配置UDP广播地址
-MULTICAST = ("224.25.25.1", 8083)          # 配置UDP组播地址
+BROADCAST = ("", CONFIG.UBPORT)                  # 配置UDP广播地址
+MULTICAST = ("224.25.25.1", CONFIG.UMPORT)          # 配置UDP组播地址
 
+# 
 ENCODING = "utf-8"                           # 编码格式
 RECVSIZE = 1024                              # 最大数据量
 MAXCONNNUM = 50                              # 最大连接数
@@ -100,17 +101,14 @@ class Reception:
     async def __reception(self):
         # 等待客户端发送数据(心跳包)
         rec = await self.loop.sock_recvfrom(self.udp_socket, RECVSIZE)
-        # print(rec)
         self.CONNECTNUM -= 10
         
         # 解析数据
         data = rec[0].decode(ENCODING)
         ip, port = rec[1]
-        
         # 保存心跳包数据
         DATABASE.hset("heart_packages", mapping={ip: data}) # ip地址和心跳包数据
-        # data = DATABASE.hgetall("client_message")
-        # print(type(data), data[ip.encode()].decode())
+        # print(data)
         
         # 校验客户端连接状态
         await self.__check_connection(ip, data)

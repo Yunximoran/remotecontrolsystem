@@ -1,12 +1,11 @@
 from subprocess import Popen, PIPE
 
-from projectdesposetool.parse import Parse
+from projectdesposetool.parse import CONFIG
 
 
 
 class ServerManage:
-    parse = Parse()
-    servers = parse.parseConfig("servers")
+    servers = CONFIG.parseConfig("servers")
     
     def __init__(self) -> None:
         self.ServerList = []
