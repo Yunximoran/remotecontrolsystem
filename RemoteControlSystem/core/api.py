@@ -29,8 +29,8 @@ from core import control
 from core.udp import MultiCast
 from datamodel import (
     HeartPkgs,
-    SoftWareCheckList,
-    ShellList
+    ShellList,
+    SoftWare
     )
 
 
@@ -53,9 +53,7 @@ app.add_middleware(
 server = uvicorn.Server(uvicorn.Config(app))
 
 controlor = control.Control()
-
-
-
+multiter = MultiCast()
 
 # Server API
 
@@ -66,27 +64,21 @@ async def tapi():
 
 @app.put("/servers/send_control_shell")         # 发送shell指令
 async def send_control_shell(shell_list: list[ShellList]):
-    for shell_msg in shell_list:
-        controlor.sendtoclient(shell_msg.model_dump_json())
-    return {"ok": "send a shell to client"}
+    try:
+        for shell_msg in shell_list:
+            controlor.sendtoclient(shell_msg.model_dump_json())
+        return {"ok": "send a shell to client"}
+    except Exception as e:
+        return {"ERROR": e}
 
 @app.put("/servers/send_software_checklist")    # 发送软件清单
-async def send_software_checklist(checklist: SoftWareCheckList):
-    softwarelist = checklist.model_dump()
-    print(type(softwarelist))
-    MultiCast().send(json.dumps(softwarelist["software"]))  
-    return checklist
+async def send_software_checklist(checklist: list[SoftWare]):
+    software = [item.model_dump() for item in checklist]
+    try:
+        multiter.send(json.dumps(software))  
+        return {"OK": "send software checklist"}
+    except Exception as e:
+        return {"ERROR": e}
 
-
-
-# Client API
-
-@app.put("/clients/send_heart_pkgs/") 
-async def send_heart_pakgs(
-    heart_pakgs: Annotated[HeartPkgs, None],
-    ):
-    # 发送心跳包
-    # RedisConn.lpush("heart_list", heart_pakgs.model_dump_json())
-    return heart_pakgs
 
 

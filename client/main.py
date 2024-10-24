@@ -6,8 +6,6 @@
 
 # 客户端代码
 import os
-import sys
-from pathlib import Path
 import time
 import json
 import subprocess
@@ -82,15 +80,18 @@ class Client:
         tcp_conn = TCP()
         while True:
             data = json.loads(tcp_conn.listening())
-            print(data)
-            with open("data.json", 'a', encoding="utf-8") as f:
+            with open("data/shell.json", 'a', encoding="utf-8") as f:
                 json.dump(data, f, ensure_ascii=False, indent=4)
     
             
     def listing_multi(self):
         multi_conn = MultiCast()
-        multi_conn.recv()
-    
+        while True:
+            data = multi_conn.recv()
+            soft_list = json.loads(data)
+            with open('data/softwarelist.json', 'w', encoding='utf-8') as f:
+                json.dump(soft_list, f, indent=4, ensure_ascii=False)
+                
     def connect(self):
         # 每秒广播心跳包数据
         udp_conn = BroadCast()

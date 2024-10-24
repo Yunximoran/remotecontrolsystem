@@ -1,5 +1,6 @@
 import socket
 import struct
+import json
 
 from despose import CONFIG
 
@@ -64,8 +65,6 @@ class MultiCast(UDP):
         self.sock.sendto("thi is multicast", MULTICAST)
     
     def recv(self):
-        while True:
-            data, addr = self.sock.recvfrom(1024)
+        data, addr = self.sock.recvfrom(1024)
             # 唯一能获取服务端ip的地方， 可能有用
-            print(data.decode())
-    
+        return data.decode()

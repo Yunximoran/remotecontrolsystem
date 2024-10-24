@@ -2,7 +2,7 @@ from typing import Annotated
 from pydantic import BaseModel
 
 from .heart_pkgs import HeartPkgs
-from .software_checklist import SoftWareCheckList
+from .software_checklist import SoftWareCheckList, SoftWare
 
 
 

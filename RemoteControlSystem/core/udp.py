@@ -108,7 +108,6 @@ class Reception:
         ip, port = rec[1]
         # 保存心跳包数据
         DATABASE.hset("heart_packages", mapping={ip: data}) # ip地址和心跳包数据
-        # print(data)
         
         # 校验客户端连接状态
         await self.__check_connection(ip, data)
