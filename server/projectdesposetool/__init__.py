@@ -34,15 +34,3 @@ class LogManage:
         logging.critical("the critical")
 
 
-
-# LogManage = LogManage(savedir=Parse.CWD)
-
-
-# logging.basicConfig(
-#     level=logging.INFO,
-#     filename='logs/ProjectDespose.log'
-# )
-
-# logger = logging.getLogger(__name__)
-# logger.info('the message')
-# logger.critical()

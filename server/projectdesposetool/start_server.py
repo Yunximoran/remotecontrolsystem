@@ -21,6 +21,5 @@ class ServerManage:
             process = self.ServerList.pop()
             Popen.kill(process)
 
-print(os.getcwd())
 SERVERMANAGE = ServerManage()
 

@@ -12,6 +12,7 @@ MESSAGEQUEUE = multiprocessing.Queue()
 
 
 class Control:
+    process = []
     CLIENTMESSAGE = {}
     
     def __init__(self):
@@ -35,9 +36,9 @@ class Control:
             p.start()
             p.join()
             
+            
                 
     def sendtoshell(self, shell_control, ip):
         conn = TCP()
-        print(ip)
         conn.send(shell_control, ip)
         conn.close()

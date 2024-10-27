@@ -1,6 +1,7 @@
 import asyncio
 import socket
 import struct
+import json
 
 import databasetool
 from projectdesposetool import CONFIG
@@ -106,6 +107,7 @@ class Reception:
         # 解析数据
         data = rec[0].decode(ENCODING)
         ip, port = rec[1]
+        # print(ip)
         # 保存心跳包数据
         DATABASE.hset("heart_packages", mapping={ip: data}) # ip地址和心跳包数据
         
@@ -135,6 +137,7 @@ class Reception:
         # 等待3秒后 删除客户端连接缓存 or 先标记为断线 等待服务端关闭后清空
         await asyncio.sleep(3)
         TIMERLIST.pop(ip)
+        DATABASE.hdel("heart_packages", ip)
         print(f"The IP {ip} user is disconnected")
 
 

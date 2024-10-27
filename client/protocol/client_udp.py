@@ -37,7 +37,7 @@ class BroadCast(UDP):
         
     
     def settings(self):
-        self.sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)     # 允许地址复用
+        # self.sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)     # 允许地址复用
         self.sock.setsockopt(socket.SOL_SOCKET, socket.SO_BROADCAST, 1)     # 允许广播
         
     

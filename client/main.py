@@ -80,7 +80,6 @@ class Client:
         tcp_conn = TCP()
         while True:
             data = json.loads(tcp_conn.listening())
-            print(data)
             with open("data/shell.json", 'a', encoding="utf-8") as f:
                 json.dump(data, f, ensure_ascii=False, indent=4)
     
@@ -99,7 +98,6 @@ class Client:
         udp_conn = BroadCast()
         while True:
             time.sleep(1)
-            # print("send a connection information to the server")
             heart_pkgs = self.get_heart_packages()
             udp_conn.send(json.dumps(heart_pkgs))
             
