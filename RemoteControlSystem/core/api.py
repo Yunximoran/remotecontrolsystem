@@ -62,7 +62,7 @@ async def tapi():
     pass
     return {"msg": "Hello Server, There is Control"}
 
-@app.put("/servers/send_control_shell")         # 发送shell指令
+@app.put("/servers/send_control_shell/")         # 发送shell指令
 async def send_control_shell(shell_list: list[ShellList]):
     try:
         for shell_msg in shell_list:
@@ -71,7 +71,7 @@ async def send_control_shell(shell_list: list[ShellList]):
     except Exception as e:
         return {"ERROR": e}
 
-@app.put("/servers/send_software_checklist")    # 发送软件清单
+@app.put("/servers/send_software_checklist/")    # 发送软件清单
 async def send_software_checklist(checklist: list[SoftWare]):
     software = [item.model_dump() for item in checklist]
     try:

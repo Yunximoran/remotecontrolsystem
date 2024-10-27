@@ -6,6 +6,8 @@
 
 
 <button @click="sendshell">shell msg: {{ shell }}</button>
+
+<button @click="send_softlist"></button>
 </template>
 
 <script>
@@ -34,6 +36,10 @@ export default{
       ]).then((res) => {
         this.shell = res.data
       })
+    },
+    send_softlist(){
+      axios.put("/servers/send_software_checklist/")
+      this.softwares = res.data
     }
     
   }
