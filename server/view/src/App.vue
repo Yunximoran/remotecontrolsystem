@@ -4,9 +4,8 @@
     <form @submit.prevent="addshell">
         <input type="text" v-model="shell.name">
         <input type="text" v-model="shell.shell">
-        <button type="submit">add shell</button>
-        <p>{{ shells }}</p>
     </form>
+    <button @click="sendshell"></button>
 
 </template>
 
@@ -15,6 +14,7 @@ import axios from 'axios';
 export default{
     data(){
         return {
+            msg: null,
             shells: [],
             shell: {
                 name: null,
@@ -28,7 +28,8 @@ export default{
         addshell(shell){
             if(this.shell.name && this.shell.shell){
                 this.shells.push(this.shell)
-   
+                this.shell.name = null
+                this.shell.shell = null
             }
         },
 
@@ -39,11 +40,7 @@ export default{
         }, 
 
         sendshell(){
-            axios.put("/servers/send_control_shell", [
-                {
-                    name: "first",
-                    shell: "Hello server"
-                }]).then((res) => {
+            axios.put("/servers/send_control_shell", this.shells).then((res) => {
                     this.shell = res.data
                 })
         },

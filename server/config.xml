@@ -28,6 +28,7 @@
             <listening>python core/udp.py</listening>
             <control>python core/control.py</control>
             <redis>redis-server</redis>
+            <view>npm --prefix view run serve</view>
 
         </servers>
     </base>

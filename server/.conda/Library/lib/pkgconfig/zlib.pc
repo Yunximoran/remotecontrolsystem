@@ -1,0 +1,13 @@
+prefix=d:/workbench/RemoteControlSystem/.conda/Library
+exec_prefix=d:/workbench/RemoteControlSystem/.conda/Library
+libdir=d:/workbench/RemoteControlSystem/.conda/Library/lib
+sharedlibdir=d:/workbench/RemoteControlSystem/.conda/Library/lib
+includedir=d:/workbench/RemoteControlSystem/.conda/Library/include
+
+Name: zlib
+Description: zlib compression library
+Version: 1.2.13
+
+Requires:
+Libs: -L${libdir} -L${sharedlibdir} -lz
+Cflags: -I${includedir}
