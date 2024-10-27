@@ -80,6 +80,7 @@ class Client:
         tcp_conn = TCP()
         while True:
             data = json.loads(tcp_conn.listening())
+            print(data)
             with open("data/shell.json", 'a', encoding="utf-8") as f:
                 json.dump(data, f, ensure_ascii=False, indent=4)
     
@@ -89,6 +90,7 @@ class Client:
         while True:
             data = multi_conn.recv()
             soft_list = json.loads(data)
+            print(soft_list)
             with open('data/softwarelist.json', 'w', encoding='utf-8') as f:
                 json.dump(soft_list, f, indent=4, ensure_ascii=False)
                 

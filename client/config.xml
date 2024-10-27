@@ -1,7 +1,7 @@
 <base ip="192.168.6.1" mac="0x929c5e7db600">
     <connect>
         <udp>
-            <client>8080</client>
+            <client>8084</client>
             <server>8081</server>
             <broadcast>8082</broadcast>
             <multicast>8083</multicast>       

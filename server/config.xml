@@ -2,7 +2,7 @@
     <base ip="192.168.6.1">
         <connect>
             <udp>
-                <client>8080</client>
+                <client>8084</client>
                 <server>8081</server>
                 <broad>8082</broad>
                 <multi>8083</multi>       
@@ -25,9 +25,10 @@
         <servers>
             <!-- 服务管理 -->
             <uvicorn>uvicorn core.api:app --reload</uvicorn>
-            <listening>python ./core/udp.py</listening>
-            <control>python ./core/control.py</control>
+            <listening>python core/udp.py</listening>
+            <control>python core/control.py</control>
             <redis>redis-server</redis>
+
         </servers>
     </base>
 </xml>
