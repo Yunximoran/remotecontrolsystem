@@ -80,7 +80,7 @@ class Client:
         tcp_conn = TCP()
         while True:
             data = json.loads(tcp_conn.listening())
-            with open("data/shell.json", 'a', encoding="utf-8") as f:
+            with open("data/shell.json", 'w', encoding="utf-8") as f:
                 json.dump(data, f, ensure_ascii=False, indent=4)
     
             
@@ -91,7 +91,7 @@ class Client:
             soft_list = json.loads(data)
             print(soft_list)
             with open('data/softwarelist.json', 'w', encoding='utf-8') as f:
-                json.dump(soft_list, f, indent=4, ensure_ascii=False)
+                json.dump(soft_list, f, ensure_ascii=False, indent=4)
                 
     def connect(self):
         # 每秒广播心跳包数据

@@ -5,7 +5,7 @@ from pydantic import BaseModel
 
 class SoftWare(BaseModel):
     name: Annotated[str, None]  
-    start: Annotated[str, None] = None
+    start: Annotated[bool, None] = False
 
 class SoftWareCheckList(BaseModel):
     software: list[SoftWare]

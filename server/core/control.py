@@ -31,7 +31,6 @@ class Control:
             MESSAGEQUEUE.put(info['ip'])
             
         while MESSAGEQUEUE.qsize() > 0:
-            print(shell_control)
             p = multiprocessing.Process(target=self.sendtoshell, args=(shell_control, MESSAGEQUEUE.get()))
             p.start()
             p.join()

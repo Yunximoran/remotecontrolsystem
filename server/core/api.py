@@ -65,9 +65,7 @@ async def tapi():
 @app.put("/servers/send_control_shell/")         # 发送shell指令
 async def send_control_shell(shell_list: list[ShellList]):
     try:
-        # print(shell_list, type(shell_list))
         for shell_msg in shell_list:
-            # print(shell_msg)
             controlor.sendtoclient(shell_msg.model_dump_json())
         return {"ok": "send a shell to client"}
     except Exception as e:
