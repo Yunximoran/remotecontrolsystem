@@ -13,7 +13,7 @@ class Parse:
         
     def init(self):
         self.CWD = os.getcwd()
-        self.CONF = ET.parse("\\".join([self.CWD, "config.xml"]))
+        self.CONF = ET.parse("/".join([self.CWD, "config.xml"]))
         self.ROOT = self.CONF.getroot().find("base")
         
         self.IP = self.ROOT.get("ip")
