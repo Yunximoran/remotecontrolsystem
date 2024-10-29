@@ -1,6 +1,10 @@
 [
     {
-        "name": "string",
+        "name": "yumo",
+        "start": false
+    },
+    {
+        "name": "yuanshen",
         "start": false
     }
 ]

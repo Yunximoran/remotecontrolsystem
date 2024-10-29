@@ -49,7 +49,7 @@ class Parse:
         self.UVICORNSERVER = SERVERS.find("uvicorn").text
         self.LISTENINGSERVER = SERVERS.find("listening").text
         self.CONTROLSERVER = SERVERS.find("control").text
-        self.REDISSERVER = SERVERS.find("redis").text
+        # self.REDISSERVER = SERVERS.find("redis").text
         
     def parseConfig(self, TAG):
         RES = {}

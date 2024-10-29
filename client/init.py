@@ -68,4 +68,4 @@ class MacOSSytem(BaseSystem):
         
         
 if __name__ == "__main__":
-    print(IP)
+    Init()
