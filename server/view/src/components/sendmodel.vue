@@ -1,4 +1,5 @@
 <template>
+    <!-- 数据发送模块 -->
     <div class="sendbox">
         <div class="sends">
             <div class="send shell">
