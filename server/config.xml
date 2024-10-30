@@ -30,9 +30,5 @@
             <redis>reids-server</redis>
             <view>npm --prefix view run serve</view>
         </servers>
-
-        <windows>
-            s1
-        </windows>
     </base>
 </xml>
