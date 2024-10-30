@@ -1,8 +1,36 @@
 <template>
     <div class="menu">
-        <span class="settings">
-            <p>SETTINGS</p>
+        <span 
+            class="settings" @click="showsettings = true" @mouseleave="showsettings = false">
+
+            <span>SETTINGS</span>
+            
+            <span
+                v-if="showsettings"
+                v-for="(value, key) in options" 
+                @click="showoptions_level_1 = true" 
+                @mouseleave="showoptions_level_1 = false">
+
+                <p>{{ key }}
+                    <ul v-if="showoptions_level_1" v-for="(o, n) in value"
+                        @click="showoptions_level_2 = true" 
+                        @mouseleave="showoptions_level_2 = false">
+                        <p>{{ n }}
+                            <ul v-if="showoptions_level_2" v-for="(so, sn) in o">
+                                <p 
+                                @click="showoptions_level_3=true"
+                                @mouseleave="showoptions_level_3=false">
+                                <p @click="isHovered=true">{{ sn }}</p>
+                                </p>
+                                <input v-if="(showoptions_level_3 && isHovered)" type="text" :placeholder="so">
+                            </ul>
+                        </p>
+
+                    </ul>
+                </p>
+            </span>
         </span>
+        
         <span class="login"><p>LOGIN</p></span>
     </div>
 </template>
@@ -26,7 +54,12 @@ export default{
                     }
                 }
             },
-            setting: false,
+            showsettings: false,
+            showoptions_level_1: false,
+            showoptions_level_2: false,
+            showoptions_level_3: false,
+
+            isHovered: false,
         }
     },
     methods: {
@@ -34,6 +67,10 @@ export default{
             axios.put('/settings/serverport').then((res)=>{
                 this.setting = res.data
             })
+        },
+        alter(){
+            this.isHovered = !this.isHovered
+            this.showoptions_level_3 = !this.showoptions_level_3
         }
     }
 }
@@ -48,9 +85,10 @@ export default{
 }
 
 .menu span{
+    /* width: 30px; */
     height: 100%;
     margin: 0 10px 0 10px;
-    background-color: #424242;
+    /* background-color: #424242; */
     color: #bebebe;
     text-align: center;
     line-height: 30px;
@@ -58,7 +96,14 @@ export default{
     border-radius: 3px;
 }
 
+.menu span span{
+    margin: 0px;
+    padding: 0px;
+    color: white;
+}
+
 .menu p {
+    background-color: greenyellow;
     font: 18px;
     margin: 0;
 }
