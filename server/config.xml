@@ -30,5 +30,9 @@
             <redis>reids-server</redis>
             <view>npm --prefix view run serve</view>
         </servers>
+
+        <linux>
+            there is linux conf
+        </linux>
     </base>
 </xml>
