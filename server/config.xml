@@ -29,8 +29,5 @@
             <control>python core/control.py</control>
             <view>npm --prefix view run serve</view>
         </servers>
-
-        <linux>
-        </linux>
     </base>
 </xml>

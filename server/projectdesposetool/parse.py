@@ -49,9 +49,8 @@ class Parse:
         self.UVICORNSERVER = SERVERS.find("uvicorn").text
         self.LISTENINGSERVER = SERVERS.find("listening").text
         self.CONTROLSERVER = SERVERS.find("control").text
-        
-    def loadlinux(self):
-        self.LINUX = None
+
+
     def parseConfig(self, TAG):
         RES = {}
         
