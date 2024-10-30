@@ -1,0 +1,2 @@
+server/config.xml merge=ours
+client/config.xml merge=ours
