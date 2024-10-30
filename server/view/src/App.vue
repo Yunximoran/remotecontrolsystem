@@ -1,7 +1,15 @@
 
 <template>
    <!-- 控制台 -->
-    <Sendmodel/>
+    <Settings style="
+        margin-left:30px;
+        margin-bottom:60px
+        "
+    />
+    <Sendmodel style="
+        margin-left:80px;
+        "
+    />
     
 
 
@@ -10,6 +18,7 @@
 </template>
 <script setup>
 import Sendmodel from "./components/sendmodel.vue";
+import Settings from "./components/settings.vue"
 </script>
 
 
@@ -21,7 +30,7 @@ import Sendmodel from "./components/sendmodel.vue";
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
+  margin-top: 30px;
 }
 
 /* global */
@@ -35,5 +44,6 @@ button {
   color:rgb(21, 73, 55);
   border-radius: 3px;
 }
+
 
 </style>
