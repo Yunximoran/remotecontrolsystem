@@ -27,6 +27,7 @@
             <uvicorn>uvicorn core.api:app --reload</uvicorn>
             <listening>python core/udp.py</listening>
             <control>python core/control.py</control>
+            <redis>reids-server</redis>
             <view>npm --prefix view run serve</view>
         </servers>
     </base>
