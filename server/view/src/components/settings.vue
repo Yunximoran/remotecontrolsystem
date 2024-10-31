@@ -29,7 +29,12 @@ export default{
                         client: this.setdemo
                     }
                 },
-                demo: this.setdemo
+                demo: this.setdemo,
+                demol: {
+                    n1: null,
+                    n2: null,
+                    n3: null,
+                }
             },
 
             // 选项级别
@@ -61,7 +66,18 @@ export default{
         },
 
         loadoptions(node, label, options, level){
+            console.log(node.querySelectorAll('span').length)
+            const is_unfold = node.querySelectorAll('span').length === 0 // 判断该选项是否展开
+
+            if (is_unfold){
+                this.is_show_options[level] = false
+            }
+            else{
+                this.is_show_options[level] = true
+            }
+
             this.is_show_options[level] = !this.is_show_options[level]
+
             if (this.is_show_options[level]) {
                 this.addsettings(node, options, level)
             }
@@ -78,14 +94,15 @@ export default{
 
                 title.textContent = option
 
-                console.log(typeof level)
                 current.className = this.option_level[level]
                 current.appendChild(title)
 
                 if (typeof options[option] === 'object'){
-                    // 怎么设置同级别共用一个is_show
+                    // 设置同级别共用一个is_show
+                    // 是否有其他同级别节点
                     current.onclick = (event) => {
-                        event.stopPropagation();
+                        event.stopPropagation()
+                        this.checkcolleagues(parent, option)
                         this.loadoptions(current, option, options[option], level+1)
                     }
                 }
@@ -99,6 +116,20 @@ export default{
         removesettings(element, label){
             element.innerHTML = `<p>${label}</p>`
         },
+
+        checkcolleagues(parent, selfname){    // 检查同事节点是否展开
+            const colleagues = parent.querySelectorAll('span')
+            for (const colleague of colleagues){
+                
+                const is_unfold = colleague.querySelectorAll('span').length !== 0
+                const label = colleague.querySelector('p').textContent
+
+                if (is_unfold && selfname != label){
+                    this.removesettings(colleague, label)
+                }
+            }
+        },
+
         alter(option){
             alert(`alter ${option} option`)
         },
