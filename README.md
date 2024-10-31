@@ -50,3 +50,36 @@
     2、运行client/main.py 启动客户端
 
     3、进入remotecontrolsystem/view 终端： npm run serve (view启动服务未完成， 需要另外启动)
+
+* ### 2024-11-1:
+  * ### server:
+    * 优化控制台页面：
+      * 优化shell数据和softwarelist操作接口
+        * 新增预览功能
+        * 完成控制台数据操作逻辑
+
+      * 新增控制台菜单栏
+        * [X]搭建设置选项框架
+        * []服务器登录选项(待定)
+        * ...(未定)
+
+  * ### version:
+    * [X]测试项目linux系统运行
+    * [X]增加github版本控制 [main/linux/window]
+
+  * ### run project：
+    * init: 
+      * start server:
+        * install redis
+        * install nodejs
+        * install vue
+          * npm install @vue
+          * npm install @vue/cli
+        * install python=3.11 fastapi uvicorn redis/redis-py[window/linux]
+        * alter server/config.xml: node[base] ip="localhost"
+        * run server/start.py
+      * start client:
+          install python=3.11
+          run client/init.py
+          run client/main.py
+
