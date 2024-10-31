@@ -43,13 +43,12 @@ class Parse:
         self.RHOST = REDISCONN.find("host").text
         self.RPORT = int(REDISCONN.find("port").text)
     
-    def loadservers(self):
-        SERVERS = self.ROOT.find("servers")
+    # def loadservers(self):
+    #     SERVERS = self.ROOT.find("servers")
         
-        self.UVICORNSERVER = SERVERS.find("uvicorn").text
-        self.LISTENINGSERVER = SERVERS.find("listening").text
-        self.CONTROLSERVER = SERVERS.find("control").text
-        self.REDISSERVER = SERVERS.find("redis").text
+    #     self.UVICORNSERVER = SERVERS.find("uvicorn").text
+    #     self.LISTENINGSERVER = SERVERS.find("listening").text
+    #     self.CONTROLSERVER = SERVERS.find("control").text
 
 
     def parseConfig(self, TAG):
