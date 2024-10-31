@@ -133,6 +133,7 @@ export default{
         alter(option){
             alert(`alter ${option} option`)
         },
+
         setdemo(){
             console.log("demo settings")
             alert("demo func")
@@ -167,14 +168,26 @@ export default{
     text-align: center;
     line-height: 30px;
     border-radius: 3px;
-
+    display: flex;
+    flex-direction: column;
 }
+
+.menu span p{
+    border-radius: 3px;
+}
+
 span.level_0{
+    display: flex;
+    flex-direction: column;
     position: relative;
     margin: 0;
     color: gold
 }
+
 span.level_1{
+    width: 60px;
+    display: flex;
+    flex-direction: column;
     position: relative;
     bottom: 30px;
     left: 120px;
@@ -182,9 +195,12 @@ span.level_1{
     color: rebeccapurple
 }
 span.level_2{
+    width: 60px;
+    display: flex;
+    flex-direction: column;
     position: relative;
     bottom: 30px;
-    left: 120px;
+    left: 60px;
     margin: 0;
     color: green
 }
