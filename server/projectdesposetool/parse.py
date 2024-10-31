@@ -21,7 +21,7 @@ class Parse:
     def load_allconfig(self):
         self.loadconnect()
         self.loadredis()
-        self.loadservers()
+        # self.loadservers()
 
 
     def loadconnect(self):
