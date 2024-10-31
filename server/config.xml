@@ -30,8 +30,8 @@
             <view>npm --prefix view run serve</view>
         </servers>
         
-        <linux>
-            there is linux config
-        </linux>
+        <system>
+            there is system config
+        </system>
     </base>
 </xml>
