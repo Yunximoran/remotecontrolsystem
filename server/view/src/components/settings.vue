@@ -1,5 +1,5 @@
 <template>
-    <div class="menu">
+    <div class="menu" >
         <span ref="settings" class="settings" @click="loadoptions(this.$refs.settings, 'SETTINGS', options, 0)">
             <p>SETTINGS</p>
         </span>
@@ -7,11 +7,14 @@
             <p>LOGIN</p>
         </span>
     </div>
+    <div class="render"></div>
 </template>
 
 <script>
 import axios from "axios";
-import { createElementBlock } from "vue";
+import { h, withModifiers, render } from "vue";
+
+
 export default{
     data(){
         return {
@@ -19,22 +22,17 @@ export default{
             options:{
                 port:{
                     udp:{
-                        server: this.setdemo,
-                        borad: this.setdemo,
-                        multi: this.setdemo,
-                        client: this.setdemo,
+                        server: 'null',
+                        borad: 'null',
+                        multi: 'null',
+                        client: 'null',
                     },
                     tcp: {
-                        server: this.setdemo,
-                        client: this.setdemo
+                        server: 'null',
+                        client: 'null',
                     }
                 },
-                demo: this.setdemo,
-                demol: {
-                    n1: null,
-                    n2: null,
-                    n3: null,
-                }
+                demo: 'null',
             },
 
             // 选项级别
@@ -55,15 +53,11 @@ export default{
                 false,
                 false,
                 false,
-            ]
+            ],
         }
     },
+
     methods: {
-        set_conf(){
-            axios.put('/settings/serverport').then((res)=>{
-                this.setting = res.data
-            })
-        },
 
         loadoptions(node, label, options, level){
             console.log(node.querySelectorAll('span').length)
@@ -96,7 +90,6 @@ export default{
 
                 current.className = this.option_level[level]
                 current.appendChild(title)
-
                 if (typeof options[option] === 'object'){
                     // 设置同级别共用一个is_show
                     // 是否有其他同级别节点
@@ -107,12 +100,16 @@ export default{
                     }
                 }
                 else {
-                    current.onclick = () => this.alter(option)
+                    current.onclick = (event) => {
+                        event.stopPropagation()
+                        this.alter(current, option)
+                    }
                 }
 
                 parent.appendChild(current)
             }
         },
+
         removesettings(element, label){
             element.innerHTML = `<p>${label}</p>`
         },
@@ -130,20 +127,66 @@ export default{
             }
         },
 
-        alter(option){
-            alert(`alter ${option} option`)
+
+        alter(current, option){
+            // console.log()
+            const inp = h('input', {
+                    class: 'alter',
+                    id: option,
+                    type: 'text',
+                    onKeyup:(event) => {
+                        event.stopPropagation()
+                        if (event.key === 'Enter'){
+                            console.log(event.target.value)
+                            axios.put("/servers/settings/alter/", null, {
+                                    params:{
+                                        option: option,
+                                        nval: event.target.value
+                                    }
+                                }).then(res => {
+                                    console.log(res.data)
+                                }).catch(error => {
+                                    console.log(error.message)
+                                }).finally(() => {
+                                    render(null, current)
+                                })
+                        }
+                    },
+
+                    onclick: (event) => {
+                        event.stopPropagation()
+                    },
+                })
+
+                
+            const otherAlters = this.$refs.settings.querySelectorAll('.alter')
+            if (otherAlters.length === 0){
+                render(inp, current)
+            }
+            else {
+                // re clcik event
+                // click self or click other 
+                render(null, current)
+            }
         },
 
-        setdemo(){
-            console.log("demo settings")
-            alert("demo func")
-        }
+        
+    },
+
+    mounted(){
+        document.addEventListener('click', (event)=>{
+            console.log('global click event')
+            console.log(event.target.textContent)
+        })
     }
 }
+
+
 </script>
 
 <style>
 .menu{
+    /* position:relative; */
     user-select: none;
     display: flex;
     flex-direction: row;
@@ -203,5 +246,13 @@ span.level_2{
     left: 60px;
     margin: 0;
     color: green
+}
+
+.alter{
+    position:relative;
+    top: -100%;
+    left: 100%;
+    border: red 2px;
+    /* border-radius: 15px; */
 }
 </style>

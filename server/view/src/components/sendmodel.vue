@@ -99,7 +99,8 @@ export default{
                 this.softwares = []
             })
         }
-    }
+    },
+    
 }
 </script>
 
