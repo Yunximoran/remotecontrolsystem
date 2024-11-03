@@ -79,6 +79,13 @@ async def send_software_checklist(checklist: list[SoftWare]):
         return {"OK": "send software checklist"}
     except Exception as e:
         return {"ERROR": e}
+    
+    
+
+# server settings
+@app.put("/servers/settings/alter/")
+async def alter_settings(option: str, nval: str):
+    return {"ok": f"reset {option} => {nval}"}
 
 
 
