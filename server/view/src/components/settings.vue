@@ -164,8 +164,6 @@ export default{
                 render(inp, current)
             }
             else {
-                // re clcik event
-                // click self or click other 
                 render(null, current)
             }
         },
