@@ -12,7 +12,7 @@
 
 <script>
 import axios from "axios";
-import { h, withModifiers, render } from "vue";
+import { h, onBeforeMount, render, withDirectives } from "vue";
 
 
 export default{
@@ -56,7 +56,6 @@ export default{
             ],
         }
     },
-
     methods: {
 
         loadoptions(node, label, options, level){
@@ -134,7 +133,7 @@ export default{
                     class: 'alter',
                     id: option,
                     type: 'text',
-                    onKeyup:(event) => {
+                    onkeyup:(event) => {
                         event.stopPropagation()
                         if (event.key === 'Enter'){
                             console.log(event.target.value)
@@ -148,16 +147,24 @@ export default{
                                 }).catch(error => {
                                     console.log(error.message)
                                 }).finally(() => {
-                                    render(null, current)
+                                    event.target.blur()
                                 })
                         }
                     },
+                    onblur: (event) => {
+                        console.log("input event")
+                        try{
+                            render(null, current)
+                        }catch(error){
+                            console.log(error)
+                        }
+                    },
 
-                    onclick: (event) => {
+                    onclick: (event) =>{
                         event.stopPropagation()
+                        
                     },
                 })
-
                 
             const otherAlters = this.$refs.settings.querySelectorAll('.alter')
             if (otherAlters.length === 0){
@@ -172,12 +179,11 @@ export default{
 
         
     },
+    render(){
 
+    },
     mounted(){
-        document.addEventListener('click', (event)=>{
-            console.log('global click event')
-            console.log(event.target.textContent)
-        })
+
     }
 }
 
