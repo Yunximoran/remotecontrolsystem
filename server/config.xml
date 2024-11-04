@@ -31,7 +31,8 @@
         </servers>
         
         <system>
-            there is system config
+            there is base config
         </system>
+        
     </base>
 </xml>
