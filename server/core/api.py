@@ -32,6 +32,7 @@ from datamodel import (
     ShellList,
     SoftWare
     )
+from databasetool import RedisConn as DATABASE
 
 
 
@@ -80,7 +81,11 @@ async def send_software_checklist(checklist: list[SoftWare]):
     except Exception as e:
         return {"ERROR": e}
     
-    
+# server data
+@app.get("/servers/data/clientmessage")
+async def getclientmessage():
+    clients = DATABASE.hgetall("heart_packages")
+    return clients
 
 # server settings
 @app.put("/servers/settings/alter/")

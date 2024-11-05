@@ -11,34 +11,23 @@
         "
     ></Sendmodel>
 
+    <ClientBox>"all client"</ClientBox>
+
 
 
 </template>
 <script>
 import Sendmodel from "./components/sendmodel.vue";
 import Settings from "./components/settings.vue";
+import ClientBox from "./components/home/clientbox.vue"
 
 
 export default{
   components: {
     Sendmodel,
     Settings,
+    ClientBox
   },
-  render(){
-    const inp = h('input', {
-                class: 'alter',
-                id: current.textContent,
-                type: 'text',
-                onKeyup: withModifiers((event) => {
-                    axios.put('/servers/settings/alter/', {
-                        option: option,
-                        nval: event.target.value
-                    })
-                }, ['enter'])
-            })
-            // inp.render()
-          return
-  }
 }
 </script>
 
