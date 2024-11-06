@@ -103,8 +103,6 @@ export default{
                     current.onclick = (event) => {
                         event.stopPropagation()
                         this.checkcolleagues(parent, option)
-                        this.alter(current, option)
-                        this.checkcolleagues(parent, option)
                         this.alter(current, option, options[option])
                     }
                 }
@@ -133,13 +131,13 @@ export default{
         },
 
 
-        alter(current, option){
+        alter(current, option, value){
             // create alter entry
             const inp = h('input', {
                     class: 'alter',
                     id: option,
                     type: 'text',
-                    placeholder: 123456,
+                    placeholder: value,
                     onkeyup:(event) => {
                         event.stopPropagation()
                         if (event.key === 'Enter'){

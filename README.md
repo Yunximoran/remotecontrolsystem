@@ -83,3 +83,11 @@
           run client/init.py
           run client/main.py
 
+  * ### 2024-11-05
+    * ### server:
+      * ### view:
+        * 优化setting option功能
+        * 新增client区域，显示client链接状态
+        * 新增alter接口
+        * 新增data接口
+

@@ -1,9 +1,8 @@
 
 <template>
-    <div>
+    <div class="clientbox">
         <span v-if="clients" class="clients">
             <Client v-for="client in demo" :key="client" :ip="client.ip" :msg="client">logo</Client>
-
         </span>
     </div>
 </template>
@@ -42,16 +41,24 @@ export default{
 </script>
 
 <style>
-.clients {
-    width: 30%;
+.clientbox{
+    display: block;
+    float: right;
     height: 80%;
-    position: relative;
-    top: 33px;
-    display: grid;
-    
-    background-color: wheat;
-    grid-template-columns: repeat(auto-fill, minmax(60px, 60px)); 
-    gap: 3px;
+    width: 30%;
+    background-color: yellow;
+    padding: 6px;
+    border-radius: 15px;
 }
-
+.clients {
+    width: 100%;
+    /* height: 80%; */
+    position: relative;
+    display: grid;
+    background-color: wheat;
+    grid-template-columns: repeat(auto-fit, minmax(60px, 60px)); 
+    gap: 3px;
+    border-radius: 10px;
+    padding: 3px;
+}
 </style>
