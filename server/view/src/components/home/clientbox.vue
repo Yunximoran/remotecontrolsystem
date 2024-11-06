@@ -15,11 +15,19 @@ export default{
     data(){
         return {
             clients: [],
-            demo: [1, 2, 3 ,4 ,5, 6, 7,8,9,10]
+            demo: [1, 2, 3 ,4 ,5, 6, 7,8,9,10, 11, 12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27],
+            select: [],
         }
     },
     components: {
         Client,   
+    },
+    watch: {
+        select: {
+            handler(nval, oval){
+                console.log(select)
+            }
+        }
     },
 
     methods: {
@@ -30,35 +38,61 @@ export default{
                    console.log(this.clients)
                 }
             })
+        },
+
+        selectclient(item){
+            this.select.push(...item)
         }
     },
 
     created(){
         // 这里是组件的钩子，组件被创建时调用
         this.getclientmessage()
+        document.addEventListener("click", (event)=>{
+        })
+    },
+    beforeMount(){
+
     }
 }
 </script>
 
 <style>
 .clientbox{
-    display: block;
-    float: right;
+    display: inline-block;
+    align-items: center;
     height: 80%;
-    width: 30%;
+    width: 32%;
     background-color: yellow;
-    padding: 6px;
     border-radius: 15px;
 }
+
+
 .clients {
-    width: 100%;
-    /* height: 80%; */
     position: relative;
+    width: 100%;
+    height: 100%;
     display: grid;
     background-color: wheat;
-    grid-template-columns: repeat(auto-fit, minmax(60px, 60px)); 
-    gap: 3px;
+    grid-template-columns: repeat(auto-fill, minmax(60px, 1fr));  
+    grid-template-rows: repeat(auto-fill, minmax(60px, 1fr));
     border-radius: 10px;
-    padding: 3px;
+    place-items: center;
+    padding: 6px;
+    overflow-y: scroll;
+    gap: 3px;
 }
+
+.clients::-webkit-scrollbar{
+    width: 10px;
+}
+
+.clients::-webkit-scrollbar-track{
+    background-color: aqua;
+}
+
+.clients::-webkit-scrollbar-thumb{
+    background-color: red;
+}
+
 </style>
