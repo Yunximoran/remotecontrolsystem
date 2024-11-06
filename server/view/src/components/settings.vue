@@ -81,6 +81,7 @@ export default{
         },
 
         addsettings(parent, options, level){
+            // create a set of options on the parent element
             for (let option in options){
                 let current = document.createElement('span')
                 let title = document.createElement('p')
@@ -102,6 +103,8 @@ export default{
                     current.onclick = (event) => {
                         event.stopPropagation()
                         this.checkcolleagues(parent, option)
+                        this.alter(current, option)
+                        this.checkcolleagues(parent, option)
                         this.alter(current, option, options[option])
                     }
                 }
@@ -111,10 +114,12 @@ export default{
         },
 
         removesettings(element, label){
+            // reinitialize the element named label
             element.innerHTML = `<p>${label}</p>`
         },
 
-        checkcolleagues(parent, selfname){    // 检查同事节点是否展开
+        checkcolleagues(parent, selfname){ 
+            // check if other colleagues are saved
             const colleagues = parent.querySelectorAll('span')
             for (const colleague of colleagues){
                 
@@ -128,13 +133,13 @@ export default{
         },
 
 
-        alter(current, option, value){
-            // console.log()
+        alter(current, option){
+            // create alter entry
             const inp = h('input', {
                     class: 'alter',
                     id: option,
                     type: 'text',
-                    placeholder: value,
+                    placeholder: 123456,
                     onkeyup:(event) => {
                         event.stopPropagation()
                         if (event.key === 'Enter'){
@@ -153,6 +158,7 @@ export default{
                                 })
                         }
                     },
+
                     onblur: (event) => {
                         console.log("input event")
                         try{
@@ -167,31 +173,27 @@ export default{
                         
                     },
                 })
-                
+            
+            // whether other input tags exist 
             const otherAlters = this.$refs.settings.querySelectorAll('.alter')
             if (otherAlters.length === 0){
-                render(inp, current)
+                render(inp, current) // rendering to current node
             }
             else {
-                // re clcik event
-                // click self or click other  
-                render(null, current)
+                render(null, current) // remoded from the current node
             }
 
-            const is_render = current.querySelector('input')
-            if (is_render){
-                is_render.focus();
-            }
+            // the input is automatically focused rendered
+            this.$nextTick(() => {
+                const inputElement = current.querySelector(`#${option}`)
+                if (inputElement){
+                    inputElement.focus()
+                }
+            })
         },
 
         
     },
-    render(){
-
-    },
-    mounted(){
-
-    }
 }
 
 
