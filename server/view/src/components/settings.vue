@@ -5,9 +5,9 @@
         </span>
         <span class="login">
             <p>LOGIN</p>
+
         </span>
     </div>
-    <div class="render"></div>
 </template>
 
 <script>
@@ -22,14 +22,14 @@ export default{
             options:{
                 port:{
                     udp:{
-                        server: 'null',
-                        borad: 'null',
-                        multi: 'null',
-                        client: 'null',
+                        server: 8081,
+                        borad: 8082,
+                        multi: 8083,
+                        client: 8084,
                     },
                     tcp: {
-                        server: 'null',
-                        client: 'null',
+                        server: 9095,
+                        client: 8085,
                     }
                 },
                 demo: 'null',
@@ -101,7 +101,8 @@ export default{
                 else {
                     current.onclick = (event) => {
                         event.stopPropagation()
-                        this.alter(current, option)
+                        this.checkcolleagues(parent, option)
+                        this.alter(current, option, options[option])
                     }
                 }
 
@@ -127,12 +128,13 @@ export default{
         },
 
 
-        alter(current, option){
+        alter(current, option, value){
             // console.log()
             const inp = h('input', {
                     class: 'alter',
                     id: option,
                     type: 'text',
+                    placeholder: value,
                     onkeyup:(event) => {
                         event.stopPropagation()
                         if (event.key === 'Enter'){
@@ -172,10 +174,13 @@ export default{
             }
             else {
                 // re clcik event
-                // click self or click other 
-
-                
+                // click self or click other  
                 render(null, current)
+            }
+
+            const is_render = current.querySelector('input')
+            if (is_render){
+                is_render.focus();
             }
         },
 
