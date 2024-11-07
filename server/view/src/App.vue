@@ -1,17 +1,22 @@
 
 <template>
-   <!-- 控制台 -->
-    <Settings style="
-        margin-left:30px;
-        margin-bottom:60px
-        "
-    ></Settings>
-    <Sendmodel style="
+   <!-- menu  -->
+    <div class="menu">
+        <Settings></Settings>
+    </div>
+
+    <!-- content -->
+    <div class="core">
+        <Sendmodel style="
         margin-left:80px;
         "
-    ></Sendmodel>
+        ></Sendmodel>
 
-    <ClientBox>"all client"</ClientBox>
+        <ClientBox></ClientBox>
+    </div>
+
+
+
 
 
 
@@ -53,6 +58,28 @@ button {
   background-color: rgb(175, 220, 171);
   color:rgb(21, 73, 55);
   border-radius: 3px;
+}
+
+.menu{
+    /* position:relative; */
+    user-select: none;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-items: center;
+    height: 30px;
+    
+}
+.menu p, span{
+    background-color: #798589;
+    margin: 0;
+}
+
+.core {
+    float: right;
+    display: flex;
+
+    justify-items: flex-end;
 }
 
 

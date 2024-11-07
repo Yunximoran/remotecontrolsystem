@@ -15,7 +15,6 @@
                 <button @click="clean(shells)">clean</button>
                 <button @click="sendshells">send</button>
             </div>
-            .clients
             <div class="send software">
                 <div class="inputsoftware">
                     <input type="text" placeholder="name"

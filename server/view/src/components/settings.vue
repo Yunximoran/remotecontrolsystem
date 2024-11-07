@@ -1,18 +1,12 @@
 <template>
-    <div class="menu" >
-        <span ref="settings" class="settings" @click="loadoptions(this.$refs.settings, 'SETTINGS', options, 0)">
+    <span ref="settings" class="settings" @click="loadoptions(this.$refs.settings, 'SETTINGS', options, 0)">
             <p>SETTINGS</p>
-        </span>
-        <span class="login">
-            <p>LOGIN</p>
-
-        </span>
-    </div>
+    </span>
 </template>
 
 <script>
 import axios from "axios";
-import { h, onBeforeMount, render, withDirectives } from "vue";
+import { h, render } from "vue";
 
 
 export default{
@@ -198,21 +192,6 @@ export default{
 </script>
 
 <style>
-.menu{
-    /* position:relative; */
-    user-select: none;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-items: center;
-    height: 30px;
-    
-}
-.menu p, span{
-    background-color: #798589;
-    margin: 0;
-    /* margin: 0; */
-}
 
 
 /* settings  */
@@ -228,13 +207,14 @@ export default{
     flex-direction: column;
 }
 
-.menu span p{
+.settings span p{
     border-radius: 3px;
 }
 
 span.level_0{
     display: flex;
     flex-direction: column;
+    align-items: center;
     position: relative;
     margin: 0;
     color: gold
@@ -246,7 +226,7 @@ span.level_1{
     flex-direction: column;
     position: relative;
     bottom: 30px;
-    left: 120px;
+    left: 90px;
     margin: 0;
     color: rebeccapurple
 }
@@ -263,6 +243,7 @@ span.level_2{
 
 .alter{
     position:relative;
+    width: 60px;
     top: -100%;
     left: 100%;
     border: red 2px;
