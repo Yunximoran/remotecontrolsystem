@@ -1,7 +1,7 @@
 
 <template>
     <div v-if="clients" class="clients">
-            <Client ref='item' @click="addSelect(client)" v-for="client in demo" :key="client" :ip="client.ip" :msg="client">logo</Client>
+            <Client ref='item' @click="selectclient([client, i])" v-for="(client, i) in demo" :key="client" :ip="client.ip" :msg="client"></Client>
     </div>
 </template>
 
@@ -23,7 +23,7 @@ export default{
     watch: {
         select: {
             handler(nval, oval){
-                console.log(select)
+                console.log(this.select)
             }
         }
     },
@@ -39,15 +39,31 @@ export default{
         },
 
         selectclient(item){
-            this.select.push(...item)
-        }
+            let is_exist = false
+            if(this.select.length === 0) {
+
+            }
+            else{            
+                for(const c of this.select){
+                    if (c[1] === item[1]){
+                        is_exist = true
+                        break
+                    }
+                }
+            }
+            if (!is_exist) {
+                this.select.push([...item])
+                console.log([...item])
+                console.log(this.select)
+                console.log("ok, selected a item")
+            }
+            else{
+                console.log("the item is exist")
+            }
+        },
+
     },
 
-    computed: {
-        addSelect (item) {
-            this.select.push(item)
-        }
-    },  
 
     created(){
         // 这里是组件的钩子，组件被创建时调用
