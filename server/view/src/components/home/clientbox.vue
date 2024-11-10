@@ -1,7 +1,7 @@
 
 <template>
     <div v-if="clients" class="clients">
-            <Client ref='item' @click="selectclient([client, i])" v-for="(client, i) in demo" :key="client" :ip="client.ip" :msg="client"></Client>
+            <Client ref='item' @click="selectclient(client, i)" v-for="(client, i) in clients" :key="client" :ip="client.ip" :msg="client"></Client>
     </div>
 </template>
 
@@ -12,9 +12,10 @@ import Client from "./client.vue"
 export default{
     data(){
         return {
-            clients: [],
-            demo: [1, 2, 3 ,4 ,5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31,32, 33, 34, 35,36],
-            select: [],
+            clients: {},
+            demo: Array.from({length: 100},  (_, i) => i+1),
+            select: {},
+            isclear: false,
         }
     },
     components: {
@@ -31,48 +32,24 @@ export default{
     methods: {
         getclientmessage(){
             axios.get("/servers/data/clientmessage/").then((res)=>{
-                for (const client in res.data){
-                   this.clients.push({...JSON.parse(res.data[client])}) 
-                   console.log(this.clients)
-                }
+                this.clients = res.data
             })
         },
 
-        selectclient(item){
-            let is_exist = false
-            if(this.select.length === 0) {
-
-            }
-            else{            
-                for(const c of this.select){
-                    if (c[1] === item[1]){
-                        is_exist = true
-                        break
-                    }
-                }
-            }
-            if (!is_exist) {
-                this.select.push([...item])
-                console.log([...item])
-                console.log(this.select)
-                console.log("ok, selected a item")
-            }
-            else{
-                console.log("the item is exist")
-            }
+        selectclient(item, i){
+            const current = this.$refs.item[i] // 点击后改变效果
+            this.select[i] = item
+            console.log(this.select)
         },
-
     },
 
 
     created(){
         // 这里是组件的钩子，组件被创建时调用
-        this.getclientmessage()
-        document.addEventListener("click", (event)=>{
-
-        })
+        () => {
+            this.getclientmessage()
+        }
     },
-
 }
 </script>
 

@@ -84,7 +84,7 @@ async def send_software_checklist(checklist: list[SoftWare]):
 # server data
 @app.get("/servers/data/clientmessage")
 async def getclientmessage():
-    clients = DATABASE.hgetall("heart_packages")
+    clients = DATABASE.hgetall("client_status")
     return clients
 
 # server settings

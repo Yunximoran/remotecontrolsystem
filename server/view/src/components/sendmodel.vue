@@ -4,11 +4,11 @@
         <div class="sends">
             <div class="send shell">
                 <div class="inputshell">
-                    <input type="text" placeholder="name"
+                    <input ref="sn" type="text" placeholder="name"
                         v-model="shell.name"
                         @keyup.enter="addshell(shell)">
                         <br>
-                    <input type="text" placeholder="shell"
+                    <input ref="ss" type="text" placeholder="shell"
                         v-model="shell.shell"
                         @keyup.enter="addshell(shell)">
                 </div>
@@ -69,16 +69,40 @@ export default{
     methods: {
         // add 
         addshell(shell){
-            if (shell.name && shell.shell){
-                this.shells.push({...shell})
-                shell.name = null
-                shell.shell = null
+            const s = shell.name || shell.shell
+            const n = shell.name && shell.shell
+            if(s){ // 至少有个为真
+                if(!n){
+                    if(s == shell.name){
+                        this.$refs.ss.focus()
+                    }
+                    else{
+                        this.$refs.sn.focus()
+                    }
+                }
+                else{
+                    this.shells.push({...shell})
+                    shell.name = null
+                    shell.shell = null
+                    this.$refs.sn.focus()
+                }
+            }
+            else{
+                if(!(this.shells.length === 0)){
+                    this.sendshells()
+                }
             }
         },
+
         addsoftware(software){
             if (software.name){
                 this.softwares.push({...software})
                 software.name = null
+            }
+            else{
+                if(!(this.softwares.length === 0)){
+                    this.sendsoftwares()
+                }
             }
         },
 
@@ -89,13 +113,17 @@ export default{
 
         // send
         sendshells(){
-            axios.put("/servers/send_control_shell", this.shells).then((res) =>{
-                this.shells = []
+            const params = this.shells
+            this.shells = []
+            axios.put("/servers/send_control_shell", params).then((res) =>{
+                console.log(res.data)
             })
         },
         sendsoftwares(){
-            axios.put("/servers/send_software_checklist/", this.softwares).then((res)=>{
-                this.softwares = []
+            const params = this.softwares
+            this.softwares = []
+            axios.put("/servers/send_software_checklist/", params).then((res)=>{
+                console.log(res.data)
             })
         }
     },
@@ -108,6 +136,7 @@ export default{
 .sendbox {
     float:left;
     display: flex; 
+    size: 100%;
     flex-direction: column; 
     align-items: center;
 }

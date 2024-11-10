@@ -8,30 +8,30 @@
     <!-- content -->
     <div class="core">
         <Sendmodel style="
-        margin-left:80px;
+        margin-right:80px;
         "
         ></Sendmodel>
 
         <ClientBox></ClientBox>
     </div>
 
-
-
-
-
-
+    <!-- <Tf></Tf> -->
 </template>
+
+
 <script>
 import Sendmodel from "./components/sendmodel.vue";
 import Settings from "./components/settings.vue";
 import ClientBox from "./components/home/clientbox.vue"
+import Tf from "./components/tf.vue"
 
 
 export default{
   components: {
     Sendmodel,
     Settings,
-    ClientBox
+    ClientBox,
+    Tf,
   },
 }
 </script>
@@ -76,9 +76,9 @@ button {
 }
 
 .core {
-    float: right;
     display: flex;
-
+    float: right;
+    margin-left: 10px;
     justify-items: flex-end;
 }
 

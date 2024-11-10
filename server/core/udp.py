@@ -70,7 +70,9 @@ class UPD:
     
 class Reception:
     CONNECTNUM = 0  # 标记当前正在等待客户端连接的任务数量
-    
+    CLIENTSTART = {
+        
+    }
     
     def __init__(self, 
                  loop: asyncio.BaseEventLoop,
@@ -109,14 +111,16 @@ class Reception:
         ip, port = rec[1]
         # print(ip)
         # 保存心跳包数据
+        DATABASE.hset("client_status", ip, "true")
+        # DATABASE.hset()
         DATABASE.hset("heart_packages", mapping={ip: data}) # ip地址和心跳包数据
         
         # 校验客户端连接状态
-        await self.__check_connection(ip, data)
+        await self.__check_connection(ip)
 
 
 
-    async def __check_connection(self, ip, data):
+    async def __check_connection(self, ip):
         if ip in TIMERLIST:
             # 校验当前客户端是否正在连接
             TIMERLIST[ip].cancel()
@@ -137,6 +141,7 @@ class Reception:
         # 等待3秒后 删除客户端连接缓存 or 先标记为断线 等待服务端关闭后清空
         await asyncio.sleep(3)
         TIMERLIST.pop(ip)
+        DATABASE.hset("client_status", ip, "false")
         DATABASE.hdel("heart_packages", ip)
         print(f"The IP {ip} user is disconnected")
 
