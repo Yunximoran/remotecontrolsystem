@@ -11,11 +11,8 @@
         margin-right:80px;
         "
         ></Sendmodel>
-
         <ClientBox></ClientBox>
     </div>
-
-    <!-- <Tf></Tf> -->
 </template>
 
 
@@ -27,12 +24,20 @@ import Tf from "./components/tf.vue"
 
 
 export default{
-  components: {
-    Sendmodel,
-    Settings,
-    ClientBox,
-    Tf,
-  },
+    components: {
+        Sendmodel,
+        Settings,
+        ClientBox,
+        Tf,
+    },
+    data(){
+        return {
+            clients: {}
+        }
+    },
+    created(){
+        
+    }
 }
 </script>
 

@@ -33,6 +33,10 @@ export default{
         getclientmessage(){
             axios.get("/servers/data/clientmessage/").then((res)=>{
                 this.clients = res.data
+            }).then(() =>{
+                console.log("ok update client message")
+            }).catch((error)=>{
+                console.log(error)
             })
         },
 
@@ -47,7 +51,9 @@ export default{
     created(){
         // 这里是组件的钩子，组件被创建时调用
         () => {
-            this.getclientmessage()
+            while (true){
+                this.getclientmessage()
+            }
         }
     },
 }

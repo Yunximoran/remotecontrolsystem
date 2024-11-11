@@ -38,6 +38,7 @@ from databasetool import RedisConn as DATABASE
 
 
 ORIGINS = [
+    # vue address
     "https://localhost:8080",
     "http://localhost:8080"
 ]
