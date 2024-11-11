@@ -50,11 +50,7 @@ export default{
 
     created(){
         // 这里是组件的钩子，组件被创建时调用
-        () => {
-            while (true){
-                this.getclientmessage()
-            }
-        }
+        this.getclientmessage()
     },
 }
 </script>

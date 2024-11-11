@@ -3,8 +3,9 @@
    <!-- menu  -->
     <div class="menu">
         <Settings></Settings>
+        <Login></Login>
     </div>
-
+    <!-- 基础控制按钮 -->
     <!-- content -->
     <div class="core">
         <Sendmodel style="
@@ -18,9 +19,9 @@
 
 <script>
 import Sendmodel from "./components/sendmodel.vue";
-import Settings from "./components/settings.vue";
-import ClientBox from "./components/home/clientbox.vue"
-import Tf from "./components/tf.vue"
+import Settings from "./components/menu/settings.vue";
+import Login from "./components/menu/login.vue";
+import ClientBox from "./components/home/clientview/clientbox.vue"
 
 
 export default{
@@ -28,7 +29,7 @@ export default{
         Sendmodel,
         Settings,
         ClientBox,
-        Tf,
+        Login,
     },
     data(){
         return {
