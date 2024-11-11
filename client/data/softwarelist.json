@@ -1,0 +1,22 @@
+[
+    {
+        "name": "geek",
+        "start": false
+    },
+    {
+        "name": "goole",
+        "start": false
+    },
+    {
+        "name": "edge",
+        "start": false
+    },
+    {
+        "name": "python",
+        "start": false
+    },
+    {
+        "name": "vscode",
+        "start": false
+    }
+]
