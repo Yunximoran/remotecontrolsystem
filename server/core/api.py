@@ -32,6 +32,7 @@ from datamodel import (
     ShellList,
     SoftWare
     )
+from datamodel import User, UserResponse
 from databasetool import RedisConn as DATABASE
 
 
@@ -58,6 +59,9 @@ controlor = control.Control()
 multiter = MultiCast()
 
 # Server API
+@app.post("/servers/login/", response_model=UserResponse)
+async def login(user: User):
+    info = User.model_dump()
 
 @app.get("/testapi/")
 async def tapi():

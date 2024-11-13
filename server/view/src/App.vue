@@ -14,6 +14,9 @@
         ></Sendmodel>
         <ClientBox></ClientBox>
     </div>
+    <router-link to='/login' >login text</router-link>
+    
+    <router-view></router-view>
 </template>
 
 
