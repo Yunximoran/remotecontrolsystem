@@ -6,6 +6,9 @@
         <Login></Login>
     </div>
     <!-- 基础控制按钮 -->
+     <div class=btnbox>
+        <BtnBox></BtnBox>
+     </div>
     <!-- content -->
     <div class="core">
         <Sendmodel style="
@@ -18,15 +21,17 @@
 
 
 <script>
-import Sendmodel from "./components/sendmodel.vue";
+import Sendmodel from "./components/home/basecontrol/sendmodel.vue";
 import Settings from "./components/menu/settings.vue";
 import Login from "./components/menu/login.vue";
+import BtnBox from "./components/home/basecontrol/btnbox.vue"
 import ClientBox from "./components/home/clientview/clientbox.vue"
 
 
 export default{
     components: {
         Sendmodel,
+        BtnBox,
         Settings,
         ClientBox,
         Login,
