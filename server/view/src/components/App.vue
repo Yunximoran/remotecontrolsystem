@@ -1,34 +1,34 @@
 
 <template>
-   <!-- menu  -->
-    <div class="menu">
-        <Settings></Settings>
-        <Login></Login>
+    <div class="home">
+        <div class="menu">
+            <Settings></Settings>
+            <Login></Login>
+        </div>
+        <!-- 基础控制按钮 -->
+        <div class="container">
+            <div class=btnbox>
+                <BtnBox></BtnBox>
+            </div>
+            <!-- content -->
+            <div class="core">
+                <Sendmodel style="
+                margin-right:80px;
+                "
+                ></Sendmodel>
+                <ClientBox></ClientBox>
+            </div>            
+        </div>
     </div>
-    <!-- 基础控制按钮 -->
-     <div class=btnbox>
-        <BtnBox></BtnBox>
-     </div>
-    <!-- content -->
-    <div class="core">
-        <Sendmodel style="
-        margin-right:80px;
-        "
-        ></Sendmodel>
-        <ClientBox></ClientBox>
-    </div>
-    <router-link to='/login' >login text</router-link>
-    
-    <router-view></router-view>
 </template>
 
 
 <script>
-import Sendmodel from "./components/home/basecontrol/sendmodel.vue";
-import Settings from "./components/menu/settings.vue";
-import Login from "./components/menu/login.vue";
-import BtnBox from "./components/home/basecontrol/btnbox.vue"
-import ClientBox from "./components/home/clientview/clientbox.vue"
+import Sendmodel from "./widgets/home/basecontrol/sendmodel.vue";
+import Settings from "./widgets//menu/settings.vue";
+import Login from "./widgets/menu/login.vue";
+import BtnBox from "./widgets/home/basecontrol/btnbox.vue"
+import ClientBox from "./widgets/home/clientview/clientbox.vue"
 
 
 export default{

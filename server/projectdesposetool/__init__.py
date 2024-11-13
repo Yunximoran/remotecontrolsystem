@@ -1,36 +1,11 @@
-import logging
-import os
 
+from fastapi import HTTPException
 
 from .parse import CONFIG
 from .start_server import SERVERMANAGE
 
 
-
-class LogManage:
-    def __init__(self, level=logging.INFO, filename=None, savedir=None):
-        self.level = level
-        self.savedir = savedir
-        self.filename = filename
+def CheckLoginInfomation(username, password):
+    return True
+    # return True if username == "admin" and password == "123456" else False
     
-    def init(self):
-        if not os.path.exists(self.filename):
-            os.makedirs(self.filename)
-        
-    
-    def info(self):
-        logging.info("the info")
-    
-    def debug(self):
-        logging.debug("the debug")
-    
-    def warning(self):
-        logging.warning("the warning")
-    
-    def error(self):
-        logging.error("the error")
-    
-    def critical(self):
-        logging.critical("the critical")
-
-

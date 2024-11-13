@@ -2,8 +2,8 @@ import axios from 'axios'
 import { createApp } from 'vue'
 
 
-import App from './App.vue' // 导入组件
-import router from "./router"
+import App from './components/App.vue' // 导入组件
+import router from "./components/router"
 
 
 // content fastapi

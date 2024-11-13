@@ -6,7 +6,7 @@
 
 <script>
 import {render, h} from "vue"
-import {axios} from "axios"
+import axios from "axios"
 
 export default{
     date(){
@@ -38,15 +38,25 @@ export default{
                     event.stopPropagation()
                     if(event.key === "Enter"){
                         this.password = event.target.value
-                        if(this.password && this.username){
-                            event.target.parentElement.submit()
+                        if(this.password !== null){
+                            if(this.username !== null){
+                                event.target.parentElement.click((event)=> {
+                                    console.log(this.username)
+                                    console.log(this.password)
+                                })
+                            }
                         }
                     }
                 }   
             })
+
             const login_form = h('form', {
                 onSubmit: (event)=>{
-                    axios.post("servers/login/", [username, password]).then((res)=>{
+                    event.preventDefault()
+                    axios.post("/servers/login/", {
+                        username: this.username,
+                        password: this.password
+                    }).then((res)=>{
                         console.log(res)
                     }).catch((error)=>{
                         console.log(error)

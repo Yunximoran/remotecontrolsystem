@@ -27,13 +27,16 @@ from fastapi import (
 
 from core import control
 from core.udp import MultiCast
+from databasetool import RedisConn as DATABASE
 from datamodel import (
     HeartPkgs,
     ShellList,
-    SoftWare
+    Software,
+    User,
+    UserResponse
     )
-from datamodel import User, UserResponse
-from databasetool import RedisConn as DATABASE
+from projectdesposetool import CheckLoginInfomation
+
 
 
 
@@ -61,7 +64,13 @@ multiter = MultiCast()
 # Server API
 @app.post("/servers/login/", response_model=UserResponse)
 async def login(user: User):
-    info = User.model_dump()
+    user_info = user.model_dump()
+    success = CheckLoginInfomation(
+        user_info['username'],
+        user_info['password'])
+    
+    if success:    
+        return user
 
 @app.get("/testapi/")
 async def tapi():
@@ -78,7 +87,7 @@ async def send_control_shell(shell_list: list[ShellList]):
         return {"ERROR": e}
 
 @app.put("/servers/send_software_checklist/")    # 发送软件清单
-async def send_software_checklist(checklist: list[SoftWare]):
+async def send_software_checklist(checklist: list[Software]):
     software = [item.model_dump() for item in checklist]
     try:
         multiter.send(json.dumps(software))  
