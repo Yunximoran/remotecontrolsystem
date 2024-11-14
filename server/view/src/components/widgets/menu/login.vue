@@ -1,76 +1,34 @@
 <template>
-    <span ref="login" @click="user_message">
-        LOGIN
+    <span ref="login" class="login" @click.prevent="formshow">
+        <p>LOGIN</p>
     </span>
 </template>
 
 <script>
-import {render, h} from "vue"
+import {render, h, nextTick} from "vue"
 import axios from "axios"
 
 export default{
-    date(){
+    data(){
         return{
             usernane: null,
             password: null,
+            isshow: false,
         }
     },
     watch(){
 
     },
-    methods:{
-        user_message(){
-            const input_username = h('input', {
-                type: 'text',
-                placeholder: 'username',
-                onkeyup: (event)=>{
-                    event.stopPropagation()
-                    if (event.key === "Enter"){
-                        this.username = event.target.value
-                    }
-                }
-            })
+    mounted(){
+        // document.addEventListener
 
-            const input_password = h('input', {
-                type: 'password',
-                placeholder: 'password',
-                onkeyup: (event)=>{
-                    event.stopPropagation()
-                    if(event.key === "Enter"){
-                        this.password = event.target.value
-                        if(this.password !== null){
-                            if(this.username !== null){
-                                event.target.parentElement.click((event)=> {
-                                    console.log(this.username)
-                                    console.log(this.password)
-                                })
-                            }
-                        }
-                    }
-                }   
-            })
 
-            const login_form = h('form', {
-                onSubmit: (event)=>{
-                    event.preventDefault()
-                    axios.post("/servers/login/", {
-                        username: this.username,
-                        password: this.password
-                    }).then((res)=>{
-                        console.log(res)
-                    }).catch((error)=>{
-                        console.log(error)
-                    })
-                }
-            }, [input_username, input_password])
-            render(login_form, this.$refs.login)
-        },
-        inpevent(event, action){
-            event.stopPropagation()
-            if(event.key === "Enter"){
-                action()
-            }
-        },
     },
+    methods:{
+        formshow(){
+            this.$router.push("/login")
+        }
+    },
+
 }
 </script>

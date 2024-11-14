@@ -29,7 +29,7 @@ from core import control
 from core.udp import MultiCast
 from databasetool import RedisConn as DATABASE
 from datamodel import (
-    HeartPkgs,
+    NewUser,
     ShellList,
     Software,
     User,
@@ -68,7 +68,7 @@ async def login(user: User):
     success = CheckLoginInfomation(
         user_info['username'],
         user_info['password'])
-    
+    # 用户名和密码查找id 返回vue
     if success:    
         return user
 
@@ -100,6 +100,17 @@ async def send_software_checklist(checklist: list[Software]):
 async def getclientmessage():
     clients = DATABASE.hgetall("client_status")
     return clients
+
+@app.get("/servers/data/usermessage")
+async def getusermessage(uname: str):
+    # 从id获取用户数据
+    usermessage = DATABASE.hget("accounts", uname)
+    return {"hunef":"usermessage"}
+
+@app.put("/servers/data/registry_account")
+async def registryaccount(account: NewUser):
+    DATABASE.hset("accounts", account.username, account.model_dump_json())
+    return {"username": account.username, "id": 111111}
 
 # server settings
 @app.put("/servers/settings/alter/")

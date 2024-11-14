@@ -10,3 +10,10 @@ class User(BaseModel):
 
 class UserResponse(BaseModel):
     username: Annotated[str, None]
+
+
+class NewUser(BaseModel):
+    username: Annotated[str, None]
+    password: Annotated[str, None]
+    repassword: Annotated[str, None]
+    
