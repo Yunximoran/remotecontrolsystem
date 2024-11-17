@@ -14,6 +14,7 @@ export default{
     data(){
         return {
             formlist: {
+                account: null,   // 手机号，邮箱？
                 username: null,
                 password: null,
                 repassword: null,
@@ -23,7 +24,7 @@ export default{
     methods:{
         submit_registry(){
             try{
-                axios.put("/servers/data/registry_account", this.check_message())
+                axios.put("/servers/data/registry_new_account", this.check_message())
                 .then((res)=>{
                     console.log("success registry a account", res.data.username)
                     console.log(res.data)

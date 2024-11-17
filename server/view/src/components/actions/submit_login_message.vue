@@ -1,13 +1,10 @@
 <template>
     <form ref="submit">
-        <input ref="username" type="text" @keyup.enter="inp_username_event" v-model="username">
+        <input ref="account" type="text" @keyup.enter="inp_account_event($event)" v-model="account">
         <input ref="password" tpye="password" @keyup.enter="inp_password_event($event)" v-model="password">
-
-        <p>{{ username }}</p>
-        <p>{{ password }}</p>
-        <button @click.prevent="$router.push('/registry')">注册</button>
-        <button @click.prevent="submitlogin">登录</button>
     </form>
+    <button @click.prevent="$router.push('/registry')">注册</button>
+    <button @click.prevent="submitlogin">登录</button>
 </template>
 
 <script>
@@ -17,34 +14,35 @@ import { nextTick } from 'vue';
 export default{
     data(){
         return {
-            username: null,
+            account: null,
             password: null
         }
     },
     methods:{
         submitlogin(){
             axios.post("/servers/login/", {
-                "username":this.username,
+                "account":this.account,
                 "password":this.password
             }).then((res)=>{
-                
+                const usermsg = res.data.msg
                 this.$router.push({
                     name: "user",
                     params: {
-                        uname: this.username
+                        uname: usermsg.username,
+                        account: usermsg.account
                     }
                 })
             }).catch((error)=>{
                 console.log(error)
             })
         },
-        inp_username_event(){
+        inp_account_event(event){
             nextTick(()=>{
                 this.$refs.password.focus()
             })
         },
         inp_password_event(event){
-            if(this.username && this.password){
+            if(this.account && this.password){
                 this.submitlogin()
             }
         },

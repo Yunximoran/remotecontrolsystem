@@ -9,7 +9,7 @@ import Registry from "./page/registry.vue"
 const routes = [
     {path: "/", redirect: "home"},
     {path: "/home", component: Home},
-    {path: "/user/:uname", name: "user", component: User},
+    {path: "/user/:uname?:account?", name: "user", component: User},
     {path: "/login", name: "login", component: Login},
     {path: "/registry", component: Registry}
 ]

@@ -5,6 +5,7 @@
 </template>
 
 <script>
+import axios from 'axios';
 export default{
     data(){
         return {
@@ -20,7 +21,17 @@ export default{
 
     },
     methods:{
-
     }
 }
 </script>
+
+<style>
+.btnbox{
+    display: flex;
+    flex-direction: column;
+}
+
+.btnbox button{
+    width: 5vw;
+}
+</style>

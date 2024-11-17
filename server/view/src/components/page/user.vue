@@ -17,9 +17,9 @@ export default{
     },
     methods:{
         get_user_information(){
-            axios.get("/servers/data/usermessage", {
+            axios.get("/servers/data/accounts/", {
                 params: {
-                    uname: "yunximoran"
+                    account: this.$route.params.account
                 }
             })
             .then((res)=>{
@@ -31,7 +31,7 @@ export default{
             })
         }
     },
-    created(){
+    mounted(){
         this.get_user_information()
     }
 }

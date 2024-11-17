@@ -2,7 +2,7 @@ from typing import Annotated
 from pydantic import BaseModel
 
 
-from .user import User, UserResponse, NewUser
+from .user import User, UserResponse, NewUser, Credentils
 from .transfer_data import *
 
 

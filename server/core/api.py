@@ -21,6 +21,7 @@ import uvicorn
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi import (
         FastAPI,
+        HTTPException,
         Path,
         Depends
     )
@@ -33,9 +34,10 @@ from datamodel import (
     ShellList,
     Software,
     User,
-    UserResponse
+    UserResponse,
+    Credentils
     )
-from projectdesposetool import CheckLoginInfomation
+from projectdesposetool import SERVERMANAGE
 
 
 
@@ -62,18 +64,22 @@ controlor = control.Control()
 multiter = MultiCast()
 
 # Server API
-@app.post("/servers/login/", response_model=UserResponse)
-async def login(user: User):
-    user_info = user.model_dump()
-    success = CheckLoginInfomation(
-        user_info['username'],
-        user_info['password'])
-    # 用户名和密码查找id 返回vue
-    if success:    
-        return user
+@app.post("/servers/login/")
+async def login(loginform: Credentils):
+    credentils = loginform.account
+    password = loginform.password
+    
+    accounts_information = DATABASE.hget("accounts", credentils)
+    if accounts_information is not None:
+        accounts_information = accounts_information.decode()
+        if password == accounts_information['password']:
+            return {"start": "OK", "msg": accounts_information}
+        else:
+            raise HTTPException(status_code=404, detail="password is error")
+    else:
+        raise HTTPException(status_code=404, detail="account is not exits")
+    
 
-@app.get("/testapi/")
-async def tapi():
     pass
     return {"msg": "Hello Server, There is Control"}
 
@@ -96,26 +102,37 @@ async def send_software_checklist(checklist: list[Software]):
         return {"ERROR": e}
     
 # server data
-@app.get("/servers/data/clientmessage")
-async def getclientmessage():
+@app.get("/servers/data/client_status")
+async def getclientmessage():   # 获取客户端连接状态
     clients = DATABASE.hgetall("client_status")
     return clients
 
-@app.get("/servers/data/usermessage")
-async def getusermessage(uname: str):
-    # 从id获取用户数据
-    usermessage = DATABASE.hget("accounts", uname)
-    return {"hunef":"usermessage"}
+@app.get("/servers/data/accounts/")
+async def get_account_data(account: Annotated[str, None]):
+    # 从数据库中获取账号数据，校验账号是否存在
+    account_infomation = DATABASE.hget("accounts", account)
+    if account_infomation is not None:
+        return json.loads(account_infomation.decode())
+    return {'start': "not data"}
 
-@app.put("/servers/data/registry_account")
-async def registryaccount(account: NewUser):
-    DATABASE.hset("accounts", account.username, account.model_dump_json())
-    return {"username": account.username, "id": 111111}
+
+@app.put("/servers/data/registry_new_account")
+async def registryaccount(regisform: NewUser):
+    # 注册新用户，保存在数据库
+    DATABASE.hset("accounts", regisform.account, regisform.model_dump_json())
+    return {
+        "account": regisform.account,
+        "username": regisform.username
+    }
 
 # server settings
 @app.put("/servers/settings/alter/")
 async def alter_settings(option: str, nval: str):
+    # 修改服务端配置
     return {"ok": f"reset {option} => {nval}"}
+
+
+
 
 
 

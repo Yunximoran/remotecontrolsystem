@@ -4,16 +4,20 @@ from fastapi import Query
 from pydantic import BaseModel
 
 
-class User(BaseModel):
-    username: Annotated[str, None]
+class Credentils(BaseModel):
+    account: Annotated[str, None]
     password: Annotated[str, None]
-
-class UserResponse(BaseModel):
+    
+    
+    
+class User(BaseModel):
+    account: Annotated[str, None]
     username: Annotated[str, None]
+    
+class UserResponse(User):
+    pass
 
-
-class NewUser(BaseModel):
-    username: Annotated[str, None]
+class NewUser(User):
     password: Annotated[str, None]
     repassword: Annotated[str, None]
     

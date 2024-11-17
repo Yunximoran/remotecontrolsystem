@@ -7,16 +7,14 @@
         </div>
         <!-- 基础控制按钮 -->
         <div class="container">
-            <div class=btnbox>
-                <BtnBox></BtnBox>
-            </div>
+            <!-- 基本控制指令 -->
+            <BtnBox></BtnBox>   
             <!-- content -->
             <div class="core">
                 <Sendmodel style="
                 margin-right:80px;
-                "
-                ></Sendmodel>
-                <ClientBox></ClientBox>
+                "></Sendmodel>          <!--自定义指令 -->
+                <ClientBox></ClientBox> <!--客户端预览 -->
             </div>            
         </div>
     </div>
@@ -74,6 +72,16 @@ button {
   border-radius: 3px;
 }
 
+
+/* HOME */
+.home{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+
+/* MENU */
 .menu{
     /* position:relative; */
     user-select: none;
@@ -89,12 +97,12 @@ button {
     margin: 0;
 }
 
+
+/* CONTAINER */
 .core {
     display: flex;
     float: right;
     margin-left: 10px;
     justify-items: flex-end;
 }
-
-
 </style>
