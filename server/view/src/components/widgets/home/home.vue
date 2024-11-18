@@ -8,14 +8,18 @@
         <!-- 基础控制按钮 -->
         <div class="container">
             <!-- 基本控制指令 -->
-            <BtnBox></BtnBox>   
+            <BtnBox @clicked="btnbox_event"></BtnBox>   
             <!-- content -->
             <div class="core">
-                <Sendmodel style="
+                <RouterView v-if="isshow_send"></RouterView>
+                <!-- <Sendmodel style="
                 margin-right:80px;
-                "></Sendmodel>          <!--自定义指令 -->
-                <ClientBox></ClientBox> <!--客户端预览 -->
-            </div>            
+                " v-if="isshow_send" :clist="clients">
+                </Sendmodel> -->
+                <Loger v-if="!isshow_send"></Loger>
+                <ClientBox v-if="!isshow_send" @return="(val)=>{this.clients = val}"></ClientBox> <!--客户端预览 -->
+            </div>
+                        
         </div>
     </div>
 </template>
@@ -27,6 +31,7 @@ import Settings from "../menu/settings.vue";
 import Login from "../menu/login.vue";
 import BtnBox from "./basecontrol/btnbox.vue"
 import ClientBox from "./clientview/clientbox.vue"
+import Loger from "./loger.vue";
 
 
 export default{
@@ -36,14 +41,38 @@ export default{
         Settings,
         ClientBox,
         Login,
+        Loger,
     },
     data(){
         return {
-            clients: {}
+            clients: {},
+            isshow_send: false,
+        }
+    },
+    methods:{
+        btnbox_event(label){
+            switch(label){
+                case "custom commands":{
+                    this.isshow_send = !this.isshow_send
+                    if(this.isshow_send){
+                        this.$router.push({name: "sendmodel"})
+                    }
+                    else{
+                        this.$router.push("/home")
+                    }
+                }
+            }
+            
         }
     },
     created(){
-        
+        this.$router.afterEach((to, from) =>{
+            // console.log(to)
+            // console.log(from)
+            if(this.$route.path === "/home"){
+                this.isshow_send = false
+            }
+        })
     }
 }
 </script>
@@ -99,10 +128,19 @@ button {
 
 
 /* CONTAINER */
-.core {
+.container{
     display: flex;
-    float: right;
+    margin-left: auto;
+    align-items: center;
+    flex-direction: column;
+
+}
+.core {
+    margin-top: 12px;
+    display: flex;
     margin-left: 10px;
-    justify-items: flex-end;
+    align-items: flex-start;
+    gap: 12px
+
 }
 </style>

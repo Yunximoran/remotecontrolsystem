@@ -4,6 +4,7 @@
         :ip="ip" 
         :src="require('@/assets/logo.png')"
         :alt="ip" 
+        @click="selecting()"       
         @mouseenter="start=true" 
         @mouseleave="start=false">
 </template>
@@ -14,22 +15,36 @@ export default{
     data(){
         return {
             start: false,
-            color: '#bababa'
+            color: '#bababa',
+            isclick: false,
          }
     },
 
     watch: {
         start: {
             handler(nval, oval){
-                if(nval){
-                    this.color = 'red'
-                }
-                else{
-                    this.color = '#bababa'
+                if(this.isclick === false){
+                    if(nval){
+                        this.color = 'red'
+                    }
+                    else{
+                        this.color = '#bababa'
+                    }
                 }
             }
-        }
+        },
     },
+    methods:{
+        selecting(){
+            this.isclick = !this.isclick
+            if(this.isclick){
+                this.color = "red"
+            }
+        },
+    },
+    created(){
+        
+    }
 }
 </script>
 <style>

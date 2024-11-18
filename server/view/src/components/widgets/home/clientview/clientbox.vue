@@ -1,7 +1,7 @@
 
 <template>
-    <div v-if="clients" class="clients">
-            <Client ref='item' @click="selectclient(client, i)" v-for="(client, i) in clients" :key="client" :ip="client.ip" :msg="client"></Client>
+    <div v-if="clients" class="clients" @click="isreset = !isreset">
+        <Client ref='item' @click="selectclient(client, i)" v-for="(client, i) in clients" :key="client" :ip="client.ip" :msg="client" :reset="isreset"></Client>
     </div>
 </template>
 
@@ -13,9 +13,10 @@ export default{
     data(){
         return {
             clients: {},
-            demo: Array.from({length: 100},  (_, i) => i+1),
+            demo: Array.from({length: 100},  (_, i) => i+1),    // 测试用数据
             select: {},
             isclear: false,
+            isreset: false,
         }
     },
     components: {
@@ -31,9 +32,9 @@ export default{
 
     methods: {
         getclientmessage(){
-            axios.get("/servers/data/clientmessage/").then((res)=>{
+            axios.get("/servers/data/client_status/").then((res)=>{
                 this.clients = res.data
-            }).then(() =>{
+            }).then((res) =>{
                 console.log("ok update client message")
             }).catch((error)=>{
                 console.log(error)
@@ -51,6 +52,7 @@ export default{
     created(){
         // 这里是组件的钩子，组件被创建时调用
         this.getclientmessage()
+        this.$emit("return", this.select)
     },
 }
 </script>

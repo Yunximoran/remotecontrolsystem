@@ -1,6 +1,6 @@
 <template>
     <div class="btnbox">
-        <button v-for="(action, btn) in btns" :key='btn' class="btn" :name="btn">{{action}}</button>
+        <button v-for="(action, btn) in btns" :key='btn' class="btn" :name="btn" @click="action">{{btn}}</button>
     </div>
 </template>
 
@@ -10,10 +10,42 @@ export default{
     data(){
         return {
             btns: { // name: [show, action]
-                1: "rm",
-                2: "cd",
-                3: "ls",
-                4: "sudo"
+                closeClients: () =>{
+                    alert("close all clients")
+                },
+                openClients: ()=>{
+                    alert("open all Clients")
+                },
+                restartClients: ()=>{
+                    alert("restart all clients")
+                },
+                addSoftware: ()=>{
+                    alert("add new software")
+                },
+                openSoftware: ()=>{
+                    this.$emit("clicked")
+                    alert("open the software")
+                },
+                closeAllSoftWare: ()=>{
+                    this.$emit("clicked")
+                    alert("close all software")
+                },
+                openAllSoftWare: ()=>{
+                    this.$emit("clicked")
+                    alert("open all software")
+                },
+                downloadFile: ()=>{
+                    this.$emit("clicked")
+                    alert("download file")
+                },
+                batchOperation: ()=>{
+                    this.$emit("clicked")
+                    alert("batch operation")
+                },
+                customCommands: ()=>{
+                    this.$emit("clicked", "custom commands")
+                    alert("customCommands")
+                }
             } 
         }
     },
@@ -21,6 +53,7 @@ export default{
 
     },
     methods:{
+
     }
 }
 </script>
@@ -28,10 +61,14 @@ export default{
 <style>
 .btnbox{
     display: flex;
-    flex-direction: column;
+    width: 50vw;
+    flex-wrap: wrap;
+    flex-direction: row;
+    gap: 10px;
 }
 
 .btnbox button{
-    width: 5vw;
+    width: 8vw;
+    height: 30px;
 }
 </style>

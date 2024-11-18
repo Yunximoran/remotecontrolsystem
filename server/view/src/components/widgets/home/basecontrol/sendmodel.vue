@@ -26,7 +26,7 @@
             </div>
         </div>
 
-        <div class="output">
+        <div class="sendview">
             <span class="show">
                 SHELL LIST
                 <p v-for="(s, i) in shells">
@@ -50,6 +50,9 @@
 import axios from 'axios';
 
 export default{
+    props: {
+        clients: Object
+    },
     data() {
         return{
             shells: [],
@@ -136,7 +139,8 @@ export default{
 .sendbox {
     float:left;
     display: flex; 
-    size: 100%;
+    width: 100%;
+    height: 100%;
     flex-direction: column; 
     align-items: center;
 }
@@ -153,7 +157,7 @@ export default{
 
 }
 
-.output{
+.sendview{
     float: right;
     display: flex;
     align-items: flex-start;
