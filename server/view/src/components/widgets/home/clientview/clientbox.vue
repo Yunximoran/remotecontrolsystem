@@ -63,7 +63,7 @@ export default{
     position: relative;
     border: 3px solid red;
     width: 32vw;
-    height:80vh;
+    height:60vh;
     display: grid;
     background-color: wheat;
     grid-template-columns: repeat(auto-fill, minmax(60px, 1fr));  

@@ -61,14 +61,15 @@ export default{
 <style>
 .btnbox{
     display: flex;
-    width: 50vw;
+    width: 100%;
     flex-wrap: wrap;
     flex-direction: row;
-    gap: 10px;
+    gap: 6px;
 }
 
 .btnbox button{
     width: 8vw;
     height: 30px;
+    overflow: hidden;
 }
 </style>

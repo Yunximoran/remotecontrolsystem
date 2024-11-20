@@ -8,18 +8,22 @@
         <!-- 基础控制按钮 -->
         <div class="container">
             <!-- 基本控制指令 -->
-            <BtnBox @clicked="btnbox_event"></BtnBox>   
-            <!-- content -->
-            <div class="core">
-                <RouterView v-if="isshow_send"></RouterView>
-                <!-- <Sendmodel style="
-                margin-right:80px;
-                " v-if="isshow_send" :clist="clients">
-                </Sendmodel> -->
-                <Loger v-if="!isshow_send"></Loger>
-                <ClientBox v-if="!isshow_send" @return="(val)=>{this.clients = val}"></ClientBox> <!--客户端预览 -->
+            <div class="core-left">
+                <!--  -->
             </div>
-                        
+            <div class="core-mid">
+                <!-- 按键盒子 && 软件列表 -->
+                <BtnBox @clicked="btnbox_event"></BtnBox>
+            </div>
+              
+            <!-- content -->
+            <div class="core-right">
+                <RouterView v-if="isshow_send"></RouterView>
+                <ClientBox v-if="!isshow_send" @return="(val)=>{this.clients = val}"></ClientBox>
+            </div>      
+        </div>
+        <div class="bottomBar">
+            <Loger></Loger>
         </div>
     </div>
 </template>
@@ -116,6 +120,7 @@ button {
     user-select: none;
     display: flex;
     flex-direction: row;
+    align-self:flex-start;
     align-items: center;
     justify-items: center;
     height: 30px;
@@ -130,17 +135,30 @@ button {
 /* CONTAINER */
 .container{
     display: flex;
-    margin-left: auto;
-    align-items: center;
-    flex-direction: column;
-
+    align-self: flex-end;
+    align-items: flex-end;
+    flex-direction: row;
 }
-.core {
+
+.core-mid{
+    width: 42vw;
+    align-self:flex-start
+}
+
+.core-right {
     margin-top: 12px;
     display: flex;
     margin-left: 10px;
     align-items: flex-start;
+    width: 32vw;
     gap: 12px
+}
 
+.bottomBar{
+    position: fixed;
+    align-self: center;
+    bottom: 10px;
+    height: 20vh;
+    width: 99%;
 }
 </style>
