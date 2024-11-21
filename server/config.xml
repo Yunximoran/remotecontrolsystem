@@ -34,7 +34,5 @@
         <OS>
             <filedialog>start explorer</filedialog>
         </OS>
-        
-        
     </base>
 </xml>
