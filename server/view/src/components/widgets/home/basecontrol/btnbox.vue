@@ -1,11 +1,12 @@
 <template>
     <div class="btnbox">
-        <button v-for="(action, btn) in btns" :key='btn' class="btn" :name="btn" @click="action">{{btn}}</button>
+        <button v-for="(action, btn) in btns" :key='btn' class="btn" :name="btn" :ref="btn" @click="action">{{btn}}</button>
     </div>
 </template>
 
 <script>
 import axios from 'axios';
+import { render, h } from 'vue';
 export default{
     data(){
         return {
@@ -21,6 +22,13 @@ export default{
                 },
                 addSoftware: ()=>{
                     alert("add new software")
+                    axios.put("/servers/data/alter", "push")
+                    .then((res)=>{
+
+                    })
+                    .catch((error)=>{
+                        console.log(error)
+                    })
                 },
                 openSoftware: ()=>{
                     this.$emit("clicked")
@@ -60,16 +68,25 @@ export default{
 
 <style>
 .btnbox{
+    /* position:absolute */
     display: flex;
     width: 100%;
+    height: 10%;
     flex-wrap: wrap;
     flex-direction: row;
+    justify-content: space-between;
     gap: 6px;
+    z-index: 1;
 }
 
 .btnbox button{
-    width: 8vw;
+    width:calc((100% / 5) - 6px);
     height: 30px;
+    line-height: 30px;
     overflow: hidden;
+    text-align: center;
+    padding: 0;
+    /* margin: 0 6px 0 6px; */
+    /* margin: 0; */
 }
 </style>

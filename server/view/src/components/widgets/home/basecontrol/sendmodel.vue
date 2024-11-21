@@ -18,14 +18,15 @@
             <div class="send software">
                 <div class="inputsoftware">
                     <input type="text" placeholder="name"
-                        v-model="software.name" 
+                        v-model="software.ecdis.name" 
                         @keyup.enter="addsoftware(software)">
                 </div>
                 <button @click="clean(softwares)">clean</button>
                 <button @click="sendsoftwares">send</button>
             </div>
-        </div>
 
+        
+        </div>
         <div class="sendview">
             <span class="show">
                 SHELL LIST
@@ -42,7 +43,7 @@
                     {{ s }}
                 </p>
             </span>
-        </div>
+        </div>  
     </div>
 </template>
 
@@ -63,8 +64,11 @@ export default{
 
             softwares: [],
             software:{
-                name: null,
-                start: false
+                ecdis: {
+                    name: null,
+                    version: "null"
+                },
+                conning: false
             }
         }
     },
@@ -84,7 +88,7 @@ export default{
                     }
                 }
                 else{
-                    this.shells.push({...shell})
+                    this.shells.push(JSON.parse(JSON.stringify(shell)))
                     shell.name = null
                     shell.shell = null
                     this.$refs.sn.focus()
@@ -98,9 +102,10 @@ export default{
         },
 
         addsoftware(software){
-            if (software.name){
-                this.softwares.push({...software})
-                software.name = null
+            const temp = software
+            if (software.ecdis.name){
+                this.softwares.push(JSON.parse(JSON.stringify(software)))
+                software.ecdis.name = null
             }
             else{
                 if(!(this.softwares.length === 0)){
@@ -137,12 +142,13 @@ export default{
 
 <style>
 .sendbox {
-    float:left;
     display: flex; 
     width: 100%;
     height: 100%;
     flex-direction: column; 
     align-items: center;
+    align-self: center;
+    justify-self: center;
 }
 
 .sends{

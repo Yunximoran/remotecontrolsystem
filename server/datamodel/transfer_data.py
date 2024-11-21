@@ -6,9 +6,14 @@ from fastapi import Query
 from pydantic import BaseModel
 
 
+class Ecdis(BaseModel):
+    name: Annotated[str, None]
+    version: Annotated[str, None]
+    
+
 class Software(BaseModel):
-    ecdis: Annotated[str, None] = None
-    conning: Annotated[str, None] = False
+    ecdis: Annotated[Ecdis, None]
+    conning: Annotated[bool, None] = False
     
 class SoftWareCheckList(BaseModel):
     software: list[Software]

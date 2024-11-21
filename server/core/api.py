@@ -38,6 +38,7 @@ from datamodel import (
     Credentils
     )
 from projectdesposetool import SERVERMANAGE
+from projectdesposetool.systool import choose_software
 
 
 
@@ -80,9 +81,6 @@ async def login(loginform: Credentils):
         raise HTTPException(status_code=404, detail="account is not exits")
     
 
-    pass
-    return {"msg": "Hello Server, There is Control"}
-
 @app.put("/servers/send_control_shell/")         # 发送shell指令
 async def send_control_shell(shell_list: list[ShellList]):
     try:
@@ -124,12 +122,22 @@ async def registryaccount(regisform: NewUser):
         "account": regisform.account,
         "username": regisform.username
     }
+    
+@app.get("/servers/data/softwarelist")
+async def get_softwarelist():
+    return DATABASE.hgetall("softwarelist")
 
 # server settings
 @app.put("/servers/settings/alter/")
 async def alter_settings(option: str, nval: str):
     # 修改服务端配置
     return {"ok": f"reset {option} => {nval}"}
+
+@app.put("/servers/data/alter")
+async def alter_software(alter: Annotated[str, None]):
+    if alter == "push":
+        
+        choose_software()
 
 
 

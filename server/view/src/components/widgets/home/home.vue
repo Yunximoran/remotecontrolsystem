@@ -14,6 +14,7 @@
             <div class="core-mid">
                 <!-- 按键盒子 && 软件列表 -->
                 <BtnBox @clicked="btnbox_event"></BtnBox>
+                <Softwarebox></Softwarebox>
             </div>
               
             <!-- content -->
@@ -36,6 +37,7 @@ import Login from "../menu/login.vue";
 import BtnBox from "./basecontrol/btnbox.vue"
 import ClientBox from "./clientview/clientbox.vue"
 import Loger from "./loger.vue";
+import Softwarebox from "./softwareview/softwarebox.vue";
 
 
 export default{
@@ -46,6 +48,7 @@ export default{
         ClientBox,
         Login,
         Loger,
+        Softwarebox
     },
     data(){
         return {
@@ -122,9 +125,7 @@ button {
     flex-direction: row;
     align-self:flex-start;
     align-items: center;
-    justify-items: center;
-    height: 30px;
-    
+    justify-items: center;   
 }
 .menu p, span{
     background-color: #798589;
@@ -138,11 +139,19 @@ button {
     align-self: flex-end;
     align-items: flex-end;
     flex-direction: row;
+    height: 70vh;
 }
-
+.core-left{
+    width: 26vh;
+}
 .core-mid{
     width: 42vw;
-    align-self:flex-start
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    align-self:flex-start;
+    gap: 10px;
 }
 
 .core-right {
@@ -155,7 +164,6 @@ button {
 }
 
 .bottomBar{
-    position: fixed;
     align-self: center;
     bottom: 10px;
     height: 20vh;
