@@ -30,11 +30,5 @@
             <redis>redis-server</redis>
             <view>npm --prefix view run serve</view>
         </servers>
-
-        <OS>
-            <filedialog>start explorer</filedialog>
-        </OS>
-        
-        
     </base>
 </xml>
