@@ -31,9 +31,9 @@
             <view>npm --prefix view run serve</view>
         </servers>
 
-        <windows>
-            there is windows config
-        </windows>
+        <OS>
+            <filedialog>start explorer</filedialog>
+        </OS>
         
         
     </base>
