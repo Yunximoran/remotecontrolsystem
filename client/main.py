@@ -13,7 +13,7 @@ import multiprocessing
 from typing import Annotated
 
 from protocol import BroadCast, TCP, MultiCast
-from despose import CONFIG
+from despose import CONFIG, load_software
 
 COMMUNICATION = multiprocessing.Queue()
 SOFTWARTLIST = [] 
@@ -90,7 +90,7 @@ class Client:
             data = multi_conn.recv()
             soft_list = json.loads(data)
             print(soft_list)
-            with open('data/softwarelist.json', 'w', encoding='utf-8') as f:
+            with open('data/softwares.json', 'w', encoding='utf-8') as f:
                 json.dump(soft_list, f, ensure_ascii=False, indent=4)
                 
     def connect(self):
@@ -102,13 +102,17 @@ class Client:
             udp_conn.send(json.dumps(heart_pkgs))
             
     def get_heart_packages(self):
+        """
+        software: {
+            ecdis{
+                name: version
+            }
+        }
+        """
         return {
             "mac": CONFIG.MAC,
             "ip": CONFIG.IP,
-            "software": {
-                "key1": "value1",
-                "key2": "value2"
-            }
+            "software": load_software()
         }
             
 
