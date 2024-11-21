@@ -1,7 +1,17 @@
 import os
-import tkinter
+import platform
 from tkinter import filedialog
 
 
 def choose_software():
-    os.system("start explorer")
+    OSN = platform.system()
+    if OSN == "Windows":
+        filedialog_shell = "start explorer"
+    
+    if OSN == "Linux":
+        filedialog_shell = "nautilus &"
+    
+    try:
+        os.system(filedialog_shell)
+    except:
+        pass

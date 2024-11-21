@@ -22,7 +22,12 @@ export default{
                 },
                 addSoftware: ()=>{
                     alert("add new software")
-                    axios.put("/servers/data/alter", "push")
+                    axios.put("/servers/data/alter", null,{
+                        params: {
+                            alter: "push"
+                        }
+                    }
+                    )
                     .then((res)=>{
 
                     })
