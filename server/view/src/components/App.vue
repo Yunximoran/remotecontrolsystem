@@ -1,4 +1,4 @@
 <template>
-    <RouterLink to="/"</RouterLink>
+    <RouterLink to="/"></RouterLink>
     <RouterView></RouterView>
 </template>

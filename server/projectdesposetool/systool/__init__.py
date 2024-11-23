@@ -1,17 +1,18 @@
 import os
 import platform
+import tkinter
 from tkinter import filedialog
 
-
 def choose_software():
-    OSN = platform.system()
-    if OSN == "Windows":
-        filedialog_shell = "start explorer"
+    window = tkinter.Tk()
+    window.withdraw()
+    window.attributes("-topmost", True)
+    file_path = filedialog.askopenfilename(
+        filetypes=[
+            ("software", ".exe"),
+            ("software", "*.docx")
+        ]
+    )
+    window.quit()
+    return file_path
     
-    if OSN == "Linux":
-        filedialog_shell = "nautilus &"
-    
-    try:
-        os.system(filedialog_shell)
-    except:
-        pass

@@ -136,8 +136,8 @@ async def alter_settings(option: str, nval: str):
 @app.put("/servers/data/alter")
 async def alter_software(alter: Annotated[str, None]):
     if alter == "push":
-        
-        choose_software()
+        software = choose_software()
+        return {"OK": software}
 
 
 
