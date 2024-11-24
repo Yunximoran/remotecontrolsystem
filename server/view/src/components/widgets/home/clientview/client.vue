@@ -2,7 +2,7 @@
     <img class='client'
         ref = 'item'
         :ip="ip" 
-        :src="require('@/assets/logo.png')"
+        :src="config.logo"
         :alt="ip" 
         @click="selecting()"       
         @mouseenter="start=true" 
@@ -10,16 +10,24 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
 export default{
-    props: ['ip', 'msg'],
+    props: ['ip', 'status'],
     data(){
         return {
+            isselect: false,
             start: false,
-            color: '#bababa',
+            defalut_color: "#bababa",
+            color: null,
+            status: this.$props.status,
             isclick: false,
          }
     },
-
+    computed:{
+        ...mapGetters({
+            config: "getconfig_client"
+        })
+    },
     watch: {
         start: {
             handler(nval, oval){
@@ -28,12 +36,21 @@ export default{
                         this.color = 'red'
                     }
                     else{
-                        this.color = '#bababa'
+                        this.color = this.defalut_color
                     }
                 }
             }
         },
+        status(nval){
+            if (nval === "true"){
+                this.defalut_color = "greenyellow"
+            }
+            else{
+                this.defalut_color = "#bababa"
+            }
+        },
     },
+
     methods:{
         selecting(){
             this.isclick = !this.isclick
@@ -43,10 +60,15 @@ export default{
         },
     },
     created(){
-        
+        if (this.status === "true"){
+            this.defalut_color = "greenyellow"
+        }
+        this.color = this.defalut_color
+        console.log(this.status)
     }
 }
 </script>
+
 <style>
 .client {
     overflow: hidden;

@@ -3,8 +3,8 @@ import { createApp } from 'vue'
 
 
 import App from './components/App.vue' // 导入组件
-import router from "./components/router"
-import store from './components/variable'
+import router from "./plugins/router"
+import {store} from './plugins/variable/variable'
 
 
 // content fastapi

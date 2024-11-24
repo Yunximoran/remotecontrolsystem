@@ -1,18 +1,33 @@
 <template>
     <!-- 通过代开资源管理器添加软件 -->
      <div class="softwarebox">
-        {{ $store.state.softwares }}
+        <tabel>
+            <tr>
+                <th>软件名称</th>
+                <th>连接状态</th>
+            </tr>
+            <tr v-for="software in softwares" :key="software">
+                <td>{{software.ecdis.name}}</td>
+                <td>{{ software.conning }}</td>
+            </tr>
+        </tabel>
      </div>
 </template>
 
 
 <script>
 import axios from 'axios';
+// import { mapState } from 'vuex';
 
 export default{
     data(){
         return {
             
+        }
+    },
+    computed:{
+        softwares(){
+            return this.$store.state.softwares
         }
     },
     methods:{
