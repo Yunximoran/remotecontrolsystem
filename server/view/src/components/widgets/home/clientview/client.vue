@@ -2,69 +2,53 @@
     <img class='client'
         ref = 'item'
         :ip="ip" 
-        :src="config.logo"
+        :src="require('@/assets/logo.png')"
         :alt="ip" 
-        @click="selecting()"       
-        @mouseenter="start=true" 
-        @mouseleave="start=false">
+        @click="selecting($event)"       
+        @mouseenter="isfocus=true" 
+        @mouseleave="isfocus=false">
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
 export default{
     props: ['ip', 'status'],
     data(){
         return {
-            isselect: false,
-            start: false,
-            defalut_color: "#bababa",
-            color: null,
-            status: this.$props.status,
-            isclick: false,
+            isselect: false,    // 是否选中
+            isfocus: false,     // 是否聚焦
+            isclick: false,     // 是否点击
+            color: this.set_color(),
          }
     },
     computed:{
-        ...mapGetters({
-            config: "getconfig_client"
-        })
+        selects(){
+            return this.$store.state.selects
+        }
     },
-    watch: {
-        start: {
-            handler(nval, oval){
-                if(this.isclick === false){
-                    if(nval){
-                        this.color = 'red'
-                    }
-                    else{
-                        this.color = this.defalut_color
-                    }
-                }
+    watch:{
+        isfocus(nval){
+            if (!this.isselect) {
+                this.color = nval ? "red" : this.set_color()
             }
         },
-        status(nval){
-            if (nval === "true"){
-                this.defalut_color = "greenyellow"
-            }
-            else{
-                this.defalut_color = "#bababa"
-            }
-        },
+        isselect(nval){
+            this.color = nval ? "red" : this.set_color()
+            this.$store.commit("update_selected", {
+                0: this.$props.ip,
+                1: nval
+            })
+        }
     },
-
     methods:{
-        selecting(){
-            this.isclick = !this.isclick
-            if(this.isclick){
-                this.color = "red"
-            }
+        selecting(event){
+            // event.ctrlKey
+            this.isselect = !this.isselect
         },
+        set_color(){
+            return this.$props.status === "true" ? "greenyellow" : "#bababa"
+        }
     },
     created(){
-        if (this.status === "true"){
-            this.defalut_color = "greenyellow"
-        }
-        this.color = this.defalut_color
-        console.log(this.status)
     }
 }
 </script>

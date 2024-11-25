@@ -25,3 +25,4 @@ class HeartPkgs(BaseModel):
     ip: Annotated[str, None] = \
         Query(pattern="((1\d{2}\.)|(2[0-5]{2}\.)|(\d{1,2}\.)){3}((1\d{2}\.)|(\d{3}\.))")
     software: Annotated[Software, None] = None
+    

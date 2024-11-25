@@ -1,7 +1,7 @@
 
 <template>
-    <div v-if="clients" class="clients" @click="isreset = !isreset">
-        <Client ref='item' @click="selectclient(status, ip)" v-for="(status, ip) in clients" :key="status" :ip="ip" :status="status" :reset="isreset"></Client>
+    <div v-if="clients" class="clients">
+        <Client ref='item' v-for="(status, ip) in clients" :key="status" :ip="ip" :status="status"></Client>
     </div>
 </template>
 
@@ -13,9 +13,7 @@ import Client from "./client.vue"
 export default{
     data(){
         return {
-            select: {},
             isclear: false,
-            isreset: false,
         }
     },
     components: {
@@ -24,41 +22,34 @@ export default{
     computed:{
         clients(){
             return this.$store.state.clients
+        },
+        selects(){
+            return this.$store.state.selects
         }
     },
     watch: {
-        select: {
-            handler(nval, oval){
-                console.log(this.select)
-            }
-        }
+
     },
 
     methods: {
         getclientmessage(){
-            axios.get("/servers/data/client_status/").then((res)=>{
+            axios.get("/servers/data/client_status/")
+            .then((res)=>{
                 console.log(res.data)
                 this.$store.commit("add_clients", res.data)
-                // this.clients = res.data
-            }).then((res) =>{
-                console.log("ok update client message")
+                return res.data
+            }).then((data) =>{
+                console.log("init selects")
+                this.$store.commit("init_selects", data)
             }).catch((error)=>{
                 console.log(error)
             })
-        },
-
-        selectclient(item, i){
-            const current = this.$refs.item[i] // 点击后改变效果
-            this.select[i] = item
-            console.log(this.select)
-        },
+        }, 
     },
-
-
     created(){
         // 这里是组件的钩子，组件被创建时调用
         this.getclientmessage()
-        this.$emit("return", this.select)
+        this.$emit("return", this.selects)
         
     },
 }
