@@ -18,10 +18,20 @@ from despose import CONFIG, load_software
 COMMUNICATION = multiprocessing.Queue()
 SOFTWARTLIST = [] 
 
+if not os.path.exists("data"):
+    print("make data dir")
+    os.mkdir("data")
+    
+if not os.path.exists("data/softwares.json"):
+    print("make softwares.json file")
+    with open("data/softwares.json", 'w', encoding="utf-8") as f:
+        json.dump([], f, ensure_ascii=False, indent=4)
 
-# udp_conn = UDP()
-# tcp_conn = TCP()
-
+if not os.path.exists("data/shell.json"):
+    print("make shell.json file")
+    with open("data/shell.json", 'w', encoding="utf-8") as f:
+        json.dump([], f, ensure_ascii=False, indent=4)
+        
 class Client:
     ALLSERVER: list[multiprocessing.Process] = []
     def __init__(self):
@@ -33,7 +43,7 @@ class Client:
         for p in self.ALLSERVER:
             p.join()
     
-
+    # server
     def start_select_server(self):
         select_server = multiprocessing.Process(target=self.select, args=())
         select_server.start()
@@ -51,11 +61,11 @@ class Client:
         listen_server.start()
         self.ALLSERVER.append(listen_server)
     
-    
+    # actions
     def run_shell(self, control: Annotated[list, None]):
         subprocess.Popen(control)
     
-    
+    # function
     def check_software(self):
         # 检查软件状态
         try:
@@ -72,26 +82,49 @@ class Client:
                 
                 os.path.join(root, filename)
               
-                
+    # conning     
     def select(self):
         """
-            监听tcp， 接受server发送的shell指令并启动
+            监听tcp  接受server发送的shell指令并启动
         """
         tcp_conn = TCP()
         while True:
             data = json.loads(tcp_conn.listening())
+            print(data)
             with open("data/shell.json", 'w', encoding="utf-8") as f:
                 json.dump(data, f, ensure_ascii=False, indent=4)
     
             
     def listing_multi(self):
+        # 组播接受软件清单
+        # 在服务端获取更新
         multi_conn = MultiCast()
         while True:
             data = multi_conn.recv()
+<<<<<<< HEAD
             soft_list = json.loads(data)
             print(soft_list)
             with open('data/softwares.json', 'w', encoding='utf-8') as f:
                 json.dump(soft_list, f, ensure_ascii=False, indent=4)
+=======
+            softwares = json.loads(data) # [{}, {}...]
+            with open('data/softwares.json', 'r', encoding='utf-8') as f:
+                local_softwares: list[dict] = (json.load(f))
+                for newitem in softwares:
+                    newsoftware = newitem['ecdis']['name']
+                    isexist = False
+                    for olditem in local_softwares:
+                        oldsoftware = olditem['ecdis']['name']
+                        if newsoftware == oldsoftware:
+                            isexist = True
+                            break
+                        
+                    if not isexist:
+                        local_softwares.append(newitem)
+       
+            with open("data/softwares.json", "w", encoding='utf-8') as f:
+                json.dump(local_softwares, f, ensure_ascii=False, indent=4)
+>>>>>>> main
                 
     def connect(self):
         # 每秒广播心跳包数据
@@ -102,6 +135,7 @@ class Client:
             udp_conn.send(json.dumps(heart_pkgs))
             
     def get_heart_packages(self):
+<<<<<<< HEAD
         """
         software: {
             ecdis{
@@ -113,6 +147,15 @@ class Client:
             "mac": CONFIG.MAC,
             "ip": CONFIG.IP,
             "software": load_software()
+=======
+        with open("data/softwares.json", "r") as f:
+            softwares = json.load(f)
+            print(softwares)
+        return {
+            "mac": CONFIG.MAC,
+            "ip": CONFIG.IP,
+            "softwares": softwares
+>>>>>>> main
         }
             
 

@@ -108,11 +108,10 @@ class Reception:
         
         # 解析数据
         data = rec[0].decode(ENCODING)
-        ip, port = rec[1]
+        ip = json.loads(data)['ip']
         # print(ip)
         # 保存心跳包数据
         DATABASE.hset("client_status", ip, "true")
-        # DATABASE.hset()
         DATABASE.hset("heart_packages", mapping={ip: data}) # ip地址和心跳包数据
         
         # 校验客户端连接状态
@@ -141,8 +140,8 @@ class Reception:
         # 等待3秒后 删除客户端连接缓存 or 先标记为断线 等待服务端关闭后清空
         await asyncio.sleep(3)
         TIMERLIST.pop(ip)
-        DATABASE.hset("client_status", ip, "false")
-        DATABASE.hdel("heart_packages", ip)
+        DATABASE.hset("client_status", ip, "false")   # 删除客户端连接数据
+        DATABASE.hdel("heart_packages", ip)     # 删除心跳包
         print(f"The IP {ip} user is disconnected")
 
 
@@ -160,7 +159,8 @@ class MultiCast:
         
         
     
-    def send(self, data):
+    def send(self, data:str):
+        print(data)
         self.multi.sendto(data.encode(), MULTICAST)
         
 

@@ -49,6 +49,9 @@
 
 <script>
 import axios from 'axios';
+import { useRootStore } from '@/plugins/store/rootStore';
+import { mapStores, mapState } from 'pinia';
+
 
 export default{
     props: {
@@ -72,7 +75,10 @@ export default{
             }
         }
     },
-
+    computed:{
+        // ...mapStores(useRootStore),
+        ...mapState(useRootStore, ['selecteds'])
+    },
     methods: {
         // add 
         addshell(shell){
@@ -121,12 +127,20 @@ export default{
 
         // send
         sendshells(){
-            const params = this.shells
+            const params = {
+                shell_list: this.shells,
+                toclients: this.selecteds
+            }
             this.shells = []
-            axios.put("/servers/send_control_shell", params).then((res) =>{
-                console.log(res.data)
+            console.log("shells params", params)
+            axios.put("/servers/send_control_shell/", params)
+            .then((res) =>{
+                console.log("sent to clients", this.selecteds)
+            }).catch(error=>{
+                console.log(error)
             })
         },
+
         sendsoftwares(){
             const params = this.softwares
             this.softwares = []

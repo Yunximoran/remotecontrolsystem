@@ -1,63 +1,40 @@
 <template>
     <!-- 通过代开资源管理器添加软件 -->
      <div class="softwarebox">
-        <table>
+        <tabel>
             <tr>
-                <th>名称</th>
-                <th>软件状态</th>
+                <th>软件名称</th>
+                <th>连接状态</th>
             </tr>
-            <tr v-for="software in softwarelist" :key="software">
-                <td>{{software.name}}</td>
-                <td>{{software.start}}</td>
+            <tr v-for="software in rootStore.softwares" :key="software">
+                <td>{{software.ecdis.name}}</td>
+                <td>{{ software.conning }}</td>
             </tr>
-        </table>
-        <ul v-for="software in softwarelist" :key="software">
-            
-        </ul>
-        <button @click="get_softwarelist">刷新</button>
+        </tabel>
      </div>
 </template>
 
 
 <script>
 import axios from 'axios';
+import { useRootStore } from '@/plugins/store/rootStore';
+import { mapStores } from 'pinia';
 
+// 软件列表保存本地
 export default{
     data(){
         return {
-            softwarelist: []
+            
         }
+    },
+    computed:{
+        ...mapStores(useRootStore)
     },
     methods:{
         get_softwarelist(){
             axios.get("/servers/data/softwarelist")
             .then((res)=>{
 
-            })
-            .catch((error)=>{
-                console.log(error)
-            })
-        },
-        // 每次执行修改后重新获取数据
-        add_software(item){
-            axios.put("/servers/alter/data", item)
-            .then((res)=>{
-                this.get_softwarelist()
-            })
-            .catch((error)=>{
-                console.log(error)
-            })
-        },
-        /* 
-        item: {
-            alter,  put or delete
-            object, software
-        }
-        */
-        pop_software(item){
-            axios.delete("/servers/alter/data", item)
-            .then((res)=>{
-                this.get_softwarelist()
             })
             .catch((error)=>{
                 console.log(error)

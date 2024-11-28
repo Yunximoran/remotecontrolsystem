@@ -12,8 +12,6 @@ API 接收请求 处理请求内容 返回响应数据
 服务端
 """
 
-
-import time
 import json
 from typing import Annotated
 
@@ -22,8 +20,6 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi import (
         FastAPI,
         HTTPException,
-        Path,
-        Depends
     )
 
 from core import control
@@ -82,10 +78,10 @@ async def login(loginform: Credentils):
     
 
 @app.put("/servers/send_control_shell/")         # 发送shell指令
-async def send_control_shell(shell_list: list[ShellList]):
+async def send_control_shell(shell_list: list[ShellList], toclients: list[str] = []):
     try:
         for shell_msg in shell_list:
-            controlor.sendtoclient(shell_msg.model_dump_json())
+            controlor.sendtoclient(shell_msg.model_dump_json(), toclients)
         return {"ok": "send a shell to client"}
     except Exception as e:
         return {"ERROR": e}
@@ -136,8 +132,8 @@ async def alter_settings(option: str, nval: str):
 @app.put("/servers/data/alter")
 async def alter_software(alter: Annotated[str, None]):
     if alter == "push":
-        
-        choose_software()
+        software = choose_software()
+        return {"OK": software}
 
 
 

@@ -1,9 +1,21 @@
-
+import multiprocessing
 from fastapi import HTTPException
 
 from .parse import CONFIG
 from .start_server import SERVERMANAGE
+from .systool import choose_software
 
+QUEUE = multiprocessing.Queue()
+
+
+class ProjectManage:
+    def __init__(self):
+        self.pool = multiprocessing.Pool()
+        
+
+    def registry(self, action, *args):
+        self.pool.map(action, *args)
+        
 
 def CheckLoginInfomation(username, password):
     return True
