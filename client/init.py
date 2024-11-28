@@ -29,6 +29,7 @@ class Init:
     def __init_local_address(self):
         tree = et.parse("config.xml")
         root = tree.getroot()
+        print(IP)
         root.set("ip", IP)
         root.set("mac", MAC)
         tree.write("config.xml")

@@ -21,14 +21,18 @@ class Control:
     def push(self):
         pass
     
-    def sendtoclient(self, shell_control:str):
+    def sendtoclient(self, shell_control:str, toclients = []):
         """
             加载redis中保存的client message
             子进程启动tcp连接客户端发送shell_control
         """
-        for client  in DATABASE.hgetall("heart_packages").values():
-            info = json.loads(client.decode())
-            MESSAGEQUEUE.put(info['ip'])
+        if toclients == []:
+            toclients = [client.decode() for client in DATABASE.hgetall("client_status").keys()]
+            
+        for client  in toclients:
+            is_connect = DATABASE.hget("client_status", client).decode()
+            if is_connect == "true":
+                MESSAGEQUEUE.put(client)
             
         while MESSAGEQUEUE.qsize() > 0:
             p = multiprocessing.Process(target=self.sendtoshell, args=(shell_control, MESSAGEQUEUE.get()))

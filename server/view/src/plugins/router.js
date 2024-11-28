@@ -1,11 +1,10 @@
 import {createRouter, createWebHistory} from "vue-router"
 
-import App from "./App.vue"
-import User from "./page/user.vue"
-import Login from "./actions/submit_login_message.vue"
-import Home from "./widgets/home/home.vue"
-import Registry from "./page/registry.vue"
-import Sendmodel from "./widgets/home/basecontrol/sendmodel.vue"
+import User from "@/components/page/user.vue"
+import Registry from "@/components/page/registry.vue"
+import Login from "@/components/actions/submit_login_message.vue"
+import Home from "@/components/widgets/home/home.vue"
+import Sendmodel from "@/components/widgets/home/basecontrol/sendmodel.vue"
 
 const routes = [
     {path: "/", redirect: "home"},

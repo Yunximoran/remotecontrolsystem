@@ -11,9 +11,9 @@ class TCP:
         self.tcp_socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
         
     
-    def send(self, shell, ip):
-        try:
-            # client地址有客户端发送细条包数据获取  
+    def send(self, shell:str, ip):
+        print(shell, type(shell))
+        try: 
             self.tcp_socket.connect((ip, CONFIG.TCPORT))
             self.tcp_socket.sendall(shell.encode())
         except ConnectionRefusedError:

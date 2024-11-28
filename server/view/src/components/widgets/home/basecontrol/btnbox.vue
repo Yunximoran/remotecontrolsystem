@@ -6,7 +6,9 @@
 
 <script>
 import axios from 'axios';
-import { render, h } from 'vue';
+import { mapStores } from 'pinia';
+import { useRootStore } from '@/plugins/store/rootStore';
+
 export default{
     data(){
         return {
@@ -14,48 +16,73 @@ export default{
                 closeClients: () =>{
                     alert("close all clients")
                 },
+
                 openClients: ()=>{
                     alert("open all Clients")
                 },
+
                 restartClients: ()=>{
                     alert("restart all clients")
                 },
-                addSoftware: ()=>{
-                    alert("add new software")
-                    axios.put("/servers/data/alter", "push")
-                    .then((res)=>{
 
+                addSoftware: ()=>{
+                    // alert("add new software")
+                    axios.put("/servers/data/alter", null,{
+                        params: {
+                            alter: "push"
+                        }
+                    })
+                    .then((res)=>{
+                        console.log(res.data)
+
+                        // 新加入的软件默认为未连接状态
+                        const software = {
+                            "ecdis":{
+                                "name": res.data.OK,
+                                "version": "1.0.1"
+                            },
+                            "conning": false
+                        }
+                        this.rootStore.add_software(software)
                     })
                     .catch((error)=>{
                         console.log(error)
                     })
                 },
+
                 openSoftware: ()=>{
                     this.$emit("clicked")
                     alert("open the software")
                 },
+
                 closeAllSoftWare: ()=>{
                     this.$emit("clicked")
                     alert("close all software")
                 },
+
                 openAllSoftWare: ()=>{
                     this.$emit("clicked")
                     alert("open all software")
                 },
+
                 downloadFile: ()=>{
                     this.$emit("clicked")
                     alert("download file")
                 },
+
                 batchOperation: ()=>{
                     this.$emit("clicked")
                     alert("batch operation")
                 },
+
                 customCommands: ()=>{
                     this.$emit("clicked", "custom commands")
-                    alert("customCommands")
                 }
             } 
         }
+    },
+    computed:{
+        ...mapStores(useRootStore)
     },
     watch:{
 
