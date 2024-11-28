@@ -27,7 +27,7 @@ class TCP:
         while True:
             try:
                 server_sock, address = self.sock.accept()
-                data = server_sock.recv(1024)
+                data = server_sock.recv(2048)
                 return data.decode()
             except TimeoutError:
                 # print("time out")

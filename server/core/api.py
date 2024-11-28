@@ -78,9 +78,7 @@ async def login(loginform: Credentils):
     
 
 @app.put("/servers/send_control_shell/")         # 发送shell指令
-async def send_control_shell(shell_list: list[ShellList], toclients: list[str]):
-    print(toclients)
-    print(shell_list)
+async def send_control_shell(shell_list: list[ShellList], toclients: list[str] = []):
     try:
         for shell_msg in shell_list:
             controlor.sendtoclient(shell_msg.model_dump_json(), toclients)

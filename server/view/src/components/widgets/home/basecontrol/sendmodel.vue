@@ -49,6 +49,9 @@
 
 <script>
 import axios from 'axios';
+import { useRootStore } from '@/plugins/store/rootStore';
+import { mapStores, mapState } from 'pinia';
+
 
 export default{
     props: {
@@ -73,9 +76,8 @@ export default{
         }
     },
     computed:{
-        selecteds(){
-            return this.$store.getters.selecteds
-        }
+        // ...mapStores(useRootStore),
+        ...mapState(useRootStore, ['selecteds'])
     },
     methods: {
         // add 
@@ -130,9 +132,12 @@ export default{
                 toclients: this.selecteds
             }
             this.shells = []
+            console.log("shells params", params)
             axios.put("/servers/send_control_shell/", params)
             .then((res) =>{
                 console.log("sent to clients", this.selecteds)
+            }).catch(error=>{
+                console.log(error)
             })
         },
 

@@ -1,4 +1,7 @@
 {
     "terminal.integrated.env.linux": {"PYTHONPATH": "${workspaceFolder}${env:PYTHONPATH}"},
-    "terminal.integrated.env.windows": {"PYTHONPATH": "${workspaceFolder}${env:PYTHONPATH}"},
+    "terminal.integrated.env.windows": {
+        "PYTHONPATH": "${workspaceFolder}${env:PYTHONPATH}"
+    },
+    "workbench.editor.languageDetection": false,
 }

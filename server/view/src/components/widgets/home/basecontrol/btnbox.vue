@@ -6,7 +6,8 @@
 
 <script>
 import axios from 'axios';
-import { render, h } from 'vue';
+import { mapStores } from 'pinia';
+import { useRootStore } from '@/plugins/store/rootStore';
 
 export default{
     data(){
@@ -42,7 +43,7 @@ export default{
                             },
                             "conning": false
                         }
-                        this.$store.commit("add_software", software)
+                        this.rootStore.add_software(software)
                     })
                     .catch((error)=>{
                         console.log(error)
@@ -79,6 +80,9 @@ export default{
                 }
             } 
         }
+    },
+    computed:{
+        ...mapStores(useRootStore)
     },
     watch:{
 

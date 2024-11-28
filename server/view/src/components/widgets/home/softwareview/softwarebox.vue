@@ -6,7 +6,7 @@
                 <th>软件名称</th>
                 <th>连接状态</th>
             </tr>
-            <tr v-for="software in softwares" :key="software">
+            <tr v-for="software in rootStore.softwares" :key="software">
                 <td>{{software.ecdis.name}}</td>
                 <td>{{ software.conning }}</td>
             </tr>
@@ -17,8 +17,10 @@
 
 <script>
 import axios from 'axios';
-// import { mapState } from 'vuex';
+import { useRootStore } from '@/plugins/store/rootStore';
+import { mapStores } from 'pinia';
 
+// 软件列表保存本地
 export default{
     data(){
         return {
@@ -26,9 +28,7 @@ export default{
         }
     },
     computed:{
-        softwares(){
-            return this.$store.state.softwares
-        }
+        ...mapStores(useRootStore)
     },
     methods:{
         get_softwarelist(){

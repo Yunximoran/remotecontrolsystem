@@ -1,10 +1,11 @@
 import axios from 'axios'
 import { createApp } from 'vue'
+import { createPinia } from 'pinia'
 
 
 import App from './components/App.vue' // 导入组件
 import router from "./plugins/router"
-import {store} from './plugins/variable/variable'
+const store = createPinia()
 
 
 // content fastapi

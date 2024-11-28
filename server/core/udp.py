@@ -108,7 +108,7 @@ class Reception:
         
         # 解析数据
         data = rec[0].decode(ENCODING)
-        ip, port = rec[1]
+        ip = json.loads(data)['ip']
         # print(ip)
         # 保存心跳包数据
         DATABASE.hset("client_status", ip, "true")
@@ -159,7 +159,8 @@ class MultiCast:
         
         
     
-    def send(self, data):
+    def send(self, data:str):
+        print(data)
         self.multi.sendto(data.encode(), MULTICAST)
         
 
