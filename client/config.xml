@@ -12,5 +12,13 @@
             <client>8085</client>
         </tcp>
     </connect>
-    
+
+    <paths>
+        <path_softwares>D://softwares</path_softwares>
+    </paths>
+
+    <performance>
+        <max_process>10</max_process>    
+    </performance>
+
 </base>
