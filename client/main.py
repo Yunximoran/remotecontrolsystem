@@ -6,6 +6,7 @@
 
 # 客户端代码
 import os
+import re
 import time
 import json
 import subprocess
@@ -13,12 +14,18 @@ import multiprocessing
 from typing import Annotated
 
 from protocol import BroadCast, TCP, MultiCast
-from despose import CONFIG, checkfile, loadmodel
+from despose import CONFIG, checkfile
 
-SYSTEM = loadmodel("system.pkl")
+try:
+    from system import SYSTEM
+except ImportError as e:
+    raise ImportError("系统未加载， 检查当前目录下是否存在system.py文件")
+
 COMMUNICATION = multiprocessing.Queue()
+INSTRUCTQUEUE = multiprocessing.Queue()
 SOFTWARTLIST = [] 
 SOFTWARE_PATH = ""
+
 
 if not os.path.exists("data"):
     print("make data dir")
@@ -37,51 +44,68 @@ if not os.path.exists("data/shell.json"):
 class Client:
     ALLSERVER: list[multiprocessing.Process] = []
     def __init__(self):
-        # 启动Client服务
-        self.start_connect_server()
-        self.start_select_server()
-        self.start_listing_server()
+        self.start_server()
         
-        for p in self.ALLSERVER:
-            p.join()
     
+    def start_server(self):
+        self.__select_server()
+        self.__connect_server()
+        self.__listing_server()
+        
+        for server in self.ALLSERVER:
+            server.join()
+            
     # server
-    def start_select_server(self):
+    def __select_server(self):
         # 监听server并执行
         select_server = multiprocessing.Process(target=self.select, args=())
         select_server.start()
         self.ALLSERVER.append(select_server)
-        
     
-    def start_connect_server(self):
+    def __connect_server(self):
         # 保持连接状态
         connect_server = multiprocessing.Process(target=self.connect, args=())
         connect_server.start()
         self.ALLSERVER.append(connect_server)
     
     
-    def start_listing_server(self):
+    def __listing_server(self):
         # 监听TCP，接受软件清单
         listen_server = multiprocessing.Process(target=self.listing_multi, args=())
         listen_server.start()
         self.ALLSERVER.append(listen_server)
     
-    # actions
-    def run_shell(self, control: Annotated[list, None]):
-        subprocess.Popen(control)
+    def executor(self):
+        with multiprocessing.Pool() as pool:
+            while COMMUNICATION.qsize > 0:
+                pass
     
-            
+    # 接受消息后执行shell
+    # shell报错是通知server处理
+    
     # conning     
     def select(self):
         """
             监听tcp  接受server发送的shell指令并启动
+
+        shell指令应该包含
+            操作类型
+                compute close | restart
+                software start | close
+                other
+            指令内容
         """
         tcp_conn = TCP()
         while True:
-            data = json.loads(tcp_conn.listening())
-            print(data)
+            instructs = json.loads(tcp_conn.listening())
+            for instruct in instructs:
+                COMMUNICATION.put(instruct)
+                
             with open("data/shell.json", 'w', encoding="utf-8") as f:
-                json.dump(data, f, ensure_ascii=False, indent=4)
+                json.dump(instructs, f, ensure_ascii=False, indent=4)
+        
+                
+            
     
             
     def listing_multi(self):
@@ -106,6 +130,7 @@ class Client:
             udp_conn.send(json.dumps(heart_pkgs))
             
     def __update_softwares(self, softwares):
+        # 更新软件清单
         with open('data/softwares.json', 'r', encoding='utf-8') as f:
             local_softwares: list[dict] = (json.load(f))    # 加载本地软件清单
             for newitem in softwares:
@@ -147,7 +172,10 @@ class Client:
             if software in files:
                 return None
             
-
+def logo():
+    while True:
+        time.sleep(1)
+        print("Hello world")
 
 if __name__ == "__main__":
     Client()

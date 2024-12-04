@@ -2,26 +2,13 @@ import os
 import subprocess
 import time
 import pickle
+import inspect
 
 
-for i in []:
-    print(type(i), i)
-    
-    
-class S:
-    def __init__(self):
-        pass
-    
-    def count(self, n, b):
-        return n * b
-    
-with open("software_.pkl", "wb") as f:
-    pickle.dump(S(), f)
-    
+class M:
+    def s(cls):
+        return inspect.getsource(cls)
     
 
-with open("software_.pkl", "rb") as f:
-    s = pickle.load(f)
-    
 
-print(s.count(1, 3))
+print(M.__name__)

@@ -4,6 +4,7 @@ import platform
 import socket
 import uuid
 import re
+import inspect
 import pickle
 from xml.etree import ElementTree as et
 
@@ -37,11 +38,11 @@ class Init:
 
     def __init_system(self):
         if SYSTEM_NAME == "Windows":
-            self.__dump_system_model(WindowSystem(SYSTEM_VERSION, SYSTEM_ARCHITECTURE, "D://softwares//"))
+            self.__dump_system_model(WindowsSystem, SYSTEM_NAME, SYSTEM_VERSION, SYSTEM_ARCHITECTURE, "D://softwares/")
             
 
         elif SYSTEM_NAME == "Linux":
-            self.__dump_system_model(LinuxSystem(SYSTEM_VERSION, SYSTEM_ARCHITECTURE, "~/softwares/"))
+            self.__dump_system_model(LinuxSystem, SYSTEM_NAME, SYSTEM_VERSION, SYSTEM_ARCHITECTURE, "~/softwares/")
         
         # elif SYSTEM_NAME == "macOS":
         #     return MacOSSytem(SYSTEM_VERSION, SYSTEM_ARCHITECTURE)
@@ -49,15 +50,25 @@ class Init:
         # else:
         #     return BaseSystem(SYSTEM_VERSION, SYSTEM_ARCHITECTURE)
     
-    def __dump_system_model(self, SYSTEM):
-        with open("system.pkl", "wb") as f:
-            pickle.dump(SYSTEM, f)
-        
+    def __dump_system_model(self, SYSTEM, name, version, archiecture, softwarepath):
+        with open("system.py", "w", encoding="utf-8") as f:
+            f.write("import os\n")
+            f.write("import re\n")
+            f.write("import subprocess\n")
+            f.write(inspect.getsource(BaseSystem))
+            f.write("\n")
+            f.write(inspect.getsource(SYSTEM))
+            f.write(f'SYSTEM = {SYSTEM.__name__}("{version}", {archiecture}, "{softwarepath}")\n')
         
         
 class BaseSystem:
     SOFTWARE_PATH = "" # 默认软件安装位置
     # EXTENSION = ".exe" | ".deb"
+    
+    """
+    存在问题
+        设备关机和重启
+    """
     
     PID:dict[str, subprocess.Popen] = {}    # 暂定
     
@@ -75,37 +86,35 @@ class BaseSystem:
     
     # 硬件相关
     def close(self):
+        # 关机
         pass
     
     def restart(self):
+        # 重启
         pass
     
     
     # 软件相关
     def start_software(self, software):
+        # 启动软件
         pass
     
     def close_software(self, software):
+        # 关闭软件
         pass
     
     
     # 文件相关
     def compress(self, dir_path):
-        """
-            解压
-        """
+        # 压缩
         pass
     
     def uncompress(self, form, to):
-        """
-            压缩
-        """
+        # 解压
         pass
     
     def wget(self, url, path=None):
-        """
-            下载
-        """
+        # 下载
         pass
     
     # 处理器
@@ -120,8 +129,9 @@ class BaseSystem:
                 else:
                     continue
                 
+                
 
-class WindowSystem(BaseSystem):
+class WindowsSystem(BaseSystem):
     def __init__(self, *args):
         super().__init__(*args)
         
