@@ -60,7 +60,7 @@ server = uvicorn.Server(uvicorn.Config(app))
 controlor = control.Control()
 multiter = MultiCast()
 
-# Server API
+# LOGIN
 @app.post("/servers/login/")
 async def login(loginform: Credentils):
     credentils = loginform.account
@@ -77,6 +77,8 @@ async def login(loginform: Credentils):
         raise HTTPException(status_code=404, detail="account is not exits")
     
 
+
+# SEND TO CLIENT
 @app.put("/servers/send_control_shell/")         # 发送shell指令
 async def send_control_shell(shell_list: list[ShellList], toclients: list[str] = []):
     try:
@@ -95,7 +97,7 @@ async def send_software_checklist(checklist: list[Software]):
     except Exception as e:
         return {"ERROR": e}
     
-# server data
+# DATA
 @app.get("/servers/data/client_status")
 async def getclientmessage():   # 获取客户端连接状态
     clients = DATABASE.hgetall("client_status")
@@ -123,13 +125,15 @@ async def registryaccount(regisform: NewUser):
 async def get_softwarelist():
     return DATABASE.hgetall("softwarelist")
 
-# server settings
+# ALTER #
+# config
 @app.put("/servers/settings/alter/")
 async def alter_settings(option: str, nval: str):
     # 修改服务端配置
     return {"ok": f"reset {option} => {nval}"}
 
-@app.put("/servers/data/alter")
+# data
+@app.put("/servers/data/alter/")
 async def alter_software(alter: Annotated[str, None]):
     if alter == "push":
         software = choose_software()

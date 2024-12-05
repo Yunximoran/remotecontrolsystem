@@ -15,7 +15,7 @@ class ProjectManage:
 
     def registry(self, action, *args):
         self.pool.map(action, *args)
-        
+    
 
 def CheckLoginInfomation(username, password):
     return True
@@ -27,5 +27,8 @@ def createid(username, password):
 
 def findid(username, password):
     pass
+
+
+
 
 

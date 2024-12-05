@@ -26,7 +26,7 @@ class Server:
             self.multi_manage.send("hello the is multicast message")
     
     def udp_server(self):
-        udp_server = udp.UPD()
+        udp_server = udp.UDP()
         udp_server.run()
     
     def load_pluging(self):

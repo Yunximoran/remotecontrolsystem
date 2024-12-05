@@ -21,15 +21,9 @@ TIMEOUT = 3                                  # 超时等待时间
 TIMERLIST = {}                               # 客户端连接状态
 DATABASE = databasetool.RedisConn            # Redis数据库
 
-
-class Communication:
-    def __init__(self):
-        self.udp_protocol = UPD()
-        self.udp_protocol.run()
         
         
-        
-class UPD:
+class UDP:
     """
         # 监听客户端连接状态
         # 向客户端发送软件清单
@@ -38,8 +32,6 @@ class UPD:
     
     def __init__(self):
         self.init_udp_socket() 
-        self.loop = asyncio.get_event_loop()
-        self.add_tasks()
         
     def add_tasks(self):
         # 创建模块任务
@@ -50,14 +42,21 @@ class UPD:
         self.udp_socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)      # 声明UDP协议
         self.udp_socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)   # 允许地址复用
         self.udp_socket.setsockopt(socket.SOL_SOCKET, socket.SO_BROADCAST, 1)   # 允许地址复用
-        self.udp_socket.bind(BROADCAST)     # 绑定本机地址
+        self.udp_socket.bind(BROADCAST)     # 绑定广播地址
 
     async def reception(self):   # 加载数据连接模块
         self.recloop = asyncio.new_event_loop()
         self.loop.run_in_executor(None, Reception, self.recloop, self.udp_socket)
         
+    
+    def wol(self, macs: list[str] = []):
+        if macs is []:
+            DATABASE.hgetall("client_message")
+        
 
     def run(self):
+        self.loop = asyncio.get_event_loop()
+        self.loop.create_task(self.reception())
         try:    # 事件循环
             self.loop.run_forever()
         except KeyboardInterrupt:
@@ -166,4 +165,5 @@ class MultiCast:
 
 
 if __name__ == "__main__":
-    Communication()
+    udp = UDP()
+    udp.run()
