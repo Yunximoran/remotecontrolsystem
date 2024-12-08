@@ -10,6 +10,7 @@
         <tcp>
             <server>9095</server>
             <client>8085</client>
+            <client_call>8086</client_call>
         </tcp>
     </connect>
 

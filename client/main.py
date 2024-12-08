@@ -5,12 +5,15 @@
 """
 
 # 客户端代码
+import multiprocessing.managers
 import os
 import re
+import socket
 import time
 import json
 import subprocess
 import multiprocessing
+from multiprocessing.managers import BaseManager
 from typing import Annotated
 
 from protocol import BroadCast, TCP, MultiCast
@@ -23,34 +26,40 @@ except ImportError as e:
 
 COMMUNICATION = multiprocessing.Queue()
 INSTRUCTQUEUE = multiprocessing.Queue()
+REPORTQUEUE = multiprocessing.Queue()
 SOFTWARTLIST = [] 
 SOFTWARE_PATH = ""
 
 
-if not os.path.exists("data"):
-    print("make data dir")
-    os.mkdir("data")
-    
-if not os.path.exists("data/softwares.json"):
-    print("make softwares.json file")
-    with open("data/softwares.json", 'w', encoding="utf-8") as f:
-        json.dump([], f, ensure_ascii=False, indent=4)
 
-if not os.path.exists("data/shell.json"):
-    print("make shell.json file")
-    with open("data/shell.json", 'w', encoding="utf-8") as f:
-        json.dump([], f, ensure_ascii=False, indent=4)
         
 class Client:
     ALLSERVER: list[multiprocessing.Process] = []
     def __init__(self):
+        self.build()
         self.start_server()
         
+    def build(self):
+        if not os.path.exists("data"):
+            print("make data dir")
+            os.mkdir("data")
+            
+        if not os.path.exists("data/softwares.json"):
+            print("make softwares.json file")
+            with open("data/softwares.json", 'w', encoding="utf-8") as f:
+                json.dump([], f, ensure_ascii=False, indent=4)
+
+        if not os.path.exists("data/shell.json"):
+            print("make shell.json file")
+            with open("data/shell.json", 'w', encoding="utf-8") as f:
+                json.dump([], f, ensure_ascii=False, indent=4)
+    
     
     def start_server(self):
         self.__select_server()
         self.__connect_server()
         self.__listing_server()
+        # self.__executor_server()
         
         for server in self.ALLSERVER:
             server.join()
@@ -75,13 +84,19 @@ class Client:
         listen_server.start()
         self.ALLSERVER.append(listen_server)
     
-    def executor(self):
-        with multiprocessing.Pool() as pool:
-            while COMMUNICATION.qsize > 0:
-                pass
+    
+    def __executor_server(self):
+        executor_server = multiprocessing.Process(target=self.executor, args=())
+        executor_server.start()
+        self.ALLSERVER.append(executor_server)
+            
     
     # 接受消息后执行shell
     # shell报错是通知server处理
+    """
+    需要地址
+    tcp
+    """
     
     # conning     
     def select(self):
@@ -94,17 +109,54 @@ class Client:
                 software start | close
                 other
             指令内容
+            
+        instruct = {
+            "label: close | close -s,
+            "instruct: "" | None
+        }
         """
-        tcp_conn = TCP()
+        tcp_conn =  TCP()
         while True:
-            instructs = json.loads(tcp_conn.listening())
-            for instruct in instructs:
-                COMMUNICATION.put(instruct)
+            conn, data = tcp_conn.listening()
+            if data:         
+                instructs = json.loads(data)
+                # tcp_conn.sendform("测试 tcp汇报服务器")
+                with multiprocessing.Pool() as pool:
+                    res_execute = pool.apply_async(self._execute_instruct, args=(instructs,),
+                        callback=lambda report: self._report_results(conn, report))
+                    res_history = pool.apply_async(self._history, args=(instructs,))
+                    print("res", res_execute.get())
+
+                    
                 
-            with open("data/shell.json", 'w', encoding="utf-8") as f:
-                json.dump(instructs, f, ensure_ascii=False, indent=4)
-        
                 
+    def _history(self, instructs):
+        print("history process")
+        with open("data/shell.json", 'w', encoding="utf-8") as f:
+            json.dump(instructs, f, ensure_ascii=False, indent=4)
+                
+    def _report_results(self, conn, report:str):
+        print(type(conn))
+        conn.sendall(report.encode())
+        conn.close()
+
+    def _execute_instruct(self, instructs:dict[str, str]):
+        # 顺序执行shell
+        print("execute process")
+        label = instructs['name']
+        shell = instructs['shell']
+        print(shell)
+        process = subprocess.Popen(shell, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True, shell=True)
+        msg, err = process.communicate()
+        report = {
+            "status": "ok" if not err else "error",
+            "instruct": shell,
+            "msg": msg if msg else "<No output>",
+            "err": err if err else "<No error output>",
+            "time": time.time()
+        }
+
+        return json.dumps(report, ensure_ascii=False)
             
     
             
@@ -172,6 +224,12 @@ class Client:
             if software in files:
                 return None
             
+    def executor(self):
+        tcp_conn = TCP(port=8088)
+        while True:
+            instruct = COMMUNICATION.get()
+            tcp_conn.sendform(instruct)
+            
 def logo():
     while True:
         time.sleep(1)
@@ -179,6 +237,9 @@ def logo():
 
 if __name__ == "__main__":
     Client()
+    # with BaseManager() as PROCESSMANAGER:
+    #     PROCESSMANAGER.register("tcp_conn", TCP)
+    #     Client(PROCESSMANAGER)
     
 """
 软件位置应该在添加软件清单时配置
