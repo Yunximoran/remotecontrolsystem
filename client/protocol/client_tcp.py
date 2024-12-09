@@ -1,24 +1,34 @@
 import socket
 
 from despose import CONFIG
-
-
+TIMEOUT = 1
 class TCP:
-    def __init__(self, ip=CONFIG.IP, port=CONFIG.TCPORT, timeout=1):
-        self.address = (ip, port)
-        
-        self.init()
-        self.settings(timeout)
-    
-    def init(self):
-        # 初始化TCP套接字，绑定本机地址
+    def __init__(self):
         self.sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        self.settings()
+    
+    def settings(self):
+        pass
+    
+    def send(self, data):
+        pass
+    
+    def recv(self):
+        pass
+
+    def close(self):
+        self.sock.close()
+        
+class TCPListen(TCP):
+    def __init__(self, ip=CONFIG.IP, port=CONFIG.TCPORT):
+        super().__init__()
+        self.address = (ip, port)
         self.sock.bind(self.address)
         self.sock.listen(5)
-        # self.server_sock, self.saddr = self.sock.accept()   
     
-    def settings(self, timeout):
-        self.sock.settimeout(timeout)
+    
+    def settings(self):
+        self.sock.settimeout(TIMEOUT)
     
     
     def listening(self):
@@ -33,5 +43,12 @@ class TCP:
                 return (server_sock, data.decode())
             except TimeoutError:
                 pass
-    
-    
+
+class TCPConnect(TCP):
+    def __init__(self):
+        super().__init__()
+        
+
+
+if __name__ == "__main__":
+    TCPListen()

@@ -16,7 +16,8 @@ import multiprocessing
 from multiprocessing.managers import BaseManager
 from typing import Annotated
 
-from protocol import BroadCast, TCP, MultiCast
+from protocol import BroadCast, MultiCast
+from protocol import TCPListen, TCPConnect
 from despose import CONFIG, checkfile
 
 try:
@@ -115,7 +116,7 @@ class Client:
             "instruct: "" | None
         }
         """
-        tcp_conn =  TCP()
+        tcp_conn =  TCPListen()
         while True:
             conn, data = tcp_conn.listening()
             if data:         
@@ -131,6 +132,7 @@ class Client:
                 
                 
     def _history(self, instructs):
+        # 记录历史指令
         print("history process")
         with open("data/shell.json", 'w', encoding="utf-8") as f:
             json.dump(instructs, f, ensure_ascii=False, indent=4)
@@ -143,21 +145,45 @@ class Client:
     def _execute_instruct(self, instructs:dict[str, str]):
         # 顺序执行shell
         print("execute process")
-        label = instructs['name']
-        shell = instructs['shell']
-        print(shell)
-        process = subprocess.Popen(shell, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True, shell=True)
+        label = instructs['name']   # label 标记指令用途
+        shell = instructs['shell']  # shell 实习执行指令
+        
+        report = self.__instruct_default(label)
+        if not report:
+            report = self.__instruct_custom(shell)
+
+        return json.dumps(report, ensure_ascii=False)
+
+    def __instruct_default(self, label):
+        # 调用默认指令
+        isdefault = True
+        if label == "close":
+            return SYSTEM.close()
+        if label == "close -s":
+            return  SYSTEM.close_software()
+        if label == "restart":
+            return SYSTEM.restart()
+        if label == "start -s":
+            return SYSTEM.start_software()
+        if label == "wget":
+            return SYSTEM.wget()
+        if label == "compress":
+            return SYSTEM.compress()
+        if label == "uncompress":
+            return SYSTEM.uncompress()
+        return False
+         
+    def __instruct_custom(self, instruct):
+        # 调用自定义指令
+        process = subprocess.Popen(instruct, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True, shell=True)
         msg, err = process.communicate()
-        report = {
+        return {
             "status": "ok" if not err else "error",
-            "instruct": shell,
+            "instruct": instruct,
             "msg": msg if msg else "<No output>",
             "err": err if err else "<No error output>",
             "time": time.time()
         }
-
-        return json.dumps(report, ensure_ascii=False)
-            
     
             
     def listing_multi(self):
@@ -165,14 +191,12 @@ class Client:
         # 在服务端获取更新 ？ 
         # 软件安装位置
         multi_conn = MultiCast()
+        pool = multiprocessing.Pool()
         while True:
             data = multi_conn.recv()
             softwares = json.loads(data) # 解析服务端软件清单
-            local_softwares = self.__update_softwares(softwares)    
-            with open("data/softwares.json", "w", encoding='utf-8') as f:
-                json.dump(local_softwares, f, ensure_ascii=False, indent=4)
-                
-                
+            pool.apply_async(self._update_softwares, args=(softwares,), callback=self._write_local_softwares)
+    
     def connect(self):
         # 每秒广播心跳包数据
         udp_conn = BroadCast()
@@ -181,7 +205,7 @@ class Client:
             heart_pkgs = self.__get_heart_packages()
             udp_conn.send(json.dumps(heart_pkgs))
             
-    def __update_softwares(self, softwares):
+    def _update_softwares(self, softwares):
         # 更新软件清单
         with open('data/softwares.json', 'r', encoding='utf-8') as f:
             local_softwares: list[dict] = (json.load(f))    # 加载本地软件清单
@@ -195,15 +219,31 @@ class Client:
                         break
                     
                 if not isexist: # 写入新对象
-                    software_path = checkfile(newsoftware, SOFTWARE_PATH)
-                    newitem['ecdis']['path'] = softwares  # 更新软件安装路径  * 可能为None
-                    if software_path is None:
-                        pass    # 如果软件不存在则需要通知服务端处理
-                    
-                    # 不管软件是否安装，都写入软件清单
-                    local_softwares.append(newitem)
+                    # 新的软件需要获取本地路径
+                    # 动态处理 磁盘中查找所有匹配项，返回服务端，等待服务端处理
+                    """
+                    步骤
+                        在local\softwares\中创建软连接[快捷方式]
+                        
+                    result: newitem['ecdis']['path'] = ./local/softwares/software.exe
+                    """
+                    allpath = SYSTEM.checkfile(newsoftware)
+                    res = self.wait_respose(allpath)
+                    if res is not None:
+                        newitem['ecdis']['path'] = res
+                        local_softwares.append(newitem)
+                    else:
+                        print("没有找到相关软件，请检查软件是否安装")
         return local_softwares
     
+    def _write_local_softwares(self, local_softwares):
+        with open("data/softwares.json", "w", encoding='utf-8') as f:
+            json.dump(local_softwares, f, ensure_ascii=False, indent=4)
+    
+    def wait_respose(self, param):
+        conn = TCPConnect()
+        conn.send(param)
+        return conn.recv()
     
     def __get_heart_packages(self):
         with open("data/softwares.json", "r") as f:
@@ -224,11 +264,6 @@ class Client:
             if software in files:
                 return None
             
-    def executor(self):
-        tcp_conn = TCP(port=8088)
-        while True:
-            instruct = COMMUNICATION.get()
-            tcp_conn.sendform(instruct)
             
 def logo():
     while True:
@@ -237,11 +272,20 @@ def logo():
 
 if __name__ == "__main__":
     Client()
-    # with BaseManager() as PROCESSMANAGER:
-    #     PROCESSMANAGER.register("tcp_conn", TCP)
-    #     Client(PROCESSMANAGER)
     
 """
 软件位置应该在添加软件清单时配置
+项目结构
 
+data
+local
+    softwares
+        software1
+        software2
+        software3
+        software4
+        。。。 软连接|快捷方式
+        * 怎么导入 => 全盘扫描? 返回所有匹配项 => 汇报服务端，由服务端选择 | 客户端手动加入
+        * 异常捕获：
+            * 软件位置发生移动 => 软连接[快捷方式] 失效, 报告服务端， 重新建立连接[通知用户处理]
 """
