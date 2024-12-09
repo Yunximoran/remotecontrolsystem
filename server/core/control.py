@@ -16,10 +16,21 @@ class Control:
     CLIENTMESSAGE = {}
     
     def __init__(self):
+        # multiprocessing.Process(target=self.listen)
         pass
     
     def push(self):
         pass
+
+    def listen(self):
+        conn = TCP()
+        while True:
+            try:
+                data = conn.recv()
+                print(data)
+            except:
+                pass
+            
     
     def sendtoclient(self, shell_control:str, toclients = []):
         """
@@ -39,9 +50,15 @@ class Control:
             p.start()
             p.join()
             
-            
+    
                 
     def sendtoshell(self, shell_control, ip):
+        """
+            一次只发送一个指令，
+        """
         conn = TCP()
-        conn.send(shell_control, ip)
-        conn.close()
+        msg = conn.send(shell_control, ip)
+        msg = json.loads(msg)
+        print(msg)
+
+            

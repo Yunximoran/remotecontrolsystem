@@ -9,7 +9,7 @@
         <div class="container">
             <!-- 基本控制指令 -->
             <div class="core-left">
-                <!--  -->
+                <WaitDone>fesfe</WaitDone>
             </div>
             <div class="core-mid">
                 <!-- 按键盒子 && 软件列表 -->
@@ -38,6 +38,7 @@ import BtnBox from "./basecontrol/btnbox.vue"
 import ClientBox from "./clientview/clientbox.vue"
 import Loger from "./loger.vue";
 import Softwarebox from "./softwareview/softwarebox.vue";
+import WaitDone from "./waitdone.vue"
 
 
 export default{
@@ -48,7 +49,8 @@ export default{
         ClientBox,
         Login,
         Loger,
-        Softwarebox
+        Softwarebox,
+        WaitDone
     },
     data(){
         return {
@@ -123,8 +125,7 @@ button {
     user-select: none;
     display: flex;
     flex-direction: row;
-    align-self:flex-start;
-    align-items: center;
+    align-items:flex-start;
     justify-items: center;   
 }
 .menu p, span{
@@ -140,9 +141,14 @@ button {
     align-items: flex-end;
     flex-direction: row;
     height: 70vh;
+    gap:10px;
 }
 .core-left{
-    width: 26vh;
+    width: 22vw;
+    display: flex;
+    align-self: center;
+    justify-self: center;
+    height: 100%;
 }
 .core-mid{
     width: 42vw;
@@ -152,6 +158,7 @@ button {
     align-items: center;
     align-self:flex-start;
     gap: 10px;
+
 }
 
 .core-right {

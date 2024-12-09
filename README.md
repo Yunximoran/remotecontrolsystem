@@ -141,6 +141,54 @@
        * 初始化数据表
        * 完成软件清单数据保存
          * 忽略重复项（暂定）=> 可能从服务端修改后再发送，直接保存）
+* ### 2024-12-10:
+  * ### client:
+    * 更新select（监听shell指令）
+      * _history: 记录历史操作
+      * _report_results: 通知服务端执行结果
+        * report：报文模型
+          * status： 是否正确
+          * instruct：实际调用shell
+          * msg： 成功时，输出信息
+          * err： 错误时，输出信息
+          * time： 指令执行时间
+        * （report作为execute回调函数使用）
+      * _execute_instruct: 实际执行方法
+    * 优化listening_multi(监听软件清单)
+      * 进程启动解析来自服务端的软件清单
+      * 检查重复项，忽略以存在的软件
+      * 对新增软件进行额外处理：
+        * 全盘搜索匹配项（可匹配路径）
+        * 匹配结果提交服务端，等待处理
+        * 保存处理结果 software['ecdis']['path']
+          * 处理详情：
+            * 选择正确的路径
+            * 在local\softwares\下创建 软链接[快捷方式]
+            * software['ecdis']['path'] -> .\local\softwares\software
+        * 更新本地软件清单
+    * 优化软件的启动和关闭
+      * start：新进程打开软件，保存PID
+      * close：通过PID，关闭软件
+    * 新增checkfile方法：全盘搜索指定文件
+    * 优化项目结构：
+      * 同一通过executor执行器执行
+        * executor返回report，用于通知服务端执行结果
+    * 优化TCP连接
+      * TCPListen： 监听来自服务端的连接
+        * 获取shell指令
+      * TCPConnect： 与服务端建立连接
+        * 个别shell指令，需要等待服务端处理才能正确执行
+        * 交互式shell
+        * 建立软连接[快捷方式]
+  * ### server
+    * 优化TCP模块
+      * 发送shell后等待client汇报结果
+    * view：
+      * 计划新增wiatdone模块（待办事项）：
+        * 显示需要处理的客户端请求
+        * 处理入口
+      * 计划新增log模块内容：
+        * 输出来自客户端的汇报结果
 
     
 
