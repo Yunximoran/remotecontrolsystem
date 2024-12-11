@@ -12,6 +12,7 @@ import json
 import string
 from collections.abc import Iterable
 from xml.etree import ElementTree as et
+from protocol import TCPConnect
 
 
 SYSTEM_NAME = platform.system()                 # 操作系统名称
@@ -82,6 +83,8 @@ class Init:
             f.write(inspect.getsource(SYSTEM))
             f.write(f'SYSTEM = {SYSTEM.__name__}("{version}", {archiecture}, "{softwarepath}")\n')
         
+    
+        
         
         
 class BaseSystem:
@@ -136,6 +139,18 @@ class BaseSystem:
         # 关闭软件
         pass
     
+    def format_params(self, label, data):
+        return {
+            "label": label,
+            "data": data
+        }
+    
+    def wait_response(self, param):
+        conn = TCPConnect()
+        conn.send(json.dumps(param))
+        data = conn.recv()
+        conn.close()
+        return data.decode()
     
     # 文件相关
     def compress(self, dir_path):
@@ -199,6 +214,9 @@ class BaseSystem:
             "err": err if err else "<No error output>",
             "time": time.time()
         }   
+    
+    def build_hyperlink(f, t):
+        pass
     
     def uproot(self):
         # 升级root权限
@@ -265,6 +283,12 @@ class WindowsSystem(BaseSystem):
         for root in self.DATAPATH['root']:
             results.extend(super().checkfile(check_object, root))
         return results
+    
+    def build_hyperlink(target, frompath):
+        # windows 建立关联整个目录的连接
+        dir = os.path.dirname(frompath)
+        subprocess.Popen(["mklink", "/j", ".\local\softwares\{target}", dir])
+        
     
 class LinuxSystem(BaseSystem):
     def __init__(self, *args):

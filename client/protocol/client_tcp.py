@@ -2,6 +2,7 @@ import socket
 
 from despose import CONFIG
 TIMEOUT = 1
+BYTRSIZE = 1024
 class TCP:
     def __init__(self):
         self.sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -11,10 +12,10 @@ class TCP:
         pass
     
     def send(self, data):
-        pass
+        self.sock.sendall(data.encode())
     
     def recv(self):
-        pass
+        return self.sock.recv(BYTRSIZE)
 
     def close(self):
         self.sock.close()

@@ -1,5 +1,6 @@
 import ctypes
 import string
+import os
 
 def get_disks():
     drives = []
@@ -11,6 +12,10 @@ def get_disks():
     return drives
 
 if __name__ == "__main__":
-    disks = get_disks()
-    print("磁盘数量:", len(disks))
-    print("磁盘列表:", disks)
+    import subprocess
+    
+    source = r".\local\softwares"
+    # E:\Materail\game material\Chapter01テスト展示版
+    
+    s = os.path.dirname("E:\Materail\game material\Chapter01テスト展示版")
+    print(s)

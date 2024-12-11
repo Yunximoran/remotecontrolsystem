@@ -228,13 +228,16 @@ class Client:
                     result: newitem['ecdis']['path'] = ./local/softwares/software.exe
                     """
                     allpath = SYSTEM.checkfile(newsoftware)
-                    res = self.wait_respose(allpath)
+                    params = SYSTEM.format_params("", allpath)
+                    res = SYSTEM.wait_response(params)
+                    topath = f"./local/softwaers/{newsoftware}"
                     if res is not None:
                         newitem['ecdis']['path'] = res
                         local_softwares.append(newitem)
                     else:
                         print("没有找到相关软件，请检查软件是否安装")
         return local_softwares
+    
     
     def _write_local_softwares(self, local_softwares):
         with open("data/softwares.json", "w", encoding='utf-8') as f:

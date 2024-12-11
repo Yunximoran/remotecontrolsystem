@@ -58,6 +58,18 @@ class BaseSystem:
         # 关闭软件
         pass
     
+    def format_params(self, label, data):
+        return {
+            "label": label,
+            "data": data
+        }
+    
+    def wait_response(self, param):
+        conn = TCPConnect()
+        conn.send(json.dumps(param))
+        data = conn.recv()
+        conn.close()
+        return data.decode()
     
     # 文件相关
     def compress(self, dir_path):
