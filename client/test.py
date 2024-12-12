@@ -1,21 +1,17 @@
-import ctypes
-import string
+import subprocess
 import os
+import time
 
-def get_disks():
-    drives = []
-    bitmask = ctypes.cdll.kernel32.GetLogicalDrives()
-    for letter in string.ascii_uppercase:
-        if bitmask & 1:
-            drives.append(f"{letter}:\\")
-        bitmask >>= 1
-    return drives
+msgssh = open("local\logs\msg.out", 'a+')
+errssh = open("local\logs\err.err", 'a+')
 
-if __name__ == "__main__":
-    import subprocess
-    
-    source = r".\local\softwares"
-    # E:\Materail\game material\Chapter01テスト展示版
-    
-    s = os.path.dirname("E:\Materail\game material\Chapter01テスト展示版")
-    print(s)
+process = subprocess.Popen(['python'], stdin=subprocess.PIPE,
+                           stdout=msgssh, stderr=errssh, shell=True)
+
+while True:
+    process.stdin.write(b"print('hello')\r\n")
+    # process.stdin.flush()
+    msgssh.flush()
+    # msg = open("local\logs\msg.out", 'r')
+    print("output:", msgssh.read()) 
+    time.sleep(1)

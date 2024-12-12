@@ -10,16 +10,29 @@
         <tcp>
             <server>9095</server>
             <client>8085</client>
-            <client_call>8086</client_call>
         </tcp>
     </connect>
 
+    <build>
+    
+        <structure target="local">
+        
+            <dir>data</dir>
+            <dir>logs</dir>
+            <dir>softwares</dir>
+        </structure>
+
+        
+        <encoding>utf-8</encoding>
+    </build>
+
     <paths>
-        <path_softwares>D://softwares</path_softwares>
+        <map_softwares>local\data\softwares.json</map_softwares>
+        <log_shells>local\data\shells.json</log_shells>
+        <output />
     </paths>
 
     <performance>
         <max_process>10</max_process>    
     </performance>
-
 </base>

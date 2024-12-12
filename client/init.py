@@ -38,7 +38,8 @@ class Init:
             "import time",
             "import json",
             "import subprocess", 
-            "from collections.abc import Iterable"   
+            "from collections.abc import Iterable",
+            "from protocol import TCPConnect"
         ],
         "Windows":[
             "import ctypes",
@@ -73,7 +74,7 @@ class Init:
         #     return BaseSystem(SYSTEM_VERSION, SYSTEM_ARCHITECTURE)
     
     def __dump_system_model(self, SYSTEM, label, version, archiecture, softwarepath):
-        with open("system.py", "w", encoding="utf-8") as f:
+        with open(r"util\system.py", "w", encoding="utf-8") as f:
             for public_package in self.DUMPSYSTEM['public']:
                 f.write(f"{public_package}\n")
             
@@ -91,9 +92,20 @@ class BaseSystem:
     CWDIR = os.getcwd()
     DATAPATH = {
         "softwares": os.path.join(CWDIR, r"data\softwares.json"),
-        "root": None
+        "root": None,
+        "logs":{
+            "msg": None,
+            "err": None,
+        }
     }
-    
+    ERRORFILE = {
+        "file": None,
+        "path": None
+    }
+    MSGFILE = {
+        "file": None,
+        "path": None
+    }
     # EXTENSION = ".exe" | ".deb"
     
     """
@@ -186,7 +198,7 @@ class BaseSystem:
                     
         return results
     
-    def executor(self, label, *args):
+    def executor(self, label, args, isclear=True):
         """
         :param label: PID标识
         :param args: 封装的shell指令列表
@@ -197,7 +209,7 @@ class BaseSystem:
                                            stdout=subprocess.PIPE,
                                            stderr=subprocess.PIPE)
         msg, err = self.PID[label].communicate()
-        self.clear_process(label)
+        self.clear_process(label) if isclear else None
         return self.report(args, msg, err) 
     
     def clear_process(self, label):
@@ -215,8 +227,8 @@ class BaseSystem:
             "time": time.time()
         }   
     
-    def build_hyperlink(f, t):
-        pass
+    def build_hyperlink(self, frompath):
+        report = self.executor("build re")
     
     def uproot(self):
         # 升级root权限
@@ -254,7 +266,7 @@ class WindowsSystem(BaseSystem):
             for item in softwares:
                 if software == item["ecdis"]['name']:
                     # 新窗口打开 防止进程已经开启 | 或者后续更新为校验进程池
-                    report = self.executor(software, "start", item['ecdis']['path'])
+                    report = self.executor(software, ["start", item['ecdis']['path']], False)
                     item["conning"] = True if report['err'] == "<No error output>" else False # 更新软件状态
                     break
                 
@@ -284,10 +296,23 @@ class WindowsSystem(BaseSystem):
             results.extend(super().checkfile(check_object, root))
         return results
     
-    def build_hyperlink(target, frompath):
+    def build_hyperlink(frompath):
+        """
+        target 目录名称
+        所在路径
+            linux 可以通过软链接启动程序
+            window 软连接需要将包含软件依赖的目录
+        """
         # windows 建立关联整个目录的连接
-        dir = os.path.dirname(frompath)
-        subprocess.Popen(["mklink", "/j", ".\local\softwares\{target}", dir])
+        target = os.path.basename(frompath)
+        topath = os.path.join(".\local\softwares", target)
+        subprocess.Popen(["mklink", "/j", topath, frompath])
+        return topath
+    
+    def build_softwarelink(self, softname, frompath):
+        path = r".\local\softwares\{name}".format(name=softname)
+        self.executor(["mklink", "/j", path, frompath])
+        return path
         
     
 class LinuxSystem(BaseSystem):

@@ -41,7 +41,7 @@ class BroadCast(UDP):
         self.sock.setsockopt(socket.SOL_SOCKET, socket.SO_BROADCAST, 1)     # 允许广播
         
     
-    def send(self, data):
+    def send(self, data:str):
         self.sock.sendto(data.encode(), BROADCAST)
 
 

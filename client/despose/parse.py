@@ -9,6 +9,7 @@ class Parse:
         
         self.load_connect_config()
         self.load_pathconfig()
+        self.load_buildconfig()
         self.load_performance()
     
     def message(self):
@@ -32,8 +33,18 @@ class Parse:
     def load_pathconfig(self):
         self.__PATHROOT = self.__ROOT.find("paths")
         
-        self.PATH_SOFTWARES = self.__PATHROOT.find("path_softwares").text
+        self.PATH_LOG_SHELLS = self.__PATHROOT.find("log_shells").text
+        self.PATH_MAP_SOFTWARES = self.__PATHROOT.find("map_softwares").text
+    
+    def load_buildconfig(self):
+        BUILDROOT = self.__ROOT.find("build")
+        STRUCTURE = BUILDROOT.find("structure")
+        self.LOCAL_DIR_ROOT = STRUCTURE.get('target')
+        self.LOCAL_DIR_DATA = "\\".join([self.LOCAL_DIR_ROOT, STRUCTURE.findall("dir")[0].text])
+        self.LOCAL_DIR_LOGS = "\\".join([self.LOCAL_DIR_ROOT, STRUCTURE.findall("dir")[1].text])
+        self.LOCAL_DIR_SOFTWARES = "\\".join([self.LOCAL_DIR_ROOT, STRUCTURE.findall("dir")[2].text]) 
         
+        self.ENCODING = BUILDROOT.find("encoding").text     
     
     def load_performance(self):
         self.__PERFORMANCE = self.__ROOT.find("performance")
@@ -43,5 +54,6 @@ class Parse:
         
 CONFIG = Parse()
 if __name__ == "__main__":
-    print(CONFIG.IP)
+    print(CONFIG.LOCAL_DIR_SOFTWARES)
+    print(CONFIG.ENCODING)
 
