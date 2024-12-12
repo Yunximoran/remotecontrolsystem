@@ -12,7 +12,7 @@ import json
 import string
 from collections.abc import Iterable
 from xml.etree import ElementTree as et
-from protocol import TCPConnect
+from depend.protocol import TCPConnect
 
 
 SYSTEM_NAME = platform.system()                 # 操作系统名称

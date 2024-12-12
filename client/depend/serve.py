@@ -4,9 +4,13 @@ import subprocess
 import multiprocessing
 
 from despose import CONFIG, DESPOSE
-from protocol import TCPListen, TCPConnect
-from protocol import BroadCast, MultiCast
-from .system import SYSTEM
+from .protocol import TCPListen
+from .protocol import BroadCast, MultiCast
+try:
+    from .system import SYSTEM
+except ImportError:
+    raise ImportError("导入失败，请检查depend\system.py 是否存在")
+
 
 class BaseServe:
     def __init__(self, *args, **kwargs):
@@ -109,9 +113,7 @@ class ConnectServe(BaseServe):
             time.sleep(1)
             heart_pkgs = DESPOSE.get_heartpack()
             print(heart_pkgs)
-            udp_conn.send(json.dumps(heart_pkgs))
-            
-   
+            udp_conn.send(json.dumps(heart_pkgs))   
         
 class ListenServe(BaseServe):   
     def serve(self):

@@ -8,15 +8,9 @@
 import os
 import json
 
-from util import ListenServe, SelectServe, ConnectServe, BaseServe
+from depend import ListenServe, SelectServe, ConnectServe, BaseServe
 from despose import CONFIG
 from despose import build_directory
-
-try:
-    from system import SYSTEM
-except ImportError as e:
-    raise ImportError("系统未加载， 检查当前目录下是否存在system.py文件")
-
      
 class Client:
     ALLSERVER: list[BaseServe] = [

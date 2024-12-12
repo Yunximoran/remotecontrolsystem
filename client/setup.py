@@ -10,3 +10,6 @@
 本机MAC
 软件安装位置 根目录
 """
+
+import init 
+init.Init()
