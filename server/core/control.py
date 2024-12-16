@@ -2,13 +2,17 @@ import multiprocessing
 import time
 import json
 
+from multiprocessing import Manager
+from fastapi import websockets
+
 from databasetool import RedisConn as DATABASE
-from core.tcp import TCP
+from core.tcp import TCPConnect, TCPListen
 
 
 
 LOCK = multiprocessing.Lock()
 MESSAGEQUEUE = multiprocessing.Queue()
+WAITDONEQUEUE = Manager().Queue()
 
 
 class Control:
@@ -16,21 +20,38 @@ class Control:
     CLIENTMESSAGE = {}
     
     def __init__(self):
-        # multiprocessing.Process(target=self.listen)
         pass
     
-    def push(self):
-        pass
+
 
     def listen(self):
-        conn = TCP()
+        conn = TCPListen()
+        pool = multiprocessing.Pool()
         while True:
             try:
-                data = conn.recv()
-                print(data)
+                # 监听待办事件
+                """
+                写入redis 供vue读取
+                等待vue执行处理
+                
+                * 更新待办事件
+                * 创建处理任务
+                    pass
+                """
+                sock, msg = conn.recv()
+                pool.apply_async(self.waitdone, args=(sock, msg))   # 添加待办任务
             except:
                 pass
-            
+    
+    def waitdone(self, msg):
+        DATABASE.lpush("waitdone_message", msg)
+        # 阻塞函数，等待前端处理
+        """
+        前端通过接口返回处理结果，怎么找到对应的client套接字
+        
+        """
+
+    
     
     def sendtoclient(self, shell_control:str, toclients = []):
         """
@@ -56,9 +77,12 @@ class Control:
         """
             一次只发送一个指令，
         """
-        conn = TCP()
-        msg = conn.send(shell_control, ip)
-        msg = json.loads(msg)
-        print(msg)
+        conn = TCPConnect() 
+        report = conn.send(shell_control, ip)
+        DATABASE.lpush("reports", report)
+        DATABASE.hset("logs", ip, report)
 
-            
+
+if __name__ == "__main__":
+    Control().listen()
+    

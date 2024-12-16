@@ -19,6 +19,7 @@ import uvicorn
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi import (
         FastAPI,
+        WebSocket,
         HTTPException,
     )
 
@@ -59,6 +60,15 @@ server = uvicorn.Server(uvicorn.Config(app))
 
 controlor = control.Control()
 multiter = MultiCast()
+
+async def websocket_handler(websocket: WebSocket, target, *args, **kwargs):
+    await websocket.accept()
+    target(*args, **kwargs)
+
+#SOCKET
+@app.websocket("/ws")
+async def periodic_update():
+    pass
 
 # LOGIN
 @app.post("/servers/login/")
