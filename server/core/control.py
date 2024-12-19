@@ -12,7 +12,7 @@ from core.tcp import TCPConnect, TCPListen
 
 LOCK = multiprocessing.Lock()
 MESSAGEQUEUE = multiprocessing.Queue()
-WAITDONEQUEUE = Manager().Queue()
+# WAITDONEQUEUE = Manager().Queue()
 
 
 class Control:
@@ -48,7 +48,6 @@ class Control:
         # 阻塞函数，等待前端处理
         """
         前端通过接口返回处理结果，怎么找到对应的client套接字
-        
         """
 
     
@@ -58,7 +57,9 @@ class Control:
             加载redis中保存的client message
             子进程启动tcp连接客户端发送shell_control
         """
+        print("hello wrold")
         if toclients == []:
+            
             toclients = [client.decode() for client in DATABASE.hgetall("client_status").keys()]
             
         for client  in toclients:
@@ -83,6 +84,3 @@ class Control:
         DATABASE.hset("logs", ip, report)
 
 
-if __name__ == "__main__":
-    Control().listen()
-    

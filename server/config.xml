@@ -18,8 +18,10 @@
             <host>localhost</host>
             <port>6379</port>
             <datas>
-                <lr>client-message</lr>
+                client_status
+                client_message
             </datas>
+            <conf>./databasetool</conf>
         </redis_config>
 
         <servers>
@@ -27,7 +29,7 @@
             <uvicorn>uvicorn core.api:app --reload</uvicorn>
             <listening>python core/udp.py</listening>
             <control>python core/control.py</control>
-            <redis>redis-server</redis>
+            <redis>redis-server ./databasetool/redis-service.conf</redis>
             <view>npm --prefix view run serve</view>
         </servers>
     </base>

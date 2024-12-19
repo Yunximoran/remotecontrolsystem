@@ -8,6 +8,17 @@ module.exports = defineConfig({
         "path": false
       }
     }    
+  },
+  devServer: {
+    historyApiFallback: true,
+    allowedHosts: "all"
   }
+  // devServer:{
+ 
+  //   historyApiFallback: true,
+ 
+  //   allowedHosts: "all",
+ 
+  // }
 
 })

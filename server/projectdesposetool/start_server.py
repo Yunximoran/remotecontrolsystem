@@ -14,11 +14,8 @@ class ServerManage:
     
     def start(self):
         for shell in self.servers.values():
-            self.ServerList.append(Popen(args=shell, stdin=PIPE, shell=True))
+            self.ServerList.append(Popen(args=shell.split(" "), shell=True))
     
-    def kill(self):
-        for process in self.ServerList:
-            print(process)
 
 SERVERMANAGE = ServerManage()
 

@@ -13,15 +13,17 @@ API 接收请求 处理请求内容 返回响应数据
 """
 
 import json
+import asyncio
 from typing import Annotated
 
 import uvicorn
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi import (
         FastAPI,
+        HTTPException,    
         WebSocket,
-        HTTPException,
-    )
+        WebSocketDisconnect
+        )
 
 from core import control
 from core.udp import MultiCast
@@ -44,7 +46,7 @@ from projectdesposetool.systool import choose_software
 ORIGINS = [
     # vue address
     "https://localhost:8080",
-    "http://localhost:8080"
+    "http://localhost:8080",
 ]
 
 app = FastAPI()
@@ -61,24 +63,28 @@ server = uvicorn.Server(uvicorn.Config(app))
 controlor = control.Control()
 multiter = MultiCast()
 
-async def websocket_handler(websocket: WebSocket, target, *args, **kwargs):
-    await websocket.accept()
-    target(*args, **kwargs)
 
-#SOCKET
+
 @app.websocket("/ws")
-async def periodic_update():
-    pass
-
+async def predict(websocket: WebSocket):
+    await websocket.accept()
+    try:
+        while True:
+            client_status = DATABASE.hgetall("client_status")
+            client_reports = DATABASE.hgetall("reports")
+            await websocket.send_json([client_status, client_reports])
+            await asyncio.sleep(1)
+            
+    except WebSocketDisconnect:
+        print("断开连接")
+        
 # LOGIN
 @app.post("/servers/login/")
 async def login(loginform: Credentils):
     credentils = loginform.account
     password = loginform.password
-    
-    accounts_information = DATABASE.hget("accounts", credentils)
+    accounts_information = DATABASE.hget("accounts", credentils).decode()
     if accounts_information is not None:
-        accounts_information = accounts_information.decode()
         if password == accounts_information['password']:
             return {"start": "OK", "msg": accounts_information}
         else:
@@ -93,10 +99,13 @@ async def login(loginform: Credentils):
 async def send_control_shell(shell_list: list[ShellList], toclients: list[str] = []):
     try:
         for shell_msg in shell_list:
+            
             controlor.sendtoclient(shell_msg.model_dump_json(), toclients)
+            
         return {"ok": "send a shell to client"}
     except Exception as e:
         return {"ERROR": e}
+    
 
 @app.put("/servers/send_software_checklist/")    # 发送软件清单
 async def send_software_checklist(checklist: list[Software]):
@@ -119,16 +128,18 @@ async def get_account_data(account: Annotated[str, None]):
     account_infomation = DATABASE.hget("accounts", account)
     if account_infomation is not None:
         return json.loads(account_infomation.decode())
+    
     return {'start': "not data"}
 
 
 @app.put("/servers/data/registry_new_account")
 async def registryaccount(regisform: NewUser):
     # 注册新用户，保存在数据库
-    DATABASE.hset("accounts", regisform.account, regisform.model_dump_json())
+    DATABASE.hset("accounts", regisform.account, regisform.model_dump_json())   
     return {
         "account": regisform.account,
         "username": regisform.username
+        
     }
     
 @app.get("/servers/data/softwarelist")
@@ -148,6 +159,7 @@ async def alter_software(alter: Annotated[str, None]):
     if alter == "push":
         software = choose_software()
         return {"OK": software}
+
 
 
 

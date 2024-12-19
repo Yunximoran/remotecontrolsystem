@@ -8,10 +8,19 @@
 <script>
 import axios from 'axios';
 import Client from "./client.vue"
-import { mapStores } from 'pinia';
 import { useRootStore } from "@/plugins/store/rootStore"
+import { useSocketStore } from '@/plugins/store/sockerStore';
+import { ref } from 'vue';
 
 export default{
+    setup(){
+        const rootStore = useRootStore()
+        // const sockerStore = useSocketStore()
+        return {
+            rootStore,
+            // sockerStore
+        }
+    },
     data(){
         return {
             isclear: false,
@@ -20,9 +29,7 @@ export default{
     components: {
         Client,   
     },
-    computed:{
-        ...mapStores(useRootStore)
-    },
+
     watch: {
 
     },
@@ -44,7 +51,6 @@ export default{
         }, 
     },
     created(){
-        // 这里是组件的钩子，组件被创建时调用
         this.getclientmessage()
         this.$emit("return", this.selects)
         

@@ -1,4 +1,4 @@
-from redis import Redis, ConnectionPool
+from redis import Redis
 
 from projectdesposetool import CONFIG
 
@@ -6,16 +6,6 @@ from projectdesposetool import CONFIG
 REDIS_CONF = CONFIG.parseConfig("redis_config")
 
 
-RedisConn = Redis(host=REDIS_CONF['host'], port=REDIS_CONF['port'], db=0)
-
-
-class RedisTools:
-    def __init__(self) -> None:
-        self.conn = ConnectionPool()
+RedisConn = Redis(host=REDIS_CONF['host'], port=REDIS_CONF['port'], db=0, decode_responses=True)
     
-
-if __name__ == "__main__":
-    RedisConn.pubsub()
-
-    
-    
+# print(REDIS_CONF.items())

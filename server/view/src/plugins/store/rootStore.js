@@ -1,7 +1,5 @@
 
 import { defineStore } from "pinia"
-import { useClientStore } from "./clientStore"
-
 
 export const useRootStore = defineStore("root", {
     state: ()=>({
@@ -19,12 +17,6 @@ export const useRootStore = defineStore("root", {
             }
             console.log("selected ", selected)
             return selected
-        },
-        all_store: (state) =>{
-            const clientStore = useClientStore()
-            return {
-                ...clientStore
-            }
         }
     },
     actions:{

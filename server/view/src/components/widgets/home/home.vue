@@ -39,6 +39,8 @@ import ClientBox from "./clientview/clientbox.vue"
 import Loger from "./loger.vue";
 import Softwarebox from "./softwareview/softwarebox.vue";
 import WaitDone from "./waitdone.vue"
+import { useSocketStore } from "@/plugins/store/sockerStore";
+import { useRootStore } from "@/plugins/store/rootStore";
 
 
 export default{
@@ -51,6 +53,14 @@ export default{
         Loger,
         Softwarebox,
         WaitDone
+    },
+    setup(){
+        const sockerStore = useSocketStore()
+        const rootStore = useRootStore()
+        return {
+            sockerStore,
+            rootStore
+        }
     },
     data(){
         return {
@@ -75,9 +85,8 @@ export default{
         }
     },
     created(){
+        this.sockerStore.setupWebSocket()
         this.$router.afterEach((to, from) =>{
-            // console.log(to)
-            // console.log(from)
             if(this.$route.path === "/home"){
                 this.isshow_send = false
             }
