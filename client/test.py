@@ -1,17 +1,24 @@
-import subprocess
-import os
-import time
+# import subprocess
+# import ctypes
+# import sys
+# import os
 
-msgssh = open("local\logs\msg.out", 'a+')
-errssh = open("local\logs\err.err", 'a+')
+# def is_admin():
+#     try:
+#         return ctypes.windll.shell32.IsUserAnAdmin()
+#     except:
+#         return False
+    
+# if is_admin():
+#     print("admin")
+# else:
+#     # ShellExecuteW
+#     ctypes.windll.shell32.ShellExecuteW(None, "runas", sys.executable, " ".join(sys.argv), None, 1)
+#     sys.exit(0)
+# print(os.getcwd())
+# basepath = os.getcwd()
+# topath = "local\softwares"
+# print(os.path.join(basepath, topath, "geek"))
+# subprocess.Popen(['mklink',  topath+"\\geek", r"D:\\toolkit\\system\\geek.exe"], shell=True)
 
-process = subprocess.Popen(['python'], stdin=subprocess.PIPE,
-                           stdout=msgssh, stderr=errssh, shell=True)
 
-while True:
-    process.stdin.write(b"print('hello')\r\n")
-    # process.stdin.flush()
-    msgssh.flush()
-    # msg = open("local\logs\msg.out", 'r')
-    print("output:", msgssh.read()) 
-    time.sleep(1)

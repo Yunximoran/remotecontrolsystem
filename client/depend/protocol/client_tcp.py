@@ -44,6 +44,11 @@ class TCPListen(TCP):
                 return (server_sock, data.decode())
             except TimeoutError:
                 pass
+    
+    def recv(self):
+        server_sock, server_address = self.sock.accept()
+        data = server_sock.recv(2048)
+        return (server_sock, data.decode())
 
 class TCPConnect(TCP):
     def __init__(self):

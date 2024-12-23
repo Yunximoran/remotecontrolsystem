@@ -4,18 +4,19 @@ import subprocess
 import multiprocessing
 
 from despose import CONFIG, DESPOSE
-from .protocol import TCPListen
+from .protocol import TCPListen, TCPConnect
 from .protocol import BroadCast, MultiCast
+
 try:
     from .system import SYSTEM
 except ImportError:
-    raise ImportError("导入失败，请检查depend\system.py 是否存在")
+    pass
+    # raise ImportError("导入失败，请检查depend\system.py 是否存在")
 
 
 class BaseServe:
-    def __init__(self, *args, **kwargs):
-        self.process = multiprocessing.Process(target=self.serve, args=args)
-        # self.process.start()
+    def __init__(self):
+        self.serve()
     
     def serve(self):
         pass
@@ -34,75 +35,68 @@ class SelectServe(BaseServe):
             指令内容
             
         instruct = {
-            "label: close | close -s,
+            "label: close | close -s,   # 应该更具体一点 ？ 但麻烦的就是服务端的处理， 需要保存pid的进程应该只有启动软件 是这样吗？
             "instruct: "" | None
         }
         """
         tcp_conn =  TCPListen()
         while True:
-            conn, data = tcp_conn.listening()
-            if data:         
-                instructs = json.loads(data)
-                # tcp_conn.sendform("测试 tcp汇报服务器")
+            try:             
+                conn, data = tcp_conn.recv()
+                instruct = json.loads(data) # type: dict
+                # # 某个参数不可被序列化, 使用pool会报错，但是使用process则不会
+                # 怎么解决pool运行时不可被序列化的问题
                 with multiprocessing.Pool() as pool:
-                    res_execute = pool.apply_async(self._execute_instruct, args=(instructs,),
-                        callback=lambda report: self._report_results(conn, report))
-                    res_history = pool.apply_async(self._history, args=(instructs,))
-                    print("res", res_execute.get())
+                    res_execute = pool.apply_async(self.execute_instruct, args=(instruct, ),
+                        callback=lambda report: self.report_results(conn, report))
+                    res_history = pool.apply_async(self.history, args=(instruct, ))
+                    print(res_execute.get())
+            except TimeoutError:
+                pass
+            
+
         
-    def _history(self, instructs):
+    def history(self, instruct):
         # 记录历史指令
         print("history process")
         with open(CONFIG.PATH_LOG_SHELLS, 'w', encoding="utf-8") as f:
-            json.dump(instructs, f, ensure_ascii=False, indent=4)
+            json.dump(instruct, f, ensure_ascii=False, indent=4)
                 
-    def _report_results(self, conn, report:str):
-        print(type(conn))
+    def report_results(self, conn, report:str):
         conn.sendall(report.encode())
         conn.close()
+        return report
 
-    def _execute_instruct(self, instructs:dict[str, str]):
-        # 顺序执行shell
-        print("execute process")
-        label = instructs['name']   # label 标记指令用途
-        shell = instructs['shell']  # shell 实习执行指令
-        
-        report = self.__instruct_default(label)
-        if not report:
-            report = self.__instruct_custom(shell)
-
-        return json.dumps(report, ensure_ascii=False)
-
-    def __instruct_default(self, label):
-        # 调用默认指令
-        isdefault = True
+    def execute_instruct(self, instruct:dict[str, str]):
+        label = instruct['name']      # label 标记指令用途
+        instruct = instruct['shell'] # shell 实际执行语句
         if label == "close":
-            return SYSTEM.close()
+            report =  SYSTEM.close()
+            
         if label == "close -s":
-            return  SYSTEM.close_software()
+            report =   SYSTEM.close_software()
+            
         if label == "restart":
-            return SYSTEM.restart()
+            report =  SYSTEM.restart()
+            
         if label == "start -s":
-            return SYSTEM.start_software()
+            report = SYSTEM.start_software()
+            
         if label == "wget":
-            return SYSTEM.wget()
+            report = SYSTEM.wget()
+            
         if label == "compress":
-            return SYSTEM.compress()
+            report = SYSTEM.compress()
+            
         if label == "uncompress":
-            return SYSTEM.uncompress()
-        return False
+            report = SYSTEM.uncompress()
+        
+        report = SYSTEM.executor(instruct)
+        return report
+    
          
-    def __instruct_custom(self, instruct):
-        # 调用自定义指令
-        process = subprocess.Popen(instruct, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True, shell=True)
-        msg, err = process.communicate()
-        return {
-            "status": "ok" if not err else "error",
-            "instruct": instruct,
-            "msg": msg if msg else "<No output>",
-            "err": err if err else "<No error output>",
-            "time": time.time()
-        }
+    
+
      
 class ConnectServe(BaseServe):
 
@@ -112,19 +106,19 @@ class ConnectServe(BaseServe):
         while True:
             time.sleep(1)
             heart_pkgs = DESPOSE.get_heartpack()
-            print(heart_pkgs)
+            # print(heart_pkgs)
             udp_conn.send(json.dumps(heart_pkgs))   
         
-class ListenServe(BaseServe):   
+class ListenServe(BaseServe): 
+    # 监听组播端口， 获取软件清单  
     def serve(self):
-        # 组播接受软件清单
-        # 在服务端获取更新 ？ 
-        # 软件安装位置
-        multi_conn = MultiCast()
+        multi_conn = MultiCast()    # 激活组播端口
         pool = multiprocessing.Pool()
         while True:
             data = multi_conn.recv()
             softwares = json.loads(data) # 解析服务端软件清单
+            # pool.map_async(self._update_softwares, softwares)
+            # 为每次接收到的软件清单创建处理进程
             pool.apply_async(self._update_softwares, args=(softwares,), callback=self._write_local_softwares)
             
     def _update_softwares(self, softwares):
@@ -132,6 +126,7 @@ class ListenServe(BaseServe):
         with open(CONFIG.PATH_MAP_SOFTWARES, 'r', encoding='utf-8') as f:
             local_softwares: list[dict] = (json.load(f))    # 加载本地软件清单
             for newitem in softwares:
+                # 遍历软件清单
                 newsoftware = newitem['ecdis']['name']
                 isexist = False
                 for olditem in local_softwares: # 筛选重复项
@@ -145,14 +140,17 @@ class ListenServe(BaseServe):
                     # 动态处理 磁盘中查找所有匹配项，返回服务端，等待服务端处理
                     """
                     步骤
-                        在local\softwares\中创建软连接[快捷方式]
+                        在local\softwares\中创建软连接[符号链接]
                         
                     result: newitem['ecdis']['path'] = ./local/softwares/software.exe
                     """
-                    allpath = SYSTEM.checkfile(newsoftware)
-                    params = SYSTEM.format_params("choose software path", allpath)  # 格式化表单信息
-                    res = SYSTEM.wait_response(params)
-                    newitem['ecdis']['path'] = SYSTEM.build_softwarelink(res)
+                    allpath = SYSTEM.checkfile(newsoftware) # 在磁盘总搜索所有包含软件名的路径
+                    params = SYSTEM.format_params(1, allpath)  # 格式化表单信息
+                    res = self._wait_response(params)  # 等待服务器选择正确路径
+                    
+                    newitem['ecdis']['path'], report = SYSTEM.build_hyperlink(newsoftware, res)
+                    self._report_results(report)
+                    
                     local_softwares.append(newitem)
                     
         return local_softwares
@@ -160,4 +158,20 @@ class ListenServe(BaseServe):
     def _write_local_softwares(self, local_softwares):
         with open(CONFIG.PATH_MAP_SOFTWARES, "w", encoding='utf-8') as f:
             json.dump(local_softwares, f, ensure_ascii=False, indent=4)
-    
+            
+    def _report_results(self, report):
+        conn = TCPConnect()
+        conn.send(report)
+        conn.close()
+        del conn
+        
+    def _wait_response(self, param):
+        conn = TCPConnect()
+        conn.send(json.dumps(param))
+        data = conn.recv()
+        conn.close()
+        return data.decode()
+
+    def add_pathfield(self, item):
+        pass
+

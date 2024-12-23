@@ -23,11 +23,6 @@ class Despose:
     def get_heartpack(self):
         with open(CONFIG.PATH_MAP_SOFTWARES, "r") as f:
             softwares = json.load(f)
-            for item in softwares:
-                try:    # 初始状态下item可能为None ? 历史问题， 后续可能不需要捕获异常
-                    del item['ecdis']['path']
-                except KeyError:
-                    pass
         return {
             "mac": CONFIG.MAC,
             "ip": CONFIG.IP,

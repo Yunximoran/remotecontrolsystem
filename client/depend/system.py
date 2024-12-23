@@ -1,49 +1,40 @@
 import os
 import re
+import sys
 import time
 import json
 import subprocess
 from collections.abc import Iterable
-from protocol import TCPConnect
+
+
+from despose import CONFIG
+from .protocol import TCPConnect
+
+
 import ctypes
 import string
 class BaseSystem:
     CWDIR = os.getcwd()
     DATAPATH = {
-        "softwares": os.path.join(CWDIR, r"data\softwares.json"),
+        "softwares": os.path.join(CWDIR, r"local\data\softwares.json"),
         "root": None,
         "logs":{
-            "msg": None,
-            "err": None,
+            "msg": "local\logs\msg.log",
+            "err": "local\logs\err.log",
         }
     }
-    ERRORFILE = {
-        "file": None,
-        "path": None
-    }
-    MSGFILE = {
-        "file": None,
-        "path": None
-    }
-    # EXTENSION = ".exe" | ".deb"
     
     """
     存在问题
         设备关机和重启
     """
     
-    PID:dict[str, subprocess.Popen] = {}    # 暂定
+    PID:dict[str, subprocess.Popen] = {}  # 保存运行进程
     
     
-    def __init__(self, version, architecure, softwares_dir=""):
-        if not os.path.exists(softwares_dir):
-            os.makedirs(softwares_dir)
-        
+    def __init__(self, version, architecure):
         self.version = version
         self.bit, self.linktype = architecure
-        self.path = {
-            "softwares": softwares_dir
-        }
     
     def init(self):
         pass
@@ -70,18 +61,22 @@ class BaseSystem:
         # 关闭软件
         pass
     
-    def format_params(self, label, data):
+    def format_params(self, typecode, data):
+        types = [
+            "instruct",
+            "software"
+        ]
         return {
-            "label": label,
-            "data": data
+            "type": types[typecode],
+            "data": data    # 携带的data， 软件路径列表 | 错误报文
         }
     
-    def wait_response(self, param):
-        conn = TCPConnect()
-        conn.send(json.dumps(param))
-        data = conn.recv()
-        conn.close()
-        return data.decode()
+    # def wait_response(self, param):
+    #     conn = TCPConnect()
+    #     conn.send(json.dumps(param))
+    #     data = conn.recv()
+    #     conn.close()
+    #     return data.decode()
     
     # 文件相关
     def compress(self, dir_path):
@@ -117,37 +112,51 @@ class BaseSystem:
                     
         return results
     
-    def executor(self, label, args, isclear=True):
+    def executor(self, args, label=None, isadmin=False):
         """
         :param label: PID标识
         :param args: 封装的shell指令列表
-        :return report: 返回报文, 用于向服务端汇报执行结果 
+        :return report: 返回报文, 用于向服务端汇报执行结果
+        
+        除了软件清单，其他指令可能存在创建重复label进程
+            如：同时关闭多个软件
+            规定更详细的label close ？ softwares
         """
-        self.PID[label] = subprocess.Popen(args=args, shell=True, text=True,
-                                           stdin = subprocess.PIPE,
-                                           stdout=subprocess.PIPE,
-                                           stderr=subprocess.PIPE)
-        msg, err = self.PID[label].communicate()
-        self.clear_process(label) if isclear else None
-        return self.report(args, msg, err) 
+        if isadmin:
+            self.uproot()
+        else:
+            pass
+        process= subprocess.Popen(
+                args=args,
+                shell=True, 
+                text=True,
+                stdin = subprocess.PIPE,
+                stdout=subprocess.PIPE,
+                stderr=subprocess.PIPE
+            )
+        msg, err = process.communicate()
+        
+        if label is not None:
+            self.PID[label] = process
+            
+        return  self.report(args, msg, err)\
+            if err == "你没有足够的权限执行此操作" or "权限不足"\
+            else self.executor(args, isadmin=True)
     
-    def clear_process(self, label):
-        # 清理无用进程
-        self.PID[label].kill()
-        del self.PID[label]
         
     def report(self, args, msg, err):
         # 格式化报文
-        return {
+        return json.dumps({
             "status": "ok" if not err else "error",
             "instruct": " ".join(args) if isinstance(args, Iterable) else args,
             "msg": msg if msg else "<No output>",
             "err": err if err else "<No error output>",
             "time": time.time()
-        }   
+        }, ensure_ascii=False)   
+    
     
     def build_hyperlink(self, frompath):
-        report = self.executor("build re")
+        pass
     
     def uproot(self):
         # 升级root权限
@@ -179,11 +188,17 @@ class WindowsSystem(BaseSystem):
         # 软件路径
         report = None
         with open(self.DATAPATH['softwares'], 'r', encoding="utf-8") as f:
-            softwares = json.load(f)
+            softwares = json.load(f)    # 软件映射文件
             for item in softwares:
                 if software == item["ecdis"]['name']:
                     # 新窗口打开 防止进程已经开启 | 或者后续更新为校验进程池
-                    report = self.executor(software, ["start", item['ecdis']['path']], False)
+                    try:
+                        report = self.executor(["start", item['ecdis']['path']], label=software)
+                    except:
+                        tosoftware = os.path.join(CONFIG.PATH_MAP_SOFTWARES, software)
+                        report = self.executor(["start", tosoftware], label=software)
+                        
+                    # 通过报文返回的信息，如果没有异常，表示正在连接
                     item["conning"] = True if report['err'] == "<No error output>" else False # 更新软件状态
                     break
                 
@@ -213,7 +228,7 @@ class WindowsSystem(BaseSystem):
             results.extend(super().checkfile(check_object, root))
         return results
     
-    def build_hyperlink(frompath):
+    def build_hyperlink(self, filename, frompath):
         """
         target 目录名称
         所在路径
@@ -221,13 +236,16 @@ class WindowsSystem(BaseSystem):
             window 软连接需要将包含软件依赖的目录
         """
         # windows 建立关联整个目录的连接
-        target = os.path.basename(frompath)
-        topath = os.path.join(".\local\softwares", target)
-        subprocess.Popen(["mklink", "/j", topath, frompath])
-        return topath
-    
-    def build_softwarelink(self, softname, frompath):
-        path = r".\local\softwares\{name}".format(name=softname)
-        self.executor(["mklink", "/j", path, frompath])
-        return path
-SYSTEM = WindowsSystem("10.0.22631", ('64bit', 'WindowsPE'), "D://softwares/")
+        topath = os.path.join(CONFIG.PATH_MAP_SOFTWARES, filename)  # 软件映射地址  
+        # 软件不应该同名
+        report = self.executor(["mklink", topath, frompath], isadmin=True)
+        return topath, report
+
+    def uproot(self):
+        # 不确定包含范围
+        try:
+            ctypes.windll.shell32.IsUserAnAdmin()
+        except:
+            ctypes.windll.shell32.ShellExecuteW(None, "runas", sys.executable, None, 1)
+            sys.exit(0)
+SYSTEM = WindowsSystem("10.0.22631", ('64bit', 'WindowsPE'))
