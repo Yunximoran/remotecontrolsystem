@@ -36,6 +36,7 @@ class TCPListen(TCP):
     def settings(self):
         self.tcp_socket.bind((CONFIG.IP, CONFIG.TSPORT))
         self.tcp_socket.listen(5)
+        self.tcp_socket.settimeout(1)
     
     def recv(self):
         client_sock, address = self.tcp_socket.accept()

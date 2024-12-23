@@ -13,8 +13,14 @@ export const useSocketStore = defineStore('socket', {
             data: {
                 client_status: null,
                 client_reports: null,
+                client_waitdone: null,  
+                softwarelist: null,
+                
             }
         }
+    },
+    getters:{
+
     },
     actions:{
 
@@ -23,7 +29,7 @@ export const useSocketStore = defineStore('socket', {
                 this.socket.close()
             }
         },
-
+        
         setupWebSocket(){
             this.socket = new WebSocket(this.address)
             this.socket.onopen = (event) => this.onSocketOpen(event)
@@ -41,6 +47,9 @@ export const useSocketStore = defineStore('socket', {
             const data = JSON.parse(event.data)
             this.data.client_status = data[0]
             this.data.client_reports = data[1]
+            this.data.client_waitdone = data[2]
+            this.data.softwarelist = data[3]
+            console.log(data)
         },
         ErrorScoket(error){
             console.log(error)

@@ -1,11 +1,13 @@
 <template>
     <div class="waitdone">
-        WaitDone
+        <Tasklist/>
     </div>
 </template>
 
 
-<script>
+<script setup>
+import Tasklist from './tasklist.vue';
+
 </script>
 
 <style>

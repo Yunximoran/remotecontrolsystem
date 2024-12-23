@@ -1,7 +1,7 @@
 
 <template>
-    <div v-if="rootStore.clients" class="clients">
-        <Client ref='item' v-for="(status, ip) in rootStore.clients" :key="status" :ip="ip" :status="status"></Client>
+    <div v-if="socketStore.data.client_status" class="clients">
+        <Client ref='item' v-for="(status, ip) in socketStore.data.client_status" :key="status" :ip="ip" :status="status"></Client>
     </div>
 </template>
 
@@ -15,10 +15,10 @@ import { ref } from 'vue';
 export default{
     setup(){
         const rootStore = useRootStore()
-        // const sockerStore = useSocketStore()
+        const socketStore = useSocketStore()
         return {
             rootStore,
-            // sockerStore
+            socketStore 
         }
     },
     data(){
@@ -35,23 +35,8 @@ export default{
     },
 
     methods: {
-        demo(){
-            this.rootStore.add_clients()
-        },
-        getclientmessage(){
-            axios.get("/servers/data/client_status/")
-            .then((res)=>{
-                console.log(res.data)
-                this.rootStore.add_clients(res.data)
-                this.rootStore.init_selects(res.data)
-            })
-            .catch((error)=>{
-                console.log(error)
-            })
-        }, 
     },
     created(){
-        this.getclientmessage()
         this.$emit("return", this.selects)
         
     },

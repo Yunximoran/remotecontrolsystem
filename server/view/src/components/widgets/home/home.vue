@@ -35,10 +35,10 @@ import Sendmodel from "./basecontrol/sendmodel.vue";
 import Settings from "../menu/settings.vue";
 import Login from "../menu/login.vue";
 import BtnBox from "./basecontrol/btnbox.vue"
-import ClientBox from "./clientview/clientbox.vue"
-import Loger from "./loger.vue";
-import Softwarebox from "./softwareview/softwarebox.vue";
-import WaitDone from "./waitdone.vue"
+import ClientBox from "./view_clients/clientbox.vue"
+import Loger from "./view_logger/logger.vue";
+import Softwarebox from "./view_softwares/softwarebox.vue";
+import WaitDone from "./view_waitdone/waitdone.vue"
 import { useSocketStore } from "@/plugins/store/sockerStore";
 import { useRootStore } from "@/plugins/store/rootStore";
 
@@ -85,6 +85,12 @@ export default{
         }
     },
     created(){
+        /*
+        clients:{
+        status:
+        report:
+        }
+        */ 
         this.sockerStore.setupWebSocket()
         this.$router.afterEach((to, from) =>{
             if(this.$route.path === "/home"){
@@ -94,7 +100,15 @@ export default{
     }
 }
 </script>
+<!-- 
+{
+status: xxx,
+},
+{
+reports: xxx
+}
 
+-->
 
 
 <style>

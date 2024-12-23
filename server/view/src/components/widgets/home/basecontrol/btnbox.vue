@@ -43,6 +43,7 @@ export default{
                             },
                             "conning": false
                         }
+                        // 服务端可能不需要也安装软件
                         this.rootStore.add_software(software)
                     })
                     .catch((error)=>{

@@ -19,7 +19,7 @@ RECVSIZE = 1024                              # 最大数据量
 MAXCONNNUM = 50                              # 最大连接数
 TIMEOUT = 3                                  # 超时等待时间
 TIMERLIST = {}                               # 客户端连接状态
-DATABASE = databasetool.RedisConn            # Redis数据库
+DATABASE = databasetool.DataBaseManager            # Redis数据库
 
         
         

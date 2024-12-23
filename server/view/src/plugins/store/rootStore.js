@@ -3,7 +3,6 @@ import { defineStore } from "pinia"
 
 export const useRootStore = defineStore("root", {
     state: ()=>({
-            clients: {},
             selects: {},
             softwares: [],
         }),
@@ -24,10 +23,6 @@ export const useRootStore = defineStore("root", {
             console.log("add_software")
             console.log(this.softwares)
             this.softwares.push(item)
-        },
-
-        add_clients(data){
-            this.clients = data
         },
 
         init_selects(data){

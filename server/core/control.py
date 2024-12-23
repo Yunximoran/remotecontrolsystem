@@ -1,23 +1,23 @@
 import multiprocessing
-import time
+import socket
 import json
 
 from multiprocessing import Manager
 from fastapi import websockets
 
-from databasetool import RedisConn as DATABASE
+from databasetool import DataBaseManager as DATABASE
 from core.tcp import TCPConnect, TCPListen
 
 
 
 LOCK = multiprocessing.Lock()
 MESSAGEQUEUE = multiprocessing.Queue()
-# WAITDONEQUEUE = Manager().Queue()
+WAITDONEQUEUE = multiprocessing.Queue()
 
 
 class Control:
     process = []
-    CLIENTMESSAGE = {}
+    waittasks: dict[str, socket.socket] = {}
     
     def __init__(self):
         pass
@@ -26,7 +26,6 @@ class Control:
 
     def listen(self):
         conn = TCPListen()
-        pool = multiprocessing.Pool()
         while True:
             try:
                 # 监听待办事件
@@ -39,18 +38,33 @@ class Control:
                     pass
                 """
                 sock, msg = conn.recv()
-                pool.apply_async(self.waitdone, args=(sock, msg))   # 添加待办任务
-            except:
+                self.add_watidone(sock, msg)
+                # pool.apply_async(self.add_watidone, args=(sock, msg))   # 添加待办任务
+            except TimeoutError:
                 pass
     
-    def waitdone(self, msg):
-        DATABASE.lpush("waitdone_message", msg)
-        # 阻塞函数，等待前端处理
+    def add_watidone(self, sock, msg):
+        self.waittasks[msg] = sock
+        DATABASE.hset("waitdones", msg, "false")
         """
         前端通过接口返回处理结果，怎么找到对应的client套接字
         """
-
-    
+        
+    def dps_waitdone(self, msg, response: str):
+        sock = self.waittasks[msg]
+        sock.sendall(response.encode())
+        sock.close()
+        DATABASE.hdel("waitdones", msg)
+        del sock
+        del self.waittasks[msg]
+        
+        """
+        
+        results: igonre
+        results: shelllist{
+            
+        }
+        """
     
     def sendtoclient(self, shell_control:str, toclients = []):
         """
@@ -60,10 +74,10 @@ class Control:
         print("hello wrold")
         if toclients == []:
             
-            toclients = [client.decode() for client in DATABASE.hgetall("client_status").keys()]
+            toclients = [client for client in DATABASE.hgetall("client_status").keys()]
             
         for client  in toclients:
-            is_connect = DATABASE.hget("client_status", client).decode()
+            is_connect = DATABASE.hget("client_status", client)
             if is_connect == "true":
                 MESSAGEQUEUE.put(client)
             
@@ -84,3 +98,6 @@ class Control:
         DATABASE.hset("logs", ip, report)
 
 
+
+if __name__ == "__main__":
+    Control().listen()

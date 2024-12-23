@@ -14,6 +14,8 @@ API 接收请求 处理请求内容 返回响应数据
 
 import json
 import asyncio
+import re
+
 from typing import Annotated
 
 import uvicorn
@@ -27,7 +29,7 @@ from fastapi import (
 
 from core import control
 from core.udp import MultiCast
-from databasetool import RedisConn as DATABASE
+from databasetool import DataBaseManager as DATABASE
 from datamodel import (
     NewUser,
     ShellList,
@@ -56,6 +58,7 @@ app.add_middleware(
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"]
+    
 )
 
 server = uvicorn.Server(uvicorn.Config(app))
@@ -72,18 +75,29 @@ async def predict(websocket: WebSocket):
         while True:
             client_status = DATABASE.hgetall("client_status")
             client_reports = DATABASE.hgetall("reports")
-            await websocket.send_json([client_status, client_reports])
-            await asyncio.sleep(1)
+            client_waitdones = DATABASE.hgetall("waitdones")
             
+            softwarelist = DATABASE.lrange("softwarelist")
+            await websocket.send_json([client_status, client_reports, client_waitdones, softwarelist])
+            await asyncio.sleep(1)
     except WebSocketDisconnect:
-        print("断开连接")
+        print("链接中断")
+
+
+@app.get("/servers/despose/waitdone/")
+async def despose_waitdones(msg: str, results: str | list | dict):
+    try:
+        controlor.dps_waitdone(msg, results)
+    except Exception as e:
+        print(e)
         
+    
 # LOGIN
 @app.post("/servers/login/")
 async def login(loginform: Credentils):
     credentils = loginform.account
     password = loginform.password
-    accounts_information = DATABASE.hget("accounts", credentils).decode()
+    accounts_information = DATABASE.hget("accounts", credentils)
     if accounts_information is not None:
         if password == accounts_information['password']:
             return {"start": "OK", "msg": accounts_information}
@@ -116,6 +130,7 @@ async def send_software_checklist(checklist: list[Software]):
     except Exception as e:
         return {"ERROR": e}
     
+    
 # DATA
 @app.get("/servers/data/client_status")
 async def getclientmessage():   # 获取客户端连接状态
@@ -127,7 +142,7 @@ async def get_account_data(account: Annotated[str, None]):
     # 从数据库中获取账号数据，校验账号是否存在
     account_infomation = DATABASE.hget("accounts", account)
     if account_infomation is not None:
-        return json.loads(account_infomation.decode())
+        return json.loads(account_infomation)
     
     return {'start': "not data"}
 
@@ -158,9 +173,11 @@ async def alter_settings(option: str, nval: str):
 async def alter_software(alter: Annotated[str, None]):
     if alter == "push":
         software = choose_software()
+        DATABASE.lpush("softwarelist", software)
         return {"OK": software}
 
-
+if __name__ == "__main__":
+    uvicorn.run(app="api:app", host="localhost", port=8000, reload=True)
 
 
 
