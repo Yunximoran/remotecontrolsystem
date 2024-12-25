@@ -67,7 +67,6 @@ import { useRootStore } from '@/plugins/store/rootStore';
 import { useSocketStore } from '@/plugins/store/sockerStore';
 import { ref, watch} from 'vue';
 import { useTemplateRef } from 'vue';
-import { version } from 'core-js';
 
 const rootStore = useRootStore()
 const socketStore = useSocketStore()
@@ -138,9 +137,6 @@ function addsoftware(software){
             })
         }
     }
-    else{
-        console.log("软件不存在")
-    }
     software.ecdis.name = null
 
 }
@@ -197,107 +193,8 @@ watch(()=> software.value.ecdis.name, (nval, oval)=>{
     console.log("searchview", searchview.value)
 
 })
-/*
-// export default{
 
-//     // props: {
-//     //     clients: Object
-//     // },
-//     // data() {
-//     //     return{
-//     //         shells: [],
-//     //         shell: {
-//     //             name: null,
-//     //             shell: null
-//     //         },
 
-//     //         softwares: [],
-//     //         software:{
-//     //             ecdis: {
-//     //                 name: null,
-//     //                 version: "null"
-//     //             },
-//     //             conning: false
-//     //         }
-//     //     }
-//     // },
-//     computed:{
-//         // ...mapStores(useRootStore),
-//         ...mapState(useRootStore, ['selecteds'])
-//     },
-//     methods: {
-//         // add 
-//         addshell(shell){
-//             const s = shell.name || shell.shell
-//             const n = shell.name && shell.shell
-//             if(s){ // 至少有个为真
-//                 if(!n){
-//                     if(s == shell.name){
-//                         this.$refs.ss.focus()
-//                     }
-//                     else{
-//                         this.$refs.sn.focus()
-//                     }
-//                 }
-//                 else{
-//                     this.shells.push(JSON.parse(JSON.stringify(shell)))
-//                     shell.name = null
-//                     shell.shell = null
-//                     this.$refs.sn.focus()
-//                 }
-//             }
-//             else{
-//                 if(!(this.shells.length === 0)){
-//                     this.sendshells()
-//                 }
-//             }
-//         },
-
-//         addsoftware(software){
-//             const temp = software
-//             if (software.ecdis.name){
-//                 this.softwares.push(JSON.parse(JSON.stringify(software)))
-//                 software.ecdis.name = null
-//             }
-//             else{
-//                 if(!(this.softwares.length === 0)){
-//                     this.sendsoftwares()
-//                 }
-//             }
-//         },
-
-//         // clean
-//         clean(obj){
-//             obj.length = 0
-//         },
-
-//         // send
-//         sendshells(){
-//             const params = {
-//                 shell_list: this.shells,
-//                 toclients: this.selecteds
-//             }
-//             this.shells = []
-//             console.log("shells params", params)
-//             axios.put("/servers/send_control_shell/", params)
-//             .then((res) =>{
-//                 console.log("sent to clients", this.selecteds)
-//             }).catch(error=>{
-//                 console.log(error)
-//             })
-//         },
-
-//         sendsoftwares(){
-//             const params = this.softwares
-//             this.softwares = []
-//             axios.put("/servers/send_software_checklist/", params).then((res)=>{
-//                 console.log(res.data)
-//             })
-//         }
-//     },
-    
-// }
-*/
 </script>
 
 

@@ -18,10 +18,15 @@
             <host>localhost</host>
             <port>6379</port>
             <datas>
-                client_status
-                client_message
+                <item>client_status</item>
+                <item>client_message</item>
+                <item>heart_packages</item>
+                <item>softwarelist</item>
+                <item>accounts</item>
+                <item>reports</item>
+                <item>logs</item>
+                <item>waitdones</item>
             </datas>
-            <conf>./databasetool</conf>
         </redis_config>
 
         <servers>

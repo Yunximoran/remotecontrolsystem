@@ -8,7 +8,6 @@ from collections.abc import Iterable
 
 
 from despose import CONFIG
-from .protocol import TCPConnect
 
 
 import ctypes
@@ -39,8 +38,6 @@ class BaseSystem:
     def init(self):
         pass
     
-    def getdisks(self):
-        drives = []
     
     # 硬件相关
     def close(self):
@@ -98,14 +95,14 @@ class BaseSystem:
         else:
             print("del file")
             
-    def checkfile(self, check_object, root=None):
+    def checkfile(self, check_object, base=None):
         results = []
-        if root is None:
-            root = self.DATAPATH['root']
-        for root, dirs, files in os.walk(root):
+        if base is None:
+            base = self.DATAPATH['root']
+        for root, dirs, files in os.walk(base):
             for file in files:
                 if file == check_object:
-                    results.append(os.path(root, file))
+                    results.append(os.path.join(root, file))
             for dir in dirs:
                 if dir == check_object:
                     results.append(os.path.join(root, dir))
@@ -173,7 +170,7 @@ class WindowsSystem(BaseSystem):
         for letter in string.ascii_uppercase:
             if bitmask & 1:
                 drives.append(f"{letter}:\\")
-                bitmask >>= 1
+            bitmask >>= 1
         return drives
     
     def close(self):
@@ -248,4 +245,4 @@ class WindowsSystem(BaseSystem):
         except:
             ctypes.windll.shell32.ShellExecuteW(None, "runas", sys.executable, None, 1)
             sys.exit(0)
-SYSTEM = WindowsSystem("10.0.22631", ('64bit', 'WindowsPE'))
+SYSTEM = WindowsSystem("10.0.26100", ('64bit', 'WindowsPE'))

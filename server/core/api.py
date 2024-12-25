@@ -34,8 +34,7 @@ from datamodel import (
     NewUser,
     ShellList,
     Software,
-    User,
-    UserResponse,
+    Waitdone,
     Credentils
     )
 from projectdesposetool import SERVERMANAGE
@@ -84,10 +83,10 @@ async def predict(websocket: WebSocket):
         print("链接中断")
 
 
-@app.get("/servers/despose/waitdone/")
-async def despose_waitdones(msg: str, results: str | list | dict):
+@app.put("/servers/despose/waitdone/")
+async def despose_waitdones(res: Waitdone):
     try:
-        controlor.dps_waitdone(msg, results)
+        controlor.dps_waitdone(res.msg, res.results)
     except Exception as e:
         print(e)
         
@@ -176,8 +175,6 @@ async def alter_software(alter: Annotated[str, None]):
         DATABASE.lpush("softwarelist", software)
         return {"OK": software}
 
-if __name__ == "__main__":
-    uvicorn.run(app="api:app", host="localhost", port=8000, reload=True)
 
 
 

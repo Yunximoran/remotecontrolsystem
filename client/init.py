@@ -46,7 +46,6 @@ class Init:
             "from collections.abc import Iterable",
             "\n",
             "from despose import CONFIG",
-            "from .protocol import TCPConnect",
             "\n"
         ],
         "Windows":[
@@ -124,8 +123,6 @@ class BaseSystem:
     def init(self):
         pass
     
-    def getdisks(self):
-        drives = []
     
     # 硬件相关
     def close(self):
@@ -146,10 +143,14 @@ class BaseSystem:
         # 关闭软件
         pass
     
-    def format_params(self, label, data):
+    def format_params(self, typecode, data):
+        types = [
+            "instruct",
+            "software"
+        ]
         return {
-            "label": label,
-            "data": data
+            "type": types[typecode],
+            "data": data    # 携带的data， 软件路径列表 | 错误报文
         }
     
     # def wait_response(self, param):
@@ -179,14 +180,14 @@ class BaseSystem:
         else:
             print("del file")
             
-    def checkfile(self, check_object, root=None):
+    def checkfile(self, check_object, base=None):
         results = []
-        if root is None:
-            root = self.DATAPATH['root']
-        for root, dirs, files in os.walk(root):
+        if base is None:
+            base = self.DATAPATH['root']
+        for root, dirs, files in os.walk(base):
             for file in files:
                 if file == check_object:
-                    results.append(os.path(root, file))
+                    results.append(os.path.join(root, file))
             for dir in dirs:
                 if dir == check_object:
                     results.append(os.path.join(root, dir))
@@ -256,7 +257,7 @@ class WindowsSystem(BaseSystem):
         for letter in string.ascii_uppercase:
             if bitmask & 1:
                 drives.append(f"{letter}:\\")
-                bitmask >>= 1
+            bitmask >>= 1
         return drives
     
     def close(self):

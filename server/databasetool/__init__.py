@@ -1,1 +1,1 @@
-from .redisConnector import *
+from .redis_connector import *

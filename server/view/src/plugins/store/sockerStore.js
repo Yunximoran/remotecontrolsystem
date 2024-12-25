@@ -20,7 +20,15 @@ export const useSocketStore = defineStore('socket', {
         }
     },
     getters:{
-
+        format_waitdone(state){
+            const waitdones = []
+            for(const item in state.data.client_waitdone){
+                const waitdone = JSON.parse(item)
+                waitdones.push((waitdone.label, waitdone.data))
+                console.log(waitdone)
+            }
+            return waitdones
+        }
     },
     actions:{
 
@@ -49,7 +57,7 @@ export const useSocketStore = defineStore('socket', {
             this.data.client_reports = data[1]
             this.data.client_waitdone = data[2]
             this.data.softwarelist = data[3]
-            console.log(data)
+            // console.log(data)
         },
         ErrorScoket(error){
             console.log(error)

@@ -24,7 +24,7 @@ class TCPConnect(TCP):
             self.tcp_socket.connect((ip, CONFIG.TCPORT))
             self.tcp_socket.sendall(shell.encode())
             data = self.tcp_socket.recv(1024)
-            return data.decode()
+            return data.decode('utf-8')
         except ConnectionRefusedError:
             print("当前无连接")
         finally:
@@ -40,6 +40,7 @@ class TCPListen(TCP):
     
     def recv(self):
         client_sock, address = self.tcp_socket.accept()
+        
         data = client_sock.recv(1024)
         return client_sock, data.decode()
     

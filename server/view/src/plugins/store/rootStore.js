@@ -8,6 +8,7 @@ export const useRootStore = defineStore("root", {
         }),
     getters:{
         selecteds: (state) => {
+            //  确保发送时client处于正在链接
             const selected = []
             for (const key in state.selects){
                 if(state.selects[key]){

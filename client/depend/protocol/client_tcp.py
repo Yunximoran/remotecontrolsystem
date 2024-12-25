@@ -19,7 +19,7 @@ class TCP:
 
     def close(self):
         self.sock.close()
-        
+    
 class TCPListen(TCP):
     def __init__(self, ip=CONFIG.IP, port=CONFIG.TCPORT):
         super().__init__()
@@ -53,6 +53,10 @@ class TCPListen(TCP):
 class TCPConnect(TCP):
     def __init__(self):
         super().__init__()
+        
+    def send(self, data):
+        self.sock.connect(('192.168.6.1', 9095))
+        self.sock.sendall(data.encode())
         
 
 

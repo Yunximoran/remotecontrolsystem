@@ -8,8 +8,15 @@
 import axios from 'axios';
 import { mapStores } from 'pinia';
 import { useRootStore } from '@/plugins/store/rootStore';
+import { useSocketStore } from '@/plugins/store/sockerStore';
 
 export default{
+    setup(){
+        const socketStore = useSocketStore()
+        return {
+            socketStore
+        }
+    },
     data(){
         return {
             btns: { // name: [show, action]
@@ -54,10 +61,17 @@ export default{
                 openSoftware: ()=>{
                     this.$emit("clicked")
                     alert("open the software")
+
                 },
 
                 closeAllSoftWare: ()=>{
-                    this.$emit("clicked")
+                    axios.put("/servers/send_control_shell/", {
+                        shell_list: [{
+                            name: 'close -s',
+                            shell: null
+                        }],
+                        tocliencts: this.rootStore.selected()
+                    })
                     alert("close all software")
                 },
 
@@ -67,8 +81,15 @@ export default{
                 },
 
                 downloadFile: ()=>{
-                    this.$emit("clicked")
-                    alert("download file")
+                    axios.post("/servers/data/alter", null, {
+                        params: {
+                            alter: "download"
+                        }
+                    }).then(res=>{
+                        console.log("downloaing")
+                    }).catch(err=>{
+                        console.log("error downloaded")
+                    })
                 },
 
                 batchOperation: ()=>{

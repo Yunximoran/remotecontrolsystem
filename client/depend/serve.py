@@ -119,6 +119,7 @@ class ListenServe(BaseServe):
             softwares = json.loads(data) # 解析服务端软件清单
             # pool.map_async(self._update_softwares, softwares)
             # 为每次接收到的软件清单创建处理进程
+            print(softwares)
             pool.apply_async(self._update_softwares, args=(softwares,), callback=self._write_local_softwares)
             
     def _update_softwares(self, softwares):
@@ -145,9 +146,10 @@ class ListenServe(BaseServe):
                     result: newitem['ecdis']['path'] = ./local/softwares/software.exe
                     """
                     allpath = SYSTEM.checkfile(newsoftware) # 在磁盘总搜索所有包含软件名的路径
+                    print(allpath)
                     params = SYSTEM.format_params(1, allpath)  # 格式化表单信息
                     res = self._wait_response(params)  # 等待服务器选择正确路径
-                    
+                    print("respath", res)
                     newitem['ecdis']['path'], report = SYSTEM.build_hyperlink(newsoftware, res)
                     self._report_results(report)
                     
@@ -167,8 +169,8 @@ class ListenServe(BaseServe):
         
     def _wait_response(self, param):
         conn = TCPConnect()
-        conn.send(json.dumps(param))
-        data = conn.recv()
+        conn.send(json.dumps(param, ensure_ascii=False))
+        data = conn.recv(1024)
         conn.close()
         return data.decode()
 

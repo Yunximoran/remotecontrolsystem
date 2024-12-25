@@ -43,22 +43,32 @@ class Parse:
         self.RHOST = REDISCONN.find("host").text
         self.RPORT = int(REDISCONN.find("port").text)
     
-    # def loadservers(self):
-    #     SERVERS = self.ROOT.find("servers")
-        
-    #     self.UVICORNSERVER = SERVERS.find("uvicorn").text
-    #     self.LISTENINGSERVER = SERVERS.find("listening").text
-    #     self.CONTROLSERVER = SERVERS.find("control").text
-
 
     def parseConfig(self, TAG):
         RES = {}
-        
-        s = self.ROOT.find(TAG)
-        for elem in s:
-            RES[elem.tag] = elem.text
+        root = self.ROOT.find(TAG)
+        # print("type xml", type(root))
 
-        return RES
+        return self.deepparsing(root)
+
+    def deepparsing(self, root:ET.Element):
+        tree = {}
+        elemnums = len(root)
+        if elemnums == 0:
+            # tree[root.tag] = root.text
+            return root.text
+        else:
+            for elem in root:
+                # tree.append((elem.tag, self.deepparsing(elem)))
+                child = self.deepparsing(elem)
+                if elem.tag in tree.keys():
+                    if isinstance(tree[elem.tag], str):
+                         tree[elem.tag] = [tree[elem.tag]]
+                    tree[elem.tag].append(child)
+                else:
+                    tree[elem.tag] = self.deepparsing(elem)
+        return tree
+        
     
 CONFIG = Parse()
 
