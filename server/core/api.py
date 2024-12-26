@@ -27,17 +27,16 @@ from fastapi import (
         WebSocketDisconnect
         )
 
-from core import control
+from core.control import controlor
 from core.udp import MultiCast
 from databasetool import DataBaseManager as DATABASE
 from datamodel import (
     NewUser,
     ShellList,
     Software,
-    Waitdone,
+    WaitDesposeResults,
     Credentils
     )
-from projectdesposetool import SERVERMANAGE
 from projectdesposetool.systool import choose_software
 
 
@@ -62,7 +61,6 @@ app.add_middleware(
 
 server = uvicorn.Server(uvicorn.Config(app))
 
-controlor = control.Control()
 multiter = MultiCast()
 
 
@@ -75,7 +73,6 @@ async def predict(websocket: WebSocket):
             client_status = DATABASE.hgetall("client_status")
             client_reports = DATABASE.hgetall("reports")
             client_waitdones = DATABASE.hgetall("waitdones")
-            
             softwarelist = DATABASE.lrange("softwarelist")
             await websocket.send_json([client_status, client_reports, client_waitdones, softwarelist])
             await asyncio.sleep(1)
@@ -84,11 +81,9 @@ async def predict(websocket: WebSocket):
 
 
 @app.put("/servers/despose/waitdone/")
-async def despose_waitdones(res: Waitdone):
-    try:
-        controlor.dps_waitdone(res.msg, res.results)
-    except Exception as e:
-        print(e)
+async def despose_waitdones(res: WaitDesposeResults):
+    print("despose waitdone api data:", res.cookie, res.results)
+    DATABASE.hset("waitdone_despose_results", res.cookie, res.results)
         
     
 # LOGIN
@@ -174,7 +169,6 @@ async def alter_software(alter: Annotated[str, None]):
         software = choose_software()
         DATABASE.lpush("softwarelist", software)
         return {"OK": software}
-
 
 
 

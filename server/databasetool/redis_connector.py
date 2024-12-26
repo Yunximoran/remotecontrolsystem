@@ -1,8 +1,6 @@
-from redis import Redis, StrictRedis
+from redis import StrictRedis
 
 from projectdesposetool import CONFIG
-# import aioredis
-
 
 REDIS_CONF = CONFIG.parseConfig("redis_config")
 

@@ -144,6 +144,10 @@ class Reception:
         print(f"The IP {ip} user is disconnected")
 
 
+
+class BroadCast:
+    pass
+
 class MultiCast:
     def __init__(self):
         self.multi = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
@@ -163,6 +167,8 @@ class MultiCast:
         self.multi.sendto(data.encode(), MULTICAST)
         
 
+multiter = MultiCast()
+broadcaster = UDP()
 
 if __name__ == "__main__":
     udp = UDP()

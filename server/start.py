@@ -1,6 +1,7 @@
 from projectdesposetool import SERVERMANAGE
 
-SERVERMANAGE.start()
+if __name__ == "__main__":
+    SERVERMANAGE.start()
 
 
 """

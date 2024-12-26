@@ -653,3 +653,416 @@
 
 [19516] 25 Dec 23:28:02.581 # Server initialized
 [19516] 25 Dec 23:28:02.582 * Ready to accept connections
+[22420] 26 Dec 20:12:52.037 # oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
+[22420] 26 Dec 20:12:52.040 # Redis version=5.0.14.1, bits=64, commit=ec77f72d, modified=0, pid=22420, just started
+[22420] 26 Dec 20:12:52.040 # Configuration loaded
+                _._                                                  
+           _.-``__ ''-._                                             
+      _.-``    `.  `_.  ''-._           Redis 5.0.14.1 (ec77f72d/0) 64 bit
+  .-`` .-```.  ```\/    _.,_ ''-._                                   
+ (    '      ,       .-`  | `,    )     Running in standalone mode
+ |`-._`-...-` __...-.``-._|'` _.-'|     Port: 6379
+ |    `-._   `._    /     _.-'    |     PID: 22420
+  `-._    `-._  `-./  _.-'    _.-'                                   
+ |`-._`-._    `-.__.-'    _.-'_.-'|                                  
+ |    `-._`-._        _.-'_.-'    |           http://redis.io        
+  `-._    `-._`-.__.-'_.-'    _.-'                                   
+ |`-._`-._    `-.__.-'    _.-'_.-'|                                  
+ |    `-._`-._        _.-'_.-'    |                                  
+  `-._    `-._`-.__.-'_.-'    _.-'                                   
+      `-._    `-.__.-'    _.-'                                       
+          `-._        _.-'                                           
+              `-.__.-'                                               
+
+[22420] 26 Dec 20:12:52.044 # Server initialized
+[22420] 26 Dec 20:12:52.045 * Ready to accept connections
+[22420] 26 Dec 20:20:35.963 # User requested shutdown...
+[22420] 26 Dec 20:20:35.964 # Redis is now ready to exit, bye bye...
+[35028] 26 Dec 20:43:07.502 # oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
+[35028] 26 Dec 20:43:07.505 # Redis version=5.0.14.1, bits=64, commit=ec77f72d, modified=0, pid=35028, just started
+[35028] 26 Dec 20:43:07.505 # Configuration loaded
+                _._                                                  
+           _.-``__ ''-._                                             
+      _.-``    `.  `_.  ''-._           Redis 5.0.14.1 (ec77f72d/0) 64 bit
+  .-`` .-```.  ```\/    _.,_ ''-._                                   
+ (    '      ,       .-`  | `,    )     Running in standalone mode
+ |`-._`-...-` __...-.``-._|'` _.-'|     Port: 6379
+ |    `-._   `._    /     _.-'    |     PID: 35028
+  `-._    `-._  `-./  _.-'    _.-'                                   
+ |`-._`-._    `-.__.-'    _.-'_.-'|                                  
+ |    `-._`-._        _.-'_.-'    |           http://redis.io        
+  `-._    `-._`-.__.-'_.-'    _.-'                                   
+ |`-._`-._    `-.__.-'    _.-'_.-'|                                  
+ |    `-._`-._        _.-'_.-'    |                                  
+  `-._    `-._`-.__.-'_.-'    _.-'                                   
+      `-._    `-.__.-'    _.-'                                       
+          `-._        _.-'                                           
+              `-.__.-'                                               
+
+[35028] 26 Dec 20:43:07.512 # Server initialized
+[35028] 26 Dec 20:43:07.513 * Ready to accept connections
+[35028] 26 Dec 20:46:53.915 # User requested shutdown...
+[35028] 26 Dec 20:46:53.916 # Redis is now ready to exit, bye bye...
+[17096] 26 Dec 21:00:15.283 # oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
+[17096] 26 Dec 21:00:15.286 # Redis version=5.0.14.1, bits=64, commit=ec77f72d, modified=0, pid=17096, just started
+[17096] 26 Dec 21:00:15.287 # Configuration loaded
+                _._                                                  
+           _.-``__ ''-._                                             
+      _.-``    `.  `_.  ''-._           Redis 5.0.14.1 (ec77f72d/0) 64 bit
+  .-`` .-```.  ```\/    _.,_ ''-._                                   
+ (    '      ,       .-`  | `,    )     Running in standalone mode
+ |`-._`-...-` __...-.``-._|'` _.-'|     Port: 6379
+ |    `-._   `._    /     _.-'    |     PID: 17096
+  `-._    `-._  `-./  _.-'    _.-'                                   
+ |`-._`-._    `-.__.-'    _.-'_.-'|                                  
+ |    `-._`-._        _.-'_.-'    |           http://redis.io        
+  `-._    `-._`-.__.-'_.-'    _.-'                                   
+ |`-._`-._    `-.__.-'    _.-'_.-'|                                  
+ |    `-._`-._        _.-'_.-'    |                                  
+  `-._    `-._`-.__.-'_.-'    _.-'                                   
+      `-._    `-.__.-'    _.-'                                       
+          `-._        _.-'                                           
+              `-.__.-'                                               
+
+[17096] 26 Dec 21:00:15.292 # Server initialized
+[17096] 26 Dec 21:00:15.293 * Ready to accept connections
+[34340] 26 Dec 21:19:04.133 # oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
+[34340] 26 Dec 21:19:04.135 # Redis version=5.0.14.1, bits=64, commit=ec77f72d, modified=0, pid=34340, just started
+[34340] 26 Dec 21:19:04.135 # Configuration loaded
+                _._                                                  
+           _.-``__ ''-._                                             
+      _.-``    `.  `_.  ''-._           Redis 5.0.14.1 (ec77f72d/0) 64 bit
+  .-`` .-```.  ```\/    _.,_ ''-._                                   
+ (    '      ,       .-`  | `,    )     Running in standalone mode
+ |`-._`-...-` __...-.``-._|'` _.-'|     Port: 6379
+ |    `-._   `._    /     _.-'    |     PID: 34340
+  `-._    `-._  `-./  _.-'    _.-'                                   
+ |`-._`-._    `-.__.-'    _.-'_.-'|                                  
+ |    `-._`-._        _.-'_.-'    |           http://redis.io        
+  `-._    `-._`-.__.-'_.-'    _.-'                                   
+ |`-._`-._    `-.__.-'    _.-'_.-'|                                  
+ |    `-._`-._        _.-'_.-'    |                                  
+  `-._    `-._`-.__.-'_.-'    _.-'                                   
+      `-._    `-.__.-'    _.-'                                       
+          `-._        _.-'                                           
+              `-.__.-'                                               
+
+[34340] 26 Dec 21:19:04.140 # Server initialized
+[34340] 26 Dec 21:19:04.141 * Ready to accept connections
+[21508] 26 Dec 21:26:52.121 # oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
+[21508] 26 Dec 21:26:52.123 # Redis version=5.0.14.1, bits=64, commit=ec77f72d, modified=0, pid=21508, just started
+[21508] 26 Dec 21:26:52.123 # Configuration loaded
+                _._                                                  
+           _.-``__ ''-._                                             
+      _.-``    `.  `_.  ''-._           Redis 5.0.14.1 (ec77f72d/0) 64 bit
+  .-`` .-```.  ```\/    _.,_ ''-._                                   
+ (    '      ,       .-`  | `,    )     Running in standalone mode
+ |`-._`-...-` __...-.``-._|'` _.-'|     Port: 6379
+ |    `-._   `._    /     _.-'    |     PID: 21508
+  `-._    `-._  `-./  _.-'    _.-'                                   
+ |`-._`-._    `-.__.-'    _.-'_.-'|                                  
+ |    `-._`-._        _.-'_.-'    |           http://redis.io        
+  `-._    `-._`-.__.-'_.-'    _.-'                                   
+ |`-._`-._    `-.__.-'    _.-'_.-'|                                  
+ |    `-._`-._        _.-'_.-'    |                                  
+  `-._    `-._`-.__.-'_.-'    _.-'                                   
+      `-._    `-.__.-'    _.-'                                       
+          `-._        _.-'                                           
+              `-.__.-'                                               
+
+[21508] 26 Dec 21:26:52.129 # Server initialized
+[21508] 26 Dec 21:26:52.129 * Ready to accept connections
+[21508] 26 Dec 21:34:49.385 # User requested shutdown...
+[21508] 26 Dec 21:34:49.385 # Redis is now ready to exit, bye bye...
+[32172] 26 Dec 21:37:32.435 # oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
+[32172] 26 Dec 21:37:32.436 # Redis version=5.0.14.1, bits=64, commit=ec77f72d, modified=0, pid=32172, just started
+[32172] 26 Dec 21:37:32.437 # Configuration loaded
+                _._                                                  
+           _.-``__ ''-._                                             
+      _.-``    `.  `_.  ''-._           Redis 5.0.14.1 (ec77f72d/0) 64 bit
+  .-`` .-```.  ```\/    _.,_ ''-._                                   
+ (    '      ,       .-`  | `,    )     Running in standalone mode
+ |`-._`-...-` __...-.``-._|'` _.-'|     Port: 6379
+ |    `-._   `._    /     _.-'    |     PID: 32172
+  `-._    `-._  `-./  _.-'    _.-'                                   
+ |`-._`-._    `-.__.-'    _.-'_.-'|                                  
+ |    `-._`-._        _.-'_.-'    |           http://redis.io        
+  `-._    `-._`-.__.-'_.-'    _.-'                                   
+ |`-._`-._    `-.__.-'    _.-'_.-'|                                  
+ |    `-._`-._        _.-'_.-'    |                                  
+  `-._    `-._`-.__.-'_.-'    _.-'                                   
+      `-._    `-.__.-'    _.-'                                       
+          `-._        _.-'                                           
+              `-.__.-'                                               
+
+[32172] 26 Dec 21:37:32.442 # Server initialized
+[32172] 26 Dec 21:37:32.443 * Ready to accept connections
+[32172] 26 Dec 21:45:16.440 # User requested shutdown...
+[32172] 26 Dec 21:45:16.441 # Redis is now ready to exit, bye bye...
+[22388] 26 Dec 22:03:43.848 # oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
+[22388] 26 Dec 22:03:43.857 # Redis version=5.0.14.1, bits=64, commit=ec77f72d, modified=0, pid=22388, just started
+[22388] 26 Dec 22:03:43.857 # Configuration loaded
+[22388] 26 Dec 22:03:43.858 # Windows does not support daemonize. Start Redis as service
+                _._                                                  
+           _.-``__ ''-._                                             
+      _.-``    `.  `_.  ''-._           Redis 5.0.14.1 (ec77f72d/0) 64 bit
+  .-`` .-```.  ```\/    _.,_ ''-._                                   
+ (    '      ,       .-`  | `,    )     Running in standalone mode
+ |`-._`-...-` __...-.``-._|'` _.-'|     Port: 6379
+ |    `-._   `._    /     _.-'    |     PID: 22388
+  `-._    `-._  `-./  _.-'    _.-'                                   
+ |`-._`-._    `-.__.-'    _.-'_.-'|                                  
+ |    `-._`-._        _.-'_.-'    |           http://redis.io        
+  `-._    `-._`-.__.-'_.-'    _.-'                                   
+ |`-._`-._    `-.__.-'    _.-'_.-'|                                  
+ |    `-._`-._        _.-'_.-'    |                                  
+  `-._    `-._`-.__.-'_.-'    _.-'                                   
+      `-._    `-.__.-'    _.-'                                       
+          `-._        _.-'                                           
+              `-.__.-'                                               
+
+[22388] 26 Dec 22:03:43.862 # Server initialized
+[22388] 26 Dec 22:03:43.863 * Ready to accept connections
+[22388] 26 Dec 22:04:00.615 # User requested shutdown...
+[22388] 26 Dec 22:04:00.616 * Removing the pid file.
+[22388] 26 Dec 22:04:00.617 # Redis is now ready to exit, bye bye...
+[37376] 26 Dec 22:11:24.918 # oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
+[37376] 26 Dec 22:11:24.920 # Redis version=5.0.14.1, bits=64, commit=ec77f72d, modified=0, pid=37376, just started
+[37376] 26 Dec 22:11:24.920 # Configuration loaded
+                _._                                                  
+           _.-``__ ''-._                                             
+      _.-``    `.  `_.  ''-._           Redis 5.0.14.1 (ec77f72d/0) 64 bit
+  .-`` .-```.  ```\/    _.,_ ''-._                                   
+ (    '      ,       .-`  | `,    )     Running in standalone mode
+ |`-._`-...-` __...-.``-._|'` _.-'|     Port: 6379
+ |    `-._   `._    /     _.-'    |     PID: 37376
+  `-._    `-._  `-./  _.-'    _.-'                                   
+ |`-._`-._    `-.__.-'    _.-'_.-'|                                  
+ |    `-._`-._        _.-'_.-'    |           http://redis.io        
+  `-._    `-._`-.__.-'_.-'    _.-'                                   
+ |`-._`-._    `-.__.-'    _.-'_.-'|                                  
+ |    `-._`-._        _.-'_.-'    |                                  
+  `-._    `-._`-.__.-'_.-'    _.-'                                   
+      `-._    `-.__.-'    _.-'                                       
+          `-._        _.-'                                           
+              `-.__.-'                                               
+
+[37376] 26 Dec 22:11:24.923 # Server initialized
+[37376] 26 Dec 22:11:24.924 * Ready to accept connections
+[37376] 26 Dec 22:11:38.347 # User requested shutdown...
+[37376] 26 Dec 22:11:38.348 # Redis is now ready to exit, bye bye...
+[22148] 26 Dec 22:16:27.817 # oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
+[22148] 26 Dec 22:16:27.818 # Redis version=5.0.14.1, bits=64, commit=ec77f72d, modified=0, pid=22148, just started
+[22148] 26 Dec 22:16:27.820 # Configuration loaded
+                _._                                                  
+           _.-``__ ''-._                                             
+      _.-``    `.  `_.  ''-._           Redis 5.0.14.1 (ec77f72d/0) 64 bit
+  .-`` .-```.  ```\/    _.,_ ''-._                                   
+ (    '      ,       .-`  | `,    )     Running in standalone mode
+ |`-._`-...-` __...-.``-._|'` _.-'|     Port: 6379
+ |    `-._   `._    /     _.-'    |     PID: 22148
+  `-._    `-._  `-./  _.-'    _.-'                                   
+ |`-._`-._    `-.__.-'    _.-'_.-'|                                  
+ |    `-._`-._        _.-'_.-'    |           http://redis.io        
+  `-._    `-._`-.__.-'_.-'    _.-'                                   
+ |`-._`-._    `-.__.-'    _.-'_.-'|                                  
+ |    `-._`-._        _.-'_.-'    |                                  
+  `-._    `-._`-.__.-'_.-'    _.-'                                   
+      `-._    `-.__.-'    _.-'                                       
+          `-._        _.-'                                           
+              `-.__.-'                                               
+
+[22148] 26 Dec 22:16:27.824 # Server initialized
+[22148] 26 Dec 22:16:27.825 * Ready to accept connections
+[22148] 26 Dec 22:16:45.751 # User requested shutdown...
+[22148] 26 Dec 22:16:45.751 # Redis is now ready to exit, bye bye...
+[15584] 26 Dec 22:48:23.573 # oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
+[15584] 26 Dec 22:48:23.575 # Redis version=5.0.14.1, bits=64, commit=ec77f72d, modified=0, pid=15584, just started
+[15584] 26 Dec 22:48:23.576 # Configuration loaded
+                _._                                                  
+           _.-``__ ''-._                                             
+      _.-``    `.  `_.  ''-._           Redis 5.0.14.1 (ec77f72d/0) 64 bit
+  .-`` .-```.  ```\/    _.,_ ''-._                                   
+ (    '      ,       .-`  | `,    )     Running in standalone mode
+ |`-._`-...-` __...-.``-._|'` _.-'|     Port: 6379
+ |    `-._   `._    /     _.-'    |     PID: 15584
+  `-._    `-._  `-./  _.-'    _.-'                                   
+ |`-._`-._    `-.__.-'    _.-'_.-'|                                  
+ |    `-._`-._        _.-'_.-'    |           http://redis.io        
+  `-._    `-._`-.__.-'_.-'    _.-'                                   
+ |`-._`-._    `-.__.-'    _.-'_.-'|                                  
+ |    `-._`-._        _.-'_.-'    |                                  
+  `-._    `-._`-.__.-'_.-'    _.-'                                   
+      `-._    `-.__.-'    _.-'                                       
+          `-._        _.-'                                           
+              `-.__.-'                                               
+
+[15584] 26 Dec 22:48:23.579 # Server initialized
+[15584] 26 Dec 22:48:23.580 * Ready to accept connections
+[34452] 26 Dec 22:59:48.736 # oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
+[34452] 26 Dec 22:59:48.738 # Redis version=5.0.14.1, bits=64, commit=ec77f72d, modified=0, pid=34452, just started
+[34452] 26 Dec 22:59:48.738 # Configuration loaded
+                _._                                                  
+           _.-``__ ''-._                                             
+      _.-``    `.  `_.  ''-._           Redis 5.0.14.1 (ec77f72d/0) 64 bit
+  .-`` .-```.  ```\/    _.,_ ''-._                                   
+ (    '      ,       .-`  | `,    )     Running in standalone mode
+ |`-._`-...-` __...-.``-._|'` _.-'|     Port: 6379
+ |    `-._   `._    /     _.-'    |     PID: 34452
+  `-._    `-._  `-./  _.-'    _.-'                                   
+ |`-._`-._    `-.__.-'    _.-'_.-'|                                  
+ |    `-._`-._        _.-'_.-'    |           http://redis.io        
+  `-._    `-._`-.__.-'_.-'    _.-'                                   
+ |`-._`-._    `-.__.-'    _.-'_.-'|                                  
+ |    `-._`-._        _.-'_.-'    |                                  
+  `-._    `-._`-.__.-'_.-'    _.-'                                   
+      `-._    `-.__.-'    _.-'                                       
+          `-._        _.-'                                           
+              `-.__.-'                                               
+
+[34452] 26 Dec 22:59:48.742 # Server initialized
+[34452] 26 Dec 22:59:48.743 * Ready to accept connections
+[37844] 26 Dec 23:58:24.509 # oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
+[37844] 26 Dec 23:58:24.511 # Redis version=5.0.14.1, bits=64, commit=ec77f72d, modified=0, pid=37844, just started
+[37844] 26 Dec 23:58:24.512 # Configuration loaded
+                _._                                                  
+           _.-``__ ''-._                                             
+      _.-``    `.  `_.  ''-._           Redis 5.0.14.1 (ec77f72d/0) 64 bit
+  .-`` .-```.  ```\/    _.,_ ''-._                                   
+ (    '      ,       .-`  | `,    )     Running in standalone mode
+ |`-._`-...-` __...-.``-._|'` _.-'|     Port: 6379
+ |    `-._   `._    /     _.-'    |     PID: 37844
+  `-._    `-._  `-./  _.-'    _.-'                                   
+ |`-._`-._    `-.__.-'    _.-'_.-'|                                  
+ |    `-._`-._        _.-'_.-'    |           http://redis.io        
+  `-._    `-._`-.__.-'_.-'    _.-'                                   
+ |`-._`-._    `-.__.-'    _.-'_.-'|                                  
+ |    `-._`-._        _.-'_.-'    |                                  
+  `-._    `-._`-.__.-'_.-'    _.-'                                   
+      `-._    `-.__.-'    _.-'                                       
+          `-._        _.-'                                           
+              `-.__.-'                                               
+
+[37844] 26 Dec 23:58:24.516 # Server initialized
+[37844] 26 Dec 23:58:24.517 * Ready to accept connections
+[37844] 26 Dec 23:58:49.190 # User requested shutdown...
+[37844] 26 Dec 23:58:49.190 # Redis is now ready to exit, bye bye...
+[3500] 27 Dec 00:26:26.979 # oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
+[3500] 27 Dec 00:26:26.981 # Redis version=5.0.14.1, bits=64, commit=ec77f72d, modified=0, pid=3500, just started
+[3500] 27 Dec 00:26:26.982 # Configuration loaded
+                _._                                                  
+           _.-``__ ''-._                                             
+      _.-``    `.  `_.  ''-._           Redis 5.0.14.1 (ec77f72d/0) 64 bit
+  .-`` .-```.  ```\/    _.,_ ''-._                                   
+ (    '      ,       .-`  | `,    )     Running in standalone mode
+ |`-._`-...-` __...-.``-._|'` _.-'|     Port: 6379
+ |    `-._   `._    /     _.-'    |     PID: 3500
+  `-._    `-._  `-./  _.-'    _.-'                                   
+ |`-._`-._    `-.__.-'    _.-'_.-'|                                  
+ |    `-._`-._        _.-'_.-'    |           http://redis.io        
+  `-._    `-._`-.__.-'_.-'    _.-'                                   
+ |`-._`-._    `-.__.-'    _.-'_.-'|                                  
+ |    `-._`-._        _.-'_.-'    |                                  
+  `-._    `-._`-.__.-'_.-'    _.-'                                   
+      `-._    `-.__.-'    _.-'                                       
+          `-._        _.-'                                           
+              `-.__.-'                                               
+
+[3500] 27 Dec 00:26:26.985 # Server initialized
+[3500] 27 Dec 00:26:26.985 * Ready to accept connections
+[27876] 27 Dec 00:36:41.684 # oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
+[27876] 27 Dec 00:36:41.686 # Redis version=5.0.14.1, bits=64, commit=ec77f72d, modified=0, pid=27876, just started
+[27876] 27 Dec 00:36:41.686 # Configuration loaded
+                _._                                                  
+           _.-``__ ''-._                                             
+      _.-``    `.  `_.  ''-._           Redis 5.0.14.1 (ec77f72d/0) 64 bit
+  .-`` .-```.  ```\/    _.,_ ''-._                                   
+ (    '      ,       .-`  | `,    )     Running in standalone mode
+ |`-._`-...-` __...-.``-._|'` _.-'|     Port: 6379
+ |    `-._   `._    /     _.-'    |     PID: 27876
+  `-._    `-._  `-./  _.-'    _.-'                                   
+ |`-._`-._    `-.__.-'    _.-'_.-'|                                  
+ |    `-._`-._        _.-'_.-'    |           http://redis.io        
+  `-._    `-._`-.__.-'_.-'    _.-'                                   
+ |`-._`-._    `-.__.-'    _.-'_.-'|                                  
+ |    `-._`-._        _.-'_.-'    |                                  
+  `-._    `-._`-.__.-'_.-'    _.-'                                   
+      `-._    `-.__.-'    _.-'                                       
+          `-._        _.-'                                           
+              `-.__.-'                                               
+
+[27876] 27 Dec 00:36:41.692 # Server initialized
+[27876] 27 Dec 00:36:41.693 * Ready to accept connections
+[27876] 27 Dec 00:39:11.696 # User requested shutdown...
+[27876] 27 Dec 00:39:11.697 # Redis is now ready to exit, bye bye...
+[21608] 27 Dec 00:39:26.616 # oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
+[21608] 27 Dec 00:39:26.618 # Redis version=5.0.14.1, bits=64, commit=ec77f72d, modified=0, pid=21608, just started
+[21608] 27 Dec 00:39:26.618 # Configuration loaded
+                _._                                                  
+           _.-``__ ''-._                                             
+      _.-``    `.  `_.  ''-._           Redis 5.0.14.1 (ec77f72d/0) 64 bit
+  .-`` .-```.  ```\/    _.,_ ''-._                                   
+ (    '      ,       .-`  | `,    )     Running in standalone mode
+ |`-._`-...-` __...-.``-._|'` _.-'|     Port: 6379
+ |    `-._   `._    /     _.-'    |     PID: 21608
+  `-._    `-._  `-./  _.-'    _.-'                                   
+ |`-._`-._    `-.__.-'    _.-'_.-'|                                  
+ |    `-._`-._        _.-'_.-'    |           http://redis.io        
+  `-._    `-._`-.__.-'_.-'    _.-'                                   
+ |`-._`-._    `-.__.-'    _.-'_.-'|                                  
+ |    `-._`-._        _.-'_.-'    |                                  
+  `-._    `-._`-.__.-'_.-'    _.-'                                   
+      `-._    `-.__.-'    _.-'                                       
+          `-._        _.-'                                           
+              `-.__.-'                                               
+
+[21608] 27 Dec 00:39:26.622 # Server initialized
+[21608] 27 Dec 00:39:26.623 * Ready to accept connections
+[21608] 27 Dec 00:44:46.187 # User requested shutdown...
+[21608] 27 Dec 00:44:46.188 # Redis is now ready to exit, bye bye...
+[39584] 27 Dec 00:46:05.371 # oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
+[39584] 27 Dec 00:46:05.372 # Redis version=5.0.14.1, bits=64, commit=ec77f72d, modified=0, pid=39584, just started
+[39584] 27 Dec 00:46:05.373 # Configuration loaded
+                _._                                                  
+           _.-``__ ''-._                                             
+      _.-``    `.  `_.  ''-._           Redis 5.0.14.1 (ec77f72d/0) 64 bit
+  .-`` .-```.  ```\/    _.,_ ''-._                                   
+ (    '      ,       .-`  | `,    )     Running in standalone mode
+ |`-._`-...-` __...-.``-._|'` _.-'|     Port: 6379
+ |    `-._   `._    /     _.-'    |     PID: 39584
+  `-._    `-._  `-./  _.-'    _.-'                                   
+ |`-._`-._    `-.__.-'    _.-'_.-'|                                  
+ |    `-._`-._        _.-'_.-'    |           http://redis.io        
+  `-._    `-._`-.__.-'_.-'    _.-'                                   
+ |`-._`-._    `-.__.-'    _.-'_.-'|                                  
+ |    `-._`-._        _.-'_.-'    |                                  
+  `-._    `-._`-.__.-'_.-'    _.-'                                   
+      `-._    `-.__.-'    _.-'                                       
+          `-._        _.-'                                           
+              `-.__.-'                                               
+
+[39584] 27 Dec 00:46:05.378 # Server initialized
+[39584] 27 Dec 00:46:05.379 * Ready to accept connections
+[38040] 27 Dec 01:01:39.734 # oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
+[38040] 27 Dec 01:01:39.736 # Redis version=5.0.14.1, bits=64, commit=ec77f72d, modified=0, pid=38040, just started
+[38040] 27 Dec 01:01:39.736 # Configuration loaded
+                _._                                                  
+           _.-``__ ''-._                                             
+      _.-``    `.  `_.  ''-._           Redis 5.0.14.1 (ec77f72d/0) 64 bit
+  .-`` .-```.  ```\/    _.,_ ''-._                                   
+ (    '      ,       .-`  | `,    )     Running in standalone mode
+ |`-._`-...-` __...-.``-._|'` _.-'|     Port: 6379
+ |    `-._   `._    /     _.-'    |     PID: 38040
+  `-._    `-._  `-./  _.-'    _.-'                                   
+ |`-._`-._    `-.__.-'    _.-'_.-'|                                  
+ |    `-._`-._        _.-'_.-'    |           http://redis.io        
+  `-._    `-._`-.__.-'_.-'    _.-'                                   
+ |`-._`-._    `-.__.-'    _.-'_.-'|                                  
+ |    `-._`-._        _.-'_.-'    |                                  
+  `-._    `-._`-.__.-'_.-'    _.-'                                   
+      `-._    `-.__.-'    _.-'                                       
+          `-._        _.-'                                           
+              `-.__.-'                                               
+
+[38040] 27 Dec 01:01:39.741 # Server initialized
+[38040] 27 Dec 01:01:39.742 * Ready to accept connections

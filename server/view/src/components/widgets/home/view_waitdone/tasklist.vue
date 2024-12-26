@@ -1,6 +1,6 @@
 <template>
     <div>
-        <button v-for="(status, msg) in socketStore.data.client_waitdone" :key="msg" @click="dps_waitdone(msg)">{{ msg }}</button>
+        <button v-for="(msg, cookie) in socketStore.data.client_waitdone" :key="msg" @click="dps_waitdone(msg)">{{ msg }}</button>
     </div>
 </template>
 

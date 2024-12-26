@@ -18,15 +18,21 @@ const router = useRouter()
 const socketStore = useSocketStore()
 
 const donedata = ref(JSON.parse(route.params.msg))
+const cookie = donedata.value.cookie
 function select_software_path(choosed){
-    axios.put("/servers/despose/waitdone/",{
-            "msg": route.params.msg,
-            "results": choosed
-        }).then(res=>{
+    console.log("msg", route.params.msg)
+    console.log("choosed", choosed)
+    axios.put("/servers/despose/waitdone/", {
+        cookie: cookie,
+        results: choosed
+    }).then(res=>{
+        console.log("choosed ok:", choosed)
         console.log(res)
     }).catch(err=>{
-        console.log(err)
+        // console.log("send error", choosed)
+        console.log("type cookie", cookie)
         console.log(choosed)
+        console.log(err)
     }).finally(()=>{
         router.push("/home")
     })

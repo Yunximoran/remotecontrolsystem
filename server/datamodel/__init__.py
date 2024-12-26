@@ -12,6 +12,6 @@ class ShellList(BaseModel):
     shell: Annotated[str, None]
     
 
-class Waitdone(BaseModel):
-    msg: Annotated[str, None]
+class WaitDesposeResults(BaseModel):
+    cookie: Annotated[float, None]
     results: Annotated[str, None]
