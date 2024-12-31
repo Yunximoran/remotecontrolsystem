@@ -55,5 +55,5 @@ class Parse:
 CONFIG = Parse()
 if __name__ == "__main__":
     print(CONFIG.PATH_MAP_SOFTWARES)
-    print(CONFIG.ENCODING)
+    print(CONFIG.LOCAL_DIR_SOFTWARES)
 

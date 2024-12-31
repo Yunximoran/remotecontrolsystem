@@ -1,4 +1,4 @@
-<base ip="192.168.6.1" mac="0xb025aa487814">
+<base ip="192.168.6.1" mac="0x201e88f505bd">
     <connect>
         <udp>
             <client>8084</client>
@@ -29,7 +29,6 @@
     <paths>
         <map_softwares>local\data\softwares.json</map_softwares>
         <log_shells>local\data\shells.json</log_shells>
-        <output />
     </paths>
 
     <performance>

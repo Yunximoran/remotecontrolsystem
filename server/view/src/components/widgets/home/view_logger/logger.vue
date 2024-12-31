@@ -1,6 +1,6 @@
 <template>
     <div class="output">
-        <li v-for="(report, ip) in socketStore.data.client_reports" :key="report">{{ ip }} {{ report.instruct }}</li>
+        <li v-for="log in socketStore.data.logs" :key="report">{{ JSON.parse(log).data }}</li>
     </div>
 </template>
 

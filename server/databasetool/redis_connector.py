@@ -16,6 +16,9 @@ class DataBaseManager(StrictRedis):
             end = self.llen(key)
         return super().lrange(key, 0, end)
 
+    def save(self, **kwargs):
+        return super().save(**kwargs)
+    
     def init_start(self):
         for data in REDIS_CONF['datas']:
             pass

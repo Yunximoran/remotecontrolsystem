@@ -74,7 +74,8 @@ async def predict(websocket: WebSocket):
             client_reports = DATABASE.hgetall("reports")
             client_waitdones = DATABASE.hgetall("waitdones")
             softwarelist = DATABASE.lrange("softwarelist")
-            await websocket.send_json([client_status, client_reports, client_waitdones, softwarelist])
+            logs = DATABASE.lrange("logs")
+            await websocket.send_json([client_status, client_reports, client_waitdones, softwarelist, logs])
             await asyncio.sleep(1)
     except WebSocketDisconnect:
         print("链接中断")
@@ -148,7 +149,6 @@ async def registryaccount(regisform: NewUser):
     return {
         "account": regisform.account,
         "username": regisform.username
-        
     }
     
 @app.get("/servers/data/softwarelist")

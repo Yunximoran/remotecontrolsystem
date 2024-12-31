@@ -27,30 +27,52 @@ class Control:
     def listen(self):
         conn = TCPListen()
         pool = multiprocessing.Pool()
-        while True:
-            try:
-                # 监听待办事件
-                """
-                写入redis 供vue读取
-                等待vue执行处理
-                
-                * 更新待办事件
-                * 创建处理任务
-                    pass
-                """
-                sock, msg = conn.recv()
-                cookie = json.loads(msg)['cookie']
-                pool.apply_async(self.add_watidone, args=(cookie, msg,), callback=lambda cookie: self.dps_waitdone(cookie, sock))
-                # pool.apply_async(self.add_watidone, args=(sock, msg))   # 添加待办任务
-            except TimeoutError:
-                pass
+        try:
+            while True:
+                try:
+                    # 监听待办事件
+                    """
+                    写入redis 供vue读取
+                    等待vue执行处理
+                    
+                    * 更新待办事件
+                    * 创建处理任务
+                        pass
+                    """
+                    sock, addr, data = conn.recv()
+                    """
+                    cookie: (typecode + ip + ctime).encode()
+                    """
+                    msg = json.loads(data)
+                    cookie = msg['cookie']
+                    if msg['type'] == "instruct":
+                        # 指令事件
+                        pass
+                    
+                    if msg['type'] == "software":
+                        # 软件事件
+                        pool.apply_async(self.add_watidone, args=(cookie, data,), callback=lambda cookie: self.dps_waitdone(cookie, sock))
+                                        
+                    
+                    if msg['type'] == "report":
+                        # 汇报事件
+                        DATABASE.lpush("logs", data)
+                    
+
+                except TimeoutError:
+                    print("TCP Listen Timeout")
+        except KeyboardInterrupt as e:
+            print(e)
     
     def add_watidone(self, cookie, msg):
-        DATABASE.hset("waitdones", cookie, msg)
+        DATABASE.lset("waitdones", cookie, msg)
         """
         前端通过接口返回处理结果，怎么找到对应的client套接字
         """
         return cookie
+    
+    def add_reports(self, cookie, msg):
+        pass
         
     def dps_waitdone(self, cookie, sock:socket.socket):
         while True:
@@ -105,7 +127,7 @@ class Control:
         """
         conn = TCPConnect() 
         report = conn.send(shell_control, ip)
-        DATABASE.hset("reports", ip, report)
-        DATABASE.hset("logs", ip, report)
+        DATABASE.lset("reports", ip, report)
+        DATABASE.lpush("logs", report)
 
 controlor = Control()

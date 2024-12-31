@@ -15,7 +15,7 @@ export const useSocketStore = defineStore('socket', {
                 client_reports: null,
                 client_waitdone: null,  
                 softwarelist: null,
-                
+                logs: null,
             }
         }
     },
@@ -57,6 +57,7 @@ export const useSocketStore = defineStore('socket', {
             this.data.client_reports = data[1]
             this.data.client_waitdone = data[2]
             this.data.softwarelist = data[3]
+            this.data.logs = data[4]
             // console.log(data)/
         },
         ErrorScoket(error){

@@ -120,57 +120,54 @@ class ListenServe(BaseServe):
             # pool.map_async(self._update_softwares, softwares)
             # 为每次接收到的软件清单创建处理进程
             print(softwares)
-            pool.apply_async(self._update_softwares, args=(softwares,), callback=self._write_local_softwares)
+            newitem = []
+            with open(CONFIG.PATH_MAP_SOFTWARES, 'r', encoding='utf-8') as f:
+                local_softwares: list[dict] = json.load(f)
+                for item in softwares:
+                    itemname = item['ecdis']['name']
+                    isexist = False
+                    for localitem in local_softwares:
+                        localname = localitem['ecdis']['name']
+                        if itemname == localname:
+                            isexist = True
+                            break
+                    if not isexist:
+                        newitem.append(item)
+                
+            pool.map_async(self._update_softwares, newitem, callback=self._write_local_softwares)
+            # pool.apply_async(self._update_softwares, args=(softwares,), callback=self._write_local_softwares)
             
     def _update_softwares(self, softwares):
         # 更新软件清单
-        with open(CONFIG.PATH_MAP_SOFTWARES, 'r', encoding='utf-8') as f:
-            local_softwares: list[dict] = (json.load(f))    # 加载本地软件清单
-            for newitem in softwares:
-                # 遍历软件清单
-                newsoftware = newitem['ecdis']['name']
-                isexist = False
-                for olditem in local_softwares: # 筛选重复项
-                    oldsoftware = olditem['ecdis']['name']
-                    if newsoftware == oldsoftware:
-                        isexist = True
-                        break
-                    
-                if not isexist: # 写入新对象
-                    # 新的软件需要获取本地路径
-                    # 动态处理 磁盘中查找所有匹配项，返回服务端，等待服务端处理
-                    """
-                    步骤
-                        在local\softwares\中创建软连接[符号链接]
-                        
-                    result: newitem['ecdis']['path'] = ./local/softwares/software.exe
-                    """
-                    allpath = SYSTEM.checkfile(newsoftware) # 在磁盘总搜索所有包含软件名的路径
-                    print(allpath)
-                    params = SYSTEM.format_params(1, allpath)  # 格式化表单信息
-                    res = self._wait_response(params)  # 等待服务器选择正确路径
-                    print("respath", res)
-                    newitem['ecdis']['path'], report = SYSTEM.build_hyperlink(newsoftware, res)
-                    self._report_results(report)
-                    
-                    local_softwares.append(newitem)
-                    
-        return local_softwares
+        software_name = softwares['ecdis']['name']
+        print("software name", software_name)
+        allpath = SYSTEM.checkfile(software_name)
+        print("all path:", allpath)
+        params = SYSTEM.format_params(1, allpath)
+        resp = self._wait_response(params)
+        print("results:", resp)
+        softwares['ecdis']['path'], report = SYSTEM.build_hyperlink(software_name, resp)
+        self._report_results(report)
+        return softwares
+
      
-    def _write_local_softwares(self, local_softwares):
-        with open(CONFIG.PATH_MAP_SOFTWARES, "w", encoding='utf-8') as f:
-            json.dump(local_softwares, f, ensure_ascii=False, indent=4)
+    def _write_local_softwares(self, nvals):
+        lcoal_softwares: list[dict]= json.load(open(CONFIG.PATH_MAP_SOFTWARES, 'r'))
+        lcoal_softwares.extend(nvals)
+        json.dump(lcoal_softwares, open(CONFIG.PATH_MAP_SOFTWARES, 'w', encoding='utf-8'), ensure_ascii=False, indent=4)
+        print("save ok")
             
     def _report_results(self, report):
         conn = TCPConnect()
-        conn.send(report)
+        SYSTEM.format_params(2, report)
+        conn.send(SYSTEM.format_params(2, report))
         conn.close()
         del conn
         
     def _wait_response(self, param):
         conn = TCPConnect()
-        conn.send(json.dumps(param, ensure_ascii=False))
-        data = conn.recv(1024)
+        conn.send(param)
+        data = conn.recv()
         conn.close()
         return data.decode()
 

@@ -16,7 +16,6 @@ from xml.etree import ElementTree as et
 
 
 from despose import CONFIG
-from depend.protocol import TCPConnect
 
 
 SYSTEM_NAME = platform.system()                 # 操作系统名称
@@ -146,12 +145,14 @@ class BaseSystem:
     def format_params(self, typecode, data):
         types = [
             "instruct",
-            "software"
+            "software",
+            "report"
         ]
-        return {
+        return json.dumps({
             "type": types[typecode],
-            "data": data    # 携带的data， 软件路径列表 | 错误报文
-        }
+            "data": data,    # 携带的data， 软件路径列表 | 错误报文
+            "cookie": time.time()
+        }, ensure_ascii=False)
     
     # def wait_response(self, param):
     #     conn = TCPConnect()
@@ -206,8 +207,6 @@ class BaseSystem:
         """
         if isadmin:
             self.uproot()
-        else:
-            pass
         process= subprocess.Popen(
                 args=args,
                 shell=True, 
@@ -320,18 +319,27 @@ class WindowsSystem(BaseSystem):
             window 软连接需要将包含软件依赖的目录
         """
         # windows 建立关联整个目录的连接
-        topath = os.path.join(CONFIG.PATH_MAP_SOFTWARES, filename)  # 软件映射地址  
+        topath = os.path.join(os.getcwd(), CONFIG.LOCAL_DIR_SOFTWARES, filename)  # 软件映射地址  
         # 软件不应该同名
         report = self.executor(["mklink", topath, frompath], isadmin=True)
         return topath, report
 
     def uproot(self):
         # 不确定包含范围
+        if self.is_admin():
+            pass
+        else:
+            
+            # ShellExecuteW
+            ctypes.windll.shell32.ShellExecuteW(None, "runas", sys.executable, " ".join(sys.argv), None, 1)
+            # sys.exit(0)
+            
+    @staticmethod
+    def is_admin():
         try:
-            ctypes.windll.shell32.IsUserAnAdmin()
+            return ctypes.windll.shell32.IsUserAnAdmin()
         except:
-            ctypes.windll.shell32.ShellExecuteW(None, "runas", sys.executable, None, 1)
-            sys.exit(0)
+            return False
     
 class LinuxSystem(BaseSystem):
     def __init__(self, *args):
@@ -358,11 +366,6 @@ class LinuxSystem(BaseSystem):
         process = subprocess.Popen(['su', '-p'], stdin=subprocess.PIPE, stderr=subprocess.PIPE)
         process.stdin.write(ROOTPASS)
     
-    def __execute_shell(self, shell):
-        # 执行shell
-        # 检测是否需要额外输入
-        # 如果需要通知服务端处理
-        process = subprocess.Popen(shell, stdin=subprocess.PIPE, stderr=subprocess.PIPE)
         
 class MacOSSystem(BaseSystem):
     def __init__(self, *args):
@@ -375,5 +378,4 @@ if __name__ == "__main__":
     软件路径不一定要统一，但是可以配置安装路径
     """
     Init()
-
     
