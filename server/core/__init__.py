@@ -1,0 +1,62 @@
+
+import asyncio
+
+import uvicorn
+from fastapi.middleware.cors import CORSMiddleware
+from fastapi import FastAPI
+
+from core.depend.api import (
+    data,
+    send,
+    alter,
+    login,
+)
+
+
+# CORS
+ORIGINS = [
+    # vue address
+    "https://localhost:8080",
+    "http://localhost:8080",
+]
+
+app = FastAPI()
+
+# config
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=ORIGINS,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"]
+    
+)
+# load router
+app.include_router(
+    data.router,
+    prefix="/servers",
+    tags=['data']
+)
+
+app.include_router(
+    send.router,
+    prefix="/servers",
+    tags=['send']
+)
+
+app.include_router(
+    alter.router,
+    prefix="/servers",
+    tags=["alter"]
+)
+app.include_router(
+    login.router,
+    prefix="/servers",
+    tags=["login"]
+)
+
+server = uvicorn.Server(uvicorn.Config(app))
+
+
+
+

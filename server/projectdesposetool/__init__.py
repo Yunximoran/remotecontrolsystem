@@ -2,7 +2,6 @@ import multiprocessing
 from fastapi import HTTPException
 
 from .parse import CONFIG
-from .start_server import SERVERMANAGE
 from .systool import choose_software
 
 QUEUE = multiprocessing.Queue()

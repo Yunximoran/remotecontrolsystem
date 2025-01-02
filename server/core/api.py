@@ -14,7 +14,6 @@ API 接收请求 处理请求内容 返回响应数据
 
 import json
 import asyncio
-import re
 
 from typing import Annotated
 
@@ -38,6 +37,7 @@ from datamodel import (
     Credentils
     )
 from projectdesposetool.systool import choose_software
+from .depend.api import data, send, alter
 
 
 
@@ -63,7 +63,18 @@ server = uvicorn.Server(uvicorn.Config(app))
 
 multiter = MultiCast()
 
-
+app.include_router(
+    data.router,
+    prefix="/servers"
+)
+app.include_router(
+    send.router,
+    prefix="/servers"
+)
+app.include_router(
+    alter.router,
+    prefix="/servers"
+)
 
 @app.websocket("/ws")
 async def predict(websocket: WebSocket):
@@ -150,10 +161,6 @@ async def registryaccount(regisform: NewUser):
         "account": regisform.account,
         "username": regisform.username
     }
-    
-@app.get("/servers/data/softwarelist")
-async def get_softwarelist():
-    return DATABASE.hgetall("softwarelist")
 
 # ALTER #
 # config
@@ -170,6 +177,19 @@ async def alter_software(alter: Annotated[str, None]):
         DATABASE.lpush("softwarelist", software)
         return {"OK": software}
 
+@app.post("/servers/default/control")
+async def default_control(btype: str):
+    if btype == "push -s":
+        pass
+    
+    if btype == "pop -s":
+        pass
+
+    if btype == "close -s":
+        pass
+    
+    if btype == "download":
+        pass
 
 
 
