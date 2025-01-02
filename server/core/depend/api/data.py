@@ -30,10 +30,7 @@ async def predict(websocket: WebSocket):
     except WebSocketDisconnect:
         print("链接中断")
 
-@router.get("/data/client_status/", tags=['client'])
-async def getclientmessage():   # 获取客户端连接状态
-    clients = DATABASE.hgetall("client_status")
-    return clients
+
 
 @router.get("/data/accounts/", tags=['user'])
 async def get_account_data(account: Annotated[str, None]):

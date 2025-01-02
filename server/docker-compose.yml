@@ -1,0 +1,34 @@
+version: '3.8'
+
+services:
+  fast:
+    image: "remotecontrol-server:latest"
+    depends_on:
+      - redis
+      - vue
+    networks:
+      - frontnet
+      - backnet
+
+  redis:
+    image: "redis:latest"
+    ports:
+      - 6379:6379/tcp
+    volumes:
+      - data:
+    networks:
+      - backnet
+
+  vue:
+    image: "remotecontrol-view:latest"
+    ports:
+      - 8080:8080/tcp
+    networks:
+      - frontnet
+      
+volumes:
+  data:
+
+networks:
+  frontnet:
+  backnet:
