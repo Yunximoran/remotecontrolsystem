@@ -9,9 +9,10 @@ from core.depend import control
 multiter = MultiCast()
 controlor = control.Control()
 
+# 通信接口
 router = APIRouter()
 
-# SEND TO CLIENT
+
 @router.post("/sends/instruct/", tags=["send", "instruct"])         # 发送shell指令
 async def send_control_shell(shell_list: list[ShellList], toclients: list[str] = []):
     try:
@@ -31,19 +32,4 @@ async def send_software_checklist(checklist: list[Software]):
         return {"OK": "send software checklist"}
     except Exception as e:
         return {"ERROR": e}
-    
-
-@router.post("/sends/buttons/", tags=["button"])
-async def default_control(btype: str):
-    if btype == "push -s":
-        pass
-    
-    if btype == "pop -s":
-        pass
-
-    if btype == "close -s":
-        pass
-    
-    if btype == "download":
-        pass
     

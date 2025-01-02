@@ -37,8 +37,6 @@ class Control:
             p = multiprocessing.Process(target=self.sendtoshell, args=(shell_control, MESSAGEQUEUE.get()))
             p.start()
             p.join()
-            
-    
                 
     def sendtoshell(self, shell_control, ip):
         """

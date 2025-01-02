@@ -57,20 +57,23 @@ class TCPListen(TCP):
                 """
                 msg = json.loads(data)
                 cookie = msg['cookie']
-                if msg['type'] == "instruct":
-                    # 指令事件
-                    pass
-                
-                if msg['type'] == "software":
-                    # 软件事件
-                    pool.apply_async(self.add_watidone, args=(cookie, data,), 
-                                     callback=lambda cookie: self.dps_waitdone(cookie, sock))
-                                    
-                
-                if msg['type'] == "report":
-                    # 汇报事件
-                    DATABASE.lpush("logs", data)
-                
+                try:
+                    if msg['type'] == "instruct":
+                        # 指令事件
+                        pass
+                    
+                    if msg['type'] == "software":
+                        # 软件事件
+                        pool.apply_async(self.add_watidone, args=(cookie, data,), 
+                                        callback=lambda cookie: self.dps_waitdone(cookie, sock))
+                                        
+                    
+                    if msg['type'] == "report":
+                        # 汇报事件
+                        DATABASE.lpush("logs", data)
+                except KeyboardInterrupt:
+                    pool.terminate()
+                    pool.join()
 
             except TimeoutError:
                 print("TCP Listen Timeout")

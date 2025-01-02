@@ -10,6 +10,7 @@ from core.depend.api import (
     send,
     alter,
     login,
+    event
 )
 
 
@@ -34,25 +35,30 @@ app.add_middleware(
 # load router
 app.include_router(
     data.router,
-    prefix="/servers",
+    prefix="/servers/data",
     tags=['data']
 )
 
 app.include_router(
     send.router,
-    prefix="/servers",
+    prefix="/servers/send",
     tags=['send']
 )
 
 app.include_router(
     alter.router,
-    prefix="/servers",
+    prefix="/servers/alter",
     tags=["alter"]
 )
 app.include_router(
     login.router,
-    prefix="/servers",
+    prefix="/servers/login",
     tags=["login"]
+)
+app.include_router(
+    event.router,
+    prefix="/servers/event",
+    tags=["event"]
 )
 
 server = uvicorn.Server(uvicorn.Config(app))
