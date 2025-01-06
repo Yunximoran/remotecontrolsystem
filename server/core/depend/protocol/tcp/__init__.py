@@ -1,3 +1,4 @@
+import sys
 import json
 import multiprocessing
 
@@ -10,20 +11,32 @@ class TCPConnect(TCP):
     
     def settings(self):
         self.sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
-        
     
-    def send(self, shell:str, ip):
-        try: 
-            self.sock.connect((ip, CONFIG.TCPORT))
-            self.sock.sendall(shell.encode())
-            data = self.sock.recv(1024)
-            return data.decode('utf-8')
-        except ConnectionRefusedError:
-            print("当前无连接")
-        finally:
-            self.sock.close()
+    def catchtimeout(func):
+        def wrapper(self, *args, **kwargs):
+            try:
+                func(self, *args, **kwargs)
+                data = self.sock.recv(1024)
+                return json.loads(data.decode('utf-8'))
+            except ConnectionAbortedError:
+                print("当前无连接")
+            finally:
+                self.sock.close()
+        return wrapper
+    
+    @catchtimeout
+    def send(self, ip, data):
+        self.sock.connect((ip, CONFIG.TCPORT))
+        self.sock.sendall(data.encode())
+        
 
-
+    @catchtimeout
+    def sendfile(self, ip,file):
+        self.sock.connect((ip, CONFIG.TCPORT))
+        self.sock.sendall(file[0])
+        self.sock.sendfile(file[1])
+        
+        
 class TCPListen(TCP):
     def Init(self):
         self.sock.bind((CONFIG.IP, CONFIG.TSPORT))
@@ -57,29 +70,24 @@ class TCPListen(TCP):
                 """
                 msg = json.loads(data)
                 cookie = msg['cookie']
-                try:
-                    if msg['type'] == "instruct":
-                        # 指令事件
-                        pass
-                    
-                    if msg['type'] == "software":
-                        # 软件事件
-                        pool.apply_async(self.add_watidone, args=(cookie, data,), 
-                                        callback=lambda cookie: self.dps_waitdone(cookie, sock))
-                                        
-                    
-                    if msg['type'] == "report":
-                        # 汇报事件
-                        DATABASE.lpush("logs", data)
-                except KeyboardInterrupt:
-                    pool.terminate()
-                    pool.join()
+                if msg['type'] == "instruct":
+                    # 指令事件
+                    pass
+                
+                if msg['type'] == "software":
+                    # 软件事件
+                    pool.apply_async(self.add_watidone, args=(cookie, data,), 
+                                    callback=lambda cookie: self.dps_waitdone(cookie, sock))           
+                
+                if msg['type'] == "report":
+                    # 汇报事件
+                    DATABASE.lpush("logs", data)
 
             except TimeoutError:
                 print("TCP Listen Timeout")
     
     def add_watidone(self, cookie, msg):
-        DATABASE.lset("waitdones", cookie, msg)
+        DATABASE.hset("waitdones", cookie, msg)
         """
         前端通过接口返回处理结果，怎么找到对应的client套接字
         """

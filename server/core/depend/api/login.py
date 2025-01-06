@@ -10,7 +10,7 @@ from datamodel import (
 router = APIRouter()
 
 
-@router.post("/login/{id}", tags=['login'])
+@router.post("/{id}", tags=['login'])
 async def login(loginform: Credentils):
     credentils = loginform.account
     password = loginform.password
@@ -24,7 +24,7 @@ async def login(loginform: Credentils):
         raise HTTPException(status_code=404, detail="account is not exits")
     
 
-@router.put("/login/registry", tags=['registry'])
+@router.post("/registry", tags=['registry'])
 async def registryaccount(regisform: NewUser):
     # 注册新用户，保存在数据库
     DATABASE.hset("accounts", regisform.account, regisform.model_dump_json())   

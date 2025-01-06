@@ -1,3 +1,4 @@
+import os
 from xml.etree import ElementTree as et
 
 class Parse:
@@ -14,7 +15,9 @@ class Parse:
     
     def message(self):
         self.IP = self.__ROOT.get("ip")
-        self.MAC = self.__ROOT.get("mac")        
+        self.MAC = self.__ROOT.get("mac")  
+        self.USERNAME = self.__ROOT.get("user")
+        self.PASSWORD = self.__ROOT.get("pass")      
 
     
     def load_connect_config(self):
@@ -40,9 +43,10 @@ class Parse:
         BUILDROOT = self.__ROOT.find("build")
         STRUCTURE = BUILDROOT.find("structure")
         self.LOCAL_DIR_ROOT = STRUCTURE.get('target')
-        self.LOCAL_DIR_DATA = "\\".join([self.LOCAL_DIR_ROOT, STRUCTURE.findall("dir")[0].text])
-        self.LOCAL_DIR_LOGS = "\\".join([self.LOCAL_DIR_ROOT, STRUCTURE.findall("dir")[1].text])
-        self.LOCAL_DIR_SOFTWARES = "\\".join([self.LOCAL_DIR_ROOT, STRUCTURE.findall("dir")[2].text]) 
+        self.LOCAL_DIR_DATA = os.path.join(self.LOCAL_DIR_ROOT, STRUCTURE.findall("dir")[0].text)
+        self.LOCAL_DIR_LOGS = os.path.join(self.LOCAL_DIR_ROOT, STRUCTURE.findall("dir")[1].text)
+        self.LOCAL_DIR_SOFTWARES = os.path.join(self.LOCAL_DIR_ROOT, STRUCTURE.findall("dir")[2].text) 
+        self.LOCAL_DIR_FILES = os.path.join(self.LOCAL_DIR_ROOT, STRUCTURE.findall("dir")[3].text)
         
         self.ENCODING = BUILDROOT.find("encoding").text     
     
@@ -54,6 +58,6 @@ class Parse:
         
 CONFIG = Parse()
 if __name__ == "__main__":
-    print(CONFIG.PATH_MAP_SOFTWARES)
+    # print(CONFIG.PATH_MAP_SOFTWARES)
     print(CONFIG.LOCAL_DIR_SOFTWARES)
 

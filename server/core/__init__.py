@@ -41,7 +41,7 @@ app.include_router(
 
 app.include_router(
     send.router,
-    prefix="/servers/send",
+    prefix="/servers/sends",
     tags=['send']
 )
 

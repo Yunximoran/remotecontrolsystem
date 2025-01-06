@@ -1,6 +1,6 @@
 import json
 import time
-import subprocess
+import os
 import multiprocessing
 
 from despose import CONFIG, DESPOSE
@@ -43,18 +43,28 @@ class SelectServe(BaseServe):
         while True:
             try:             
                 conn, data = tcp_conn.recv()
-                instruct = json.loads(data) # type: dict
-                # # 某个参数不可被序列化, 使用pool会报错，但是使用process则不会
-                # 怎么解决pool运行时不可被序列化的问题
-                with multiprocessing.Pool() as pool:
-                    res_execute = pool.apply_async(self.execute_instruct, args=(instruct, ),
-                        callback=lambda report: self.report_results(conn, report))
-                    res_history = pool.apply_async(self.history, args=(instruct, ))
-                    print(res_execute.get())
+                print("Select Serve Recv:", data)
+                try:
+                    instruct = json.loads(data) # type: dict
+                    print("exec instruct:", instruct)
+                    with multiprocessing.Pool() as pool:
+                        res_execute = pool.apply_async(self.execute_instruct, args=(instruct, ),
+                            callback=lambda report: self.report_results(conn, report))
+                        pool.apply_async(self.history, args=(instruct, ))
+                        print(res_execute.get())
+                except Exception:
+                    print("exec download:", instruct)
+                    multiprocessing.Process(self.savefile, args=(data, conn)).start()
+
+                    
             except TimeoutError:
                 pass
             
-
+    def savefile(self, filename, conn):
+        fileobj = conn.recv(1024)
+        conn.close()
+        with open(os.path.join(CONFIG.LOCAL_DIR_FILES, filename), "wb") as f:
+            f.write(fileobj)
         
     def history(self, instruct):
         # 记录历史指令
@@ -83,7 +93,7 @@ class SelectServe(BaseServe):
             report = SYSTEM.start_software()
             
         if label == "wget":
-            report = SYSTEM.wget()
+            report = SYSTEM.wget(instruct)
             
         if label == "compress":
             report = SYSTEM.compress()
@@ -170,7 +180,3 @@ class ListenServe(BaseServe):
         data = conn.recv()
         conn.close()
         return data.decode()
-
-    def add_pathfield(self, item):
-        pass
-

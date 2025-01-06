@@ -4,27 +4,27 @@ from fastapi import APIRouter
 
 from datamodel import ShellList, Software
 from core.depend.protocol.udp import MultiCast
-from core.depend import control
+from core.depend.control import Control
 
 multiter = MultiCast()
-controlor = control.Control()
+controlor = Control()
 
 # 通信接口
 router = APIRouter()
 
 
-@router.post("/sends/instruct/", tags=["send", "instruct"])         # 发送shell指令
+@router.post("/instruct", tags=["send", "instruct"])         # 发送shell指令
 async def send_control_shell(shell_list: list[ShellList], toclients: list[str] = []):
     try:
-        for shell_msg in shell_list:
-            controlor.sendtoclient(shell_msg.model_dump_json(), toclients)
-            
-        return {"ok": "send a shell to client"}
-    except Exception as e:
+        instructs = [item.model_dump_json() for item in shell_list]
+        print(instructs)
+        controlor.sendtoclient(toclients, instructs=instructs) 
+        return {"OK": "instructions have been sent to the client"}
+    except AttributeError as e:
         return {"ERROR": e}
     
 
-@router.post("/sends/softwarelist/", tags=["send", "softwarelist"])    # 发送软件清单
+@router.post("/softwarelist", tags=["send", "softwarelist"])    # 发送软件清单
 async def send_software_checklist(checklist: list[Software]):
     software = [item.model_dump() for item in checklist]
     try:

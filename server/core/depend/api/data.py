@@ -9,7 +9,6 @@ from fastapi import(
     )
 
 from databasetool import DataBaseManager as DATABASE
-from datamodel import NewUser
 
 # 数据接口
 router = APIRouter()
@@ -32,7 +31,7 @@ async def predict(websocket: WebSocket):
 
 
 
-@router.get("/data/accounts/", tags=['user'])
+@router.get("/accounts", tags=['user'])
 async def get_account_data(account: Annotated[str, None]):
     # 从数据库中获取账号数据，校验账号是否存在
     account_infomation = DATABASE.hget("accounts", account)

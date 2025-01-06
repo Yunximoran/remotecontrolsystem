@@ -54,15 +54,19 @@ class Init:
         "Linux": [],
         "MacOS": []
     }
-    def __init__(self):
+    def __init__(self, username=None, password=None):
         self.__init_system()  # 初始化操作系统
-        self.__init_local_address() # 初始化本地IP、MAC
+        self.__init_local_address(username, password) # 初始化本地IP、MAC
         
-    def __init_local_address(self):
+    def __init_local_address(self, username, password):
         tree = et.parse("config.xml")
         root = tree.getroot()
         root.set("ip", IP)
         root.set("mac", MAC)
+        if username:
+            root.set("user", username)
+        if password:
+            root.set("pass", password)
         tree.write("config.xml")
 
     def __init_system(self):
@@ -260,11 +264,11 @@ class WindowsSystem(BaseSystem):
         return drives
     
     def close(self):
-        os.system("shutdown /s /t 1")
+        os.system("shutdown /s /t 3")
         return self.report(['shutdown', "/s", "/t", 1], "closed", False)
     
     def restart(self):
-        os.system("shutdown /r/ t/ 1")
+        os.system("shutdown /r /t 3")
         return self.report(["shutdown", "/r", "/t", 1], "restarted", False)
     
     def start_software(self, software):

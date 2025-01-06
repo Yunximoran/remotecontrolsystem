@@ -27,6 +27,7 @@ class Client:
         build_directory(CONFIG.LOCAL_DIR_DATA)
         build_directory(CONFIG.LOCAL_DIR_LOGS)
         build_directory(CONFIG.LOCAL_DIR_SOFTWARES)
+        build_directory(CONFIG.LOCAL_DIR_FILES)
    
         if not os.path.exists(CONFIG.PATH_MAP_SOFTWARES):
             print("make softwares.json file")

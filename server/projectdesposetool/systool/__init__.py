@@ -1,20 +1,18 @@
-import os
-import platform
+
 import tkinter
 from tkinter import filedialog
+import os
 
-def choose_software():
+
+def choose_file():
     window = tkinter.Tk()
     window.withdraw()
     window.attributes("-topmost", True)
-    file_path = filedialog.askopenfilename(
-        filetypes=[
-            ("software", ".exe"),
-            ("software", "*.docx")
-        ]
-    )
+    file_path = filedialog.askopenfilename()
+    filename = os.path.basename(file_path)
+    print(filename)
     window.quit()
-    return file_path
+    return filename, file_path
     
     
     

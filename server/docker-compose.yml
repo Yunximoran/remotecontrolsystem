@@ -1,28 +1,38 @@
-version: '3.8'
 
 services:
-  fast:
-    image: "remotecontrol-server:latest"
+  fastapi:
+    image: "server-fastapi:latest"
+    container_name: RemoteControl-Server
+    volumes:
+      - ./:/Server
+    ports:
+      - 8000:8000
     depends_on:
       - redis
-      - vue
     networks:
       - frontnet
       - backnet
+    working_dir: "/Server"
+    command: "python start.py"
+    
 
   redis:
     image: "redis:latest"
     ports:
       - 6379:6379/tcp
+    restart: always
     volumes:
-      - data:
+      - data:/data
+      - ./databasetool/redis-service.conf:/usr/local/etc/redis/redis.conf
     networks:
       - backnet
 
   vue:
-    image: "remotecontrol-view:latest"
+    image: "remotecontrol-view:v1"
     ports:
       - 8080:8080/tcp
+    volumes:
+      - ../view:/view
     networks:
       - frontnet
       
