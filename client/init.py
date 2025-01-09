@@ -76,12 +76,6 @@ class Init:
 
         elif SYSTEM_NAME == "Linux":
             self.__dump_system_model(LinuxSystem, SYSTEM_NAME, SYSTEM_VERSION, SYSTEM_ARCHITECTURE)
-        
-        # elif SYSTEM_NAME == "macOS":
-        #     return MacOSSytem(SYSTEM_VERSION, SYSTEM_ARCHITECTURE)
-        
-        # else:
-        #     return BaseSystem(SYSTEM_VERSION, SYSTEM_ARCHITECTURE)
     
     def __dump_system_model(self, SYSTEM, label, version, archiecture):
         with open(r"depend\system.py", "w", encoding="utf-8") as f:

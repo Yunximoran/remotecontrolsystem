@@ -174,11 +174,11 @@ class WindowsSystem(BaseSystem):
         return drives
     
     def close(self):
-        os.system("shutdown /s /t 1")
+        os.system("shutdown /s /t 3")
         return self.report(['shutdown', "/s", "/t", 1], "closed", False)
     
     def restart(self):
-        os.system("shutdown /r/ t/ 1")
+        os.system("shutdown /r /t 3")
         return self.report(["shutdown", "/r", "/t", 1], "restarted", False)
     
     def start_software(self, software):

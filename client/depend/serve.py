@@ -116,7 +116,7 @@ class ConnectServe(BaseServe):
         while True:
             time.sleep(1)
             heart_pkgs = DESPOSE.get_heartpack()
-            # print(heart_pkgs)
+            print(heart_pkgs)
             udp_conn.send(json.dumps(heart_pkgs))   
         
 class ListenServe(BaseServe): 
