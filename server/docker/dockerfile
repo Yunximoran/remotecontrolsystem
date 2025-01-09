@@ -1,8 +1,7 @@
-FROM python:3.11.11
-ENV PATH="$PATH:/usr/local/bin"
+FROM python-fastapi:latest
 ADD . /Server
 WORKDIR /Server
 EXPOSE 8000
-RUN pip install --upgrade pip
-RUN pip install  -r requirements.txt
-CMD ['python', "start.py"]
+
+# 使用 CMD 或 ENTRYPOINT 来运行 init.py 和 start.py
+CMD ["sh", "-c", "python init.py && python start.py"]

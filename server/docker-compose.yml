@@ -1,34 +1,39 @@
 
 services:
   fastapi:
-    image: "server-fastapi:latest"
+    build:
+      context: ./
+      dockerfile: docker/dockerfile
     container_name: RemoteControl-Server
     volumes:
       - ./:/Server
     ports:
-      - 8000:8000
+      - 8000:8000/tcp
     depends_on:
       - redis
     networks:
       - frontnet
       - backnet
-    working_dir: "/Server"
-    command: "python start.py"
-    
+      - locallan
 
   redis:
     image: "redis:latest"
+    container_name: RemoteControl-Database
     ports:
       - 6379:6379/tcp
     restart: always
+    networks:
+      - backnet
+    command: redis-server /usr/local/etc/redis/redis.conf
     volumes:
       - data:/data
       - ./databasetool/redis-service.conf:/usr/local/etc/redis/redis.conf
-    networks:
-      - backnet
 
   vue:
     image: "remotecontrol-view:v1"
+    container_name: RemoteControl-View
+    depends_on:
+      - fastapi
     ports:
       - 8080:8080/tcp
     volumes:
@@ -41,4 +46,17 @@ volumes:
 
 networks:
   frontnet:
+    driver: bridge
   backnet:
+    driver: bridge
+  locallan:
+    driver: macvlan
+    driver_opts:
+      parent: eth0.10
+    ipam:
+      config:
+        - subnet: 192.168.1.0/24
+          gateway: 192.168.1.1
+  
+
+

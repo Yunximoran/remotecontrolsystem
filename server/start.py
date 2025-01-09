@@ -5,8 +5,6 @@ import uvicorn
 from core.depend.protocol.tcp import TCPListen
 from core.depend.protocol.udp import UDP, MultiCast
 
-WAITDONEQUEUE = multiprocessing.Queue()
-
 multiter = MultiCast()
 broadcaster = UDP()
 
@@ -25,13 +23,18 @@ class ServerManage:
         self.ServeList.append(multiprocessing.Process(target=broadcaster.run))
     
     def run_fastapi(self):
-        uvicorn.run("core:app", host="localhost", port=8000, reload=True)
+        uvicorn.run("core:app", host="0.0.0.0", port=8000, reload=True)
     
     def start_servers(self):
         for server in self.ServeList:
             server.start()
-        for server in self.ServeList:
-            server.join()
+    
+    
+    def shutdown(self):
+        for serve in self.ServeList:
+            serve.terminate()
+            serve.join()
+            
 
 if __name__ == "__main__":
     server_manager = ServerManage()

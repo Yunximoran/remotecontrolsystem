@@ -1,10 +1,14 @@
 
-import asyncio
+import sys
+from contextlib import asynccontextmanager
 
 import uvicorn
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi import FastAPI
 
+
+from databasetool import DataBaseManager as DB
+from projectdesposetool import ProjectManage
 from core.depend.api import (
     data,
     send,
@@ -21,7 +25,20 @@ ORIGINS = [
     "http://localhost:8080",
 ]
 
-app = FastAPI()
+PROJECTMANAGE = ProjectManage()
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    PROJECTMANAGE.loaddata(DB)
+    yield
+    PROJECTMANAGE.savedata(DB, "heart_packages")
+    PROJECTMANAGE.savedata(DB, "softwarelist")
+        
+    DB.shutdown()
+
+
+app = FastAPI(lifespan=lifespan)
+
 
 # config
 app.add_middleware(
@@ -60,6 +77,7 @@ app.include_router(
     prefix="/servers/event",
     tags=["event"]
 )
+
 
 server = uvicorn.Server(uvicorn.Config(app))
 

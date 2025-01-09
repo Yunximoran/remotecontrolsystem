@@ -1,4 +1,4 @@
-import sys
+import signal
 import json
 import multiprocessing
 
@@ -82,10 +82,10 @@ class TCPListen(TCP):
                 if msg['type'] == "report":
                     # 汇报事件
                     DATABASE.lpush("logs", data)
-
+                    
             except TimeoutError:
-                print("TCP Listen Timeout")
-    
+                pass
+            
     def add_watidone(self, cookie, msg):
         DATABASE.hset("waitdones", cookie, msg)
         """
@@ -107,3 +107,4 @@ class TCPListen(TCP):
                 sock.sendall(result.encode())
                 sock.close()
                 break
+            

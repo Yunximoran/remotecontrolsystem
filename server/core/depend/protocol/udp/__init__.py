@@ -3,7 +3,6 @@ from .protype import UDP, socket
 
 from projectdesposetool import CONFIG
 
-BROADCAST = ("", )
 MULTICAST = ("224.25.25.1", CONFIG.UMPORT)
 
 class BroadCast(UDP):

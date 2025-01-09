@@ -1,5 +1,0 @@
-redis
-fastapi
-uvicorn[all]
-websockets
-pydantic

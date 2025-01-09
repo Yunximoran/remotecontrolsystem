@@ -1,5 +1,5 @@
 <xml version="1.0">
-    <base ip="192.168.6.1">
+    <base ip="172.19.0.3" mac="0x242ac130003">
         <connect>
             <udp>
                 <client>8084</client>
@@ -16,7 +16,7 @@
         </connect>
 
         <redis_config>
-            <host>localhost</host>
+            <host>redis</host>
             <port>6379</port>
             <datas>
                 <item>client_status</item>
@@ -31,7 +31,7 @@
         </redis_config>
 
         <dependencys>
-            <!-- 依赖项 -->
+            
             <redis>redis-server ./databasetool/redis-service.conf</redis>
             <view>npm --prefix view run serve</view>
         </dependencys>

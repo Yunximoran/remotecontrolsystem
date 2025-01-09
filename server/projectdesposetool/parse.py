@@ -21,7 +21,6 @@ class Parse:
     def load_allconfig(self):
         self.loadconnect()
         self.loadredis()
-        # self.loadservers()
 
 
     def loadconnect(self):
@@ -47,8 +46,6 @@ class Parse:
     def parseConfig(self, TAG):
         RES = {}
         root = self.ROOT.find(TAG)
-        # print("type xml", type(root))
-
         return self.deepparsing(root)
 
     def deepparsing(self, root:ET.Element):

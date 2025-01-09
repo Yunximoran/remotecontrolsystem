@@ -8,4 +8,3 @@ router = APIRouter()
 async def alter_settings(option: str, nval: str):
     # 修改服务端配置
     return {"ok": f"reset {option} => {nval}"}
-

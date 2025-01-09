@@ -17,7 +17,6 @@ router = APIRouter()
 async def send_control_shell(shell_list: list[ShellList], toclients: list[str] = []):
     try:
         instructs = [item.model_dump_json() for item in shell_list]
-        print(instructs)
         controlor.sendtoclient(toclients, instructs=instructs) 
         return {"OK": "instructions have been sent to the client"}
     except AttributeError as e:

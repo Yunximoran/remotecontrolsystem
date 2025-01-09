@@ -38,8 +38,6 @@ class Control:
         # 未指定ip时，默认发送至所有正在链接的客户端
         # 检查链接客户端链接状体
         toclients = self.checkconnect(toclients)
-        argslist = [(ip, ) for ip in toclients]
-        print(toclients)
         with multiprocessing.Pool() as pool:
             if instructs is not None:
                 print("send instruct")
@@ -53,8 +51,10 @@ class Control:
                            callback=self.stdout,
                            error_callback=self.stderr)
             results.wait()
-            print("res", results.get())
-            
+            try:
+                print("res", results.get())
+            except KeyboardInterrupt:
+                pool.terminate()
         
     @staticmethod                           
     def sendtofile(ip, file):

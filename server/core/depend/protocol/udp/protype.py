@@ -9,7 +9,7 @@ from projectdesposetool import CONFIG
 SERVERADDRESS = (CONFIG.IP, CONFIG.USPORT)    # 服务端地址
 
 
-BROADCAST = ("", CONFIG.UBPORT)                  # 配置UDP广播地址
+BROADCAST = ("0.0.0.0", CONFIG.UBPORT)                  # 配置UDP广播地址
 MULTICAST = ("224.25.25.1", CONFIG.UMPORT)          # 配置UDP组播地址
 
 # 
@@ -100,6 +100,7 @@ class Reception:
     async def __reception(self):
         # 等待客户端发送数据(心跳包)
         rec = await self.loop.sock_recvfrom(self.udp_socket, RECVSIZE)
+        print("client conning", rec)
         self.CONNECTNUM -= 10
         
         # 解析数据

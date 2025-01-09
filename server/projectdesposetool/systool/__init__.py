@@ -13,6 +13,6 @@ def choose_file():
     print(filename)
     window.quit()
     return filename, file_path
-    
-    
+
+
     
