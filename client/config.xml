@@ -1,4 +1,4 @@
-<base ip="192.168.6.1" mac="0x201e88f505bd" user="YuncyMoran" pass="ranxi">
+<base ip="172.30.208.1" mac="0x201e88f505bd" user="YuncyMoran" pass="ranxi">
     <connect>
         <udp>
             <client>8084</client>

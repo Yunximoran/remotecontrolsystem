@@ -13,8 +13,11 @@ from despose import CONFIG
 import ctypes
 import string
 class BaseSystem:
+    # 获取工作目录
     CWDIR = os.getcwd()
+    # 运行文件
     DATAPATH = {
+        # 路径依赖
         "softwares": os.path.join(CWDIR, r"local\data\softwares.json"),
         "root": None,
         "logs":{
@@ -23,10 +26,6 @@ class BaseSystem:
         }
     }
     
-    """
-    存在问题
-        设备关机和重启
-    """
     
     PID:dict[str, subprocess.Popen] = {}  # 保存运行进程
     
@@ -58,24 +57,6 @@ class BaseSystem:
         # 关闭软件
         pass
     
-    def format_params(self, typecode, data):
-        types = [
-            "instruct",
-            "software",
-            "report"
-        ]
-        return json.dumps({
-            "type": types[typecode],
-            "data": data,    # 携带的data， 软件路径列表 | 错误报文
-            "cookie": time.time()
-        }, ensure_ascii=False)
-    
-    # def wait_response(self, param):
-    #     conn = TCPConnect()
-    #     conn.send(json.dumps(param))
-    #     data = conn.recv()
-    #     conn.close()
-    #     return data.decode()
     
     # 文件相关
     def compress(self, dir_path):
@@ -98,6 +79,7 @@ class BaseSystem:
             print("del file")
             
     def checkfile(self, check_object, base=None):
+        # 查找文件
         results = []
         if base is None:
             base = self.DATAPATH['root']
@@ -111,7 +93,7 @@ class BaseSystem:
                     
         return results
     
-    def executor(self, args, label=None, isadmin=False):
+    def executor(self, args, label=None):
         """
         :param label: PID标识
         :param args: 封装的shell指令列表
@@ -121,8 +103,6 @@ class BaseSystem:
             如：同时关闭多个软件
             规定更详细的label close ？ softwares
         """
-        if isadmin:
-            self.uproot()
         process= subprocess.Popen(
                 args=args,
                 shell=True, 
@@ -134,11 +114,10 @@ class BaseSystem:
         msg, err = process.communicate()
         
         if label is not None:
+            # 软件名称
             self.PID[label] = process
             
-        return  self.report(args, msg, err)\
-            if err == "你没有足够的权限执行此操作" or "权限不足"\
-            else self.executor(args, isadmin=True)
+        return  msg, err
     
         
     def report(self, args, msg, err):
@@ -158,6 +137,19 @@ class BaseSystem:
     def uproot(self):
         # 升级root权限
         pass
+    
+    
+    def format_params(self, typecode, data):
+        types = [
+            "instruct",
+            "software",
+            "report"
+        ]
+        return json.dumps({
+            "type": types[typecode],
+            "data": data,    # 携带的data， 软件路径列表 | 错误报文
+            "cookie": time.time()
+        }, ensure_ascii=False)     
 class WindowsSystem(BaseSystem):
     def __init__(self, *args):
         super().__init__(*args)
@@ -238,15 +230,21 @@ class WindowsSystem(BaseSystem):
         report = self.executor(["mklink", topath, frompath], isadmin=True)
         return topath, report
 
+    def executor(self, args, label=None, isadmin=False):
+        if isadmin:
+            self.uproot()
+        msg, err =  super().executor(args, label)
+        return self.report(args, msg, err)\
+        if not re.match("权限", err)\
+        else self.executor(args, label, True)
+    
     def uproot(self):
         # 不确定包含范围
         if self.is_admin():
             pass
         else:
-            
-            # ShellExecuteW
             ctypes.windll.shell32.ShellExecuteW(None, "runas", sys.executable, " ".join(sys.argv), None, 1)
-            # sys.exit(0)
+            sys.exit(0)
             
     @staticmethod
     def is_admin():

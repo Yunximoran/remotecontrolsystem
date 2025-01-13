@@ -1,54 +1,31 @@
-import subprocess
-import ctypes
-import sys
-import os
+import socket
+import fcntl
+import struct
 
-def is_admin():
+def get_broadcast_address(interface='eth0'):
+    sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     try:
-        return ctypes.windll.shell32.IsUserAnAdmin()
-    except:
-        return False
-    
-if is_admin():
-    print("admin")
-else:
-    # ShellExecuteW
-    ctypes.windll.shell32.ShellExecuteW(None, "runas", sys.executable, " ".join(sys.argv), None, 1)
-    sys.exit(0)
-print(os.getcwd())
-basepath = os.getcwd()
-topath = "local\softwares"
-print(os.path.join(basepath, topath, "geek"))
-subprocess.Popen(['mklink',  topath+"\\geek", r"D:\\toolkit\\system\\geek.exe"], shell=True)
+        # 获取接口的IP地址和子网掩码
+        ip = fcntl.ioctl(
+            sock.fileno(),
+            0x8915,  # SIOCGIFADDR
+            struct.pack('256s', interface.encode()[:15])
+        )[20:24]
+        netmask = fcntl.ioctl(
+            sock.fileno(),
+            0x891b,  # SIOCGIFNETMASK
+            struct.pack('256s', interface.encode()[:15])
+        )[20:24]
+        
+        # 计算广播地址
+        broadcast = socket.inet_ntoa(struct.pack('4B', *(ip[i] | ~netmask[i] & 0xff for i in range(4))))
+        return broadcast
+    except Exception as e:
+        print(f"Error: {e}")
+        return None
+    finally:
+        sock.close()
 
-
-# import ctypes
-# import string
-
-# def get_drives():
-#     drives = []
-#     bitmask = ctypes.cdll.kernel32.GetLogicalDrives()
-#     print(f"Initial bitmask: {bin(bitmask)}")  # 打印初始的bitmask值
-
-#     for letter in string.ascii_uppercase:
-#         print(f"Checking drive {letter}:\\")  # 打印正在检查的驱动器
-#         if bitmask & 1:
-#             drives.append(f"{letter}:\\")
-#             print(f"Drive {letter}:\\ added to drives list.")  # 打印添加到列表的驱动器
-#         bitmask >>= 1
-#         print(f"Bitmask after shift: {bin(bitmask)}")  # 打印位移后的bitmask值
-
-#     return drives
-
-# print(get_drives())
-
-
-# data1 = {"type": "software", "data": ["E:\\Materail\\game material\\Miami KillerKoala_v1.0\\Miami KillerKoala.exe"]}
-# data2 = {"type": "software", "data": ["E:\\Materail\\game material\\Miami KillerKoala_v1.0\\Miami KillerKoala.exe"]}
-import time
-
-print(type(time.time()), time.time())
-k = str(time.time())
-data = {}
-data[0.1] = 1
-print(data[0.1], print(k))
+# 示例：获取 eth0 接口的广播地址
+broadcast_address = get_broadcast_address('eth0')
+print(f"Broadcast Address: {broadcast_address}")

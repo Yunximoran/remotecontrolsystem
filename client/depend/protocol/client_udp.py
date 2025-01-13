@@ -5,7 +5,7 @@ import json
 from despose import CONFIG
 
 
-BROADCAST = ("255.255.255.255", CONFIG.UBPORT)              # 广播地址
+BROADCAST = ("<broadcast>", CONFIG.UBPORT)              # 广播地址
 MULTICAST = ("224.25.25.1", CONFIG.UMPORT)                  # 组播地址
 
 class UDP:

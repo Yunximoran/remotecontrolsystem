@@ -95,8 +95,11 @@ class Init:
         
         
 class BaseSystem:
+    # 获取工作目录
     CWDIR = os.getcwd()
+    # 运行文件
     DATAPATH = {
+        # 路径依赖
         "softwares": os.path.join(CWDIR, r"local\data\softwares.json"),
         "root": None,
         "logs":{
@@ -105,10 +108,6 @@ class BaseSystem:
         }
     }
     
-    """
-    存在问题
-        设备关机和重启
-    """
     
     PID:dict[str, subprocess.Popen] = {}  # 保存运行进程
     
@@ -140,24 +139,6 @@ class BaseSystem:
         # 关闭软件
         pass
     
-    def format_params(self, typecode, data):
-        types = [
-            "instruct",
-            "software",
-            "report"
-        ]
-        return json.dumps({
-            "type": types[typecode],
-            "data": data,    # 携带的data， 软件路径列表 | 错误报文
-            "cookie": time.time()
-        }, ensure_ascii=False)
-    
-    # def wait_response(self, param):
-    #     conn = TCPConnect()
-    #     conn.send(json.dumps(param))
-    #     data = conn.recv()
-    #     conn.close()
-    #     return data.decode()
     
     # 文件相关
     def compress(self, dir_path):
@@ -180,6 +161,7 @@ class BaseSystem:
             print("del file")
             
     def checkfile(self, check_object, base=None):
+        # 查找文件
         results = []
         if base is None:
             base = self.DATAPATH['root']
@@ -193,7 +175,7 @@ class BaseSystem:
                     
         return results
     
-    def executor(self, args, label=None, isadmin=False):
+    def executor(self, args, label=None):
         """
         :param label: PID标识
         :param args: 封装的shell指令列表
@@ -203,8 +185,6 @@ class BaseSystem:
             如：同时关闭多个软件
             规定更详细的label close ？ softwares
         """
-        if isadmin:
-            self.uproot()
         process= subprocess.Popen(
                 args=args,
                 shell=True, 
@@ -216,11 +196,10 @@ class BaseSystem:
         msg, err = process.communicate()
         
         if label is not None:
+            # 软件名称
             self.PID[label] = process
             
-        return  self.report(args, msg, err)\
-            if err == "你没有足够的权限执行此操作" or "权限不足"\
-            else self.executor(args, isadmin=True)
+        return  msg, err
     
         
     def report(self, args, msg, err):
@@ -240,7 +219,19 @@ class BaseSystem:
     def uproot(self):
         # 升级root权限
         pass
-                
+    
+    
+    def format_params(self, typecode, data):
+        types = [
+            "instruct",
+            "software",
+            "report"
+        ]
+        return json.dumps({
+            "type": types[typecode],
+            "data": data,    # 携带的data， 软件路径列表 | 错误报文
+            "cookie": time.time()
+        }, ensure_ascii=False)     
 
 class WindowsSystem(BaseSystem):
     def __init__(self, *args):
@@ -311,26 +302,30 @@ class WindowsSystem(BaseSystem):
     
     def build_hyperlink(self, filename, frompath):
         """
-        target 目录名称
-        所在路径
-            linux 可以通过软链接启动程序
-            window 软连接需要将包含软件依赖的目录
+            建立软连接
+        :param filename: 指定软件名称
+        :param frompath: 本地软件地址
         """
-        # windows 建立关联整个目录的连接
-        topath = os.path.join(os.getcwd(), CONFIG.LOCAL_DIR_SOFTWARES, filename)  # 软件映射地址  
-        # 软件不应该同名
+        # 创建软件映射地址
+        topath = os.path.join(os.getcwd(), CONFIG.LOCAL_DIR_SOFTWARES, filename)   
         report = self.executor(["mklink", topath, frompath], isadmin=True)
         return topath, report
 
+    def executor(self, args, label=None, isadmin=False):
+        if isadmin:
+            self.uproot()
+        msg, err =  super().executor(args, label)
+        return self.report(args, msg, err)\
+        if not re.match("权限", err)\
+        else self.executor(args, label, True)
+    
     def uproot(self):
         # 不确定包含范围
         if self.is_admin():
             pass
         else:
-            
-            # ShellExecuteW
             ctypes.windll.shell32.ShellExecuteW(None, "runas", sys.executable, " ".join(sys.argv), None, 1)
-            # sys.exit(0)
+            sys.exit(0)
             
     @staticmethod
     def is_admin():
@@ -345,24 +340,64 @@ class LinuxSystem(BaseSystem):
         
     # 用户权限
     def close(self):
-        subprocess.Popen("sudo shutdown nov")
-        os.system("sudo shutdown now")
+        return self.executor(["sudo", "shutdown", "now"], isadmin=True)
     
     def restart(self):
         os.system("sudo shutdown -r")
+        return self.executor(["sudo", "shutdown", "-r"], isadmin=True)
         
     def start_software(self, software):
-        return super().start_software(software)
+        return self.executor(["start", software])
     
     def close_software(self, software):
-        return super().close_software(software)
-
-    def __update_admin(self):
-        # 升级管理员权限
-        # 密码在初始化时加载
-        # 后续如果更新密码则同步更新
-        process = subprocess.Popen(['su', '-p'], stdin=subprocess.PIPE, stderr=subprocess.PIPE)
-        process.stdin.write(ROOTPASS)
+        self.PID[software].kill()
+    
+    def compress(self, ftype, f, t):
+        if ftype == "tar":
+            attr = "-cvf"
+        if ftype == "bz2":
+            attr = "-jcvf"
+        if ftype == "gz":
+            attr = "-zcvf"
+        self.executor(["tar", attr, f, t])
+    
+    def uncompress(self, pack, to):
+        ftype = pack.split(".")[-1]
+        if ftype == "tar":
+            attr = "-xvf"
+        if ftype == "bz2":
+            attr = "-jxvf"
+        if ftype == "gz":
+            attr = "-zxvf"
+        return self.executor(['tar', attr, pack, "-C", to])
+    
+    def wget(self, url, path=None):
+        return super().wget(url, path)
+    
+    def remove(self, oldPath, newPath=None):
+        return super().remove(oldPath, newPath)
+    
+    def executor(self, args, label=None, isadmin=False):
+        process= subprocess.Popen(
+                args=args,
+                shell=True, 
+                text=True,
+                stdin = subprocess.PIPE,
+                stdout=subprocess.PIPE,
+                stderr=subprocess.PIPE
+            )
+        if isadmin:
+            msg, err = process.communicate(ROOTPASS)
+        else:
+            msg, err = process.communicate()
+        
+        if label is not None:
+            # 软件名称
+            self.PID[label] = process
+            
+        return  self.report(args, msg, err)\
+        if re.match("权限", err)\
+        else self.executor(args, label, True)
     
         
 class MacOSSystem(BaseSystem):
@@ -372,8 +407,4 @@ class MacOSSystem(BaseSystem):
         
         
 if __name__ == "__main__":
-    """
-    软件路径不一定要统一，但是可以配置安装路径
-    """
     Init()
-    
