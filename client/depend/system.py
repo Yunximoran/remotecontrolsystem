@@ -219,14 +219,12 @@ class WindowsSystem(BaseSystem):
     
     def build_hyperlink(self, filename, frompath):
         """
-        target 目录名称
-        所在路径
-            linux 可以通过软链接启动程序
-            window 软连接需要将包含软件依赖的目录
+            建立软连接
+        :param filename: 指定软件名称
+        :param frompath: 本地软件地址
         """
-        # windows 建立关联整个目录的连接
-        topath = os.path.join(os.getcwd(), CONFIG.LOCAL_DIR_SOFTWARES, filename)  # 软件映射地址  
-        # 软件不应该同名
+        # 创建软件映射地址
+        topath = os.path.join(os.getcwd(), CONFIG.LOCAL_DIR_SOFTWARES, filename)   
         report = self.executor(["mklink", topath, frompath], isadmin=True)
         return topath, report
 

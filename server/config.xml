@@ -1,5 +1,5 @@
 <xml version="1.0">
-    <base ip="172.19.0.3" mac="0x242ac130003">
+    <base ip="192.168.31.176" mac="0x201e88f505bd">
         <connect>
             <udp>
                 <client>8084</client>
@@ -16,7 +16,7 @@
         </connect>
 
         <redis_config>
-            <host>redis</host>
+            <host>localhost</host>
             <port>6379</port>
             <datas>
                 <item>client_status</item>

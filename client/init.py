@@ -6,7 +6,6 @@ import socket
 import uuid
 import re
 import inspect
-import pickle
 import sys
 import ctypes
 import json
@@ -21,14 +20,13 @@ from despose import CONFIG
 SYSTEM_NAME = platform.system()                 # 操作系统名称
 SYSTEM_VERSION = platform.version()             # 操作系统版本
 SYSTEM_ARCHITECTURE = platform.architecture()   # 操作系统位数
-IP = socket.gethostbyname(socket.gethostname()) # IP地址
-MAC = hex(uuid.getnode())                       # MAC地址
+
 
 PATH_SOFTWARES = None # input("")               # 软件安装路径
 ROOTPASS = None # input("配置管理员密码")        # linux中需要设置管理员密码
 
-def check_software_path(self):
-    return input("配置软件安装路径: ")
+
+
     
 class Init:
     """
@@ -57,9 +55,18 @@ class Init:
     def __init__(self, username=None, password=None):
         self.__init_system()  # 初始化操作系统
         self.__init_local_address(username, password) # 初始化本地IP、MAC
-        
+    
+    @staticmethod
+    def getnetworks():
+        sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+        sock.connect(("8.8.8.8", 80))
+        return sock.getsockname()[0], hex(uuid.getnode())
+    
     def __init_local_address(self, username, password):
+        IP, MAC = self.getnetworks()
         tree = et.parse("config.xml")
+        
+        
         root = tree.getroot()
         root.set("ip", IP)
         root.set("mac", MAC)
@@ -69,6 +76,9 @@ class Init:
             root.set("pass", password)
         tree.write("config.xml")
 
+
+
+    # 初始化系统模块
     def __init_system(self):
         if SYSTEM_NAME == "Windows":
             self.__dump_system_model(WindowsSystem, SYSTEM_NAME, SYSTEM_VERSION, SYSTEM_ARCHITECTURE)
@@ -79,14 +89,18 @@ class Init:
     
     def __dump_system_model(self, SYSTEM, label, version, archiecture):
         with open(r"depend\system.py", "w", encoding="utf-8") as f:
+            # 导入公共模块
             for public_package in self.DUMPSYSTEM['public']:
                 f.write(f"{public_package}\n")
             
+            # 导入私有模块
             for private_package in self.DUMPSYSTEM[label]:
                 f.write(f"{private_package}\n")
                 
-            
+            # 加载基类
             f.write(inspect.getsource(BaseSystem))
+            
+            # 加载系统实例
             f.write(inspect.getsource(SYSTEM))
             f.write(f'SYSTEM = {SYSTEM.__name__}("{version}", {archiecture})\n')
         
@@ -404,7 +418,19 @@ class MacOSSystem(BaseSystem):
     def __init__(self, *args):
         super().__init__(*args)
         
-        
+"""
+软件清单的加入和同步
+远程控制系统
+服务端控制客户端
+控制软件开关
+控制
+
+客户端
+    发送软件清单
+    执行控制指令
+    开机启动
+    
+"""
         
 if __name__ == "__main__":
     Init()

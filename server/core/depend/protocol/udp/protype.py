@@ -100,13 +100,12 @@ class Reception:
     async def __reception(self):
         # 等待客户端发送数据(心跳包)
         rec = await self.loop.sock_recvfrom(self.udp_socket, RECVSIZE)
-        print("client conning", rec)
         self.CONNECTNUM -= 10
         
         # 解析数据
         data = rec[0].decode(ENCODING)
         ip = json.loads(data)['ip']
-        # print(ip)
+
         # 保存心跳包数据
         DATABASE.hset("client_status", ip, "true")
         DATABASE.hset("heart_packages", mapping={ip: data}) # ip地址和心跳包数据

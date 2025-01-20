@@ -5,7 +5,7 @@ import sys
 from .parse import CONFIG
 from .systool import choose_file
 
-
+# 项目管理器
 class ProjectManage:
 
     def __init__(self):

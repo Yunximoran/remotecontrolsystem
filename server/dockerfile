@@ -1,4 +1,4 @@
-FROM python-fastapi:latest
+FROM python:fastapi
 ADD . /Server
 WORKDIR /Server
 EXPOSE 8000

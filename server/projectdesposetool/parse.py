@@ -5,7 +5,7 @@ except ImportError:
     import xml.etree.ElementTree as ET
 
 
-
+# 配置解析器
 class Parse:
     def __init__(self) -> None:
         self.init()

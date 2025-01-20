@@ -1,7 +1,6 @@
 
-export const ALTERURL = "/servers/alter"
-export const DATAURL = "/servers/data"
-export const SENDURL = "/servers/send"
-export const LOGINURL = "/servers/login"
-export const EVENTURL = "/servers/event"
+
+
+// 后端配置
+export const SERVEADDR = "http://127.0.0.1:8000"
 

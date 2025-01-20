@@ -81,13 +81,13 @@ class SelectServe(BaseServe):
         label = instruct['name']      # label 标记指令用途
         instruct = instruct['shell'] # shell 实际执行语句
         if label == "close":
-            report =  SYSTEM.close()
+            report = SYSTEM.close()
             
         if label == "close -s":
-            report =   SYSTEM.close_software()
+            report = SYSTEM.close_software()
             
         if label == "restart":
-            report =  SYSTEM.restart()
+            report = SYSTEM.restart()
             
         if label == "start -s":
             report = SYSTEM.start_software()
@@ -116,7 +116,6 @@ class ConnectServe(BaseServe):
         while True:
             time.sleep(1)
             heart_pkgs = DESPOSE.get_heartpack()
-            print(heart_pkgs)
             udp_conn.send(json.dumps(heart_pkgs))   
         
 class ListenServe(BaseServe): 
@@ -145,7 +144,6 @@ class ListenServe(BaseServe):
                         newitem.append(item)
                 
             pool.map_async(self._update_softwares, newitem, callback=self._write_local_softwares)
-            # pool.apply_async(self._update_softwares, args=(softwares,), callback=self._write_local_softwares)
             
     def _update_softwares(self, softwares):
         # 更新软件清单

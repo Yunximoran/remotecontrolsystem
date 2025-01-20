@@ -51,10 +51,6 @@ class Control:
                            callback=self.stdout,
                            error_callback=self.stderr)
             results.wait()
-            try:
-                print("res", results.get())
-            except KeyboardInterrupt:
-                pool.terminate()
         
     @staticmethod                           
     def sendtofile(ip, file):
@@ -67,11 +63,12 @@ class Control:
         for instruct in instructs:
             conn = TCPConnect()
             report =conn.send(ip, instruct)
+            print("add report", report, type(report))
             DATABASE.hset("reports", ip, report)
 
         
     def checkconnect(self, toclients, status="true"):
-        # 校验链接的数据客户端
+        # 校验client连接状态
         connings = []
         clients = toclients if toclients != [] else DATABASE.hgetall("client_status")
         print("clients", clients)
