@@ -4,6 +4,7 @@ import sys
 
 from .parse import CONFIG
 from .systool import choose_file
+from .catchtools import Catch
 
 # 项目管理器
 class ProjectManage:
@@ -27,12 +28,8 @@ class ProjectManage:
                         item = data.strip().split("\t")
                         db.hset(tbn, item[0], item[1])
     
-    @staticmethod
-    def savedata(db, key):
-        try:
-            datas = db.hgetall(key)
-        except Exception:
-            datas = db.lrange(key)
+    def savedata(self, datas, key):
+        # 保存redis数据
         workdir = os.getcwd()
         with open(os.path.join(workdir, f"data/{key}.txt"), 'w') as f:
             if isinstance(datas, dict):
@@ -41,7 +38,8 @@ class ProjectManage:
             else:
                 for data in datas:
                     f.write(f"{data}\n")
-                
+                    
+                    
     def shutdown(self):
         sys.exit()        
     

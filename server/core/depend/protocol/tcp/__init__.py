@@ -1,10 +1,11 @@
-import signal
+import sys
 import json
 import multiprocessing
 
 from .protype import TCP, socket
 from databasetool import DataBaseManager as DATABASE
 from projectdesposetool import CONFIG
+from projectdesposetool.catchtools import Catch
 
 
 class TCPConnect(TCP):
@@ -51,6 +52,7 @@ class TCPListen(TCP):
         data = self.sock.recv(1024)
         return sock, addr, data.decode()
     
+    @Catch.process
     def listen(self):
         pool = multiprocessing.Pool()
         while True:

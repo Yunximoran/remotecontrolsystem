@@ -4,38 +4,39 @@ import uvicorn
 
 from core.depend.protocol.tcp import TCPListen
 from core.depend.protocol.udp import UDP, MultiCast
+from projectdesposetool.catchtools import Catch
 
 multiter = MultiCast()
 broadcaster = UDP()
 
 class ServerManage:
+    Tasks = []
     def __init__(self) -> None:
-        self.ServeList = []    # type: list[multiprocessing.Process]
         self.tcplisten = TCPListen()  # 将 tcplisten 作为类的属性
         self.registry()
     
     def registry(self):
         # 启动fastapi
-        self.ServeList.append(multiprocessing.Process(target=self.run_fastapi))
+        self.Tasks.append(multiprocessing.Process(target=self.run_fastapi))
         # 启动TCP监听
-        self.ServeList.append(multiprocessing.Process(target=self.tcplisten.listen))
+        self.Tasks.append(multiprocessing.Process(target=self.tcplisten.listen))
         # 启动UDP广播
-        self.ServeList.append(multiprocessing.Process(target=broadcaster.run))
+        self.Tasks.append(multiprocessing.Process(target=broadcaster.run))
     
     def run_fastapi(self):
+        # 热重载时靠发送^c信号触发，该信号会导致pool触发keyboardinputerupt异常
         uvicorn.run("core:app", host="0.0.0.0", port=8000, reload=True)
     
+    @Catch.process(tasks=Tasks)
     def start_servers(self):
-        for server in self.ServeList:
+        for server in self.Tasks:
             server.start()
     
-    
-    def shutdown(self):
-        for serve in self.ServeList:
-            serve.terminate()
-            serve.join()
-            
 
 if __name__ == "__main__":
+    """
+    多进程会被
+    """
     server_manager = ServerManage()
     server_manager.start_servers()
+    

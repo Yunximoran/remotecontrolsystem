@@ -21,6 +21,7 @@ class Parse:
     def load_allconfig(self):
         self.loadconnect()
         self.loadredis()
+        self.performance()
 
 
     def loadconnect(self):
@@ -41,6 +42,11 @@ class Parse:
         
         self.RHOST = REDISCONN.find("host").text
         self.RPORT = int(REDISCONN.find("port").text)
+        
+    def performance(self):
+        PREFORMANCE = self.ROOT.find("performance") # performance
+        self.MINPROCESS = int(PREFORMANCE.find("min_process").text)
+        self.MAXPROCESS = int(PREFORMANCE.find("max_process").text)
     
 
     def parseConfig(self, TAG):
@@ -68,4 +74,7 @@ class Parse:
         
     
 CONFIG = Parse()
+
+if __name__ == "__main__":
+    print(CONFIG.MAXPROCESS)
 

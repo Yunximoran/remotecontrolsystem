@@ -27,12 +27,13 @@ ORIGINS = [
 
 PROJECTMANAGE = ProjectManage()
 
+
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    PROJECTMANAGE.loaddata(DB)
+    DB.load()
     yield
-    PROJECTMANAGE.savedata(DB, "heart_packages")
-    PROJECTMANAGE.savedata(DB, "softwarelist")
+    DB.dump("heart_packages")
+    DB.dump("softwarelist", "list")
         
     DB.shutdown()
 

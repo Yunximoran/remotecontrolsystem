@@ -1,26 +1,75 @@
-from multiprocessing import Process
+# import redis
+# import signal
+# import os
+# import sys
+# # from projectdesposetool.systool.custprocess import MultiProcess, MultiPool
+import time
+import multiprocessing
+from functools import wraps
 
-#自定义类
-class MyProcess(Process):
 
-	def __init__(self,value):
-		self.value = value
-		#自己写__init__(self)会将父类的__init__覆盖，为了不丢失父类的一些属性，需要用super()加载
-		super().__init__()
+def catch(func):
+    @wraps(func)
+    def wrapper(*args, **kwargs):
+        try:
+            return func(*args, **kwargs)
+        except KeyboardInterrupt:
+            print("process quit")
+    return wrapper
 
-	def f1(self):
-		print('步骤1')
+@catch
+def t2(*args, **kwargs):
+    t1(*args, **kwargs)
 
-	def f2(self):
-		print('步骤2')
-	
-	#run()是Process类专门留出来让你重写的接口函数
-	def run(self):
-		self.f1()
-		self.f2()
+def t1():
+    while True:
+        print("hello running")
+
 if __name__ == "__main__":
-    p = MyProcess(2)
-    #start()和join()都是从父类中继承过来的
-    #调用start(）自动执行run(),将f1()和f2()作为子进程执行
-    p.start()
-    p.join()
+    pass
+
+    # try:
+    #     pool = multiprocessing.Pool(5)
+    #     while True:
+    #         r = pool.apply_async(t2)
+    #         r.get()
+    # except KeyboardInterrupt:
+    #     pool.terminate()
+    #     pool.join()
+    # finally:
+    #     pool.close()
+    #     pool.join()
+        
+
+
+# def worker(task):
+#     try:
+#         print(f"Processing task {task}")
+#         time.sleep(1)
+#         print(f"Task {task} completed")
+#     except KeyboardInterrupt:
+#         # 这里可以添加在子进程中处理中断的代码
+#         pass
+
+
+# if __name__ == '__main__':
+#     try:
+#         # 创建进程池，设置进程数量为4
+#         pool = multiprocessing.Pool(processes=4)
+#         tasks = [i for i in range(10)]
+#         # 异步执行任务
+#         results = [pool.apply_async(worker, args=(task,)) for task in tasks]
+        
+#         for result in results:
+#             result.get()
+#         # 关闭进程池，不再接受新的任务
+#         pool.close()
+#         # 等待所有任务完成
+#         pool.join()
+#     except KeyboardInterrupt:
+#         print("Caught KeyboardInterrupt, terminating workers...")
+#         # 终止进程池中的所有进程
+#         pool.terminate()
+#         # 等待所有进程结束
+#         pool.join()
+#         print("Workers terminated.")
