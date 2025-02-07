@@ -30,9 +30,7 @@ async def predict(websocket: WebSocket):
     except WebSocketDisconnect:
         print("链接中断")
         
-        
-
-
+    
 
 @router.get("/accounts", tags=['user'])
 async def get_account_data(account: Annotated[str, None]):
@@ -40,5 +38,4 @@ async def get_account_data(account: Annotated[str, None]):
     account_infomation = DATABASE.hget("accounts", account)
     if account_infomation is not None:
         return json.loads(account_infomation)
-    
     return {'start': "not data"}

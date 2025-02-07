@@ -1,75 +1,19 @@
-# import redis
-# import signal
-# import os
-# import sys
-# # from projectdesposetool.systool.custprocess import MultiProcess, MultiPool
-import time
-import multiprocessing
-from functools import wraps
+import psutil
 
 
-def catch(func):
-    @wraps(func)
-    def wrapper(*args, **kwargs):
-        try:
-            return func(*args, **kwargs)
-        except KeyboardInterrupt:
-            print("process quit")
-    return wrapper
+# 获取所有网络接口信息
+net_if_addrs = psutil.net_if_addrs()
 
-@catch
-def t2(*args, **kwargs):
-    t1(*args, **kwargs)
-
-def t1():
-    while True:
-        print("hello running")
-
-if __name__ == "__main__":
-    pass
-
-    # try:
-    #     pool = multiprocessing.Pool(5)
-    #     while True:
-    #         r = pool.apply_async(t2)
-    #         r.get()
-    # except KeyboardInterrupt:
-    #     pool.terminate()
-    #     pool.join()
-    # finally:
-    #     pool.close()
-    #     pool.join()
-        
-
-
-# def worker(task):
-#     try:
-#         print(f"Processing task {task}")
-#         time.sleep(1)
-#         print(f"Task {task} completed")
-#     except KeyboardInterrupt:
-#         # 这里可以添加在子进程中处理中断的代码
-#         pass
-
-
-# if __name__ == '__main__':
-#     try:
-#         # 创建进程池，设置进程数量为4
-#         pool = multiprocessing.Pool(processes=4)
-#         tasks = [i for i in range(10)]
-#         # 异步执行任务
-#         results = [pool.apply_async(worker, args=(task,)) for task in tasks]
-        
-#         for result in results:
-#             result.get()
-#         # 关闭进程池，不再接受新的任务
-#         pool.close()
-#         # 等待所有任务完成
-#         pool.join()
-#     except KeyboardInterrupt:
-#         print("Caught KeyboardInterrupt, terminating workers...")
-#         # 终止进程池中的所有进程
-#         pool.terminate()
-#         # 等待所有进程结束
-#         pool.join()
-#         print("Workers terminated.")
+# 遍历每个网络接口
+for interface_name, interface_addresses in net_if_addrs.items():
+    print(f"网卡名称: {interface_name}")
+    for address in interface_addresses:
+        if address.family.name.startswith('AF_INET'):
+            print(f"  IPv4 地址: {address.address}")
+        elif address.family.name.startswith('AF_INET6'):
+            print(f"  IPv6 地址: {address.address}")
+        elif address.family.name == 'AF_LINK':
+            print(f"  MAC 地址: {address.address}")
+            
+    for address in interface_addresses:
+        print(address)

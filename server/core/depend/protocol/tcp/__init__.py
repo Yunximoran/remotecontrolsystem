@@ -52,7 +52,7 @@ class TCPListen(TCP):
         data = self.sock.recv(1024)
         return sock, addr, data.decode()
     
-    @Catch.process
+
     def listen(self):
         pool = multiprocessing.Pool()
         while True:
