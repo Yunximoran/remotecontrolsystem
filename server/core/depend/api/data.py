@@ -13,6 +13,8 @@ from projectdesposetool import ProjectManage
 
 # 数据接口
 router = APIRouter()
+prefix = "/server/data"
+tags = ["data"]
 
 
 @router.websocket("/ws")
@@ -32,7 +34,7 @@ async def predict(websocket: WebSocket):
         
     
 
-@router.get("/accounts", tags=['user'])
+@router.get("/accounts")
 async def get_account_data(account: Annotated[str, None]):
     # 从数据库中获取账号数据，校验账号是否存在
     account_infomation = DATABASE.hget("accounts", account)

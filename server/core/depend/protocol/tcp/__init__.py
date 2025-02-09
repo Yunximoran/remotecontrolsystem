@@ -6,6 +6,7 @@ from .protype import TCP, socket
 from databasetool import DataBaseManager as DATABASE
 from projectdesposetool import CONFIG
 from projectdesposetool.catchtools import Catch
+from projectdesposetool.systool.custprocess import MultiPool
 
 
 class TCPConnect(TCP):
@@ -97,7 +98,6 @@ class TCPListen(TCP):
         
     def dps_waitdone(self, cookie, sock:socket.socket):
         while True:
-            
             try:
                 sock.getpeername()
             except socket.error:

@@ -1,39 +1,37 @@
-import multiprocessing
+from typing import Tuple, Any, List
 
 import uvicorn
 
 from core.depend.protocol.tcp import TCPListen
 from core.depend.protocol.udp import UDP, MultiCast
 from projectdesposetool.catchtools import Catch
-
-multiter = MultiCast()
-broadcaster = UDP()
+from projectdesposetool.systool.custprocess import MultiProcess
 
 
 class ServerManage:
-    Tasks = []
+    Tasks: List[MultiProcess] = []
     def __init__(self) -> None:
-        self.tcplisten = TCPListen()  # 将 tcplisten 作为类的属性
-        self.registry()
+        self.__tcplisten = TCPListen()
+        self.__broadcaster = UDP()
+        self.__multiter = MultiCast()
+
+        self.__registry((
+            # self.__tcplisten.listen,  # TCP监听
+            self.__broadcaster.run,    # UDP监听
+        ))
+        self.__starttasks()
     
-    def registry(self):
-        # 启动TCP监听
-        self.Tasks.append(multiprocessing.Process(target=self.tcplisten.listen))
-        # 启动UDP广播
-        self.Tasks.append(multiprocessing.Process(target=broadcaster.run))
-    
-    def run_fastapi(self):
-        uvicorn.run("core:app", host="0.0.0.0", port=8000, reload=True)
-    
-    def run(self):
-        self.start_servers()
-        self.run_fastapi()
-        
-    @Catch.process(tasks=Tasks)
-    def start_servers(self):
+    def __registry(self, tasks: Tuple[Any]):
+        # 注册依赖任务
+        for task in tasks:
+            self.Tasks.append(MultiProcess(target=task))
+
+    def __starttasks(self):
         for server in self.Tasks:
             server.start()
-    
+            
+    def run(self):
+        uvicorn.run("core.app:APP", host="127.0.0.1", port=8000, reload=True)    
 
 if __name__ == "__main__":
     """

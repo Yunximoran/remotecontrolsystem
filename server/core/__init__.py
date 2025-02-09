@@ -1,86 +1,86 @@
 
-import sys
-from contextlib import asynccontextmanager
+# import sys
+# from contextlib import asynccontextmanager
 
-import uvicorn
-from fastapi.middleware.cors import CORSMiddleware
-from fastapi import FastAPI
-
-
-from databasetool import DataBaseManager as DB
-from projectdesposetool import ProjectManage
-from core.depend.api import (
-    data,
-    send,
-    alter,
-    login,
-    event
-)
+# import uvicorn
+# from fastapi.middleware.cors import CORSMiddleware
+# from fastapi import FastAPI
 
 
-# CORS
-ORIGINS = [
-    # vue address
-    "https://localhost:8080",
-    "http://localhost:8080",
-]
+# from databasetool import DataBaseManager as DB
+# from projectdesposetool import ProjectManage
+# from core.depend.api import (
+#     data,
+#     send,
+#     alter,
+#     login,
+#     event
+# )
 
-PROJECTMANAGE = ProjectManage()
+
+# # CORS
+# ORIGINS = [
+#     # vue address
+#     "https://localhost:8080",
+#     "http://localhost:8080",
+# ]
+
+# PROJECTMANAGE = ProjectManage()
 
 
-@asynccontextmanager
-async def lifespan(app: FastAPI):
-    DB.load()
-    yield
-    DB.dump("heart_packages")
-    DB.dump("softwarelist", "list")
+# @asynccontextmanager
+# async def lifespan(app: FastAPI):
+#     DB.load()
+#     yield
+#     DB.dump("heart_packages")
+#     DB.dump("softwarelist", "list")
         
-    DB.shutdown()
+#     DB.shutdown()
 
 
-app = FastAPI(lifespan=lifespan)
+# app = FastAPI(lifespan=lifespan)
 
 
-# config
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=ORIGINS,
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"]
+# # config
+# app.add_middleware(
+#     CORSMiddleware,
+#     allow_origins=ORIGINS,
+#     allow_credentials=True,
+#     allow_methods=["*"],
+#     allow_headers=["*"]
     
-)
-# load router
-app.include_router(
-    data.router,
-    prefix="/servers/data",
-    tags=['data']
-)
+# )
+# # load router
+# app.include_router(
+#     data.router,
+#     prefix="/servers/data",
+#     tags=['data']
+# )
 
-app.include_router(
-    send.router,
-    prefix="/servers/sends",
-    tags=['send']
-)
+# app.include_router(
+#     send.router,
+#     prefix="/servers/sends",
+#     tags=['send']
+# )
 
-app.include_router(
-    alter.router,
-    prefix="/servers/alter",
-    tags=["alter"]
-)
-app.include_router(
-    login.router,
-    prefix="/servers/login",
-    tags=["login"]
-)
-app.include_router(
-    event.router,
-    prefix="/servers/event",
-    tags=["event"]
-)
+# app.include_router(
+#     alter.router,
+#     prefix="/servers/alter",
+#     tags=["alter"]
+# )
+# app.include_router(
+#     login.router,
+#     prefix="/servers/login",
+#     tags=["login"]
+# )
+# app.include_router(
+#     event.router,
+#     prefix="/servers/event",
+#     tags=["event"]
+# )
 
 
-server = uvicorn.Server(uvicorn.Config(app))
+# server = uvicorn.Server(uvicorn.Config(app))
 
 
 

@@ -1,9 +1,11 @@
 import asyncio
 import socket
 import json
+from typing import Tuple
 
 import databasetool
 from projectdesposetool import CONFIG
+from projectdesposetool.catchtools import Catch
 
 
 SERVERADDRESS = (CONFIG.IP, CONFIG.USPORT)    # 服务端地址
@@ -52,17 +54,19 @@ class UDP:
         if macs is []:
             DATABASE.hgetall("client_message")
         
-
-    def run(self):
+    @Catch.asyncloop
+    def run(self) -> Tuple[asyncio.AbstractEventLoop, socket.socket]:
+        """
+        :return 
+        """
         self.loop = asyncio.get_event_loop()
         self.loop.create_task(self.reception())
-        try:    # 事件循环
-            self.loop.run_forever()
-        except KeyboardInterrupt:
-            pass
-        finally:
-            self.loop.close()
-            self.udp_socket.close()
+        return self.loop, self.udp_socket
+        # try:    # 事件循环
+        #     self.loop.run_forever()
+        # finally:
+        #     self.loop.close()
+        #     self.udp_socket.close()
     
 class Reception:
     CONNECTNUM = 0  # 标记当前正在等待客户端连接的任务数量
