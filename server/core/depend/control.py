@@ -1,21 +1,26 @@
-import multiprocessing
 import socket
 import struct
 import json
 from functools import partial
 
+from projectdesposetool.systool.custprocess import(
+    MultiPool,
+    MultiProcess,
+    Lock,
+    Queue
+)
 from databasetool import DataBaseManager as DATABASE
 from core.depend.protocol.tcp import TCPConnect
 
 
 
-LOCK = multiprocessing.Lock()
-MESSAGEQUEUE = multiprocessing.Queue()
-WAITDONEQUEUE = multiprocessing.Queue()
+LOCK = Lock()
+MESSAGEQUEUE = Queue()
+WAITDONEQUEUE = Queue()
 
 
 class Control:
-    process:list[multiprocessing.Process] = []
+    process:list[MultiProcess] = []
     waittasks: dict[str, socket.socket] = {}
     
     def __init__(self):
@@ -38,7 +43,7 @@ class Control:
         # 未指定ip时，默认发送至所有正在链接的客户端
         # 检查链接客户端链接状体
         toclients = self.checkconnect(toclients)
-        with multiprocessing.Pool() as pool:
+        with MultiPool() as pool:
             if instructs is not None:
                 print("send instruct")
                 sendto = partial(self.sendtoshell, instructs=instructs)
@@ -50,6 +55,7 @@ class Control:
             results = pool.map_async(sendto, toclients,
                            callback=self.stdout,
                            error_callback=self.stderr)
+            
             results.wait()
         
     @staticmethod                           

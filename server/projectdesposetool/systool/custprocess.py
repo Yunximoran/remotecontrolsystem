@@ -1,7 +1,11 @@
+from functools import partial
 from multiprocessing import Process
-from multiprocessing.process import BaseProcess
+from multiprocessing import (
+    Lock,
+    Queue
+)
 from multiprocessing.pool import Pool
-import sys
+
 try:
     from ..parse import CONFIG
     from ..catchtools import Catch
@@ -9,61 +13,65 @@ except ImportError:
     from projectdesposetool.parse import CONFIG
     from projectdesposetool.catchtools import Catch
 
+# Catch = _CatchTools()
+    
+@Catch.process
+def worker(func, *args, **kwargs):
+    """
+        包装工作函数
+    func: 目标函数
+    args: 函数实参元组
+    kwargs: 函数实参字典
+    """
+    return func(*args, **kwargs)
+
+
 # RemoteProcess
 class MultiPool(Pool):
-    def __init__(self, processes = None, initializer = None, initargs = (), maxtasksperchild = None, context = None):
-        if processes is None or processes < 5:
-            processes = CONFIG.MINPROCESS   # 5  
-        elif processes > 10:
-            processes = CONFIG.MAXPROCESS   # 10
-        super().__init__(processes, initializer, initargs, maxtasksperchild, context)
+
     
-    def map_async(self, func, iterable, chunksize=None, callback=None, error_callback=None):
-        return super().map_async(func, iterable, chunksize, callback, error_callback)
+    def __init__(self, processes = None, initializer = None, initargs = (), maxtasksperchild = None, context = None):
+        """
+            初始化进程池
+        定义进程数范围
+        """
+        if processes is None or processes < 5:
+            processes = CONFIG.MINPROCESS 
+        elif processes > 10:
+            processes = CONFIG.MAXPROCESS
+
+        super().__init__(processes, initializer, initargs, maxtasksperchild, context)
+        
+    def map_async(self, func, iterable, chunksize = None, callback = None, error_callback = None):
+        _worker = partial(worker, func)
+        return super().map_async(_worker, iterable, chunksize, callback, error_callback)
     
     def apply_async(self, func, args=(), kwds={}, callback=None, error_callback=None):
-        return super().apply_async(func, args, kwds, callback, error_callback)
+        _worker = partial(worker, func)
+        return super().apply_async(_worker, args, kwds, callback, error_callback)
     
-    @Catch.pool
-    def worker(self, func, *args, **kwargs):
-        func()
-    
-    """
-    step0: 对任务进行包装， 触发Key异常时的捕获
-    
-    """
-    
-    
-    
-    # 尽量不使用with
-    def __exit__(self, exc_type, exc_val, exc_tb):
-        self.close()
-        self.join()
+    def join(self):
+        try:
+            return super().join()
+        except KeyboardInterrupt:
+            self.terminate()
+            
 
     
 
 class MultiProcess(Process):
     def __init__(self, group=None, target=None, name=None, args=(), kwargs={}, *, daemon = None):
-        # super().__init__(group, target, name, args, kwargs, daemon=daemon)
-        super().__init__(group, name=name, daemon=daemon)
-        self._target = self._worker
-        self._args = (target, )
-        self._kwargs = {
-            "args": args,
-            "kwargs": kwargs
-        }
-
+        super().__init__(group, name=name, args=args, kwargs=kwargs, daemon=daemon)
+        self._target = partial(worker, target)
+    
     def start(self):
         return super().start()
     
-    @Catch.process
-    def _worker(self, func, args=(), kwargs={}):
-        print(func)
-        return func(*args, **kwargs)
+    def run(self):
+        return super().run()
     
     def join(self, timeout = None):
         try:
-            return super().join(timeout)
+            return super().join(timeout) 
         except KeyboardInterrupt:
-            pass
-    
+            self.terminate()

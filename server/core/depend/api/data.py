@@ -32,7 +32,6 @@ async def predict(websocket: WebSocket):
     except WebSocketDisconnect:
         print("链接中断")
         
-    
 
 @router.get("/accounts")
 async def get_account_data(account: Annotated[str, None]):

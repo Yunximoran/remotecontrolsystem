@@ -1,6 +1,4 @@
-import sys
 import json
-import multiprocessing
 
 from .protype import TCP, socket
 from databasetool import DataBaseManager as DATABASE
@@ -49,45 +47,68 @@ class TCPListen(TCP):
         self.sock.settimeout(1)
     
     def recv(self):
-        sock, addr = self.sock.accept()
-        data = self.sock.recv(1024)
-        return sock, addr, data.decode()
-    
+        try:
+            sock, addr = self.sock.accept()
+            data = self.sock.recv(1024)
+            return sock, addr, data.decode()
+        except TimeoutError:
+            return False
+        
+    def _parse(data):
+        """
+            解析TCP数据
+        返回事件类型和Cookie
+        """
+        msg = json.loads(data)
+        event_type = msg['type']
+        cookie = msg['cookie']
+        return event_type, cookie
 
-    def listen(self):
-        pool = multiprocessing.Pool()
+    def _event_brench(self, t, cookie, data, sock, pool: MultiPool):
+        """
+            事件分支
+        区分不同类型事件，执行对应事件
+        """
+        if t == "instruct":
+            pass
+                
+        if t == "software":
+            """
+                软件事件
+            """
+            pool.apply_async(self.add_watidone, args=(cookie, data,), 
+                callback=lambda cookie: self.dps_waitdone(cookie, sock))           
+                
+        if t == "report":
+            """
+                获取汇报结果
+            客户端控制指令执行结果返回服务端
+            服务端保存至redis数据库
+            """
+            DATABASE.lpush("logs", data)
+    
+    def tlisten(self):
         while True:
-            try:
-                # 监听待办事件
-                """
-                写入redis 供vue读取
-                等待vue执行处理
-                
-                * 更新待办事件
-                * 创建处理任务
-                    pass
-                """
-                sock, addr, data = self.recv()
-                """
-                cookie: (typecode + ip + ctime).encode()
-                """
-                msg = json.loads(data)
-                cookie = msg['cookie']
-                if msg['type'] == "instruct":
-                    # 指令事件
-                    pass
-                
-                if msg['type'] == "software":
-                    # 软件事件
-                    pool.apply_async(self.add_watidone, args=(cookie, data,), 
-                                    callback=lambda cookie: self.dps_waitdone(cookie, sock))           
-                
-                if msg['type'] == "report":
-                    # 汇报事件
-                    DATABASE.lpush("logs", data)
-                    
-            except TimeoutError:
+            print("tcp_sock") 
+            
+    def listen(self):
+        pool = MultiPool()
+        while True:
+            conn = self.recv()
+            if conn:
+                sock, addr, data = conn
+                event_type, cookie = self._parse(data)
+                self._event_brench(event_type, cookie, data, sock, pool)
+            else:
                 pass
+            #     # 监听待办事件
+            #     """
+            #     写入redis 供vue读取
+            #     等待vue执行处理
+                
+            #     * 更新待办事件
+            #     * 创建处理任务
+
             
     def add_watidone(self, cookie, msg):
         DATABASE.hset("waitdones", cookie, msg)

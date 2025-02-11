@@ -11,18 +11,18 @@ from projectdesposetool.systool.custprocess import MultiProcess
 class ServerManage:
     Tasks: List[MultiProcess] = []
     def __init__(self) -> None:
-        self.__tcplisten = TCPListen()
-        self.__broadcaster = UDP()
-        self.__multiter = MultiCast()
+        __tcplisten = TCPListen()
+        __broadcaster = UDP()
 
         self.__registry((
-            # self.__tcplisten.listen,  # TCP监听
-            self.__broadcaster.run,    # UDP监听
+            __tcplisten.listen,  # TCP监听
+            __broadcaster.run,   # UDP监听
         ))
+        
         self.__starttasks()
     
     def __registry(self, tasks: Tuple[Any]):
-        # 注册依赖任务
+        # 注册依赖任务 
         for task in tasks:
             self.Tasks.append(MultiProcess(target=task))
 
