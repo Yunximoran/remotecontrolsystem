@@ -54,19 +54,18 @@ class UDP:
         if macs is []:
             DATABASE.hgetall("client_message")
         
-    @Catch.asyncloop
     def run(self) -> Tuple[asyncio.AbstractEventLoop, socket.socket]:
         """
         :return 
         """
         self.loop = asyncio.get_event_loop()
         self.loop.create_task(self.reception())
-        return self.loop, self.udp_socket
-        # try:    # 事件循环
-        #     self.loop.run_forever()
-        # finally:
-        #     self.loop.close()
-        #     self.udp_socket.close()
+        # return self.loop, self.udp_socket
+        try:    # 事件循环
+            self.loop.run_forever()
+        finally:
+            self.loop.close()
+            self.udp_socket.close()
     
 class Reception:
     CONNECTNUM = 0  # 标记当前正在等待客户端连接的任务数量

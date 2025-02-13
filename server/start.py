@@ -31,7 +31,7 @@ class ServerManage:
             server.start()
             
     def run(self):
-        uvicorn.run("core.app:APP", host="127.0.0.1", port=8000, reload=True)    
+        uvicorn.run("core.app:APP", host="127.0.0.1", port=8000, reload=True)
 
 if __name__ == "__main__":
     """

@@ -2,6 +2,7 @@ from functools import wraps
 
 
 class _CatchProcess:
+    pools = []
     def __init__(self):
         pass
     

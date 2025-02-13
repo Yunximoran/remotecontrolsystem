@@ -15,4 +15,9 @@ class TCP:
     def settings(self):
         pass
     
+    def close(self):
+        self.close()
+        
+    
+    
 

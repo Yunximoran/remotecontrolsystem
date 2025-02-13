@@ -21,6 +21,7 @@ tags = ["data"]
 async def predict(websocket: WebSocket):
     await websocket.accept()
     try:
+
         while True:
             client_status = DATABASE.hgetall("client_status")
             client_reports = DATABASE.hgetall("reports")

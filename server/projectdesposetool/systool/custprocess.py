@@ -1,4 +1,4 @@
-from functools import partial
+from functools import partial, partialmethod
 from multiprocessing import Process
 from multiprocessing import (
     Lock,
@@ -8,12 +8,10 @@ from multiprocessing.pool import Pool
 
 try:
     from ..parse import CONFIG
-    from ..catchtools import Catch
+    from ..catchtools import Catch, _CatchTools
 except ImportError:
     from projectdesposetool.parse import CONFIG
-    from projectdesposetool.catchtools import Catch
-
-# Catch = _CatchTools()
+    from projectdesposetool.catchtools import Catch, _CatchTools
     
 @Catch.process
 def worker(func, *args, **kwargs):
@@ -28,7 +26,6 @@ def worker(func, *args, **kwargs):
 
 # RemoteProcess
 class MultiPool(Pool):
-
     
     def __init__(self, processes = None, initializer = None, initargs = (), maxtasksperchild = None, context = None):
         """
@@ -39,23 +36,21 @@ class MultiPool(Pool):
             processes = CONFIG.MINPROCESS 
         elif processes > 10:
             processes = CONFIG.MAXPROCESS
-
         super().__init__(processes, initializer, initargs, maxtasksperchild, context)
         
     def map_async(self, func, iterable, chunksize = None, callback = None, error_callback = None):
         _worker = partial(worker, func)
         return super().map_async(_worker, iterable, chunksize, callback, error_callback)
-    
+
     def apply_async(self, func, args=(), kwds={}, callback=None, error_callback=None):
         _worker = partial(worker, func)
         return super().apply_async(_worker, args, kwds, callback, error_callback)
-    
+
     def join(self):
         try:
             return super().join()
         except KeyboardInterrupt:
             self.terminate()
-            
 
     
 
