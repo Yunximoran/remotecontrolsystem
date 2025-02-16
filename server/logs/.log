@@ -1,0 +1,15 @@
+2025-02-16 22:55:01,859 - tlogger - INFO - hello world
+2025-02-16 22:55:27,244 - tlogger - ERROR - hello world
+2025-02-16 22:57:05,348 - tlogger - ERROR - hello world
+2025-02-16 22:57:05,350 - tlogger - INFO - <function f1 at 0x0000021F842DDD00>
+2025-02-16 22:57:25,036 - tlogger - ERROR - hello world
+2025-02-16 22:57:25,038 - tlogger - INFO - <method-wrapper '__str__' of function object at 0x0000012F73BFDDA0>
+2025-02-16 23:01:46,855 - tlogger - ERROR - hello world
+2025-02-16 23:05:17,337 - tlogger - ERROR - hello world
+2025-02-16 23:05:22,586 - tlogger - ERROR - hello world
+2025-02-16 23:05:32,443 - tlogger - ERROR - hello world
+2025-02-16 23:20:12,702 - tlogger - ERROR - hello world
+2025-02-16 23:20:19,980 - tlogger - ERROR - hello world
+2025-02-16 23:20:28,128 - tlogger - ERROR - hello world
+2025-02-16 23:20:36,805 - tlogger - ERROR - hello world
+2025-02-16 23:20:52,815 - tlogger - ERROR - hello world

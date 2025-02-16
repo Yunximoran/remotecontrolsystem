@@ -23,8 +23,15 @@ def worker(func, *args, **kwargs):
     """
     return func(*args, **kwargs)
 
+# 获取进程输出信息
+def stdout(res):
+    print(res)
+    
+# 获取进程错误信息
+def stderr(err):
+    print(err)
 
-# RemoteProcess
+
 class MultiPool(Pool):
     
     def __init__(self, processes = None, initializer = None, initargs = (), maxtasksperchild = None, context = None):
