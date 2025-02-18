@@ -3,9 +3,9 @@ import struct
 import json
 from functools import partial
 
-from projectdesposetool.systool.custprocess import(
-    MultiPool,
-    MultiProcess,
+from projectdesposetool.systool.processing import(
+    Pool,
+    Process,
     Lock,
     Queue
 )
@@ -24,7 +24,7 @@ class Control:
         控制模块
     负责与客户端之间的通信
     """
-    process:list[MultiProcess] = []
+    process:list[Process] = []
     waittasks: dict[str, socket.socket] = {}
     
     def __init__(self):
@@ -51,7 +51,7 @@ class Control:
         toclients = self.checkconnect(toclients)
         
         # 向正在连接的指定客户端发送数据包
-        with MultiPool() as pool:
+        with Pool() as pool:
             # 区分数据包类型
             if instructs is not None:
                 # 发送指令数据

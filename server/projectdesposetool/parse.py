@@ -55,6 +55,9 @@ class Parse:
         return self.deepparsing(root)
 
     def deepparsing(self, root:ET.Element):
+        """
+            递归读取树
+        """
         tree = {}
         elemnums = len(root)
         if elemnums == 0:

@@ -3,9 +3,9 @@ import struct
 import json
 from functools import partial
 
-from projectdesposetool.systool.custprocess import(
-    MultiPool,
-    MultiProcess,
+from projectdesposetool.systool.processing import(
+    Pool,
+    Process,
     Lock,
     Queue
 )
@@ -20,7 +20,7 @@ WAITDONEQUEUE = Queue()
 
 
 class Control:
-    process:list[MultiProcess] = []
+    process:list[Process] = []
     waittasks: dict[str, socket.socket] = {}
     
     def __init__(self):
@@ -43,7 +43,7 @@ class Control:
         # 未指定ip时，默认发送至所有正在链接的客户端
         # 检查链接客户端链接状体
         toclients = self.checkconnect(toclients)
-        with MultiPool() as pool:
+        with Pool() as pool:
             if instructs is not None:
                 print("send instruct")
                 sendto = partial(self.sendtoshell, instructs=instructs)

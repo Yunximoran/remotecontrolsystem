@@ -4,7 +4,7 @@ from .protype import TCP, socket
 from databasetool import DataBaseManager as DATABASE
 from projectdesposetool import CONFIG
 from projectdesposetool.catchtools import Catch
-from projectdesposetool.systool.custprocess import MultiProcess
+from projectdesposetool.systool.processing import Process
 
 
 class TCPConnect(TCP):
@@ -91,7 +91,7 @@ class TCPListen(TCP):
         while True:
             conn = self.recv()
             if conn:
-                MultiProcess(target=self._listen, args=(conn, )).start()
+                Process(target=self._listen, args=(conn, )).start()
 
     def _listen(self, conn):
         # ???

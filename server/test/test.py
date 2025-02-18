@@ -1,5 +1,5 @@
-from projectdesposetool.systool.custprocess import MultiPool, MultiProcess
-from multiprocessing import Pool
+from projectdesposetool.systool.processing import Pool, Process
+# from multiprocessing import Pool
 from projectdesposetool.catchtools import Catch
 
 import time
@@ -13,7 +13,7 @@ def e(err):
     
 def testpool(obj):
     # with MultiPool() as pool:
-        pool = MultiPool()
+        pool = Pool()
         if obj == "map":
             pool.map_async(t, ("hello", "world", "1", "2", "3", "4"), error_callback=e)
             
@@ -25,9 +25,9 @@ def testpool(obj):
         pool.join()
         
 def testprocess():
-    MultiProcess(target=t, args=("world",), kwargs={"t": 3,}).start()
+    Process(target=t, args=("world",), kwargs={"t": 3,}).start()
     
 def deep():
-    MultiProcess(target=testpool, args=("apply", )).start()
+    Process(target=testpool, args=("apply", )).start()
 if __name__ == "__main__":
     deep()

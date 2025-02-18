@@ -18,13 +18,9 @@ class _CatchDatabase(_BaseCatch):
         @wraps(func)
         def wrapper(*args, **kwargs):
             try:
-                self.__log_record(func, "success", 0)
+                self.record(func)
                 return func(*args, **kwargs)
             except ConnectionError:
                 self.__log_record(func, "无法连接Redis")
                 return "无法连接redis"
         return wrapper
-    
-    def __log_record(self, func:Callable, msg, level=0):
-        logtext = self.getlogtext(func, msg)
-        loggin = self.log_level()

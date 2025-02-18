@@ -9,7 +9,6 @@ from fastapi import(
     )
 
 from databasetool import DataBaseManager as DATABASE
-from projectdesposetool import ProjectManage
 
 # 数据接口
 router = APIRouter()

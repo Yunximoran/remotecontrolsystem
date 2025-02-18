@@ -5,11 +5,11 @@ import uvicorn
 from core.depend.protocol.tcp import TCPListen
 from core.depend.protocol.udp import UDP, MultiCast
 from projectdesposetool.catchtools import Catch
-from projectdesposetool.systool.custprocess import MultiProcess
+from projectdesposetool.systool.processing import Process
 
 
 class ServerManage:
-    Tasks: List[MultiProcess] = []
+    Tasks: List[Process] = []
     def __init__(self) -> None:
         __tcplisten = TCPListen()
         __broadcaster = UDP()
@@ -24,7 +24,7 @@ class ServerManage:
     def __registry(self, tasks: Tuple[Any]):
         # 注册依赖任务 
         for task in tasks:
-            self.Tasks.append(MultiProcess(target=task))
+            self.Tasks.append(Process(target=task))
 
     def __starttasks(self):
         for server in self.Tasks:

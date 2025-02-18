@@ -1,18 +1,18 @@
-from functools import partial, partialmethod
+from functools import partial
 from multiprocessing import Process
+from multiprocessing.pool import Pool
 from multiprocessing import (
     Lock,
     Queue
 )
-from multiprocessing.pool import Pool
 
-try:
-    from ..parse import CONFIG
-    from ..catchtools import Catch, _CatchTools
-except ImportError:
-    from projectdesposetool.parse import CONFIG
-    from projectdesposetool.catchtools import Catch, _CatchTools
-    
+from projectdesposetool.parse import CONFIG
+from projectdesposetool.catchtools._process import _CatchProcess
+
+
+Catch = _CatchProcess()
+
+
 @Catch.process
 def worker(func, *args, **kwargs):
     """
@@ -32,7 +32,7 @@ def stderr(err):
     print(err)
 
 
-class MultiPool(Pool):
+class Pool(Pool):
     
     def __init__(self, processes = None, initializer = None, initargs = (), maxtasksperchild = None, context = None):
         """
@@ -61,7 +61,7 @@ class MultiPool(Pool):
 
     
 
-class MultiProcess(Process):
+class Process(Process):
     def __init__(self, group=None, target=None, name=None, args=(), kwargs={}, *, daemon = None):
         super().__init__(group, name=name, args=args, kwargs=kwargs, daemon=daemon)
         self._target = partial(worker, target)

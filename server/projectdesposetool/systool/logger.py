@@ -37,17 +37,55 @@ class Logger:
         file_handler.setFormatter(formatter)
         self.logger.addHandler(file_handler)
     
-    def debug(self, message):
+    def format_logtext(self, *msgs, **dmsgs):
+        """
+            格式化日志文本
+        """
+        logtext = []
+        logtext.append("\t".join(msgs))
+        
+        for msg in dmsgs:
+            item = f"{msg}: {dmsgs[msg]}"
+            logtext.append(item)
+        
+        return "\n".join(logtext)
+    
+    def record(self, level:int , msg: str):
+        """
+            日志记录器：执行写入操作
+        log level: debug < info < waring < error < critical
+        """
+        if level == 0:
+            self.__debug(msg)
+        elif level == 1:
+            self.__info(msg)
+        elif level == 2:
+            self.__warning(msg)
+        elif level == 3:
+            self.__error(msg)
+        elif level == 4:
+            self.__critical(msg)
+        else:
+            raise ValueError("must range 0, 4 the attribute level")
+    
+    def __debug(self, message):
         self.logger.debug(message)
     
-    def info(self, message):
+    def __info(self, message):
         self.logger.info(message)
     
-    def warning(self, message):
+    def __warning(self, message):
         self.logger.warning(message)
     
-    def error(self, message):
+    def __error(self, message):
         self.logger.error(message)
     
-    def critical(self, message):
+    def __critical(self, message):
         self.logger.critical(message)
+
+
+if __name__ == "__main__":
+    logger = Logger("logtext", log_file="logtext.log")
+    logtext = logger.format_logtext("t1", "t2", a1 = __file__, a2 = __name__)
+    print(logtext)
+    logger.record(4, "hello wrold")

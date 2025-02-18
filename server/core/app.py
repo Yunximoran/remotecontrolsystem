@@ -6,7 +6,6 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi import FastAPI
 
 from databasetool import DataBaseManager as DB
-from projectdesposetool import ProjectManage
 from core.depend.api import (
     alter,
     data,
@@ -15,7 +14,6 @@ from core.depend.api import (
     send
 )
 
-PROJECTMANAGE = ProjectManage()
 APP = FastAPI()
 
 
