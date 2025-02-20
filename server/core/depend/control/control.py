@@ -10,7 +10,7 @@ from projectdesposetool.systool.processing import(
     Queue
 )
 from databasetool import DataBaseManager as DATABASE
-from core.depend.protocol.tcp import TCPConnect
+from core.depend.protocol.tcp import Connector
 
 
 
@@ -75,7 +75,7 @@ class Control:
     @staticmethod                           
     def sendtofile(ip, file):
         # 发送文件数据
-        conn = TCPConnect()
+        conn = Connector()
         conn.sendfile(ip, file)
     
     @staticmethod
@@ -83,7 +83,7 @@ class Control:
         # 发送指令包
         print(ip, instructs)
         for instruct in instructs:
-            conn = TCPConnect()
+            conn = Connector()
             report =conn.send(ip, instruct)
             print("add report", report, type(report))
             DATABASE.hset("reports", ip, report)

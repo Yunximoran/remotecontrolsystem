@@ -3,7 +3,8 @@ from multiprocessing import Process
 from multiprocessing.pool import Pool
 from multiprocessing import (
     Lock,
-    Queue
+    Queue,
+    Value,
 )
 
 from projectdesposetool.parse import CONFIG

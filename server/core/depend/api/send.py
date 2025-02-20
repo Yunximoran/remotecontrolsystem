@@ -3,10 +3,14 @@ import json
 from fastapi import APIRouter
 
 from datamodel import ShellList, Software
-from core.depend.protocol.udp import MultiCast
+from core.depend.protocol.udp import MultiCastor
 from core.depend.control import Control
+# from projectdesposetool import CONFIG
 
-multiter = MultiCast()
+
+# MULTICAST = ("224.25.25.1", CONFIG.UMPORT)
+
+multiter = MultiCastor()
 controlor = Control()
 
 # 通信接口

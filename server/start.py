@@ -2,25 +2,47 @@ from typing import Tuple, Any, List
 
 import uvicorn
 
-from core.depend.protocol.tcp import TCPListen
-from core.depend.protocol.udp import UDP, MultiCast
+from core.depend.protocol.tcp import Listener
+from core.depend.protocol.udp import UDP
+from projectdesposetool import CONFIG
 from projectdesposetool.catchtools import Catch
 from projectdesposetool.systool.processing import Process
+from core.depend.protocol.udp import BroadCastor
 
 
-class ServerManage:
+# FASTAPI设置常量
+FASTAPP = "core.app:APP"
+FASTHOST = "127.0.0.1"
+FASTPORT = 8000
+ISRELOAD = True
+
+# 监听设置常量
+SERVERADDRESS = (CONFIG.IP, CONFIG.TSPORT)
+LISTENES = 5
+
+# 广播设置常量
+BROADCAST = ("0.0.0.0", CONFIG.UBPORT)                  # 配置UDP广播地址
+MULTICAST = ("224.25.25.1", CONFIG.UMPORT)          # 配置UDP组播地址
+
+
+class Start:
     Tasks: List[Process] = []
     def __init__(self) -> None:
-        __tcplisten = TCPListen()
-        __broadcaster = UDP()
-
         self.__registry((
-            __tcplisten.listen,  # TCP监听
-            __broadcaster.run,   # UDP监听
+            self._tcplisten,
+            self._udplisten,
         ))
         
         self.__starttasks()
+        uvicorn.run(app=FASTAPP, host=FASTHOST, port=FASTPORT, reload=ISRELOAD)
+        self.__jointasks()
     
+    def _tcplisten(self):
+        Listener(SERVERADDRESS, LISTENES).listen()
+    
+    def _udplisten(self):
+        BroadCastor(BROADCAST).listen()
+        
     def __registry(self, tasks: Tuple[Any]):
         # 注册依赖任务 
         for task in tasks:
@@ -30,13 +52,14 @@ class ServerManage:
         for server in self.Tasks:
             server.start()
             
-    def run(self):
-        uvicorn.run("core.app:APP", host="127.0.0.1", port=8000, reload=True)
+        
+    def __jointasks(self):
+        for server in self.Tasks:
+            server.join()
+
 
 if __name__ == "__main__":
     """
     多进程会被
     """
-    server_manager = ServerManage()
-    server_manager.run()
-    
+    Start()

@@ -1,3 +1,10 @@
+"""
+    初始化配置文件
+
+检测操作系统
+选择物理网卡
+"""
+
 import platform
 import socket
 import uuid

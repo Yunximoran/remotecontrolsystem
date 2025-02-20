@@ -15,7 +15,6 @@ class _CatchTools(
     logger = Logger("catch", log_file="sys.log")
     def __init__(self):
         self.logs = []
-        # self.func = func
     
     # 默认捕获器
     def catch(self, *args, **kwargs):
@@ -33,7 +32,7 @@ class _CatchTools(
                     return False
                 except KeyboardInterrupt:
                     self.record(func, "The Ctrl C Single is teriggered", 3)
-                    return "The Ctrl C Single is triggered"
+                    return False
                 finally:
                     return None
             return wrapper
@@ -47,7 +46,7 @@ class _CatchTools(
                 return func(*args, **kwargs)
             except TimeoutError:
                 self.record(func, "Timeout", 3)
-                return "Timeout"
+                return False
         return wrapper
     
 

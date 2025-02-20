@@ -4,3 +4,1176 @@ path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\__init__.
 2025-02-18 23:13:57,236 - catch - INFO - recv	success
 module: core.depend.protocol.tcp
 path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\__init__.py
+2025-02-19 23:08:47,915 - catch - INFO - recv	success
+module: core.depend.protocol.tcp
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\__init__.py
+2025-02-20 19:45:33,337 - catch - INFO - recv	success
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 19:46:28,549 - catch - INFO - recv	success
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 19:51:40,771 - catch - INFO - recv	success
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 19:52:04,795 - catch - INFO - recv	success
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 19:53:09,238 - catch - INFO - recv	success
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 19:53:50,220 - catch - INFO - recv	success
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 19:54:47,781 - catch - INFO - recv	success
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 19:55:42,845 - catch - INFO - recv	success
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 19:56:22,571 - catch - INFO - recv	success
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 19:57:22,092 - catch - INFO - recv	success
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 19:59:08,302 - catch - INFO - recv	success
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 19:59:26,708 - catch - INFO - recv	success
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 19:59:54,024 - catch - INFO - recv	success
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 20:00:43,828 - catch - INFO - recv	success
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 20:01:54,693 - catch - INFO - recv	success
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 20:01:55,696 - catch - ERROR - recv	Timeout
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 20:01:55,708 - catch - INFO - recv	success
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 20:01:56,723 - catch - ERROR - recv	Timeout
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 20:01:56,730 - catch - INFO - recv	success
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 20:01:57,740 - catch - ERROR - recv	Timeout
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 20:01:57,748 - catch - INFO - recv	success
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 20:01:58,749 - catch - ERROR - recv	Timeout
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 20:01:58,757 - catch - INFO - recv	success
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 20:01:59,766 - catch - ERROR - recv	Timeout
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 20:01:59,772 - catch - INFO - recv	success
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 20:02:00,775 - catch - ERROR - recv	Timeout
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 20:02:00,782 - catch - INFO - recv	success
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 20:02:01,787 - catch - ERROR - recv	Timeout
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 20:02:01,793 - catch - INFO - recv	success
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 20:02:02,796 - catch - ERROR - recv	Timeout
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 20:02:02,802 - catch - INFO - recv	success
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 20:02:03,810 - catch - ERROR - recv	Timeout
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 20:02:03,816 - catch - INFO - recv	success
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 20:02:57,717 - catch - INFO - recv	success
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 20:03:23,243 - catch - INFO - recv	success
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 20:04:02,022 - catch - INFO - recv	success
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 20:06:08,486 - catch - INFO - recv	success
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 20:06:09,489 - catch - ERROR - recv	Timeout
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 20:06:09,501 - catch - INFO - recv	success
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 20:06:10,512 - catch - ERROR - recv	Timeout
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 20:06:10,518 - catch - INFO - recv	success
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 20:06:11,524 - catch - ERROR - recv	Timeout
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 20:06:11,533 - catch - INFO - recv	success
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 20:06:12,538 - catch - ERROR - recv	Timeout
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 20:06:12,545 - catch - INFO - recv	success
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 20:06:13,552 - catch - ERROR - recv	Timeout
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 20:06:13,558 - catch - INFO - recv	success
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 20:06:14,562 - catch - ERROR - recv	Timeout
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 20:06:14,568 - catch - INFO - recv	success
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 20:06:15,572 - catch - ERROR - recv	Timeout
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 20:06:15,577 - catch - INFO - recv	success
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 20:06:16,591 - catch - ERROR - recv	Timeout
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 20:06:16,597 - catch - INFO - recv	success
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 20:06:17,602 - catch - ERROR - recv	Timeout
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 20:06:17,608 - catch - INFO - recv	success
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 20:06:18,617 - catch - ERROR - recv	Timeout
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 20:06:18,624 - catch - INFO - recv	success
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 20:06:19,637 - catch - ERROR - recv	Timeout
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 20:06:19,642 - catch - INFO - recv	success
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 20:06:20,648 - catch - ERROR - recv	Timeout
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 20:06:20,654 - catch - INFO - recv	success
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 20:06:21,661 - catch - ERROR - recv	Timeout
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 20:06:21,667 - catch - INFO - recv	success
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 20:06:22,681 - catch - ERROR - recv	Timeout
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 20:06:22,687 - catch - INFO - recv	success
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 20:06:23,692 - catch - ERROR - recv	Timeout
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 20:06:23,698 - catch - INFO - recv	success
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 20:06:24,705 - catch - ERROR - recv	Timeout
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 20:06:24,712 - catch - INFO - recv	success
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 20:06:25,722 - catch - ERROR - recv	Timeout
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 20:06:25,727 - catch - INFO - recv	success
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 20:06:26,738 - catch - ERROR - recv	Timeout
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 20:06:26,743 - catch - INFO - recv	success
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 20:06:27,752 - catch - ERROR - recv	Timeout
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 20:06:27,757 - catch - INFO - recv	success
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 20:07:07,042 - catch - INFO - recv	success
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 20:07:13,481 - catch - INFO - recv	success
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 20:07:14,492 - catch - ERROR - recv	Timeout
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 20:07:14,493 - catch - INFO - recv	success
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 20:07:15,496 - catch - ERROR - recv	Timeout
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 20:07:15,497 - catch - INFO - recv	success
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 20:07:16,506 - catch - ERROR - recv	Timeout
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 20:07:16,507 - catch - INFO - recv	success
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 20:07:17,515 - catch - ERROR - recv	Timeout
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 20:07:17,516 - catch - INFO - recv	success
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 20:07:18,529 - catch - ERROR - recv	Timeout
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 20:07:18,529 - catch - INFO - recv	success
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 20:07:19,540 - catch - ERROR - recv	Timeout
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 20:07:19,541 - catch - INFO - recv	success
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 20:07:20,551 - catch - ERROR - recv	Timeout
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 20:07:20,552 - catch - INFO - recv	success
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 20:08:21,820 - catch - INFO - recv	success
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 20:08:22,825 - catch - ERROR - recv	Timeout
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 20:08:22,834 - catch - INFO - recv	success
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 20:08:23,848 - catch - ERROR - recv	Timeout
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 20:08:23,854 - catch - INFO - recv	success
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 20:08:24,859 - catch - ERROR - recv	Timeout
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 20:08:24,864 - catch - INFO - recv	success
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 20:08:25,878 - catch - ERROR - recv	Timeout
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 20:08:25,885 - catch - INFO - recv	success
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 20:08:26,891 - catch - ERROR - recv	Timeout
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 20:08:26,897 - catch - INFO - recv	success
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 20:09:51,906 - catch - INFO - recv	success
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 20:09:52,913 - catch - ERROR - recv	Timeout
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 20:09:52,914 - catch - INFO - recv	success
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 20:09:53,921 - catch - ERROR - recv	Timeout
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 20:09:53,922 - catch - INFO - recv	success
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 20:09:54,934 - catch - ERROR - recv	Timeout
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 20:09:54,936 - catch - INFO - recv	success
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 20:09:55,944 - catch - ERROR - recv	Timeout
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 20:09:55,946 - catch - INFO - recv	success
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 20:09:56,961 - catch - ERROR - recv	Timeout
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 20:09:56,963 - catch - INFO - recv	success
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 20:09:57,977 - catch - ERROR - recv	Timeout
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 20:09:57,978 - catch - INFO - recv	success
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 20:09:58,993 - catch - ERROR - recv	Timeout
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 20:09:58,996 - catch - INFO - recv	success
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 20:10:00,008 - catch - ERROR - recv	Timeout
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 20:10:00,009 - catch - INFO - recv	success
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 20:10:01,022 - catch - ERROR - recv	Timeout
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 20:10:01,023 - catch - INFO - recv	success
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 20:10:02,036 - catch - ERROR - recv	Timeout
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 20:10:02,037 - catch - INFO - recv	success
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 20:10:03,048 - catch - ERROR - recv	Timeout
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 20:10:03,049 - catch - INFO - recv	success
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 20:10:04,055 - catch - ERROR - recv	Timeout
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 20:10:04,056 - catch - INFO - recv	success
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 20:10:05,065 - catch - ERROR - recv	Timeout
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 20:10:05,065 - catch - INFO - recv	success
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 20:10:06,073 - catch - ERROR - recv	Timeout
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 20:10:06,074 - catch - INFO - recv	success
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 20:10:07,088 - catch - ERROR - recv	Timeout
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 20:10:07,089 - catch - INFO - recv	success
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 20:10:08,100 - catch - ERROR - recv	Timeout
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 20:10:08,101 - catch - INFO - recv	success
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 20:10:09,113 - catch - ERROR - recv	Timeout
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 20:10:09,114 - catch - INFO - recv	success
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 20:10:12,853 - catch - INFO - recv	success
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 20:10:13,855 - catch - ERROR - recv	Timeout
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 20:10:13,857 - catch - INFO - recv	success
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 20:10:14,868 - catch - ERROR - recv	Timeout
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 20:10:14,870 - catch - INFO - recv	success
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 20:10:15,879 - catch - ERROR - recv	Timeout
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 20:10:15,881 - catch - INFO - recv	success
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 20:10:16,889 - catch - ERROR - recv	Timeout
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 20:10:16,891 - catch - INFO - recv	success
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 20:10:17,902 - catch - ERROR - recv	Timeout
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 20:10:17,904 - catch - INFO - recv	success
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 20:11:02,112 - catch - INFO - recv	success
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 20:11:03,116 - catch - ERROR - recv	Timeout
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 20:11:03,118 - catch - INFO - recv	success
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 20:11:04,128 - catch - ERROR - recv	Timeout
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 20:11:04,131 - catch - INFO - recv	success
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 20:11:05,140 - catch - ERROR - recv	Timeout
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 20:11:05,140 - catch - INFO - recv	success
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 20:11:06,156 - catch - ERROR - recv	Timeout
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 20:11:06,159 - catch - INFO - recv	success
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 20:11:07,165 - catch - ERROR - recv	Timeout
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 20:11:07,166 - catch - INFO - recv	success
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 20:11:08,173 - catch - ERROR - recv	Timeout
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 20:11:08,174 - catch - INFO - recv	success
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 20:11:09,181 - catch - ERROR - recv	Timeout
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 20:11:09,182 - catch - INFO - recv	success
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 20:13:40,475 - catch - INFO - recv	success
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 20:13:41,485 - catch - ERROR - recv	Timeout
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 20:13:54,970 - catch - INFO - recv	success
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 20:13:55,971 - catch - ERROR - recv	Timeout
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 20:13:55,984 - catch - INFO - recv	success
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 20:13:56,985 - catch - ERROR - recv	Timeout
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 20:13:56,991 - catch - INFO - recv	success
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 20:13:57,995 - catch - ERROR - recv	Timeout
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 20:13:58,002 - catch - INFO - recv	success
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 20:13:59,007 - catch - ERROR - recv	Timeout
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 20:13:59,014 - catch - INFO - recv	success
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 20:47:09,715 - catch - INFO - recv	success
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 20:47:10,722 - catch - ERROR - recv	Timeout
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 20:47:10,730 - catch - INFO - recv	success
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 20:47:11,733 - catch - ERROR - recv	Timeout
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 20:47:11,740 - catch - INFO - recv	success
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 20:47:12,744 - catch - ERROR - recv	Timeout
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 20:47:12,751 - catch - INFO - recv	success
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 20:47:13,754 - catch - ERROR - recv	Timeout
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 20:47:13,759 - catch - INFO - recv	success
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 20:48:36,525 - catch - INFO - recv	success
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 20:48:37,541 - catch - ERROR - recv	Timeout
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 20:48:37,550 - catch - INFO - recv	success
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 20:48:38,563 - catch - ERROR - recv	Timeout
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 20:48:38,569 - catch - INFO - recv	success
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 20:48:39,573 - catch - ERROR - recv	Timeout
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 20:48:39,579 - catch - INFO - recv	success
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 20:48:40,581 - catch - ERROR - recv	Timeout
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 20:48:40,586 - catch - INFO - recv	success
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 20:48:41,598 - catch - ERROR - recv	Timeout
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 20:48:41,605 - catch - INFO - recv	success
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 20:48:42,610 - catch - ERROR - recv	Timeout
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 20:48:42,615 - catch - INFO - recv	success
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 20:48:43,622 - catch - ERROR - recv	Timeout
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 20:48:43,628 - catch - INFO - recv	success
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 20:48:44,636 - catch - ERROR - recv	Timeout
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 20:48:44,643 - catch - INFO - recv	success
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 20:48:45,648 - catch - ERROR - recv	Timeout
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 20:48:45,655 - catch - INFO - recv	success
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 20:55:28,257 - catch - INFO - recv	success
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 20:55:29,271 - catch - ERROR - recv	Timeout
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 20:55:29,273 - catch - INFO - recv	success
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 20:55:30,279 - catch - ERROR - recv	Timeout
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 20:55:30,281 - catch - INFO - recv	success
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 20:55:31,297 - catch - ERROR - recv	Timeout
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 20:55:31,299 - catch - INFO - recv	success
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 20:55:32,303 - catch - ERROR - recv	Timeout
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 20:55:32,304 - catch - INFO - recv	success
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 20:55:33,318 - catch - ERROR - recv	Timeout
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 20:55:33,319 - catch - INFO - recv	success
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 20:55:34,332 - catch - ERROR - recv	Timeout
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 20:55:34,333 - catch - INFO - recv	success
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 20:56:05,891 - catch - INFO - recv	success
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 20:56:06,894 - catch - ERROR - recv	Timeout
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 20:56:06,896 - catch - INFO - recv	success
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 20:56:07,901 - catch - ERROR - recv	Timeout
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 20:56:07,902 - catch - INFO - recv	success
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 20:56:08,914 - catch - ERROR - recv	Timeout
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 20:56:08,916 - catch - INFO - recv	success
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 20:56:09,923 - catch - ERROR - recv	Timeout
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 20:56:09,924 - catch - INFO - recv	success
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 20:56:10,932 - catch - ERROR - recv	Timeout
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 20:56:10,933 - catch - INFO - recv	success
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 21:37:56,419 - catch - INFO - recv	success
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 21:38:08,236 - catch - INFO - recv	success
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 21:38:33,291 - catch - INFO - recv	success
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 21:39:03,929 - catch - INFO - recv	success
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 21:39:04,930 - catch - ERROR - recv	Timeout
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 21:39:04,932 - catch - INFO - recv	success
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 21:39:05,944 - catch - ERROR - recv	Timeout
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 21:39:05,947 - catch - INFO - recv	success
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 21:39:06,962 - catch - ERROR - recv	Timeout
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 21:39:06,963 - catch - INFO - recv	success
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 21:39:07,974 - catch - ERROR - recv	Timeout
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 21:39:07,976 - catch - INFO - recv	success
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 21:41:20,611 - catch - INFO - recv	success
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 21:42:01,248 - catch - INFO - recv	success
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 21:45:43,738 - catch - INFO - recv	success
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 21:45:49,366 - catch - INFO - recv	success
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 21:47:02,880 - catch - INFO - recv	success
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 21:47:23,354 - catch - INFO - recv	success
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 21:47:27,697 - catch - INFO - recv	success
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 21:48:46,481 - catch - INFO - recv	success
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 21:52:44,576 - catch - INFO - recv	success
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 21:53:18,311 - catch - INFO - recv	success
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 21:53:42,978 - catch - INFO - recv	success
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 21:53:55,128 - catch - INFO - recv	success
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 21:56:41,671 - catch - INFO - recv	success
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 21:56:42,674 - catch - ERROR - recv	Timeout
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 21:56:42,675 - catch - INFO - recv	success
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 21:56:43,686 - catch - ERROR - recv	Timeout
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 21:56:43,688 - catch - INFO - recv	success
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 21:56:44,694 - catch - ERROR - recv	Timeout
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 21:56:44,695 - catch - INFO - recv	success
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 21:56:45,703 - catch - ERROR - recv	Timeout
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 21:56:45,704 - catch - INFO - recv	success
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 22:00:10,747 - catch - INFO - recv	success
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 22:00:11,760 - catch - ERROR - recv	Timeout
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 22:00:11,761 - catch - INFO - recv	success
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 22:00:12,770 - catch - ERROR - recv	Timeout
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 22:00:12,772 - catch - INFO - recv	success
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 22:00:13,780 - catch - ERROR - recv	Timeout
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 22:00:13,781 - catch - INFO - recv	success
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 22:00:14,796 - catch - ERROR - recv	Timeout
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 22:00:14,798 - catch - INFO - recv	success
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 22:00:15,801 - catch - ERROR - recv	Timeout
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 22:00:15,803 - catch - INFO - recv	success
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 22:00:16,818 - catch - ERROR - recv	Timeout
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 22:00:16,820 - catch - INFO - recv	success
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 22:00:17,829 - catch - ERROR - recv	Timeout
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 22:00:17,831 - catch - INFO - recv	success
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 22:00:18,844 - catch - ERROR - recv	Timeout
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 22:00:18,845 - catch - INFO - recv	success
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 22:00:19,857 - catch - ERROR - recv	Timeout
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 22:00:19,858 - catch - INFO - recv	success
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 22:00:20,868 - catch - ERROR - recv	Timeout
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 22:00:20,871 - catch - INFO - recv	success
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 22:00:21,886 - catch - ERROR - recv	Timeout
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 22:00:21,887 - catch - INFO - recv	success
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 22:00:22,902 - catch - ERROR - recv	Timeout
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 22:00:22,903 - catch - INFO - recv	success
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 22:01:23,139 - catch - INFO - recv	success
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 22:01:24,142 - catch - ERROR - recv	Timeout
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 22:01:24,144 - catch - INFO - recv	success
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 22:01:25,157 - catch - ERROR - recv	Timeout
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 22:01:25,158 - catch - INFO - recv	success
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 22:01:26,171 - catch - ERROR - recv	Timeout
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 22:01:26,173 - catch - INFO - recv	success
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 22:01:27,186 - catch - ERROR - recv	Timeout
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 22:01:27,187 - catch - INFO - recv	success
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 22:01:28,198 - catch - ERROR - recv	Timeout
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 22:01:28,199 - catch - INFO - recv	success
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 22:01:29,208 - catch - ERROR - recv	Timeout
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 22:01:29,210 - catch - INFO - recv	success
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 22:01:30,217 - catch - ERROR - recv	Timeout
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 22:01:30,219 - catch - INFO - recv	success
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 22:01:31,230 - catch - ERROR - recv	Timeout
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 22:01:31,232 - catch - INFO - recv	success
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 22:01:32,238 - catch - ERROR - recv	Timeout
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 22:01:32,240 - catch - INFO - recv	success
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 22:01:33,252 - catch - ERROR - recv	Timeout
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 22:01:33,253 - catch - INFO - recv	success
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 22:01:34,269 - catch - ERROR - recv	Timeout
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 22:01:34,271 - catch - INFO - recv	success
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 22:01:35,284 - catch - ERROR - recv	Timeout
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 22:01:35,285 - catch - INFO - recv	success
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 22:01:36,300 - catch - ERROR - recv	Timeout
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 22:01:36,302 - catch - INFO - recv	success
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 22:01:37,302 - catch - ERROR - recv	Timeout
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 22:01:37,311 - catch - INFO - recv	success
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 22:01:38,317 - catch - ERROR - recv	Timeout
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 22:01:38,322 - catch - INFO - recv	success
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 22:01:39,330 - catch - ERROR - recv	Timeout
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 22:01:39,332 - catch - INFO - recv	success
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 22:01:40,346 - catch - ERROR - recv	Timeout
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 22:01:40,348 - catch - INFO - recv	success
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 22:01:41,364 - catch - ERROR - recv	Timeout
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 22:01:41,366 - catch - INFO - recv	success
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 22:01:42,375 - catch - ERROR - recv	Timeout
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 22:01:42,376 - catch - INFO - recv	success
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 22:01:43,387 - catch - ERROR - recv	Timeout
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 22:01:43,389 - catch - INFO - recv	success
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 22:01:44,397 - catch - ERROR - recv	Timeout
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 22:01:44,399 - catch - INFO - recv	success
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 22:01:45,413 - catch - ERROR - recv	Timeout
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 22:01:45,415 - catch - INFO - recv	success
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 22:01:46,419 - catch - ERROR - recv	Timeout
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 22:01:46,421 - catch - INFO - recv	success
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 22:01:47,436 - catch - ERROR - recv	Timeout
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 22:01:47,438 - catch - INFO - recv	success
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 22:01:48,451 - catch - ERROR - recv	Timeout
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 22:01:48,451 - catch - INFO - recv	success
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 22:01:49,465 - catch - ERROR - recv	Timeout
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 22:01:49,466 - catch - INFO - recv	success
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 22:01:50,480 - catch - ERROR - recv	Timeout
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 22:01:50,482 - catch - INFO - recv	success
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 22:01:51,497 - catch - ERROR - recv	Timeout
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 22:01:51,499 - catch - INFO - recv	success
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 22:01:52,513 - catch - ERROR - recv	Timeout
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 22:01:52,515 - catch - INFO - recv	success
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 22:01:53,525 - catch - ERROR - recv	Timeout
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 22:01:53,527 - catch - INFO - recv	success
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 22:01:54,530 - catch - ERROR - recv	Timeout
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 22:01:54,532 - catch - INFO - recv	success
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 22:01:55,545 - catch - ERROR - recv	Timeout
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 22:01:55,548 - catch - INFO - recv	success
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 22:01:56,559 - catch - ERROR - recv	Timeout
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 22:01:56,561 - catch - INFO - recv	success
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 22:01:57,570 - catch - ERROR - recv	Timeout
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 22:01:57,573 - catch - INFO - recv	success
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 22:01:58,587 - catch - ERROR - recv	Timeout
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 22:01:58,589 - catch - INFO - recv	success
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 22:01:59,597 - catch - ERROR - recv	Timeout
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 22:01:59,598 - catch - INFO - recv	success
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 22:02:00,609 - catch - ERROR - recv	Timeout
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 22:02:00,611 - catch - INFO - recv	success
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 22:02:01,619 - catch - ERROR - recv	Timeout
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 22:02:01,621 - catch - INFO - recv	success
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 22:02:02,633 - catch - ERROR - recv	Timeout
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 22:02:02,635 - catch - INFO - recv	success
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 22:02:03,645 - catch - ERROR - recv	Timeout
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 22:02:03,647 - catch - INFO - recv	success
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 22:03:17,686 - catch - INFO - recv	success
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 22:03:18,691 - catch - ERROR - recv	Timeout
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 22:03:18,692 - catch - INFO - recv	success
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 22:03:19,705 - catch - ERROR - recv	Timeout
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 22:03:19,706 - catch - INFO - recv	success
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 22:03:20,716 - catch - ERROR - recv	Timeout
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 22:03:20,717 - catch - INFO - recv	success
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 22:03:21,733 - catch - ERROR - recv	Timeout
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 22:03:21,734 - catch - INFO - recv	success
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 22:03:22,746 - catch - ERROR - recv	Timeout
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 22:03:22,747 - catch - INFO - recv	success
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 22:03:23,762 - catch - ERROR - recv	Timeout
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 22:03:23,764 - catch - INFO - recv	success
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 22:03:24,780 - catch - ERROR - recv	Timeout
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 22:03:24,782 - catch - INFO - recv	success
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 22:03:25,783 - catch - ERROR - recv	Timeout
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 22:03:25,784 - catch - INFO - recv	success
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 22:03:26,786 - catch - ERROR - recv	Timeout
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 22:03:26,787 - catch - INFO - recv	success
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 22:03:27,800 - catch - ERROR - recv	Timeout
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 22:03:27,801 - catch - INFO - recv	success
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 22:03:28,816 - catch - ERROR - recv	Timeout
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 22:03:28,818 - catch - INFO - recv	success
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 22:03:29,828 - catch - ERROR - recv	Timeout
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py
+2025-02-20 22:03:29,829 - catch - INFO - recv	success
+module: core.depend.protocol.tcp.listener
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\tcp\listener.py

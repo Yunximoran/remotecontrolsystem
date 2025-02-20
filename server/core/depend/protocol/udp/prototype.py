@@ -7,10 +7,6 @@ import databasetool
 from projectdesposetool import CONFIG
 from projectdesposetool.catchtools import Catch
 
-
-SERVERADDRESS = (CONFIG.IP, CONFIG.USPORT)    # 服务端地址
-
-
 BROADCAST = ("0.0.0.0", CONFIG.UBPORT)                  # 配置UDP广播地址
 MULTICAST = ("224.25.25.1", CONFIG.UMPORT)          # 配置UDP组播地址
 
@@ -46,6 +42,7 @@ class UDP:
         self.udp_socket.bind(BROADCAST)     # 绑定广播地址
 
     async def reception(self):   # 加载数据连接模块
+        # 子线程中创建reception子线程，注册监听广播任务
         self.recloop = asyncio.new_event_loop()
         self.loop.run_in_executor(None, Reception, self.recloop, self.udp_socket)
         
