@@ -8,7 +8,6 @@ from core.depend.control import Control
 # from projectdesposetool import CONFIG
 
 
-# MULTICAST = ("224.25.25.1", CONFIG.UMPORT)
 
 multiter = MultiCastor()
 controlor = Control()

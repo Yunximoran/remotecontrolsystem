@@ -3829,3 +3829,108 @@ path: d:\workbench\remotecontrolsystem\server\projectdesposetool\systool\process
 2025-02-20 22:36:27,674 - process - ERROR - worker	The Ctrl C
 module: projectdesposetool.systool.processing
 path: d:\workbench\remotecontrolsystem\server\projectdesposetool\systool\processing.py
+2025-02-23 13:29:48,748 - process - INFO - _tcplisten	success
+module: __mp_main__
+path: d:\workbench\remotecontrolsystem\server\start.py
+2025-02-23 13:29:48,758 - process - INFO - _udplisten	success
+module: __mp_main__
+path: d:\workbench\remotecontrolsystem\server\start.py
+2025-02-23 13:29:49,933 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\udp\broadcastor.py
+2025-02-23 13:29:50,073 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\udp\broadcastor.py
+2025-02-23 13:29:50,165 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\udp\broadcastor.py
+2025-02-23 13:29:50,276 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\udp\broadcastor.py
+2025-02-23 13:29:50,399 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\udp\broadcastor.py
+2025-02-23 13:29:50,480 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\udp\broadcastor.py
+2025-02-23 13:29:50,587 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\udp\broadcastor.py
+2025-02-23 13:29:50,711 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\udp\broadcastor.py
+2025-02-23 13:29:50,868 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\udp\broadcastor.py
+2025-02-23 13:29:51,023 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\udp\broadcastor.py
+2025-02-23 13:40:45,720 - process - INFO - _udplisten	success
+module: __mp_main__
+path: d:\workbench\remotecontrolsystem\server\start.py
+2025-02-23 13:40:46,740 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\udp\broadcastor.py
+2025-02-23 13:40:46,913 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\udp\broadcastor.py
+2025-02-23 13:40:46,914 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\udp\broadcastor.py
+2025-02-23 13:40:46,975 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\udp\broadcastor.py
+2025-02-23 13:40:47,118 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\udp\broadcastor.py
+2025-02-23 13:40:47,292 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\udp\broadcastor.py
+2025-02-23 13:40:47,434 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\udp\broadcastor.py
+2025-02-23 13:40:47,638 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\udp\broadcastor.py
+2025-02-23 13:40:47,747 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\udp\broadcastor.py
+2025-02-23 13:40:47,857 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\udp\broadcastor.py
+2025-02-24 00:21:13,767 - process - INFO - _udplisten	success
+module: __mp_main__
+path: d:\workbench\remotecontrolsystem\server\start.py
+2025-02-24 00:21:13,778 - process - INFO - _tcplisten	success
+module: __mp_main__
+path: d:\workbench\remotecontrolsystem\server\start.py
+2025-02-24 00:21:14,736 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\udp\broadcastor.py
+2025-02-24 00:21:14,893 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\udp\broadcastor.py
+2025-02-24 00:21:14,893 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\udp\broadcastor.py
+2025-02-24 00:21:14,956 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\udp\broadcastor.py
+2025-02-24 00:21:15,081 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\udp\broadcastor.py
+2025-02-24 00:21:15,300 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\udp\broadcastor.py
+2025-02-24 00:21:15,457 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\udp\broadcastor.py
+2025-02-24 00:21:15,598 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\udp\broadcastor.py
+2025-02-24 00:21:15,739 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\udp\broadcastor.py
+2025-02-24 00:21:15,880 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\udp\broadcastor.py

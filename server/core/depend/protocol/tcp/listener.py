@@ -8,6 +8,9 @@ from projectdesposetool.systool.processing import Process
 
         
 class Listener(TCP):
+    """
+    
+    """
     def settings(self):
         self.sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
         self.sock.settimeout(1)
@@ -22,18 +25,28 @@ class Listener(TCP):
         return sock, addr, data.decode()
 
     def listen(self):
+        """
+            监听器
+        """
         while True:
+            # 接受客户端连接
             conn = self.recv()
-            print(conn)
             if conn:
+                # 创建处理任务
                 task = Process(target=self.__task, args=(conn, ))
                 task.start()
             else:
                 print("ERROR")
-                
+             
     def __task(self, conn):
+        # 任务包装器
+        """
+            解析连接对象
+        """
         sock, addr, data = conn
+        # 格式化连接数据
         event_type, cookie = self._parse(data)
+        # 对不同累心事件进行分流
         self._event_brench(event_type, cookie, data, sock)
         
     def _parse(data):

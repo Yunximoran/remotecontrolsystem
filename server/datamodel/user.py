@@ -5,6 +5,10 @@ from pydantic import BaseModel
 
 
 class Credentils(BaseModel):
+    """
+        登录凭证
+    校验账户和密码
+    """
     account: Annotated[str, None]
     password: Annotated[str, None]
     
