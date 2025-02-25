@@ -5,7 +5,7 @@ from functools import wraps
 from redis import ConnectionError
 
 from ._catch import _BaseCatch
-from ..systool.logger import Logger
+from ..systools.logger import Logger
 
 
 
@@ -21,6 +21,6 @@ class _CatchDatabase(_BaseCatch):
                 self.record(func)
                 return func(*args, **kwargs)
             except ConnectionError:
-                self.__log_record(func, "无法连接Redis")
+                self.record(func, "无法连接Redis", 3)
                 return "无法连接redis"
         return wrapper

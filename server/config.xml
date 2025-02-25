@@ -1,6 +1,5 @@
 <xml version="1.0">
-    <base ip="192.168.31.176" mac="0x201e88f505ba">
-        
+    <base ip="192.168.31.176" mac="20-1E-88-F5-05-B9">
         <connect>
             
             <udp>
@@ -17,16 +16,13 @@
             </tcp>
         </connect>
 
-        
         <performance>
         
             <min_process>5</min_process>
             <max_process>10</max_process>
         </performance>
 
-        
         <redis_config>
-        
             <host>localhost</host>
             <port>6379</port>
             <datas>
@@ -41,10 +37,8 @@
             </datas>
         </redis_config>
 
-        
         <dependencys>
-        
-            <redis>redis-server ./databasetool/redis-service.conf</redis>
+            <redis>redis-server ./databasetool/conf/redis-service.conf</redis>
             <view>npm --prefix view run serve</view>
         </dependencys>
 

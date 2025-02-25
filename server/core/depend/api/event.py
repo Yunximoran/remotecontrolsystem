@@ -5,7 +5,7 @@ from typing import Annotated
 from fastapi import APIRouter
 
 from projectdesposetool import choose_file
-from databasetool import DataBaseManager as DATABASE
+from databasetool import Redis
 from datamodel import WaitDesposeResults
 from datamodel import Software
 from core.depend.control import Control
@@ -21,7 +21,7 @@ tags = ["event"]
 @router.put("/desposedsoftware")
 async def despose_waitdones(res: WaitDesposeResults):
     print("despose waitdone api data:", res.cookie, res.results)
-    DATABASE.hset("waitdone_despose_results", res.cookie, res.results)
+    Redis.hset("waitdone_despose_results", res.cookie, res.results)
 
 # 激活客户端
 @router.put("/wol")
@@ -49,16 +49,16 @@ async def addsoftwarelist(
         },
         "conning": False
     }
-    DATABASE.lpush("softwarelist", json.dumps(software))
+    Redis.lpush("softwarelist", json.dumps(software))
     return {"OK", softwarename}
 
 # 移除软件清单
 @router.put("/popsoftwarelist")
 async def popsoftwarelist(software):
-    softwarelist = DATABASE.lrange("softwarelist")
+    softwarelist = Redis.lrange("softwarelist")
     for i, item in enumerate(softwarelist):
         if re.match(software, item):
-            DATABASE.lpop("softwarelist", i)
+            Redis.lpop("softwarelist", i)
 
     return {"OK", f"POP {software}"}
 

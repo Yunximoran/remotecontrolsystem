@@ -1,6 +1,6 @@
 from fastapi import APIRouter, HTTPException
 
-from databasetool import DataBaseManager as DATABASE
+from databasetool import Redis
 from datamodel import (
     Credentils,
     NewUser
@@ -16,7 +16,7 @@ tags = ["login"]
 async def login(loginform: Credentils):
     credentils = loginform.account
     password = loginform.password
-    accounts_information = DATABASE.hget("accounts", credentils)
+    accounts_information = Redis.hget("accounts", credentils)
     if accounts_information is not None:
         if password == accounts_information['password']:
             return {"start": "OK", "msg": accounts_information}
@@ -29,7 +29,7 @@ async def login(loginform: Credentils):
 @router.post("/registry")
 async def registryaccount(regisform: NewUser):
     # 注册新用户，保存在数据库
-    DATABASE.hset("accounts", regisform.account, regisform.model_dump_json())   
+    Redis.hset("accounts", regisform.account, regisform.model_dump_json())   
     return {
         "account": regisform.account,
         "username": regisform.username

@@ -2,7 +2,7 @@ import inspect
 from typing import Annotated, Callable
 
 
-from ..systool.logger import Logger
+from ..systools.logger import Logger
 
 
 

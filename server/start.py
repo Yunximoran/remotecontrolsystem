@@ -3,10 +3,9 @@ from typing import Tuple, Any, List
 import uvicorn
 
 from core.depend.protocol.tcp import Listener
-from core.depend.protocol.udp import UDP
 from projectdesposetool import CONFIG
 from projectdesposetool.catchtools import Catch
-from projectdesposetool.systool.processing import Process
+from projectdesposetool.systools.processing import Process
 from core.depend.protocol.udp import BroadCastor
 
 
@@ -21,7 +20,7 @@ SERVERADDRESS = (CONFIG.IP, CONFIG.TSPORT)
 LISTENES = 5
 
 # 广播设置常量
-BROADCAST = ("0.0.0.0", CONFIG.UBPORT)                  # 配置UDP广播地址
+BROADCAST = ("0.0.0.0", CONFIG.UBPORT)              # 配置UDP广播地址
 MULTICAST = ("224.25.25.1", CONFIG.UMPORT)          # 配置UDP组播地址
 
 

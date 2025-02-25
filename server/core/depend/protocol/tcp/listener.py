@@ -1,10 +1,10 @@
 import json
 
 from ._prototype import TCP, socket
-from databasetool import DataBaseManager as DATABASE
+from databasetool import Redis
 from projectdesposetool import CONFIG
 from projectdesposetool.catchtools import Catch
-from projectdesposetool.systool.processing import Process
+from projectdesposetool.systools.processing import Process
 
         
 class Listener(TCP):
@@ -36,7 +36,7 @@ class Listener(TCP):
                 task = Process(target=self.__task, args=(conn, ))
                 task.start()
             else:
-                print("ERROR")
+                pass
              
     def __task(self, conn):
         # 任务包装器
@@ -81,11 +81,11 @@ class Listener(TCP):
             服务端保存至redis数据库
             yumo
             """
-            DATABASE.lpush("logs", data)
+            Redis.lpush("logs", data)
 
                       
     def _add_waitdone(self, cookie, msg):
-        DATABASE.hset("waitdones", cookie, msg)
+        Redis.hset("waitdones", cookie, msg)
         """
         前端通过接口返回处理结果，怎么找到对应的client套接字
         """
@@ -94,7 +94,7 @@ class Listener(TCP):
     @Catch.sock
     def _dps_waitdone(self, sock:socket.socket, cookie):
         while True:
-            results: str = DATABASE.hget("waitdone_despose_results", cookie)
+            results: str = Redis.hget("waitdone_despose_results", cookie)
             if results:
                 sock.sendall(results.encode())
                 sock.close()

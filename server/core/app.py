@@ -5,7 +5,6 @@ import uvicorn
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi import FastAPI
 
-from databasetool import DataBaseManager as DB
 from core.depend.api import (
     alter,
     data,

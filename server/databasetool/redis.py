@@ -6,12 +6,16 @@ from redis import StrictRedis
 
 from projectdesposetool import CONFIG
 from projectdesposetool.catchtools import Catch
+from projectdesposetool.catchtools._database import _CatchDatabase
 
 REDIS_CONF = CONFIG.parseConfig("redis_config")
 
+Catch = _CatchDatabase()
 
-
-class DataBaseManager(StrictRedis):
+class _Redis(StrictRedis):
+    """
+        Redis操作模块，只在redis服务启动后可用
+    """
     def __init__(self, *args, **kwargs):
         super().__init__(host=REDIS_CONF['host'], port=REDIS_CONF['port'], db=0, decode_responses=True)
     
@@ -75,4 +79,4 @@ class DataBaseManager(StrictRedis):
 
             
             
-DataBaseManager = DataBaseManager()
+Redis = _Redis()

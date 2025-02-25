@@ -3,13 +3,13 @@ import struct
 import json
 from functools import partial
 
-from projectdesposetool.systool.processing import(
+from projectdesposetool.systools.processing import(
     Pool,
     Process,
     Lock,
     Queue
 )
-from databasetool import DataBaseManager as DATABASE
+from databasetool import Redis
 from core.depend.protocol.tcp import Connector
 
 
@@ -86,13 +86,13 @@ class Control:
             conn = Connector()
             report =conn.send(ip, instruct)
             print("add report", report, type(report))
-            DATABASE.hset("reports", ip, report)
+            Redis.hset("reports", ip, report)
 
         
     def checkconnect(self, toclients, status="true"):
         # 校验client连接状态
         connings = []
-        clients = toclients if toclients != [] else DATABASE.hgetall("client_status")
+        clients = toclients if toclients != [] else Redis.hgetall("client_status")
         print("clients", clients)
         for ip in clients:
             if clients[ip] == status:
@@ -124,22 +124,21 @@ class Control:
             格式化mac码
         """
         # 读取对应ip客户端心跳包数据，获取MAC地址
-        hreart_package = json.loads(DATABASE.hget("hreart_packages", ip))
+        hreart_package = json.loads(Redis.hget("hreart_packages", ip))
         MAC:str = hreart_package["MAC"]
         
         # 校验MAC格式
         if len(MAC) == 12:
-            pass
+            return MAC
         if len(MAC) == 17:
             if MAC.count(":") == 5 or MAC.count("-") == 5:
                 sep = MAC[2]
                 MAC = MAC.replace(sep, '')
+                return MAC
             else:
                 raise ValueError("incorrect MAC format")
         else:
             raise ValueError("incorrect MAC format")
-        
-        return MAC
     
     def create_magic_packet(self, ip) -> bytes:
         """
@@ -149,6 +148,7 @@ class Control:
         data = b'FF' * 6 + (mac * 16).encode()
         print(data, type(data))
         send_data = b''
+        
         for i in range(0, len(data), 2):
             send_data =send_data + struct.pack(b"B", int(data[i: i+2], 16))
         return send_data

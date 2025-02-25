@@ -1,10 +1,18 @@
 import logging
 from logging.handlers import RotatingFileHandler
 import os
+from pathlib import Path
+
+
+WROKDIR = Path.cwd()
+LOGDIR = WROKDIR.joinpath("logs")
+LOGDIR.mkdir(parents=True, exist_ok=True)
+LEVEL = logging.INFO
+IFCONSOLE = False
 
 class Logger:
     CWD = os.getcwd()
-    def __init__(self, name, log_file='.log', level=logging.INFO, max_bytes=10485760, backup_count=5):
+    def __init__(self, name, log_file='.log', level=LEVEL, max_bytes=10485760, backup_count=5):
         """
         name: 日志记录器名称（通常使用模块名__name__）
         log_file: 日志文件名（默认app.log）
@@ -16,17 +24,16 @@ class Logger:
         self.logger.setLevel(level)
         
         # 创建日志目录（如果不存在）
-        log_dir = os.path.join(self.CWD, "logs")
-        os.makedirs(log_dir, exist_ok=True)
-        log_path = os.path.join(log_dir, log_file)
+        log_path = LOGDIR.joinpath(log_file)
+        log_path.touch()
+
+
         
         # 创建日志格式器
         formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
         
-        # 创建控制台处理器
-        console_handler = logging.StreamHandler()
-        console_handler.setFormatter(formatter)
-        self.logger.addHandler(console_handler)
+        if IFCONSOLE:
+            self.addconsole(formatter)
         
         # 创建滚动文件处理器
         file_handler = RotatingFileHandler(
@@ -36,6 +43,12 @@ class Logger:
         )
         file_handler.setFormatter(formatter)
         self.logger.addHandler(file_handler)
+    
+    def addconsole(self, formatter):
+        # 创建控制台处理器
+        console_handler = logging.StreamHandler()
+        console_handler.setFormatter(formatter)
+        self.logger.addHandler(console_handler)
     
     def format_logtext(self, *msgs, **dmsgs):
         """

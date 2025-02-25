@@ -4,8 +4,8 @@ import socket
 from typing import Dict, AnyStr
 
 from ._prototype import UDP
-from projectdesposetool.systool.processing import Process, Value, Lock
-from databasetool import DataBaseManager as DATABASE
+from projectdesposetool.systools.processing import Process, Value, Lock
+from databasetool import Redis
 
 
 RECVSIZE = 1024
@@ -66,8 +66,6 @@ class BroadCastor(UDP):
     
     def _task(self):
         # 接受广播数据
-        print("create a task")
-        
         # recvfrom 会阻塞进程，直到接收到数据
         res = self.sock.recvfrom(RECVSIZE)
         _downvalue()
@@ -77,8 +75,8 @@ class BroadCastor(UDP):
         ip = json.loads(data)['ip']
         
         # 保存/更新 广播数据
-        DATABASE.hset("client_status", ip, "true")
-        DATABASE.hset("heart_packages", mapping={ip: data}) # ip地址和心跳包数据
+        Redis.hset("client_status", ip, "true")
+        Redis.hset("heart_packages", mapping={ip: data}) # ip地址和心跳包数据
         
         # 启动/更新 计时器
         try:
@@ -102,8 +100,8 @@ class BroadCastor(UDP):
             删除计时器
         """
         time.sleep(3)
-        DATABASE.hset("client_status", ip, "false")
-        DATABASE.hdel("heart_packages", ip)
+        Redis.hset("client_status", ip, "false")
+        Redis.hdel("heart_packages", ip)
         del self.timers[ip]
         print(f"The IP {ip} user is disconnected")     
         

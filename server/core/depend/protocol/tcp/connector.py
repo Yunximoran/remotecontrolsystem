@@ -1,10 +1,10 @@
 import json
 
 from ._prototype import TCP, socket
-from databasetool import DataBaseManager as DATABASE
+from databasetool import Redis
 from projectdesposetool import CONFIG
 from projectdesposetool.catchtools import Catch
-from projectdesposetool.systool.processing import Process
+from projectdesposetool.systools.processing import Process
 
 
 class Connector(TCP):

@@ -3,7 +3,7 @@ from socket import error as SockError
 from functools import wraps
 
 from ._catch import _BaseCatch
-from ..systool.logger import Logger
+from ..systools.logger import Logger
 
 
 class _CatchSock(_BaseCatch):

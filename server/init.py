@@ -6,18 +6,21 @@
 """
 
 import platform
-import socket
+import pathlib
 import uuid
 from xml.etree import ElementTree as et
 
-from projectdesposetool.systool.inet import choosenet
+from projectdesposetool.systools import NetWork
 
+
+NET = NetWork("WLAN")
 SYSTEM_NAME = platform.system()                 # 操作系统名称
 SYSTEM_VERSION = platform.version()             # 操作系统版本
 SYSTEM_ARCHITECTURE = platform.architecture()   # 操作系统位数
-IP = choosenet("WLAN")["IPv4"]
-MAC = hex(uuid.getnode())  
+IP = NET.IPv4
+MAC = NET.mac
 XMLFILE = "config.xml"
+WORKDIR = pathlib.Path.cwd()
 
 class Init:
     def __init__(self):

@@ -3,6 +3,10 @@ import tkinter
 from tkinter import filedialog
 import os
 
+from .network import NetWork
+from .processing import Pool, Process
+from .logger import Logger
+from . resolver import Resolver
 
 def choose_file():
     window = tkinter.Tk()

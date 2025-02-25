@@ -1,7 +1,7 @@
 from functools import wraps, partial
 
 from ._catch import _BaseCatch
-from ..systool.logger import Logger
+from ..systools.logger import Logger
 
 
 class _CatchProcess(_BaseCatch):
