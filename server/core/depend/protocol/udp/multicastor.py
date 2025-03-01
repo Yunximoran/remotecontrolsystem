@@ -2,7 +2,7 @@ import struct
 from ._prototype import UDP, socket
 
 
-from projectdesposetool import CONFIG
+from dispose import CONFIG
 
 MULTICAST = ("224.25.25.1", CONFIG.UMPORT)
 

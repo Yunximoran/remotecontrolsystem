@@ -2,9 +2,9 @@ import json
 
 from ._prototype import TCP, socket
 from databasetool import Redis
-from projectdesposetool import CONFIG
-from projectdesposetool.catchtools import Catch
-from projectdesposetool.systools.processing import Process
+from dispose import CONFIG
+from dispose import Catch
+from dispose.sys.processing import Process
 
 
 class Connector(TCP):

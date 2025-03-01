@@ -1,5 +1,5 @@
 import socket
-from projectdesposetool import CONFIG
+from dispose import CONFIG
 
 
 

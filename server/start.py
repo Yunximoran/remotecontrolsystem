@@ -3,14 +3,18 @@ from typing import Tuple, Any, List
 import uvicorn
 
 from core.depend.protocol.tcp import Listener
-from projectdesposetool import CONFIG
-from projectdesposetool.catchtools import Catch
-from projectdesposetool.systools.processing import Process
 from core.depend.protocol.udp import BroadCastor
+
+from dispose.sys.processing import Process
+
+from dispose import CONFIG
+
+
+
 
 
 # FASTAPI设置常量
-FASTAPP = "core.app:APP"
+FASTAPP = "core:app"
 FASTHOST = "127.0.0.1"
 FASTPORT = 8000
 ISRELOAD = True

@@ -1,14 +1,13 @@
 <xml version="1.0">
     <base ip="192.168.31.176" mac="20-1E-88-F5-05-B9">
         <connect>
-            
             <udp>
                 <client>8084</client>
                 <server>8081</server>
                 <broad>8082</broad>
                 <multi>8083</multi>       
             </udp>
-            
+    
             <tcp>
                 <server>9095</server>
                 <client>8085</client>
