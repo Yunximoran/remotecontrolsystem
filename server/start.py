@@ -5,27 +5,25 @@ import uvicorn
 from core.depend.protocol.tcp import Listener
 from core.depend.protocol.udp import BroadCastor
 
-from dispose.sys.processing import Process
+from lib.sys.processing import Process
+from lib import Resolver
 
-from dispose import CONFIG
-
-
-
-
+resolver = Resolver()
 
 # FASTAPI设置常量
-FASTAPP = "core:app"
-FASTHOST = "127.0.0.1"
-FASTPORT = 8000
-ISRELOAD = True
+FASTAPP = resolver("server", "app")
+FASTHOST = resolver("server", "host")
+FASTPORT = resolver("server", "port")
+ISRELOAD = resolver("server", "reload")
 
 # 监听设置常量
-SERVERADDRESS = (CONFIG.IP, CONFIG.TSPORT)
-LISTENES = 5
+SERVERADDRESS =(resolver("network", "ip"), resolver("ports", "tcp", "server"))
+LISTENES = resolver("performance", "tcp-listenes")
+
 
 # 广播设置常量
-BROADCAST = ("0.0.0.0", CONFIG.UBPORT)              # 配置UDP广播地址
-MULTICAST = ("224.25.25.1", CONFIG.UMPORT)          # 配置UDP组播地址
+BROADCAST = ("0.0.0.0", resolver("ports", "udp", "broad"))              # 配置UDP广播地址
+MULTICAST = ("224.25.25.1", resolver("ports", "udp", "multi"))          # 配置UDP组播地址
 
 
 class Start:

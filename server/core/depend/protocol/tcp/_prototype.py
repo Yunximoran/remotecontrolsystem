@@ -1,5 +1,4 @@
 import socket
-from dispose import CONFIG
 
 
 

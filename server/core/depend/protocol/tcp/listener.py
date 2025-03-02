@@ -2,9 +2,8 @@ import json
 
 from ._prototype import TCP, socket
 from databasetool import Redis
-from dispose import CONFIG
-from dispose import CatchSock
-from dispose.sys.processing import Process
+from lib import CatchSock
+from lib.sys.processing import Process
 
 Catch = CatchSock()
 class Listener(TCP):

@@ -1,10 +1,10 @@
 import struct
 from ._prototype import UDP, socket
 
+from lib import Resolver
 
-from dispose import CONFIG
-
-MULTICAST = ("224.25.25.1", CONFIG.UMPORT)
+resolver = Resolver()
+MULTICAST = ("224.25.25.1", resolver("ports", "udp", "multi"))
 
 
         

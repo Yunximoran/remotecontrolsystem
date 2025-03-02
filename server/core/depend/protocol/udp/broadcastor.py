@@ -4,7 +4,7 @@ import socket
 from typing import Dict, AnyStr
 
 from ._prototype import UDP
-from dispose.sys.processing import Process, Value, Lock
+from lib.sys.processing import Process, Value, Lock
 from databasetool import Redis
 
 

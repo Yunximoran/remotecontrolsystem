@@ -4,7 +4,7 @@ import json
 from typing import Annotated
 from fastapi import APIRouter
 
-from dispose.sys.ui.explorer import choose_file
+from lib.sys.ui.explorer import choose_file
 from databasetool import Redis
 from datamodel import WaitDesposeResults
 from datamodel import Software

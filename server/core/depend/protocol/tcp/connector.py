@@ -2,11 +2,12 @@ import json
 
 from ._prototype import TCP, socket
 from databasetool import Redis
-from dispose import CONFIG
-from dispose import Catch
-from dispose.sys.processing import Process
+from lib import Catch
+from lib.sys.processing import Process
+from lib import Resolver
 
-
+resolver = Resolver()
+TCPORT = resolver("ports", "tcp", "server")
 class Connector(TCP):
     
     def settings(self):
@@ -26,13 +27,13 @@ class Connector(TCP):
     
     @catchtimeout
     def send(self, ip, data: str):
-        self.sock.connect((ip, CONFIG.TCPORT))
+        self.sock.connect((ip, TCPORT))
         self.sock.sendall(data.encode())
         
 
     @catchtimeout
     def sendfile(self, ip,file):
-        self.sock.connect((ip, CONFIG.TCPORT))
+        self.sock.connect((ip, TCPORT))
         self.sock.sendall(file[0])
         self.sock.sendfile(file[1])
         

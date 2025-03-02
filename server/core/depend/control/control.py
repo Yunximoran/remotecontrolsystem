@@ -3,7 +3,7 @@ import struct
 import json
 from functools import partial
 
-from dispose.sys.processing import(
+from lib.sys.processing import(
     Pool,
     Process,
     Lock,
