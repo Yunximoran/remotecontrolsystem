@@ -532,3 +532,12 @@ path: d:\workbench\remotecontrolsystem\server\start.py
 2025-03-02 14:41:51,761 - process - INFO - _udplisten	success
 module: __mp_main__
 path: d:\workbench\remotecontrolsystem\server\start.py
+2025-03-02 14:45:45,406 - process - INFO - _udplisten	success
+module: __mp_main__
+path: d:\workbench\remotecontrolsystem\server\start.py
+2025-03-02 14:45:45,408 - process - INFO - _tcplisten	success
+module: __mp_main__
+path: d:\workbench\remotecontrolsystem\server\start.py
+2025-03-02 14:45:47,399 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+path: d:\workbench\remotecontrolsystem\server\core\depend\protocol\udp\broadcastor.py
