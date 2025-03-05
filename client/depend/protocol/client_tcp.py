@@ -1,8 +1,15 @@
 import socket
 
-from despose import CONFIG
+from lib import Resolver
+
+resolver = Resolver()
 TIMEOUT = 1
-BYTRSIZE = 1024
+RECVSIZE = resolver("sock", "recv-size")
+IP = resolver("network", "ip")
+SERVERIP = '192.168.6.1'
+TCPORT = resolver("ports", "tcp", "client")
+TSPORT = resolver("ports", "tcp", "server")
+
 class TCP:
     def __init__(self):
         self.sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -11,17 +18,17 @@ class TCP:
     def settings(self):
         pass
     
-    def send(self, data):
+    def send(self, data:str):
         self.sock.sendall(data.encode())
     
     def recv(self):
-        return self.sock.recv(BYTRSIZE)
+        return self.sock.recv(RECVSIZE)
 
     def close(self):
         self.sock.close()
     
 class TCPListen(TCP):
-    def __init__(self, ip=CONFIG.IP, port=CONFIG.TCPORT):
+    def __init__(self, ip=IP, port=TCPORT):
         super().__init__()
         self.address = (ip, port)
         self.sock.bind(self.address)
@@ -55,7 +62,7 @@ class TCPConnect(TCP):
         super().__init__()
         
     def send(self, data):
-        self.sock.connect(('192.168.6.1', 9095))
+        self.sock.connect((SERVERIP, TSPORT))
         self.sock.sendall(data.encode())
         
 

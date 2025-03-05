@@ -1,2 +1,2 @@
-from .serve import SelectServe, ListenServe, ConnectServe, BaseServe
+from .serve import SelectServe, ListenServe, ConnectServe
 from .system import SYSTEM

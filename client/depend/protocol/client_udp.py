@@ -1,12 +1,11 @@
 import socket
 import struct
-import json
 
-from despose import CONFIG
+from lib import Resolver
 
-
-BROADCAST = ("<broadcast>", CONFIG.UBPORT)              # 广播地址
-MULTICAST = ("224.25.25.1", CONFIG.UMPORT)                  # 组播地址
+resolver = Resolver()
+BROADCAST = ("<broadcast>", resolver("ports", "udp", "broad"))              # 广播地址
+MULTICAST = ("224.25.25.1", resolver("ports", "udp", "multi"))              # 组播地址
 
 class UDP:
     def __init__(self):

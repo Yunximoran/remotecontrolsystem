@@ -5,47 +5,60 @@
 """
 
 # 客户端代码
-import os
 import json
 import multiprocessing
 
-from depend import ListenServe, SelectServe, ConnectServe, BaseServe
-from despose import CONFIG
-from despose import build_directory
-     
+from depend.serve import ListenServe, SelectServe, ConnectServe
+from depend.path import *
 class Client:
-    SERVES: list[multiprocessing.Process] = [
-        multiprocessing.Process(target=SelectServe),
-        multiprocessing.Process(target=ConnectServe),
-        multiprocessing.Process(target=ListenServe)
+    # 注册服务
+    servers: list[multiprocessing.Process] = [
+        multiprocessing.Process(target=SelectServe),    # 选中并执行服务： 接受instuct，并执行
+        multiprocessing.Process(target=ConnectServe),   # 连接服务： 连接服务端，定期发送软件清单
+        multiprocessing.Process(target=ListenServe)     # 监听服务： 接受服务端，处理待办事件
     ]
     def __init__(self):
         self.build()
         self.start_server()
         
     def build(self):
-        build_directory(CONFIG.LOCAL_DIR_DATA)
-        build_directory(CONFIG.LOCAL_DIR_LOGS)
-        build_directory(CONFIG.LOCAL_DIR_SOFTWARES)
-        build_directory(CONFIG.LOCAL_DIR_FILES)
+        # 初始化项目结构
+        # build_directory(LOCAL_DIR_DATA)      # 创建Data目录
+        # build_directory(LOCAL_DIR_LOGS)      # 创建LOGS目录
+        # build_directory(LOCAL_DIR_SOFT)      # 创建SOFT目录
+        # build_directory(LOCAL_DIR_FILE)      # 创建FILE目录
+        
+        if not LOCAL_DIR_DATA.exists():
+            LOCAL_DIR_DATA.mkdir(parents=True)
+        
+        if not LOCAL_DIR_LOGS.exists():
+            LOCAL_DIR_LOGS.mkdir(parents=True)
+            
+        if not LOCAL_DIR_SOFT.exists():
+            LOCAL_DIR_SOFT.mkdir(parents=True)
+            
+        if not LOCAL_DIR_FILE.exists():
+            LOCAL_DIR_FILE.mkdir(parents=True)
    
-        if not os.path.exists(CONFIG.PATH_MAP_SOFTWARES):
+        if not PATH_MAP_SOFTWARES.exists():
+            # 创建软件清单文件
             print("make softwares.json file")
-            with open(CONFIG.PATH_MAP_SOFTWARES, 'w', encoding="utf-8") as f:
+            with open(PATH_MAP_SOFTWARES, 'w', encoding="utf-8") as f:
                 json.dump([], f, ensure_ascii=False, indent=4)
 
-        if not os.path.exists(CONFIG.PATH_LOG_SHELLS):
+        if not PATH_LOG_SHELLS.exists():
+            # 创建shell文件，保存历史shell
             print("make shell.json file")
-            with open(CONFIG.PATH_LOG_SHELLS, 'w', encoding="utf-8") as f:
+            with open(PATH_LOG_SHELLS, 'w', encoding="utf-8") as f:
                 json.dump([], f, ensure_ascii=False, indent=4)
     
     
     def start_server(self):
-        for serve in self.SERVES:
+        # 启动服务
+        for serve in self.servers:
             serve.start()
-    
-            
-        for serve in self.SERVES:
+
+        for serve in self.servers:
             serve.join()
             
 if __name__ == "__main__":
