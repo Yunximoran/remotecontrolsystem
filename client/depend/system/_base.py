@@ -13,24 +13,28 @@ import string
 from collections.abc import Iterable
 from xml.etree import ElementTree as et
 from typing import Tuple
-        
+import psutil
+from psutil import NoSuchProcess, AccessDenied
 class __BaseSystem:
     # 获取工作目录
     CWDIR = os.getcwd()
     # 运行文件
-    DATAPATH = {
-        # 路径依赖
-        "softwares": os.path.join(CWDIR, r"local\data\softwares.json"),
-        "root": None,
-        "logs":{
-            "msg": "local\logs\msg.log",
-            "err": "local\logs\err.log",
-        }
-    }
+
+    _disks = []
     
     
     PID:dict[str, subprocess.Popen] = {}  # 保存运行进程
-    
+
+    def _check_soft_status(self, alias, path):
+        # 遍历系统进程池
+        for process in psutil.process_iter():
+            # 匹配项目
+            if re.match(alias, process.name()):
+                # 匹配名称相同的进程
+                if process.exe() == path:
+                    yield process
+
+
     def init(self):
         pass
     
@@ -49,7 +53,7 @@ class __BaseSystem:
         # 启动软件
         pass
     
-    def close_software(self, software):
+    def close_software(self, software, path):
         # 关闭软件
         pass
     
@@ -78,7 +82,12 @@ class __BaseSystem:
         # 查找文件
         results = []
         if base is None:
-            base = self.DATAPATH['root']
+            # 默认全盘搜索
+            base = self._disks
+        elif base not in self._disks:
+            # 校验非法磁盘
+            raise "disk is not exist"
+        
         for root, dirs, files in os.walk(base):
             for file in files:
                 if file == check_object:
@@ -89,15 +98,11 @@ class __BaseSystem:
                     
         return results
     
-    def executor(self, args, label=None):
+    def executor(self, args, *, cwd=None):
         """
         :param label: PID标识
         :param args: 封装的shell指令列表
         :return report: 返回报文, 用于向服务端汇报执行结果
-        
-        除了软件清单，其他指令可能存在创建重复label进程
-            如：同时关闭多个软件
-            规定更详细的label close ？ softwares
         """
         process= subprocess.Popen(
                 args=args,
@@ -105,13 +110,10 @@ class __BaseSystem:
                 text=True,
                 stdin = subprocess.PIPE,
                 stdout=subprocess.PIPE,
-                stderr=subprocess.PIPE
+                stderr=subprocess.PIPE,
+                cwd=cwd
             )
         msg, err = process.communicate()
-        
-        if label is not None:
-            # 软件名称
-            self.PID[label] = process
         return  msg, err
     
         
@@ -126,7 +128,7 @@ class __BaseSystem:
         }, ensure_ascii=False)   
     
     
-    def build_hyperlink(self, frompath):
+    def build_hyperlink(self, alias, frompath):
         pass
     
     def uproot(self):

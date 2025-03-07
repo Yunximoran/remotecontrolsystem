@@ -22,12 +22,6 @@ class Client:
         self.start_server()
         
     def build(self):
-        # 初始化项目结构
-        # build_directory(LOCAL_DIR_DATA)      # 创建Data目录
-        # build_directory(LOCAL_DIR_LOGS)      # 创建LOGS目录
-        # build_directory(LOCAL_DIR_SOFT)      # 创建SOFT目录
-        # build_directory(LOCAL_DIR_FILE)      # 创建FILE目录
-        
         if not LOCAL_DIR_DATA.exists():
             LOCAL_DIR_DATA.mkdir(parents=True)
         

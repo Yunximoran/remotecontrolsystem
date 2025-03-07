@@ -1,7 +1,6 @@
 import socket
 
 from lib import Resolver
-
 resolver = Resolver()
 TIMEOUT = 1
 RECVSIZE = resolver("sock", "recv-size")
@@ -62,6 +61,7 @@ class TCPConnect(TCP):
         super().__init__()
         
     def send(self, data):
+        # TSPORT: 9095
         self.sock.connect((SERVERIP, TSPORT))
         self.sock.sendall(data.encode())
         

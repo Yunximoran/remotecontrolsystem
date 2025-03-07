@@ -1,6 +1,10 @@
 from ._base import *
 from depend.system import SYSTEM
 
+
+
+logger = Logger("Select", log_file="select.log")
+
 class SelectServe(BaseServe):
 
     def serve(self):
@@ -19,23 +23,31 @@ class SelectServe(BaseServe):
             "instruct: "" | None
         }
         """
+        # 启动TCP家庭
         tcp_conn =  TCPListen()
         while True:
-            try:             
+            try: 
+                # 等待服务器发送shell指令            
                 conn, data = tcp_conn.recv()
                 print("Select Serve Recv:", data)
+                
+                # 尝试使用json解释数据，如果无法解析则
                 try:
+                    # 解析TCP数据，转化成字典对象
                     instruct = json.loads(data) # type: dict
-                    print("exec instruct:", instruct)
+                    logger.record(1, f"exec instruct:{instruct}")
+                    # 多进程启动
                     with multiprocessing.Pool() as pool:
                         res_execute = pool.apply_async(self.execute_instruct, args=(instruct, ),
                             callback=lambda report: self.report_results(conn, report))
                         pool.apply_async(self.history, args=(instruct, ))
                         print(res_execute.get())
                 except Exception:
-                    print("exec download:", instruct)
+                    # 如果json解析异常，可能发送的是文件
+                    # download 是向服务器文件下载至client
+                    logger.record(1, f"exec download: {data}")
                     multiprocessing.Process(self.savefile, args=(data, conn)).start()
-
+                    conn.close()
                     
             except TimeoutError:
                 pass
@@ -59,29 +71,32 @@ class SelectServe(BaseServe):
 
     def execute_instruct(self, instruct:dict[str, str]):
         label = instruct['name']      # label 标记指令用途
-        instruct = instruct['shell'] # shell 实际执行语句
-        if label == "close":
+        instruct = instruct['shell']  # shell 实际执行语句
+        if label == "close": # OK
             report = SYSTEM.close()
             
-        if label == "close -s":
-            report = SYSTEM.close_software()
+        elif label == "close -s":
+            # instruct == software name
+            report = SYSTEM.close_software(instruct)
             
-        if label == "restart":
+        elif label == "restart": # OK
             report = SYSTEM.restart()
             
-        if label == "start -s":
-            report = SYSTEM.start_software()
+        elif label == "start -s":
+            # instruct == software name
+            report = SYSTEM.start_software(instruct)
             
-        if label == "wget":
-            report = SYSTEM.wget(instruct)
+        elif label == "wget":
+            report = SYSTEM.wget()
             
-        if label == "compress":
+        elif label == "compress":
             report = SYSTEM.compress()
             
-        if label == "uncompress":
+        elif label == "uncompress":
             report = SYSTEM.uncompress()
-        
-        report = SYSTEM.executor(instruct)
+            
+        else:
+            report = SYSTEM.executor(instruct)
         return report
     
          

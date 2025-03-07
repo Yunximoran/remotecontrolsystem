@@ -1,6 +1,7 @@
 from .init.resolver import Resolver
 from .manager import Manager
 from .catch import *
+from .path import *
 
 CatchSock = _CatchSock
 CatchDataBase = _CatchDataBase

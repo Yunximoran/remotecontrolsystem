@@ -55,7 +55,10 @@ class _Resolver:
     
     def tohtml(self, node:Element) -> AnyStr:
         # 获取配置文件原始文档
-        return self.__encoding(et.tostring(node)) 
+        return self.__encoding(et.tostring(node))
+    
+    def __struct_options(self,  node:Element):
+        pass
     
     def __list_options(self, node:Element) -> List[AnyStr]:
         # 解析列表类型配置

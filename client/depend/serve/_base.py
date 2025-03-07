@@ -4,7 +4,9 @@ import os
 import multiprocessing
 
 
+
 from lib import Resolver
+from lib.sys import Logger
 from depend.protocol import TCPListen, TCPConnect
 from depend.protocol import BroadCast, MultiCast
 from depend.path import (
