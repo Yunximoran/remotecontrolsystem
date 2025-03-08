@@ -1,52 +1,63 @@
 import json
+import time
+from typing import Dict, Tuple, AnyStr
 
 from ._prototype import TCP, socket
-from databasetool import Redis
+from gloabl import DB
 from lib import CatchSock
-from lib.sys.processing import Process
+from lib.sys.processing import MultiProcess
+from lib import Resolver
 
-Catch = CatchSock()
+resolver = Resolver()
+catch = CatchSock()
+
+ENCODING = resolver("project", "encoding")
+RECVSIZE = resolver("sock", "recv-size")
+DELAY = resolver("preformance", "while-delaytime")
+
 class Listener(TCP):
-    """
-    
-    """
     def settings(self):
         self.sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
         self.sock.settimeout(1)
-        # self.sock.setblocking(1)  # 显式设置为阻塞模式
         
-    @Catch.timeout
-    def recv(self):
+    @catch.timeout
+    def recv(self, isblock=False) -> Dict[AnyStr, Tuple[socket.socket, AnyStr]]:
         sock, addr = self.sock.accept()
-        sock.setblocking(1)  # 设置客户端socket为阻塞模式
-        # 使用新接受的客户端socket进行接收操作
-        data = sock.recv(1024)
-        return sock, addr, data.decode()
+        # 是否需要阻塞，客户端连接
+        sock.setblocking(1) if isblock else None 
+
+        # 格式化TCP数据
+        data = sock.recv(RECVSIZE)
+        return sock, addr, sock
 
     def listen(self):
         """
-            监听器
+            TCP监听器
+        监听来自客户端的TCP连接
+        主要接受reports, 
         """
         while True:
             # 接受客户端连接
-            conn = self.recv()
-            if conn:
-                # 创建处理任务
-                task = Process(target=self.__task, args=(conn, ))
-                task.start()
+            conn = self.recv(isblock=False)
+            if conn is False:
+                continue
             else:
-                pass
+                task = MultiProcess(target=self.__task, args=(conn, ))
+                task.start()
+
              
-    def __task(self, conn):
+    def __task(self, conn: Dict[AnyStr, Tuple[socket.socket, AnyStr]]):
         # 任务包装器
         """
             解析连接对象
         """
-        sock, addr, data = conn
-        # 格式化连接数据
-        event_type, cookie = self._parse(data)
-        # 对不同累心事件进行分流
-        self._event_brench(event_type, cookie, data, sock)
+        sock, _, data = conn
+        
+        # 解析TCP数据，获取事件类型和cookie
+        type, cookie = self._parse(data)
+        
+        # 事件分流
+        self._event_brench(type, cookie, sock, data)
         
     def _parse(data):
         """
@@ -58,47 +69,48 @@ class Listener(TCP):
         cookie = msg['cookie']
         return event_type, cookie
 
-    def _event_brench(self, t, cookie, data, sock):
+    def _event_brench(self, type, cookie, sock, data):
         """
             事件分支
         区分不同类型事件，执行对应事件
         """
-        if t == "instruct":
+        if type == "instruct":
             pass
                 
-        if t == "software":
-            """
-                软件事件
-            """
+        if type == "software":
+            # 添加待办事件， 将事件标识和事件信息写入redis， 发送客户端，等待客户端处理
             self._add_waitdone(cookie, data)
-            self._dps_waitdone(cookie, sock)          
+            
+            # 等待处理待办事件，定期搜索事件标识，如果找到，获取处理结果，返回客户端，关闭连接
+            is_OK = self._dps_waitdone(cookie, sock)
+            if not is_OK:
+                # 在这里写入日志
+                # 删除待办事项
+                pass      
                 
-        if t == "report":
-            """
-                获取汇报结果
-            客户端控制指令执行结果返回服务端
-            服务端保存至redis数据库
-            yumo
-            """
-            Redis.lpush("logs", data)
+        if type == "report":
+            # 将汇报结果保存数据库，执行日志
+            DB.lpush("logs", data)
 
                       
-    def _add_waitdone(self, cookie, msg):
-        Redis.hset("waitdones", cookie, msg)
-        """
-        前端通过接口返回处理结果，怎么找到对应的client套接字
-        """
+    def _add_waitdone(self, cookie, data):
+        DB.hset("waitdones", cookie, data)
         return cookie
     
-    @Catch.sock
+    
+    @catch.checksockconning
     def _dps_waitdone(self, sock:socket.socket, cookie):
         while True:
-            results: str = Redis.hget("waitdone_despose_results", cookie)
+            if DB.hget("waitdones", cookie):
+                # 校验待办事项是否被删除
+                break
+
+            results: str = DB.hget("waitdone_despose_results", cookie)
             if results:
                 sock.sendall(results.encode())
                 sock.close()
-                break
+                return True
+            
+            time.sleep(DELAY)
+        return False
 
-
-if __name__ == "__main__":
-    pass

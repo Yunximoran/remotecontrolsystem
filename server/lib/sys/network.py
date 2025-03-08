@@ -3,18 +3,20 @@ import struct
 
 
 class __NetWorkTools:
-    def create_magic_packet(self, mac) -> bytes:
+    @staticmethod
+    def create_magic_packet(mac) -> bytes:
         """
             通过mac创建唤醒魔术包
         """
-        mac = self.formatmac(mac)
+        mac = __NetWorkTools.formatmac(mac)
         data = b"FF" * 6 + (mac * 16).encode()
         res = b""
         for i in range(0, len(data), 2):
             res =  res + struct.pack("B", int(data[i: i+2], 16))
         return res
     
-    def formatmac(self, mac: str) -> str:
+    @staticmethod
+    def formatmac(mac: str) -> str:
         if len(mac) == 12:
             return mac
         elif len(mac) ==17:
@@ -56,7 +58,7 @@ class NetWork(__NetWorkTools):
                     net["IPv6"] = address.address
                 elif address.family.name.startswith('AF_INET'):
                     net["IPv4"] = address.address
-                elif address.family.name == 'AF_LINK':
+                elif address.family.name.startswith('AF_LINK'):
                     net["mac"] = address.address
             result[interface_name] = net
         return result

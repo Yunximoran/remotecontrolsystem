@@ -5,7 +5,7 @@ import uvicorn
 from core.depend.protocol.tcp import Listener
 from core.depend.protocol.udp import BroadCastor
 
-from lib.sys.processing import Process
+from lib.sys.processing import MultiProcess, Manager
 from lib import Resolver
 
 resolver = Resolver()
@@ -18,7 +18,7 @@ ISRELOAD = resolver("server", "reload")
 
 # 监听设置常量
 SERVERADDRESS =(resolver("network", "ip"), resolver("ports", "tcp", "server"))
-LISTENES = resolver("performance", "tcp-listenes")
+LISTENES = resolver("sock", "tcp", "listenes")
 
 
 # 广播设置常量
@@ -27,7 +27,7 @@ MULTICAST = ("224.25.25.1", resolver("ports", "udp", "multi"))          # 配置
 
 
 class Start:
-    Tasks: List[Process] = []
+    Tasks: List[MultiProcess] = []
     def __init__(self) -> None:
         self.__registry((
             self._tcplisten,
@@ -47,7 +47,7 @@ class Start:
     def __registry(self, tasks: Tuple[Any]):
         # 注册依赖任务 
         for task in tasks:
-            self.Tasks.append(Process(target=task))
+            self.Tasks.append(MultiProcess(target=task))
 
     def __starttasks(self):
         for server in self.Tasks:

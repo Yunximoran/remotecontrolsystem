@@ -1,5 +1,5 @@
 import json
-
+from typing import List, AnyStr
 from fastapi import APIRouter
 
 from datamodel import ShellList, Software
@@ -18,20 +18,22 @@ prefix = "/server/send"
 tags = ["send"]
 
 
-@router.post("/instruct")         # 发送shell指令
-async def send_control_shell(shell_list: list[ShellList], toclients: list[str] = []):
+@router.post("/instruct") 
+async def send_control_shell(shell_list: List[ShellList], toclients: List):
     """
         发送控制指令
-    shell_list: 指令列表
+    shell_list: 指令列表 
     toclients: 目标地址
     """
     try:
         # 解析请求体
         instructs = [item.model_dump_json() for item in shell_list]
+        print("step 1")
         # 发送控制指令
         controlor.sendtoclient(toclients, instructs=instructs) 
         return {"OK": "instructions have been sent to the client"}
-    except AttributeError as e:
+    except Exception as e:
+        print("Step: error 1")
         return {"ERROR": e}
     
 

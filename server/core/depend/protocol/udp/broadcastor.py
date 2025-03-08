@@ -1,34 +1,35 @@
 import json
 import time
 import socket
-from typing import Dict, AnyStr
+from typing import Dict
 
-from ._prototype import UDP
-from lib.sys.processing import Process, Value, Lock
-from databasetool import Redis
+from core.depend.protocol.udp._prototype import UDP
+from lib.sys.processing import MultiProcess, Value, Lock, Array, Queue, Manager
+from lib import Resolver
+from lib.sys import Logger
+from gloabl import DB
 
 
-RECVSIZE = 1024
+tasknum = Value("i", 0, lock=Lock())
+logger = Logger("udp", "udp.log")
+resolver = Resolver()
+RECVSIZE = resolver("sock", "recv-size")
 MAXTASKS = 10
-NOWTASKS = Value("i", 0)
 
-lock = Lock()
 
-def _readvalue():
-    lock.acquire()
-    value = NOWTASKS.value
-    lock.release()
-    return value
 
-def _addvalue():
-    lock.acquire()
-    NOWTASKS.value += 1
-    lock.release()
-    
-def _downvalue():
-    lock.acquire()
-    NOWTASKS.value -= 1
-    lock.release()
+
+
+def _timer(ip):
+    size = 0
+    while size < 3:
+        time.sleep(1)
+        size += 1
+        DB.hget(ip, "size")
+    time.sleep(3)
+    DB.hset("client_status", ip, "false")
+    DB.hdel("heart_packages", ip)
+    logger.record(1, f"The IP {ip} user is disconnected")
 
 class BroadCastor(UDP):
     """
@@ -38,7 +39,7 @@ class BroadCastor(UDP):
     task:
         注册每次接收到广播的任务
     """
-    timers: Dict[AnyStr, Process]= {}
+    timers: Dict[str, MultiProcess] = {}  # 使用Manager共享字典
     def settings(self):
         self.sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
         self.sock.setsockopt(socket.SOL_SOCKET, socket.SO_BROADCAST, 1)
@@ -48,61 +49,35 @@ class BroadCastor(UDP):
         """
             注册监听任务
         """
+        logger.record(1, "UDP Listening")
         while True:
-            nowtasks = _readvalue()
-            if nowtasks < MAXTASKS:
-                Process(target=self._task, args=()).start()
-                _addvalue()
+            if tasknum.value < MAXTASKS:
+                task = MultiProcess(target=self._task, args=(tasknum,))
+                task.start()
+                tasknum.value += 1
+
     
-    def _uptasks(self, isadd=True):
-        lock.acquire()
-        NOWTASKS.value += 1
-        lock.release()
-    
-    def _downtask(self):
-        lock.acquire()
-        NOWTASKS.value -= 1
-        lock.release()
-    
-    def _task(self):
+    def _task(self, nowtasks):
         # 接受广播数据
         # recvfrom 会阻塞进程，直到接收到数据
         res = self.sock.recvfrom(RECVSIZE)
-        _downvalue()
+        nowtasks.value -= 1
+
         
         # 解析广播数据
         data = res[0].decode("utf-8")
         ip = json.loads(data)['ip']
+        logger.record(1, f"conning for client: {ip}")
         
         # 保存/更新 广播数据
-        Redis.hset("client_status", ip, "true")
-        Redis.hset("heart_packages", mapping={ip: data}) # ip地址和心跳包数据
+        DB.hset(ip, mapping={
+            "status": "true",
+            "heart_packages": data,
+            "size": 3
+        })
+        DB.expire(ip, 3)
         
-        # 启动/更新 计时器
-        try:
-            timer = self.timers[ip]
-            if timer.is_alive():
-                # 如果计时进程仍在运行，立即停止
-                timer.terminate()
-            
-            # 创建新的计时进程
-            self.timers[ip] = Process(target=self.__timer, args=(ip, ))
-        except KeyError:
-            # 与ip对应的计时器不在字典中，创建他
-        
-            self.timers[ip] = Process(target=self.__timer, args=(ip, ))
+        DB.hset("client_status", ip, "true")
+        DB.hset("heart_packages", mapping={ip: data}) # ip地址和心跳包数据
 
         
-    def __timer(self, ip):
-        # 计时器
-        """
-            超过3秒没有更新心跳包关闭连接
-            删除计时器
-        """
-        time.sleep(3)
-        Redis.hset("client_status", ip, "false")
-        Redis.hdel("heart_packages", ip)
-        del self.timers[ip]
-        print(f"The IP {ip} user is disconnected")     
-        
-            

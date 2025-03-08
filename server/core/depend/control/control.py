@@ -4,27 +4,42 @@ import json
 from functools import partial
 
 from lib.sys.processing import(
-    Pool,
-    Process,
+    MultiPool,
+    MultiProcess,
     Lock,
     Queue
 )
-from databasetool import Redis
+from lib import Resolver
+from lib.sys.logger import Logger
+from gloabl import DB
+from lib.sys.network import NetWork as NET
 from core.depend.protocol.tcp import Connector
 
 
+resolver = Resolver()
+logger = Logger("control", log_file="control.log")
 
 LOCK = Lock()
 MESSAGEQUEUE = Queue()
 WAITDONEQUEUE = Queue()
 
 
+# 广播地址
+BROADCAST = ("", resolver("udp", "broad"))
+
 class Control:
     """
         控制模块
     负责与客户端之间的通信
+    
+    
+    sendtoclient
+    
+    sendtoshell
+    sendtofile
+    sendtowol
     """
-    process:list[Process] = []
+    process:list[MultiProcess] = []
     waittasks: dict[str, socket.socket] = {}
     
     def __init__(self):
@@ -38,7 +53,7 @@ class Control:
     def stdout(res):
         print(res)
     
-    def sendtoclient(self, toclients, instructs=None, files=None):
+    def sendtoclient(self, toclients, *, instructs=None, files=None, wol=False):
         """
             多进程启动数据链接 依次发送指令
             加载redis中保存的client message
@@ -47,113 +62,103 @@ class Control:
         # 未指定ip时，默认发送至所有正在链接的客户端
         # 检查链接客户端链接状体
         
-        # 校验客户端连接
-        toclients = self.checkconnect(toclients)
+        # 校验客户端连接, 对目标地址群进行状态分类
+        connings, breaks = self.__checkclientstatus(toclients)
         
         # 向正在连接的指定客户端发送数据包
-        with Pool() as pool:
-            # 区分数据包类型
+        with MultiPool() as pool:
             if instructs is not None:
                 # 发送指令数据
-                print("send instruct")
                 sendto = partial(self.sendtoshell, instructs=instructs)
-            
-                pool.map_async(sendto, toclients, 
+                print("step 2", connings)
+                pool.map_async(sendto, connings, 
                                callback=self.stdout,
-                               error_callback=self.stderr)
+                               error_callback=self.stderr).wait()
                 
             if files is not None and len(files) > 1:
                 # 发送文件数据
-                print("send files")
                 sendto = partial(self.sendtofile, files=files)
             
-                pool.map_async(sendto, toclients,
+                pool.map_async(sendto, connings,
                             callback=self.stdout,
-                            error_callback=self.stderr)
+                            error_callback=self.stderr).wait()
+                
+            if wol:
+                # 发送唤醒魔术包
+                pool.map_async(self.sendtowol, breaks,
+                            callback=self.stdout,
+                            error_callback=self.stderr).wait()
             
-        
+             
+                 
     @staticmethod                           
     def sendtofile(ip, file):
         # 发送文件数据
+        logger.record(1, f"send file: {file}")
         conn = Connector()
         conn.sendfile(ip, file)
     
     @staticmethod
     def sendtoshell(ip, instructs):
         # 发送指令包
-        print(ip, instructs)
+        
         for instruct in instructs:
+            # 创建TCP连接
             conn = Connector()
-            report =conn.send(ip, instruct)
-            print("add report", report, type(report))
-            Redis.hset("reports", ip, report)
-
-        
-    def checkconnect(self, toclients, status="true"):
-        # 校验client连接状态
-        connings = []
-        clients = toclients if toclients != [] else Redis.hgetall("client_status")
-        print("clients", clients)
-        for ip in clients:
-            if clients[ip] == status:
-                connings.append(ip)
-        return connings
-    
-    def sendwol_allclient(self, toclients=[]):
-        # 校验客户端连接状态
-        toclients = self.checkconnect(toclients=toclients, status="false")
-        
-        # 向所有客户端发送数据
-        for ip in toclients:
-            self.sendwol(ip)
             
-    def sendwol(self, ip):
+            logger.record(1, f"send: {instruct} to {ip}")
+            # 发送shell执行
+            report =conn.send(ip, instruct)
+            
+            # 记录执行日志，保存结果到redis
+            if report["err"] != "error":
+                logger.record(1, f"{ip} exec {instruct}: OK")
+            else:
+                logger.record(3, f"{ip} exec {instruct}: ERROR")
+                
+            # 不管结果如何都保存在redis
+            DB.hset("reports", ip, report)
+
+    @staticmethod
+    def sendtowol(ip):
         # 创建UDP广播套接字
-        broadcast = ("", 8085)
         sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
         sock.setsockopt(socket.SOL_SOCKET, socket.SO_BROADCAST, 1)
         
         # 创建唤醒魔术包
-        magic_pack = self.create_magic_packet(ip)
-        # 发送广播
-        sock.sendto(magic_pack, broadcast)
-        
-    
-    def formatMAC(self, ip) -> str:
-        """
-            格式化mac码
-        """
-        # 读取对应ip客户端心跳包数据，获取MAC地址
-        hreart_package = json.loads(Redis.hget("hreart_packages", ip))
+        hreart_package = json.loads(DB.hget("hreart_packages", ip))
         MAC:str = hreart_package["MAC"]
+        magic_pack = NET.create_magic_packet(MAC)
         
-        # 校验MAC格式
-        if len(MAC) == 12:
-            return MAC
-        if len(MAC) == 17:
-            if MAC.count(":") == 5 or MAC.count("-") == 5:
-                sep = MAC[2]
-                MAC = MAC.replace(sep, '')
-                return MAC
+        # 发送广播
+        logger.record(1, f"send wol protocol to {ip}")
+        sock.sendto(magic_pack, BROADCAST)    
+
+    def __checkclientstatus(self, toclients):
+        """
+            # 校验client连接状态
+            
+        toclients: 目标地址群
+        status: 目标状态
+        """
+        connings = []
+        breaks = []
+        
+        # 如果toclients是空列表，默认获取所有客户端
+        clients = toclients if toclients != [] else DB.hgetall("client_status")
+        
+        # 遍历地址群 返回 连接指定状态的客户端
+        for ip in clients:
+            if clients[ip] == "true":
+                connings.append(ip)
             else:
-                raise ValueError("incorrect MAC format")
-        else:
-            raise ValueError("incorrect MAC format")
-    
-    def create_magic_packet(self, ip) -> bytes:
-        """
-            创建唤醒魔术包
-        """
-        mac = self.formatMAC(ip)
-        data = b'FF' * 6 + (mac * 16).encode()
-        print(data, type(data))
-        send_data = b''
-        
-        for i in range(0, len(data), 2):
-            send_data =send_data + struct.pack(b"B", int(data[i: i+2], 16))
-        return send_data
+                breaks.append(ip)
+        return connings, breaks
     
 
-class WOL:
-    def __init__(self):
-        pass
+            
+
+    
+ 
+    
+    

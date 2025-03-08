@@ -4,7 +4,7 @@ from functools import wraps
 from lib.sys.logger import Logger
 
 
-class _Catch:
+class __CatchBase:
     logger = Logger("catch", log_file="sys.log")
     def __init__(self):
         self.logs = []

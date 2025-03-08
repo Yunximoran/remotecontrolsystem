@@ -7,5 +7,6 @@ class UDP:
         self.settings()
         self.sock.bind(address)
     
-    def settings():
+    def settings(self):
+        # self.sock.timeout(0.1)
         pass

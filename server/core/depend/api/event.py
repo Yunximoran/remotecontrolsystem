@@ -4,12 +4,14 @@ import json
 from typing import Annotated
 from fastapi import APIRouter
 
+from lib import Resolver
 from lib.ui.explorer import choose_file
-from databasetool import Redis
 from datamodel import WaitDesposeResults
 from datamodel import Software
 from core.depend.control import Control
+from gloabl import DB
 
+resolver = Resolver()
 controlor = Control()
 
 # 事件接口
@@ -21,12 +23,17 @@ tags = ["event"]
 @router.put("/desposedsoftware")
 async def despose_waitdones(res: WaitDesposeResults):
     print("despose waitdone api data:", res.cookie, res.results)
-    Redis.hset("waitdone_despose_results", res.cookie, res.results)
+    # 将待办实现处理结果保存redis
+    DB.hset("waitdone_despose_results", res.cookie, res.results)
 
 # 激活客户端
 @router.put("/wol")
 async def magic_client(toclients:Annotated[list, None] = []):
-    controlor.sendwol_allclient(toclients)
+    """
+        发送唤醒魔术包
+    toclients: 指定发送目标IP
+    """
+    controlor.sendtoclient(toclients, wol=True)
 
 # ========= 默认事件========== #
 # 添加软件清单
@@ -39,6 +46,7 @@ async def addsoftwarelist(
    softwarename: 软件名称
    version: 软件版本[可选]
     """
+    # 打开资源管理器，选择添加软件
     executablefile, softwarepath = choose_file()
     software = {
         "ecdis": {
@@ -49,16 +57,24 @@ async def addsoftwarelist(
         },
         "conning": False
     }
-    Redis.lpush("softwarelist", json.dumps(software))
+    DB.lpush("softwarelist", json.dumps(software))
     return {"OK", softwarename}
 
-# 移除软件清单
 @router.put("/popsoftwarelist")
 async def popsoftwarelist(software):
-    softwarelist = Redis.lrange("softwarelist")
+    """
+        # 移除软件清单
+    software: 软件名    
+    """
+    
+    # 获取当前软件清单
+    softwarelist = DB.lrange("softwarelist")
+    
+    # 找到对应软件
     for i, item in enumerate(softwarelist):
         if re.match(software, item):
-            Redis.lpop("softwarelist", i)
+            # 删除修改redis表格
+            DB.lpop("softwarelist", i)
 
     return {"OK", f"POP {software}"}
 
@@ -73,8 +89,10 @@ async def download(toclients=[]):
     查找需要下载至客户端的文件
     发送文件至客户端
     """
+    # 打开资源管理器， 选择下载文件
     filename, filepath = choose_file()
     with open(filepath, "rb") as f:
+        # 二进制打开文件
         controlor.sendtoclient(toclients, files=[filename, f])
 
     

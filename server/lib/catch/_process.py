@@ -1,9 +1,9 @@
 from functools import wraps, partial
 
-from ._catch import _Catch, Logger
+from ._catch import __CatchBase, Logger
 
 
-class _CatchProcess(_Catch):
+class _CatchProcess(__CatchBase):
     logger = Logger("process", log_file="process.log")
     
     def process(self, func):

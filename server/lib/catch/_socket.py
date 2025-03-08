@@ -2,10 +2,10 @@ from socket import socket
 from socket import error as SockError
 from functools import wraps
 
-from ._catch import _Catch, Logger
+from ._catch import __CatchBase, Logger
 
 
-class _CatchSock(_Catch):
+class _CatchSock(__CatchBase):
     logger = Logger("sock", log_file="socket.log")
     socks = []
     def __init__(self):
@@ -23,15 +23,13 @@ class _CatchSock(_Catch):
         return wrapper
     
     def checksockconning(self, func):
-        """
-            校验SOCK连接状态
-        """
+        # 校验SOCK连接状态
         def wrapper(sock:socket, *args, **kwargs):
             try:
-                self.record(func)
                 sock.getpeername()
-            except SockError as e:
-                self.record(func, e, 3)
-                return e
-            return func(*args, **kwargs)
+                self.record(func)
+            except SockError:
+                self.record(func, "连接错误", 3)
+                return "连接错误"
+            return func(sock, *args, **kwargs)
         return wrapper

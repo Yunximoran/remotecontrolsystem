@@ -13,7 +13,8 @@ IFCONSOLE = False
 class Logger:
     # 日志管理器只在despose中使用吗？
     CWD = os.getcwd()
-    def __init__(self, name, log_file='.log', level=LEVEL, max_bytes=10485760, backup_count=5):
+    def __init__(self, name, log_file='.log', level=LEVEL,
+                 max_bytes=10485760, backup_count=5):
         """
         name: 日志记录器名称（通常使用模块名__name__）
         log_file: 日志文件名（默认app.log）

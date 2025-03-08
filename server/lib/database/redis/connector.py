@@ -2,16 +2,16 @@ import os
 import json
 from redis import StrictRedis
 
-from lib import Resolver
-from lib import CatchDatabase
+from lib.init.resolver import _resolver
+from lib.catch import _CatchDataBase
 
-catch = CatchDatabase()
-conf = Resolver()
+catch = _CatchDataBase()
 
-HOST = conf("redis", "host")
-PORT = conf("redis", "port")
-DB = conf("redis", "db")
-DATAS = conf("redis", "datas")
+
+HOST = _resolver("redis", "host")
+PORT = _resolver("redis", "port")
+DB = _resolver("redis", "db")
+DATAS = _resolver("redis", "datas")
 
 # 
 class Connector(StrictRedis):
@@ -20,7 +20,7 @@ class Connector(StrictRedis):
     """
     def __init__(self, *args, **kwargs):
         super().__init__(host=HOST, port=PORT, db=DB, decode_responses=True)
-    
+        
     @catch.ping
     def status(self):
         self.ping()

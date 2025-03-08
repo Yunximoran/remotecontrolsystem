@@ -1,16 +1,19 @@
 from functools import partial
 from multiprocessing import Process
 from multiprocessing.pool import Pool
+
 from multiprocessing import (
-    Lock,
-    Queue,
     Value,
+    Array,
+    Lock,
+    Manager,
+    Queue
 )
 
-from lib import Resolver
-from lib.catch._process import _CatchProcess
+from lib.init.resolver import _resolver
+from lib.catch import _CatchProcess
 
-CONFIG = Resolver()
+
 Catch = _CatchProcess()
 
 
@@ -33,7 +36,7 @@ def stderr(err):
     print(err)
 
 
-class Pool(Pool):
+class MultiPool(Pool):
     
     def __init__(self, processes = None, initializer = None, initargs = (), maxtasksperchild = None, context = None):
         """
@@ -41,9 +44,9 @@ class Pool(Pool):
         定义进程数范围
         """
         if processes is None or processes < 5:
-            processes = CONFIG("preformance", "min-processes") 
+            processes = _resolver("preformance", "min-processes") 
         elif processes > 10:
-            processes = CONFIG("preformance", "max-processes")
+            processes = _resolver("preformance", "max-processes")
         super().__init__(processes, initializer, initargs, maxtasksperchild, context)
         
     def map_async(self, func, iterable, chunksize = None, callback = None, error_callback = None):
@@ -62,7 +65,7 @@ class Pool(Pool):
 
     
 
-class Process(Process):
+class MultiProcess(Process):
     def __init__(self, group=None, target=None, name=None, args=(), kwargs={}, *, daemon = None):
         super().__init__(group, name=name, args=args, kwargs=kwargs, daemon=daemon)
         self._target = partial(worker, target)
