@@ -1,0 +1,13 @@
+prefix=/home/yumo/projects/githouse/remotecontrolsystem/client/.conda
+exec_prefix=/home/yumo/projects/githouse/remotecontrolsystem/client/.conda
+libdir=/home/yumo/projects/githouse/remotecontrolsystem/client/.conda/lib
+sharedlibdir=/home/yumo/projects/githouse/remotecontrolsystem/client/.conda/lib
+includedir=/home/yumo/projects/githouse/remotecontrolsystem/client/.conda/include
+
+Name: zlib
+Description: zlib compression library
+Version: 1.2.13
+
+Requires:
+Libs: -L${libdir} -L${sharedlibdir} -lz
+Cflags: -I${includedir}

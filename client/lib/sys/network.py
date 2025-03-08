@@ -1,5 +1,6 @@
 import psutil
 import struct
+import platform
 
 
 class __NetWorkTools:
@@ -51,6 +52,12 @@ class NetWork(__NetWorkTools):
         net_if_addrs = psutil.net_if_addrs()
         result = {}
 
+        # linux 和 window 获取 mac 的方法不一样
+        if platform.system() == "Windows":
+            link = "AF_LINK"
+        elif platform.system() == "Linux":
+            link = "AF_PACKET"
+
         for interface_name, interface_addresses in net_if_addrs.items():
             net = {}
             for address in interface_addresses:
@@ -58,12 +65,12 @@ class NetWork(__NetWorkTools):
                     net["IPv6"] = address.address
                 elif address.family.name.startswith('AF_INET'):
                     net["IPv4"] = address.address
-                elif address.family.name == 'AF_LINK':
+                elif address.family.name.startswith(link):
                     net["mac"] = address.address
             result[interface_name] = net
         return result
     
-    
+
 def choosenet(choose: str = None) -> dict:
     """
     choose: 指定工作网卡，None时返回所有网卡参数

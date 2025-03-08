@@ -1,5 +1,5 @@
 from __future__ import annotations
-import re
+import re, os
 from typing import List, AnyStr, Generator
 from xml.etree.ElementTree import Element, SubElement
 """
@@ -13,7 +13,7 @@ class Node:
         self.tag = node.tag         # 节点名
         self.attrib = node.attrib   # 节点包含属性
         self.parent = parent        # 节点父元素
-        self.data = self.__retype(node.text)
+        self.data = self.__retype(node.text) if node.text is not None else None
 
         self.__node = node              # 原始Element对象
         self.__size = 0                 # 子元素数量
@@ -119,6 +119,7 @@ class Node:
         """
             对数据进行转换
         """
+
         if re.match("^\d+$", context):
             return int(context)
         elif re.match("^[-+]?(\d*\.\d+)$", context):
