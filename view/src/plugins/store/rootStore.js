@@ -19,6 +19,10 @@ export const useRootStore = defineStore("root", {
             console.log("selected ", selected)
             return selected
         },
+        seletceds_software: (state) =>{
+            const selected = state
+            return selected
+        }
     },
     actions:{
         add_software(item){
@@ -30,6 +34,7 @@ export const useRootStore = defineStore("root", {
             console.log("pop_software")
             this.softwares.pop(item)
         },
+
         init_selects(data){
             for (const key in data){
                 this.selects[key] = false

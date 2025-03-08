@@ -1,57 +1,35 @@
 <root>
-	<global>
-		<encoding>UTF-8</encoding>
-		<logs>
-			<level>info</level>
-		</logs>
-	</global>
-	<computer username="yunximoran" password="ranxi">
-		<name>DESKTOP-4UTP93R</name>
-		<os>Windows</os>
-		<version>10.0.26100</version>
-		<cpu>11th Gen Intel(R) Core(TM) i7-11800H @ 2.30GHz   2.30 GHz</cpu>
-		<gpu>nvidia rtx3050</gpu>
-		<ram>16</ram>
-		<disk>
-			<li>C:</li>
-		</disk>
-	</computer>
-	<dependon>
-		<li>redis-server ./databasetoo./conf/redis-service.conf</li>
-		<li>npm --prefix view run serve</li>
-	</dependon>
-	<server>
-		<app>core:app</app>
-		<host>127.0.0.1</host>
-		<port>8000</port>
-		<reload>yes</reload>
-		<cors>
-			<li>https://localhost:8080</li>
-			<li>http://localhost:8080</li>
-		</cors>
-	</server>
-	<sock>
-		<udp>#</udp>
-		<tcp>
-			<listenes>5</listenes>
-		</tcp>
-		<recv-size>1024</recv-size>
-	</sock>
-	<ports>
-		<udp>
-			<server>8081</server>
-			<broad>8082</broad>
-			<multi>8083</multi>
-			<client>8084</client>
-		</udp>
-		<tcp>
-			<client>8085</client>
-			<client-file>8086</client-file>
-			<server>9095</server>
-		</tcp>
-	</ports>
-	<network>
-		<ip>192.168.31.176</ip>
-		<mac>20-1E-88-F5-05-B9</mac>
-	</network>
+	<database>
+		<redis>
+			<host>localhost</host>
+			<port>6379</port>
+			<db>0</db>
+			<datas>
+				<li>client_status</li>
+				<li>client_message</li>
+				<li>heart_packages</li>
+				<li>softwarelist</li>
+				<li>reports</li>
+				<li>waitdones</li>
+				<li>accounts</li>
+			</datas>
+		</redis>
+		<mysql user="root" password="ranxi160259">
+			<host>localhost</host>
+			<port>3306</port>
+			<db>test</db>
+			<datas>
+				<li>test</li>
+			</datas>
+		</mysql>
+	</database>
+	<preformance>
+		<min-processes>5</min-processes>
+		<max-processes>10</max-processes>
+		<tcp-listenes>5</tcp-listenes>
+	</preformance>
+	<log-default>
+		<level>info</level>
+		<logpath>logs</logpath>
+	</log-default>
 </root>

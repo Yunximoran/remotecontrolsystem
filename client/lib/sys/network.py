@@ -58,7 +58,7 @@ class NetWork(__NetWorkTools):
                     net["IPv6"] = address.address
                 elif address.family.name.startswith('AF_INET'):
                     net["IPv4"] = address.address
-                elif address.family.name == 'AF_LINK':
+                elif address.family.name.startswith('AF_LINK'):
                     net["mac"] = address.address
             result[interface_name] = net
         return result

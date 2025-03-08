@@ -5,7 +5,6 @@
 			<level>info</level>
 		</logs>
 	</global>
-
 	<computer username="yunximoran" password="ranxi">
 		<name>DESKTOP-4UTP93R</name>
 		<os>Windows</os>
@@ -23,12 +22,10 @@
 			<li>C:</li>
 		</disk>
 	</computer>
-
 	<dependon>
 		<li>redis-server ./databasetoo./conf/redis-service.conf</li>
 		<li>npm --prefix view run serve</li>
 	</dependon>
-
 	<sock>
 		<udp>#</udp>
 		<tcp>
@@ -37,7 +34,6 @@
 		<recv-size>1024</recv-size>
 		<timeout>1</timeout>
 	</sock>
-
 	<ports>
 		<udp>
 			<server>8081</server>
@@ -51,7 +47,6 @@
 			<server>9095</server>
 		</tcp>
 	</ports>
-
 	<network>
 		<ip-server>192.168.31.176</ip-server>
 		<ip>192.168.31.176</ip>

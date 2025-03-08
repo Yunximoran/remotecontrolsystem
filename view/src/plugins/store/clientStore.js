@@ -18,7 +18,7 @@ export const useClientStore = defineStore("clientStore", {
             this.DEFAULTCOLOR = Status === "true" ? "greenyellow": "#bababa"
         },
         setLogo(path){
-            this.LOGO = require("path")
+            this.LOGO = require(path)
         }
     }
 })
