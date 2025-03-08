@@ -98,7 +98,7 @@ class Windows(__BaseSystem):
 
     def checkfile(self, check_object):
         results = []
-        for root in self.DATAPATH['root']:
+        for root in self._disks:
             results.extend(super().checkfile(check_object, root))
         return results
     

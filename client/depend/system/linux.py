@@ -9,6 +9,9 @@ resolver = Resolver()
 ROOTPASS = resolver("computer")["password"]
 
 class Linux(__BaseSystem):
+    def __init__(self):
+        super().__init__()
+        self._disks = ["/"]
         
     # 用户权限
     def close(self):
