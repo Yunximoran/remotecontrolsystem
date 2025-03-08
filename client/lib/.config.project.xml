@@ -11,15 +11,15 @@
 		<version>10.0.26100</version>
 		<machine>AMD64</machine>
 		<cpu>
-			<processor>Intel64 Family 6 Model 141 Stepping 1, GenuineIntel</processor>
-			<physical-cores>8</physical-cores>
-			<logical-cores>16</logical-cores>
+			<processor />
+			<physical-cores>4</physical-cores>
+			<logical-cores>4</logical-cores>
 			<architecture>64bit</architecture>
 		</cpu>
 		<gpu>NVIDIA GeForce RTX 3050 Laptop GPU</gpu>
-		<ram>15.75</ram>
+		<ram>3.81</ram>
 		<disk total="#">
-			<li>C:</li>
+			<li>C://</li>
 		</disk>
 	</computer>
 	<dependon>
@@ -49,7 +49,7 @@
 	</ports>
 	<network>
 		<ip-server>192.168.31.176</ip-server>
-		<ip>192.168.31.176</ip>
-		<mac>20-1E-88-F5-05-B9</mac>
+		<ip>192.168.6.130</ip>
+		<mac>00:0c:29:e6:d8:7e</mac>
 	</network>
 </root>
