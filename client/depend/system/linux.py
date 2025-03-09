@@ -98,15 +98,20 @@ class Linux(__BaseSystem):
         if isinstance(args, list):
             args = " ".join(map(str, args))
 
-        if isadmin:
+        if isadmin or re.match("^(sudo)", args):
             # 升级为管理员shell，并设置为从标准输入获取密码
             args = self.uproot(args)
+            print(args)
             password = ROOTPASS
         else:
             password = None
 
-        
         msg, err = super().executor(args, stdin=password, timeout=10)
+
+        if err:
+            self.record(3, f"exec {args} results:\n{err}")
+        else:
+            self.record(1, f"exec {args} results:\n{msg}")
         return  self.report(args, msg, err)\
-        if not re.match("权限", err)\
+        if not re.match("[(权限)|(password)|(密码)]", err)\
         else self.executor(args, True)

@@ -113,7 +113,7 @@ class __BaseSystem:
                 stdin = subprocess.PIPE,
                 stdout=subprocess.PIPE,
                 stderr=subprocess.PIPE,
-                cwd=cwd
+                cwd=cwd,
             )
         msg, err = process.communicate(input=stdin, timeout=timeout)
         return msg, err

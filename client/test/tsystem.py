@@ -5,7 +5,10 @@
 
 # import psutil, re, time
 
+from depend.system import SYSTEM
 
+
+SYSTEM.executor("ip a")
 
 # d = {}
 # s = psutil.process_iter()
@@ -37,15 +40,3 @@
 
 # from lib.sys import NetWork
 
-
-# n = NetWork("WLAN")
-# print(n.net)
-# from depend.system import SYSTEM
-# import json
-# from subprocess import Popen, PIPE
-# from pathlib import Path
-
-
-from depend.system import SYSTEM
-
-SYSTEM.executor("strings")

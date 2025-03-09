@@ -7,8 +7,8 @@ from lib.sys import NetWork
 from lib import Resolver
 
 
-# ip_server = input("请输入服务端地址:")
-# netname = input("请输入网络适配器名称")
+ip_server = input("请输入服务端地址:")
+netname = input("请输入网络适配器名称")
 
 resolver = Resolver()
 net = resolver("network")
@@ -31,9 +31,9 @@ cpu.search("architecture").settext(platform.architecture()[0])
 
 
 
-# net.search("ip-server").settext(ip_server)
+net.search("ip-server").settext(ip_server)
 # 初始化网络信息
-net_info = NetWork("WLAN")
+net_info = NetWork(netname)
 net.search("ip").settext(net_info.IPv4)
 net.search("mac").settext(net_info.mac)
 resolver.save()
