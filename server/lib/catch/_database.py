@@ -1,5 +1,5 @@
 from functools import wraps
-# from redis import ConnectionError
+from redis import ConnectionError
 
 from ._catch import __CatchBase, Logger
 

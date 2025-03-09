@@ -1,4 +1,4 @@
-from typing import Annotated, Union, List, Dict, Any
+from typing import Annotated
 from pydantic import BaseModel
 
 
@@ -10,6 +10,8 @@ from .transfer_data import *
 class ShellList(BaseModel):
     name: Annotated[str, None]
     shell: Annotated[str, None]
+    isadmin: Annotated[bool, None] = False
+    os: Annotated[str, None] = Query(pattern="^(Windows)$|^(Linux)$|^(MacOS)$", default="Windows")
     
 
 class WaitDesposeResults(BaseModel):

@@ -11,7 +11,7 @@ resolver = Resolver()
 catch = CatchSock()
 TCPORT = resolver("ports", "tcp", "client")
 RECVSIZE = resolver("sock", "recv-size")
-ENCODING = resolver("project", "encoding")
+ENCODING = resolver("global", "encoding")
 
 class Connector(TCP):
     
@@ -24,14 +24,12 @@ class Connector(TCP):
     def send(self, data: str):
         self.sock.sendall(data.encode())
         # return None
-        return self.__wait_report()
 
     def sendfile(self, ip,file):
         self.sock.connect((ip, TCPORT))
         # 先发送一个标识
         self.sock.sendall(file[0])
         self.sock.sendfile(file[1])
-        return self.__wait_report()
     
     # @catch.timeout
     def recv(self):

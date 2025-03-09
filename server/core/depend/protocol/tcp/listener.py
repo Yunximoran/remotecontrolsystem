@@ -14,7 +14,7 @@ catch = CatchSock()
 ENCODING = resolver("global", "encoding")
 RECVSIZE = resolver("sock", "recv-size")
 TIMEOUT = resolver("sock", "tcp", "timeout")
-DELAY = resolver("preformance", "while-delaytime")
+DELAY = 1
 
 class Listener(TCP):
     def settings(self):

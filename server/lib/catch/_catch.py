@@ -43,7 +43,7 @@ class __CatchBase:
         return wrapper
     
     def record(self, func, msg="success", level=1):
-        logtext = self.logger.format_logtext(func.__name__, msg, module=func.__module__, path=inspect.getabsfile(func))
+        logtext = self.logger.format_logtext(func.__name__, msg, module=func.__module__)
         self.logger.record(level, logtext)
     
     

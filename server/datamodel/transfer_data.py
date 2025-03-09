@@ -4,11 +4,12 @@ from typing import Annotated
 
 from fastapi import Query
 from pydantic import BaseModel
+from pathlib import Path
 
 
 class Ecdis(BaseModel):
     name: Annotated[str, None]
-    path = None
+    path:Annotated[Path, None] = None
     
 
 class Software(BaseModel):

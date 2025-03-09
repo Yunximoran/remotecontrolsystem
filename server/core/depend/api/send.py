@@ -1,9 +1,8 @@
 import json
 from typing import List, AnyStr
 from fastapi import APIRouter
-from fastapi import Query
 
-from datamodel import Software, SoftwareList
+from datamodel import SoftwareList
 from datamodel.instruct import InstructList
 from core.depend.protocol.udp import MultiCastor
 from core.depend.control import Control
@@ -26,10 +25,9 @@ async def send_control_shell(instructlist: InstructList, toclients: List[AnyStr]
     toclients: 目标地址
     """
     try:
-        instructs = [item.model_dump_json() for item in instructlist.items]
+        
         # 解析请求体
-        # instructs = [item.model_dump_json() for item in shell_list]
-
+        instructs = [item.model_dump_json() for item in instructlist.items]
         # 发送控制指令
         controlor.sendtoclient(toclients, instructs=instructs) 
         return {"OK": "instructions have been sent to the client"}

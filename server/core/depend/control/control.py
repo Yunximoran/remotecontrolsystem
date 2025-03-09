@@ -20,7 +20,7 @@ logger = Logger("control", log_file="control.log")
 
 
 # 广播地址
-BROADCAST = ("", resolver("udp", "broad"))
+BROADCAST = ("", resolver("sock", "udp", "ip-broad"))
 
 class Control:
     """
@@ -57,20 +57,29 @@ class Control:
             if instructs is not None:
                 # 发送指令数据
                 sendto = partial(self.sendtoshell, instructs=instructs)
-                setattr(sendto, "__name__", self.sendtoshell.__name__)
-                pool.map_async(sendto, connings).get()
+                pool.map_async(sendto, connings, 
+                               attribute={  # 使用偏函数后对丢失某些属性，通过attribute参数手动设置
+                                   "__name__": self.sendtoclient.__name__
+                                   }
+                               ).get()
                 
             if files is not None and len(files) > 1:
                 # 发送文件数据
                 sendto = partial(self.sendtofile, files=files)
-                pool.map_async(sendto, connings).wait()
+                pool.map_async(sendto, connings, 
+                               attribute={  # 使用偏函数后对丢失某些属性，通过attribute参数手动设置
+                                   "__name__": self.sendtofile.__name__
+                                   }
+                               ).wait()
                 
             if wol:
                 # 发送唤醒魔术包
-                pool.map_async(self.sendtowol, breaks).wait()
-            
-             
-                 
+                pool.map_async(self.sendtowol, breaks, 
+                               attribute={  # 使用偏函数后对丢失某些属性，通过attribute参数手动设置
+                                   "__name__": self.sendtowol.__name__
+                                   }
+                               ).wait()
+ 
     @staticmethod                           
     def sendtofile(ip, file):
         # 发送文件数据
@@ -86,27 +95,15 @@ class Control:
         logger.record(1, f"send: {instructs} to {ip}")
         conn.send(json.dumps(instructs, ensure_ascii=False, indent=4))
         report = conn.recv()
-        if report['err'] == "error":
+
+        if report['err'] == "<No error output>":
             logger.record(1, f"{ip} exec {instructs}: OK")
         else:
             logger.record(3, f"{ip} exec {instructs}: ERROR")
-        DB.hset("reports", ip, report)
-        print(conn)
-        conn.close()
-        # for instruct in instructs:
-        #     # 创建TCP连接
             
-        #     logger.record(1, f"send: {instruct} to {ip}")
-        #     # 发送shell执行
-        #     report =conn.send(instruct)
-        #     # 记录执行日志，保存结果到redis
-        #     if report["err"] != "error":
-        #         logger.record(1, f"{ip} exec {instruct}: OK")
-        #     else:
-        #         logger.record(3, f"{ip} exec {instruct}: ERROR")
-                
-        #     # 不管结果如何都保存在redis
-        #     DB.hset("reports", ip, report)
+        DB.hset("reports", mapping={ip: json.dumps(report, ensure_ascii=False, indent=4)})
+        print("hello world")
+        conn.close()
 
     @staticmethod
     def sendtowol(ip):
