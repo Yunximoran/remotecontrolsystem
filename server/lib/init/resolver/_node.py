@@ -13,7 +13,7 @@ class Node:
         self.tag = node.tag         # 节点名
         self.attrib = node.attrib   # 节点包含属性
         self.parent = parent        # 节点父元素
-        self.data = self.__retype(node.text)
+        self.data = self.data = self.__retype(node.text) if node.text is not None else None
 
         self.__node = node              # 原始Element对象
         self.__size = 0                 # 子元素数量
@@ -66,7 +66,7 @@ class Node:
         # 返回新Node， 执行一些额外测操作，如设置文本，设置属性，修改标签名等
         return newnode
         
-    def delelement(self, node):
+    def delelement(self, node: Node):
         # 从子元素中找到目标Node
         if node in self.__childs:
             # 删除相关引用

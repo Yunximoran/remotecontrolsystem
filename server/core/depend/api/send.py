@@ -1,12 +1,12 @@
 import json
 from typing import List, AnyStr
 from fastapi import APIRouter
+from fastapi import Query
 
-from datamodel import ShellList, Software
+from datamodel import Software, SoftwareList
+from datamodel.instruct import InstructList
 from core.depend.protocol.udp import MultiCastor
 from core.depend.control import Control
-# from projectdesposetool import CONFIG
-
 
 
 multiter = MultiCastor()
@@ -19,33 +19,35 @@ tags = ["send"]
 
 
 @router.post("/instruct") 
-async def send_control_shell(shell_list: List[ShellList], toclients: List):
+async def send_control_shell(instructlist: InstructList, toclients: List[AnyStr] = []):
     """
         发送控制指令
     shell_list: 指令列表 
     toclients: 目标地址
     """
     try:
+        instructs = [item.model_dump_json() for item in instructlist.items]
         # 解析请求体
-        instructs = [item.model_dump_json() for item in shell_list]
-        print("step 1")
+        # instructs = [item.model_dump_json() for item in shell_list]
+
         # 发送控制指令
         controlor.sendtoclient(toclients, instructs=instructs) 
         return {"OK": "instructions have been sent to the client"}
     except Exception as e:
-        print("Step: error 1")
+        print(e)
         return {"ERROR": e}
     
 
 @router.post("/softwarelist")    # 发送软件清单
-async def send_software_checklist(checklist: list[Software]):
+async def send_software_checklist(checklist: SoftwareList):
     """
         发送软件清单
     checklist: 软件列表
     """
-    software = [item.model_dump() for item in checklist]
+    software = json.dumps([item.model_dump() for item in checklist.items])
+    
     try:
-        multiter.send(json.dumps(software))  
+        multiter.send(software)  
         return {"OK": "send software checklist"}
     except Exception as e:
         return {"ERROR": e}

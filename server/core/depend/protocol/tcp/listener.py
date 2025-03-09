@@ -11,24 +11,24 @@ from lib import Resolver
 resolver = Resolver()
 catch = CatchSock()
 
-ENCODING = resolver("project", "encoding")
+ENCODING = resolver("global", "encoding")
 RECVSIZE = resolver("sock", "recv-size")
+TIMEOUT = resolver("sock", "tcp", "timeout")
 DELAY = resolver("preformance", "while-delaytime")
 
 class Listener(TCP):
     def settings(self):
         self.sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
-        self.sock.settimeout(1)
+        self.sock.settimeout(TIMEOUT)
         
     @catch.timeout
-    def recv(self, isblock=False) -> Dict[AnyStr, Tuple[socket.socket, AnyStr]]:
+    def recv(self) -> Dict[AnyStr, Tuple[socket.socket, AnyStr]]:
         sock, addr = self.sock.accept()
         # 是否需要阻塞，客户端连接
-        sock.setblocking(1) if isblock else None 
 
         # 格式化TCP数据
         data = sock.recv(RECVSIZE)
-        return sock, addr, sock
+        return sock, addr, data.decode(ENCODING)
 
     def listen(self):
         """
@@ -38,7 +38,7 @@ class Listener(TCP):
         """
         while True:
             # 接受客户端连接
-            conn = self.recv(isblock=False)
+            conn = self.recv()
             if conn is False:
                 continue
             else:
@@ -107,6 +107,7 @@ class Listener(TCP):
 
             results: str = DB.hget("waitdone_despose_results", cookie)
             if results:
+                # 如果为空
                 sock.sendall(results.encode())
                 sock.close()
                 return True

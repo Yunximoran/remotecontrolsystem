@@ -2,11 +2,12 @@ import socket
 
 
 class UDP:
-    def __init__(self, address):
+    def __init__(self, address=None):
         self.sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+        if address:
+            self.sock.bind(address)
+            
         self.settings()
-        self.sock.bind(address)
-    
+        
     def settings(self):
-        # self.sock.timeout(0.1)
         pass

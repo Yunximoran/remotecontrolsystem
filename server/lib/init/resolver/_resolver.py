@@ -1,4 +1,4 @@
-import re
+import os
 from pathlib import Path
 
 from typing import List, AnyStr, ByteString
@@ -15,6 +15,7 @@ ENCODING = "utf-8"
 
 class _Resolver:
     def __init__(self, file=PRIVATECONF):
+        self.__file = file
         self.__conf = et.parse(file)
         self.__root = self.__conf.getroot()
     
@@ -25,7 +26,7 @@ class _Resolver:
         # 设置缩进
         et.indent(self.__conf, space="\t", level=0)
         # 写入修改
-        self.__conf.write(PRIVATECONF)
+        self.__conf.write(self.__file)
     
     def annotation(self, node:Element, msg):
         annotated = et.Comment(msg)
@@ -40,7 +41,7 @@ class _Resolver:
         """
         # 创建节点
         node = Node(root, parent)
-
+  
         # 校验校验是否包含列表数据
         list_data = self.__list_options(root)
         if list_data != []:
@@ -54,8 +55,11 @@ class _Resolver:
     
     def tohtml(self, node:Element) -> AnyStr:
         # 获取配置文件原始文档
-        return self.__encoding(et.tostring(node)) 
-          
+        return self.__encoding(et.tostring(node))
+    
+    def __struct_options(self,  node:Element):
+        pass
+    
     def __list_options(self, node:Element) -> List[AnyStr]:
         # 解析列表类型配置
         """

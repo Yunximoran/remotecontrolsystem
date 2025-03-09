@@ -1,11 +1,10 @@
 <root>
-    <global>
-        <encoding>UTF-8</encoding>
-        <logs>
-            <level>info</level>
-        </logs>
-    </global>
-
+	<global>
+		<encoding>UTF-8</encoding>
+		<logs>
+			<level>info</level>
+		</logs>
+	</global>
 	<computer username="yunximoran" password="ranxi">
 		<name>DESKTOP-4UTP93R</name>
 		<os>Windows</os>
@@ -17,13 +16,11 @@
 			<li>C:</li>
 		</disk>
 	</computer>
-
 	<dependon>
 		<li>redis-server ./databasetoo./conf/redis-service.conf</li>
 		<li>npm --prefix view run serve</li>
 	</dependon>
-
-    	<server>
+	<server>
 		<app>core:app</app>
 		<host>127.0.0.1</host>
 		<port>8000</port>
@@ -33,15 +30,17 @@
 			<li>http://localhost:8080</li>
 		</cors>
 	</server>
-
 	<sock>
-		<udp>#</udp>
+		<udp>
+			<ip-broad>0.0.0.0</ip-broad>
+			<ip-multi>224.255.255.1</ip-multi>
+		</udp>
 		<tcp>
 			<listenes>5</listenes>
+			<timeout>1</timeout>
 		</tcp>
 		<recv-size>1024</recv-size>
 	</sock>
-
 	<ports>
 		<udp>
 			<server>8081</server>
@@ -55,7 +54,6 @@
 			<server>9095</server>
 		</tcp>
 	</ports>
-
 	<network>
 		<ip>192.168.31.176</ip>
 		<mac>20-1E-88-F5-05-B9</mac>

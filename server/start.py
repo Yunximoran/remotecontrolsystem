@@ -1,5 +1,4 @@
 from typing import Tuple, Any, List
-
 import uvicorn
 
 from core.depend.protocol.tcp import Listener
@@ -22,8 +21,8 @@ LISTENES = resolver("sock", "tcp", "listenes")
 
 
 # 广播设置常量
-BROADCAST = ("0.0.0.0", resolver("ports", "udp", "broad"))              # 配置UDP广播地址
-MULTICAST = ("224.25.25.1", resolver("ports", "udp", "multi"))          # 配置UDP组播地址
+BROADCAST = (resolver("sock", "udp", "broad"), resolver("ports", "udp", "broad"))              # 配置UDP广播地址
+
 
 
 class Start:

@@ -3,15 +3,16 @@ import socket
 
 
 class TCP:
-    def __init__(self, address, listens = 5):
+    def __init__(self, address=None, listens = 10):
         # 创建TCP套接字对象
         self.sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        self.settings()  # SOCK设置选项
         
         # 初始化TCP套接字
-        self.sock.bind(address)
-        self.sock.listen(listens)   # 默认监听5个连接
-        
+        if address:
+            self.sock.bind(address)
+            self.sock.listen(listens)   # 默认监听10个连接
+            
+        self.settings()  # SOCK设置选项
         
     
     def settings(self):

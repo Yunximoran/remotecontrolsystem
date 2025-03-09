@@ -10,10 +10,10 @@ class _CatchProcess(__CatchBase):
         @wraps(func)
         def wrapper(*args, **kwargs):
             try:
-                self.record(args[0])
+                # self.record(args[0])
                 return func(*args, **kwargs)
             except KeyboardInterrupt:
-                self.record(args[0], "The Ctrl C", 3)
+                # self.record(args[0], "The Ctrl C", 3)
                 return "强制退出"
         return wrapper
     

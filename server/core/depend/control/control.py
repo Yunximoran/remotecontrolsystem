@@ -6,8 +6,6 @@ from functools import partial
 from lib.sys.processing import(
     MultiPool,
     MultiProcess,
-    Lock,
-    Queue
 )
 from lib import Resolver
 from lib.sys.logger import Logger
@@ -19,9 +17,6 @@ from core.depend.protocol.tcp import Connector
 resolver = Resolver()
 logger = Logger("control", log_file="control.log")
 
-LOCK = Lock()
-MESSAGEQUEUE = Queue()
-WAITDONEQUEUE = Queue()
 
 
 # 广播地址
@@ -44,14 +39,6 @@ class Control:
     
     def __init__(self):
         pass
-
-    @staticmethod
-    def stderr(err):
-        print(err)
-        
-    @staticmethod
-    def stdout(res):
-        print(res)
     
     def sendtoclient(self, toclients, *, instructs=None, files=None, wol=False):
         """
@@ -64,30 +51,23 @@ class Control:
         
         # 校验客户端连接, 对目标地址群进行状态分类
         connings, breaks = self.__checkclientstatus(toclients)
-        
+        logger.record(1, f"{instructs}")
         # 向正在连接的指定客户端发送数据包
         with MultiPool() as pool:
             if instructs is not None:
                 # 发送指令数据
                 sendto = partial(self.sendtoshell, instructs=instructs)
-                print("step 2", connings)
-                pool.map_async(sendto, connings, 
-                               callback=self.stdout,
-                               error_callback=self.stderr).wait()
+                setattr(sendto, "__name__", self.sendtoshell.__name__)
+                pool.map_async(sendto, connings).get()
                 
             if files is not None and len(files) > 1:
                 # 发送文件数据
                 sendto = partial(self.sendtofile, files=files)
-            
-                pool.map_async(sendto, connings,
-                            callback=self.stdout,
-                            error_callback=self.stderr).wait()
+                pool.map_async(sendto, connings).wait()
                 
             if wol:
                 # 发送唤醒魔术包
-                pool.map_async(self.sendtowol, breaks,
-                            callback=self.stdout,
-                            error_callback=self.stderr).wait()
+                pool.map_async(self.sendtowol, breaks).wait()
             
              
                  
@@ -101,23 +81,32 @@ class Control:
     @staticmethod
     def sendtoshell(ip, instructs):
         # 发送指令包
-        
-        for instruct in instructs:
-            # 创建TCP连接
-            conn = Connector()
+        conn = Connector()
+        conn.connect(ip)
+        logger.record(1, f"send: {instructs} to {ip}")
+        conn.send(json.dumps(instructs, ensure_ascii=False, indent=4))
+        report = conn.recv()
+        if report['err'] == "error":
+            logger.record(1, f"{ip} exec {instructs}: OK")
+        else:
+            logger.record(3, f"{ip} exec {instructs}: ERROR")
+        DB.hset("reports", ip, report)
+        print(conn)
+        conn.close()
+        # for instruct in instructs:
+        #     # 创建TCP连接
             
-            logger.record(1, f"send: {instruct} to {ip}")
-            # 发送shell执行
-            report =conn.send(ip, instruct)
-            
-            # 记录执行日志，保存结果到redis
-            if report["err"] != "error":
-                logger.record(1, f"{ip} exec {instruct}: OK")
-            else:
-                logger.record(3, f"{ip} exec {instruct}: ERROR")
+        #     logger.record(1, f"send: {instruct} to {ip}")
+        #     # 发送shell执行
+        #     report =conn.send(instruct)
+        #     # 记录执行日志，保存结果到redis
+        #     if report["err"] != "error":
+        #         logger.record(1, f"{ip} exec {instruct}: OK")
+        #     else:
+        #         logger.record(3, f"{ip} exec {instruct}: ERROR")
                 
-            # 不管结果如何都保存在redis
-            DB.hset("reports", ip, report)
+        #     # 不管结果如何都保存在redis
+        #     DB.hset("reports", ip, report)
 
     @staticmethod
     def sendtowol(ip):

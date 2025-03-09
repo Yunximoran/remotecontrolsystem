@@ -51,6 +51,7 @@ class MultiPool(Pool):
         
     def map_async(self, func, iterable, chunksize = None, callback = None, error_callback = None):
         _worker = partial(worker, func)
+        setattr(_worker, '__name__', func.__name__)
         return super().map_async(_worker, iterable, chunksize, callback, error_callback)
 
     def apply_async(self, func, args=(), kwds={}, callback=None, error_callback=None):

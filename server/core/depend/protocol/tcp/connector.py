@@ -18,10 +18,12 @@ class Connector(TCP):
     def settings(self):
         self.sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
     
-    
-    def send(self, ip, data: str):
+    def connect(self, ip):
         self.sock.connect((ip, TCPORT))
+        
+    def send(self, data: str):
         self.sock.sendall(data.encode())
+        # return None
         return self.__wait_report()
 
     def sendfile(self, ip,file):
@@ -31,9 +33,11 @@ class Connector(TCP):
         self.sock.sendfile(file[1])
         return self.__wait_report()
     
-    @catch.timeout
-    def __wait_report(self):
-        data = self.sock.recv(RECVSIZE)
+    # @catch.timeout
+    def recv(self):
+        data = self.sock.recv(2048)
         return json.loads(data.decode(ENCODING))
-        
+    
+    def close(self):
+        self.sock.close()
         

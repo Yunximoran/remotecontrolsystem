@@ -8,15 +8,15 @@ from pydantic import BaseModel
 
 class Ecdis(BaseModel):
     name: Annotated[str, None]
-    version: Annotated[str, None]
+    path = None
     
 
 class Software(BaseModel):
     ecdis: Annotated[Ecdis, None]
     conning: Annotated[bool, None] = False
     
-class SoftWareCheckList(BaseModel):
-    software: list[Software]
+class SoftwareList(BaseModel):
+    items: list[Software]
     
     
 class HeartPkgs(BaseModel):
