@@ -41,7 +41,13 @@ class _Resolver:
         """
         # 创建节点
         node = Node(root, parent)
-  
+        
+        # 解析路径配置
+        if "struct" in node.attrib.keys():
+            struct = self.__struct_options(root)
+            node.data = struct
+            return node
+        
         # 校验校验是否包含列表数据
         list_data = self.__list_options(root)
         if list_data != []:
@@ -57,8 +63,25 @@ class _Resolver:
         # 获取配置文件原始文档
         return self.__encoding(et.tostring(node))
     
-    def __struct_options(self,  node:Element):
-        pass
+    def __struct_options(self, node:Element, path:Path = None):
+        res = {}
+        if path is None:
+            path = Path(node.tag)
+            res['path'] = path
+
+        else:
+            path = path.joinpath(node.attrib["name"])
+            res['path'] = path
+        
+            
+        for dir in node.findall("dir"):
+            driname = dir.attrib["name"]
+            res[driname] = {
+                "dir": self.__struct_options(dir, path)
+                } 
+
+        res['file'] = self.__list_options(node)
+        return res
     
     def __list_options(self, node:Element) -> List[AnyStr]:
         # 解析列表类型配置
@@ -79,13 +102,17 @@ class _Resolver:
         except AttributeError:
             return context.decode(encoding)
     
-    def __call__(self, *args):
+    def __call__(self, *args, tree=False):
         node = self.root.search(*args)
         if node is None:
-            return None
+            setpath = " - ".join(args)
+            raise Exception(f"Setting not Exist: {setpath}")
         else:
-            return node if node.data is None else node.data
-
+            node.check(tree)
+            if tree:
+                return node
+            
+            return node.data
 
 __all__ = [
     "PRIVATECONF",

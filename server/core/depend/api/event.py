@@ -7,7 +7,6 @@ from fastapi import APIRouter
 from lib import Resolver
 from lib.ui.explorer import choose_file
 from datamodel import WaitDesposeResults
-from datamodel import Software
 from core.depend.control import Control
 from gloabl import DB
 

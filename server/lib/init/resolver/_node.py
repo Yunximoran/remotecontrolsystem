@@ -27,10 +27,20 @@ class Node:
         self.addr.append(self.tag)
         
         self.level = len(self.addr)
-        
+    
+    def check(self, tree=False):
+        # 检查选项是否为None
+        if self.data is None and not tree:
+            raise f"setting option: {self.tag} no val"
+        return self
+    
     def type(self):
         if self.data is None:
-            return "tag"
+            return "tree"
+        elif isinstance(self.data, list):
+            return "list"
+        elif isinstance(self.data, dict):
+            return "struct"
         else:
             return "val"
 
@@ -117,22 +127,29 @@ class Node:
             return int(context)
         elif re.match("^[-+]?(\d*\.\d+)$", context):
             return float(context)
-        # elif re.match("^[\t.*\n]$", context):
         elif re.match("^[(true)|(yes)|1]$", context):
             return True
         elif re.match("^[(false)|(no)|0]$", context):
             return False
         elif re.match("^[\t\n]+$", context):
+            # 只有树节点self.data为空
             return None
         else:
             return context 
-            
+    
     def __iter__(self) -> Generator[Node, None, None]:
         for elem in self.__childs:
             yield elem
     
     def __str__(self) -> AnyStr:
-        return f"{self.tag}: {self.data}" if self.data else self.tag
+        type = self.type()
+        if type == "struct":
+            return f"struct root: {self.tag}"
+        if type == "list":
+            return "\n".join(self.data)
+        if type == "tree":
+            return f"node: {self.tag}"
+        return f"option {self.tag} :\t{self.data}"
     
     def __len__(self):
         return self.__size

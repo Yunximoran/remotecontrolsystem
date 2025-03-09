@@ -1,60 +1,44 @@
-2025-03-09 00:40:34,009 - control - INFO - send: {"type":"string","shell":"ipconfig"} to 192.168.31.176
-2025-03-09 00:42:59,020 - control - INFO - send: {"type":"string","shell":"string"} to 192.168.31.176
-2025-03-09 00:44:33,871 - control - INFO - send: {"type":"string","shell":"string"} to 192.168.31.176
-2025-03-09 00:45:54,827 - control - INFO - send: {"type":"string","shell":"string"} to 192.168.31.176
-2025-03-09 00:47:43,624 - control - INFO - send: {"type":"string","shell":"string"} to 192.168.31.176
-2025-03-09 00:50:23,033 - control - INFO - send: {"type":"string","shell":"string"} to 192.168.31.176
-2025-03-09 00:50:43,328 - control - INFO - send: {"type":"string","shell":"string"} to 192.168.31.176
-2025-03-09 01:01:32,591 - control - INFO - send: {"type":"string","shell":"string"} to 192.168.31.176
-2025-03-09 01:04:14,250 - control - INFO - send: {"type":"string","shell":"string"} to 192.168.31.176
-2025-03-09 01:07:23,961 - control - INFO - send: {"type":"string","shell":"ipconfig"} to 192.168.31.176
-2025-03-09 01:10:23,268 - control - INFO - send: {"type":"string","shell":"ipconfig"} to 192.168.31.176
-2025-03-09 01:11:08,650 - control - INFO - send: {"type":"string","shell":"ipconfig"} to 192.168.31.176
-2025-03-09 01:21:06,505 - control - INFO - send: {"type":"string","shell":"ipconfig"} to 192.168.31.176
-2025-03-09 01:25:11,083 - control - INFO - send: {"type":"string","shell":"ipconfig"} to 192.168.31.176
-2025-03-09 01:25:42,918 - control - INFO - send: {"type":"string","shell":"ipconfig"} to 192.168.31.176
-2025-03-09 01:27:13,151 - control - INFO - send: {"type":"string","shell":"ipconfig"} to 192.168.31.176
-2025-03-09 01:28:10,941 - control - INFO - send: {"type":"string","shell":"ipconfig"} to 192.168.31.176
-2025-03-09 01:28:50,637 - control - INFO - send: {"type":"string","shell":"ipconfig"} to 192.168.31.176
-2025-03-09 01:31:08,928 - control - INFO - send: {"type":"string","shell":"ipconfig"} to 192.168.31.176
-2025-03-09 01:34:02,001 - control - INFO - send: {"type":"string","shell":"ipconfig"} to 192.168.31.176
-2025-03-09 01:35:53,934 - control - INFO - send: {"type":"string","shell":"ipconfig"} to 192.168.31.176
-2025-03-09 01:36:18,113 - control - INFO - send: {"type":"string","shell":"ipconfig"} to 192.168.31.176
-2025-03-09 01:37:52,032 - control - INFO - send: {"type":"string","shell":"ipconfig"} to 192.168.31.176
-2025-03-09 01:38:35,833 - control - INFO - send: {"type":"string","shell":"ipconfig"} to 192.168.31.176
-2025-03-09 01:38:52,415 - control - INFO - send: {"type":"string","shell":"ipconfig"} to 192.168.31.176
-2025-03-09 01:39:52,572 - control - INFO - send: {"type":"string","shell":"ipconfig"} to 192.168.31.176
-2025-03-09 01:41:23,266 - control - INFO - send: {"type":"string","shell":"ipconfig"} to 192.168.31.176
-2025-03-09 02:05:28,286 - control - INFO - send: {"type":"string","shell":"ipconfig"} to 192.168.31.176
-2025-03-09 02:09:09,788 - control - INFO - send: {"type":"string","shell":"ipconfig"} to 192.168.31.176
-2025-03-09 02:10:55,478 - control - INFO - send: {"type":"string","shell":"gcc --version"} to 192.168.31.176
-2025-03-09 02:12:45,124 - control - INFO - send: {"type":"string","shell":"gcc --version"} to 192.168.31.176
-2025-03-09 02:13:38,594 - control - INFO - send: {"type":"string","shell":"gcc --version"} to 192.168.31.176
-2025-03-09 02:39:54,270 - control - INFO - send: {"type":"string","shell":"gcc --version"} to 192.168.31.176
-2025-03-09 02:42:52,306 - control - INFO - send: {"type":"string","shell":"gcc --version"} to 192.168.31.176
-2025-03-09 02:44:25,717 - control - INFO - send: {"type":"string","shell":"gcc --version"} to 192.168.31.176
-2025-03-09 02:44:56,965 - control - INFO - send: {"type":"string","shell":"gcc --version"} to 192.168.31.176
-2025-03-09 02:46:13,567 - control - INFO - send: {"type":"string","shell":"gcc --version"} to 192.168.31.176
-2025-03-09 02:48:24,479 - control - INFO - send: {"type":"string","shell":"gdb --version"} to 192.168.31.176
-2025-03-09 02:49:15,695 - control - INFO - send: {"type":"string","shell":"gdb --version"} to 192.168.31.176
-2025-03-09 15:34:17,640 - control - INFO - send: ['{"type":"string","shell":"ipconfig"}', '{"type":"string","shell":"python --version"}'], <class 'list'> to 192.168.31.176
-2025-03-09 15:36:41,570 - control - INFO - send: ['{"type":"string","shell":"ipconfig"}', '{"type":"string","shell":"python --version"}'], <class 'list'> to 192.168.31.176
-2025-03-09 15:37:32,558 - control - INFO - send: ['{"type":"string","shell":"ipconfig"}', '{"type":"string","shell":"python --version"}'], <class 'list'> to 192.168.31.176
-2025-03-09 15:42:33,539 - control - INFO - send: ['{"type":"string","shell":"ipconfig"}', '{"type":"string","shell":"python --version"}'], <class 'list'> to 192.168.31.176
-2025-03-09 15:43:45,936 - control - INFO - send: ['{"type":"string","shell":"ipconfig"}', '{"type":"string","shell":"python --version"}'], <class 'list'> to 192.168.31.176
-2025-03-09 15:44:07,742 - control - INFO - send: ['{"type":"string","shell":"ipconfig"}', '{"type":"string","shell":"python --version"}'], <class 'list'> to 192.168.31.176
-2025-03-09 15:45:39,681 - control - INFO - send: ['{"type":"string","shell":"ipconfig"}', '{"type":"string","shell":"python --version"}'] to 192.168.31.176
-2025-03-09 15:50:47,293 - control - INFO - send: ['{"type":"string","shell":"ipconfig"}', '{"type":"string","shell":"python --version"}'] to 192.168.31.176
-2025-03-09 15:52:37,284 - control - INFO - send: ['{"type":"string","shell":"ipconfig"}', '{"type":"string","shell":"python --version"}'] to 192.168.31.176
-2025-03-09 15:53:11,042 - control - INFO - send: ['{"type":"string","shell":"ipconfig"}', '{"type":"string","shell":"python --version"}'] to 192.168.31.176
-2025-03-09 15:54:25,103 - control - INFO - send: ['{"type":"string","shell":"ipconfig"}', '{"type":"string","shell":"python --version"}'] to 192.168.31.176
-2025-03-09 15:56:23,955 - control - INFO - send: ['{"type":"string","shell":"ipconfig"}', '{"type":"string","shell":"python --version"}'] to 192.168.31.176
-2025-03-09 15:57:08,287 - control - INFO - send: ['{"type":"string","shell":"ipconfig"}', '{"type":"string","shell":"python --version"}'] to 192.168.31.176
-2025-03-09 16:08:51,947 - control - INFO - send: ['{"type":"string","shell":"ipconfig"}', '{"type":"string","shell":"python --version"}'] to 192.168.31.176
-2025-03-09 16:10:12,746 - control - INFO - send: ['{"type":"string","shell":"ipconfig"}', '{"type":"string","shell":"python --version"}'] to 192.168.31.176
-2025-03-09 16:10:49,427 - control - INFO - send: ['{"type":"string","shell":"ipconfig"}', '{"type":"string","shell":"python --version"}'] to 192.168.31.176
-2025-03-09 16:11:40,126 - control - INFO - send: ['{"type":"string","shell":"ipconfig"}', '{"type":"string","shell":"python --version"}'] to 192.168.31.176
-2025-03-09 16:13:47,787 - control - INFO - send: ['{"type":"string","shell":"ipconfig"}', '{"type":"string","shell":"python --version"}'] to 192.168.31.176
-2025-03-09 16:18:39,127 - control - INFO - send: ['{"type":"string","shell":"ipconfig"}', '{"type":"string","shell":"python --version"}'] to 192.168.31.176
-2025-03-09 16:20:11,670 - control - INFO - send: ['{"type":"string","shell":"ipconfig"}', '{"type":"string","shell":"python --version"}'] to 192.168.31.176
-2025-03-09 16:21:28,117 - control - INFO - send: ['{"type":"string","shell":"ipconfig"}', '{"type":"string","shell":"python --version"}'] to 192.168.31.176
+2025-03-09 22:41:25,538 - control - INFO - ['{"type":"string","shell":"ipconfig","isadmin":false,"os":"Windows","kwargs":{}}']
+2025-03-09 22:41:27,394 - control - INFO - send: ['{"type":"string","shell":"ipconfig","isadmin":false,"os":"Windows","kwargs":{}}'] to 192.168.31.176
+2025-03-09 22:44:25,363 - control - INFO - ['{"type":"string","shell":"python --version","isadmin":false,"os":"Windows","kwargs":{}}']
+2025-03-09 22:44:26,996 - control - INFO - send: ['{"type":"string","shell":"python --version","isadmin":false,"os":"Windows","kwargs":{}}'] to 192.168.31.176
+2025-03-09 22:51:08,077 - control - INFO - ['{"type":"string","shell":"python --version","isadmin":false,"os":"Windows","kwargs":{}}']
+2025-03-09 22:51:09,104 - control - INFO - send: ['{"type":"string","shell":"python --version","isadmin":false,"os":"Windows","kwargs":{}}'] to 192.168.31.176
+2025-03-09 22:51:35,277 - control - INFO - ['{"type":"string","shell":"python --version","isadmin":false,"os":"Windows","kwargs":{}}']
+2025-03-09 22:52:44,111 - control - INFO - ['{"type":"string","shell":"python --version","isadmin":false,"os":"Windows","kwargs":{}}']
+2025-03-09 22:52:45,265 - control - INFO - send: ['{"type":"string","shell":"python --version","isadmin":false,"os":"Windows","kwargs":{}}'] to 192.168.31.176
+2025-03-09 22:57:38,915 - control - INFO - ['{"type":"string","shell":"python --version","isadmin":false,"os":"Windows","kwargs":{}}']
+2025-03-09 22:57:40,070 - control - INFO - send: ['{"type":"string","shell":"python --version","isadmin":false,"os":"Windows","kwargs":{}}'] to 192.168.31.176
+2025-03-09 22:58:38,285 - control - INFO - ['{"type":"string","shell":"python --version","isadmin":false,"os":"Windows","kwargs":{}}']
+2025-03-09 22:58:39,423 - control - INFO - send: ['{"type":"string","shell":"python --version","isadmin":false,"os":"Windows","kwargs":{}}'] to 192.168.31.176
+2025-03-09 22:58:39,650 - control - ERROR - 192.168.31.176 exec ['{"type":"string","shell":"python --version","isadmin":false,"os":"Windows","kwargs":{}}']: ERROR
+2025-03-09 22:59:01,975 - control - INFO - ['{"type":"string","shell":"python --version","isadmin":false,"os":"Windows","kwargs":{}}']
+2025-03-09 22:59:03,131 - control - INFO - send: ['{"type":"string","shell":"python --version","isadmin":false,"os":"Windows","kwargs":{}}'] to 192.168.31.176
+2025-03-09 22:59:03,347 - control - ERROR - 192.168.31.176 exec ['{"type":"string","shell":"python --version","isadmin":false,"os":"Windows","kwargs":{}}']: ERROR
+2025-03-09 22:59:29,854 - control - INFO - ['{"type":"string","shell":"python --version","isadmin":false,"os":"Windows","kwargs":{}}']
+2025-03-09 22:59:31,017 - control - INFO - send: ['{"type":"string","shell":"python --version","isadmin":false,"os":"Windows","kwargs":{}}'] to 192.168.31.176
+2025-03-09 22:59:31,233 - control - ERROR - 192.168.31.176 exec ['{"type":"string","shell":"python --version","isadmin":false,"os":"Windows","kwargs":{}}']: ERROR
+2025-03-09 23:03:51,611 - control - INFO - ['{"type":"string","shell":"python --version","isadmin":false,"os":"Windows","kwargs":{}}']
+2025-03-09 23:03:52,802 - control - INFO - send: ['{"type":"string","shell":"python --version","isadmin":false,"os":"Windows","kwargs":{}}'] to 192.168.31.176
+2025-03-09 23:03:53,027 - control - ERROR - 192.168.31.176 exec ['{"type":"string","shell":"python --version","isadmin":false,"os":"Windows","kwargs":{}}']: ERROR
+2025-03-09 23:04:40,580 - control - INFO - ['{"type":"string","shell":"python --version","isadmin":false,"os":"Windows","kwargs":{}}']
+2025-03-09 23:04:41,777 - control - INFO - send: ['{"type":"string","shell":"python --version","isadmin":false,"os":"Windows","kwargs":{}}'] to 192.168.31.176
+2025-03-09 23:04:41,995 - control - ERROR - 192.168.31.176 exec ['{"type":"string","shell":"python --version","isadmin":false,"os":"Windows","kwargs":{}}']: ERROR
+2025-03-09 23:09:03,782 - control - INFO - ['{"type":"string","shell":"python --version","isadmin":false,"os":"Windows","kwargs":{}}']
+2025-03-09 23:09:04,868 - control - INFO - send: ['{"type":"string","shell":"python --version","isadmin":false,"os":"Windows","kwargs":{}}'] to 192.168.31.176
+2025-03-09 23:09:05,081 - control - ERROR - 192.168.31.176 exec ['{"type":"string","shell":"python --version","isadmin":false,"os":"Windows","kwargs":{}}']: ERROR
+2025-03-09 23:09:46,420 - control - INFO - ['{"type":"string","shell":"ipconfig","isadmin":false,"os":"Windows","kwargs":{}}']
+2025-03-09 23:09:47,536 - control - INFO - send: ['{"type":"string","shell":"ipconfig","isadmin":false,"os":"Windows","kwargs":{}}'] to 192.168.31.176
+2025-03-09 23:19:12,074 - control - INFO - ['{"type":"string","shell":"ipconfig","isadmin":false,"os":"Windows","kwargs":{}}']
+2025-03-09 23:19:13,218 - control - INFO - send: ['{"type":"string","shell":"ipconfig","isadmin":false,"os":"Windows","kwargs":{}}'] to 192.168.31.176
+2025-03-09 23:22:39,444 - control - INFO - ['{"type":"string","shell":"ipconfig","isadmin":false,"os":"Windows","kwargs":{}}']
+2025-03-09 23:22:40,585 - control - INFO - send: ['{"type":"string","shell":"ipconfig","isadmin":false,"os":"Windows","kwargs":{}}'] to 192.168.31.176
+2025-03-09 23:25:53,225 - control - INFO - ['{"type":"string","shell":"ipconfig","isadmin":false,"os":"Windows","kwargs":{}}']
+2025-03-09 23:25:54,395 - control - INFO - send: ['{"type":"string","shell":"ipconfig","isadmin":false,"os":"Windows","kwargs":{}}'] to 192.168.31.176
+2025-03-09 23:26:28,797 - control - INFO - ['{"type":"string","shell":"ipconfig","isadmin":false,"os":"Windows","kwargs":{}}']
+2025-03-09 23:26:30,290 - control - INFO - send: ['{"type":"string","shell":"ipconfig","isadmin":false,"os":"Windows","kwargs":{}}'] to 192.168.31.176
+2025-03-09 23:28:10,081 - control - INFO - ['{"type":"string","shell":"ipconfig","isadmin":false,"os":"Windows","kwargs":{}}']
+2025-03-09 23:28:11,244 - control - INFO - send: ['{"type":"string","shell":"ipconfig","isadmin":false,"os":"Windows","kwargs":{}}'] to 192.168.31.176
+2025-03-09 23:29:32,969 - control - INFO - ['{"type":"string","shell":"git config --list","isadmin":false,"os":"Windows","kwargs":{}}']
+2025-03-09 23:29:34,149 - control - INFO - send: ['{"type":"string","shell":"git config --list","isadmin":false,"os":"Windows","kwargs":{}}'] to 192.168.31.176
+2025-03-09 23:29:34,404 - control - ERROR - 192.168.31.176 exec ['{"type":"string","shell":"git config --list","isadmin":false,"os":"Windows","kwargs":{}}']: ERROR

@@ -32,17 +32,12 @@ class SelectServe(BaseServe):
             try: 
                 # 等待服务器发送shell指令            
                 sock, addr = tcp_conn.accept()
+                
                 # 创建接受任务
                 multiprocessing.Process(target=self.select, args=(sock, addr)).start()
-                    
             except TimeoutError:
                 pass
             
-
-                
-
-    
-
     def select(self, sock:socket.socket, addr):
         reports = []
         instructs = sock.recv(1024).decode()
@@ -52,13 +47,15 @@ class SelectServe(BaseServe):
             item = json.loads(instruct)
             type = item['type']
             shell = item["shell"]
-            
-            report = self.executor_instruct(type, shell)
+            isadmin = item["isadmin"]
+            report = self.executor_instruct(type, shell, isadmin)
             reports.append(report)
+            
+            
         self.report_results(sock, addr, report)
         
 
-    def executor_instruct(self, type, instruct):
+    def executor_instruct(self, type, instruct, isadmin):
             # 指令分流
             if type == "close": # OK
                 print(0)
@@ -89,7 +86,7 @@ class SelectServe(BaseServe):
                 report = SYSTEM.remove(instruct)
                 
             else:
-                report = SYSTEM.executor(instruct)
+                report = SYSTEM.executor(instruct, isadmin=isadmin)
             return report
         
     def savefile(self, filename, conn):
@@ -100,5 +97,4 @@ class SelectServe(BaseServe):
                
     def report_results(self, conn:socket.socket, addr,report:str):
         conn.sendall(report.encode())
-        conn.close()
         return report

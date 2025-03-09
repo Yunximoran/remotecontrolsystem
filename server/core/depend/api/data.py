@@ -1,5 +1,4 @@
 import json
-import asyncio
 from typing import Annotated
 
 from fastapi import(
@@ -11,7 +10,6 @@ from lib import Resolver
 
 
 resolver = Resolver()
-TABLES = resolver("redis", "datas")
 
 # 数据接口
 router = APIRouter()
@@ -32,10 +30,8 @@ async def get_realtime_data():
     实时更新数据，需要定期调用
         从redis中获取数据
     """
-    return {
+    return {"data":{
         "client_status": DB.hgetall("client_status"),
         "client_reports": DB.hgetall("reports"),
         "client_waitdones": DB.hgetall("waitdones"),
-        "softwarelist": DB.lrange("softwarelist"),
-        "logs": DB.lrange("logs")
-    }
+    }}
