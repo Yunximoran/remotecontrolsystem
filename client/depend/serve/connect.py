@@ -1,4 +1,7 @@
 from ._base import *
+from lib.sys import Logger
+
+logger = Logger("ConnectServe", "connect.log")
 class ConnectServe(BaseServe):
     def serve(self):
         # 每秒广播心跳包数据
@@ -7,6 +10,7 @@ class ConnectServe(BaseServe):
             time.sleep(1)
             heart_pkgs = self.get_heartpack()
             udp_conn.send(json.dumps(heart_pkgs))   
+            logger.record(1, f"heart packages: {heart_pkgs}")
         
     def get_heartpack(self) -> str:
         """

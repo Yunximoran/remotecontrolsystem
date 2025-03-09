@@ -41,7 +41,8 @@ class Logger:
         file_handler = RotatingFileHandler(
             log_path, 
             maxBytes=max_bytes, 
-            backupCount=backup_count
+            backupCount=backup_count,
+            encoding="UTF-8"
         )
         file_handler.setFormatter(formatter)
         self.logger.addHandler(file_handler)

@@ -77,10 +77,16 @@ class Linux(__BaseSystem):
         report = self.executor(["ln", "-s", frompath, topath])
         return topath, frompath, report
         
-    def uproot(self):
-        if os.geteuid() != 0:
-            subprocess.check_call(["sudo", sys.executable] + sys.argv)
-            sys.exit(0)
+    def uproot(self, args:str) -> str:
+        if not re.match("^(sudo)(\s(-S))", args) \
+            and re.match("^(sudo)", args):
+            # -S， 读取标准输入密码
+            args = args.replace("sudo", "sudo -S")
+        else:
+            if not re.match("^(sudo)(\s(-S))", args):
+                args = " ".join(map(str, ["sudo -S", args]))
+        return args
+
 
     def executor(self, args, isadmin=False, *, cwd=None) -> str:
         """
@@ -92,35 +98,15 @@ class Linux(__BaseSystem):
         if isinstance(args, list):
             args = " ".join(map(str, args))
 
-        # 处理需要管理元运行的命令
-        password = None
         if isadmin:
-            if not re.match("^(sudo)(\s(-S))", args) \
-                and re.match("^(sudo)", args):
-                # -S， 读取标准输入密码
-                args = args.replace("sudo", "sudo -S")
-            else:
-                if not re.match("^(sudo)(\s(-S))", args):
-                    args = " ".join(map(str, ["sudo -S", args]))
-
+            # 升级为管理员shell，并设置为从标准输入获取密码
+            args = self.uproot(args)
             password = ROOTPASS
+        else:
+            password = None
+
         
-
-        process= subprocess.Popen(
-                args=args,
-                shell=True, 
-                text=True,
-                stdin = subprocess.PIPE,
-                stdout=subprocess.PIPE,
-                stderr=subprocess.PIPE,
-            )
-
-        try:
-            msg, err = process.communicate(input=password, timeout=10)
-        except TimeoutError:
-            msg, err = False, "TimeoutError"
-    
-
+        msg, err = super().executor(args, stdin=password, timeout=10)
         return  self.report(args, msg, err)\
         if not re.match("权限", err)\
         else self.executor(args, True)

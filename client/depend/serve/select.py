@@ -1,10 +1,10 @@
+import re, socket
 from ._base import *
 from depend.system import SYSTEM
 
 
 
 logger = Logger("Select", log_file="select.log")
-
 class SelectServe(BaseServe):
 
     def serve(self):
@@ -25,79 +25,80 @@ class SelectServe(BaseServe):
         """
         # 启动TCP家庭
         tcp_conn =  TCPListen()
+        # while True:
+        #     sock, addr = tcp_conn.sock.accept()
+            
         while True:
             try: 
                 # 等待服务器发送shell指令            
-                conn, data = tcp_conn.recv()
-                print("Select Serve Recv:", data)
-                
-                # 尝试使用json解释数据，如果无法解析则
-                try:
-                    # 解析TCP数据，转化成字典对象
-                    instruct = json.loads(data) # type: dict
-                    logger.record(1, f"exec instruct:{instruct}")
-                    # 多进程启动
-                    with multiprocessing.Pool() as pool:
-                        res_execute = pool.apply_async(self.execute_instruct, args=(instruct, ),
-                            callback=lambda report: self.report_results(conn, report))
-                        pool.apply_async(self.history, args=(instruct, ))
-                        print(res_execute.get())
-                except Exception:
-                    # 如果json解析异常，可能发送的是文件
-                    # download 是向服务器文件下载至client
-                    logger.record(1, f"exec download: {data}")
-                    multiprocessing.Process(self.savefile, args=(data, conn)).start()
-                    conn.close()
+                sock, addr = tcp_conn.accept()
+                # 创建接受任务
+                multiprocessing.Process(target=self.select, args=(sock, addr)).start()
                     
             except TimeoutError:
                 pass
             
+
+                
+
+    
+
+    def select(self, sock:socket.socket, addr):
+        reports = []
+        instructs = sock.recv(1024).decode()
+        logger.record(1, f"recv instruct:{instructs}")
+        for instruct in json.loads(instructs):
+            
+            item = json.loads(instruct)
+            type = item['type']
+            shell = item["shell"]
+            
+            report = self.executor_instruct(type, shell)
+            reports.append(report)
+        self.report_results(sock, addr, report)
+        
+
+    def executor_instruct(self, type, instruct):
+            # 指令分流
+            if type == "close": # OK
+                print(0)
+                report = SYSTEM.close()
+                
+            elif type == "close -s":
+                # instruct == software name
+                report = SYSTEM.close_software(instruct)
+                
+            elif type == "restart": # OK
+                report = SYSTEM.restart()
+                
+            elif type == "start -s":
+                # instruct == software name
+                report = SYSTEM.start_software(instruct)
+                
+            elif type == "wget":
+                report = SYSTEM.wget()
+                
+            elif type == "compress":
+                report = SYSTEM.compress()
+                
+            elif type == "uncompress":
+                report = SYSTEM.uncompress()
+                
+            elif type == "remove":
+                # 将instruct 处理成 topath
+                report = SYSTEM.remove(instruct)
+                
+            else:
+                report = SYSTEM.executor(instruct)
+            return report
+        
     def savefile(self, filename, conn):
         fileobj = conn.recv(1024)
         conn.close()
         with open(os.path.join(LOCAL_DIR_FILE, filename), "wb") as f:
-            f.write(fileobj)
-        
-    def history(self, instruct):
-        # 记录历史指令
-        print("history process")
-        with open(PATH_LOG_SHELLS, 'w', encoding="utf-8") as f:
-            json.dump(instruct, f, ensure_ascii=False, indent=4)
-                
-    def report_results(self, conn, report:str):
+            f.write(fileobj)      
+               
+    def report_results(self, conn:socket.socket, addr,report:str):
         conn.sendall(report.encode())
         conn.close()
         return report
-
-    def execute_instruct(self, instruct:dict[str, str]):
-        label = instruct['name']      # label 标记指令用途
-        instruct = instruct['shell']  # shell 实际执行语句
-        if label == "close": # OK
-            report = SYSTEM.close()
-            
-        elif label == "close -s":
-            # instruct == software name
-            report = SYSTEM.close_software(instruct)
-            
-        elif label == "restart": # OK
-            report = SYSTEM.restart()
-            
-        elif label == "start -s":
-            # instruct == software name
-            report = SYSTEM.start_software(instruct)
-            
-        elif label == "wget":
-            report = SYSTEM.wget()
-            
-        elif label == "compress":
-            report = SYSTEM.compress()
-            
-        elif label == "uncompress":
-            report = SYSTEM.uncompress()
-            
-        else:
-            report = SYSTEM.executor(instruct)
-        return report
-    
-         
-    

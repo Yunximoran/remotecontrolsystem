@@ -10,11 +10,14 @@ import sys
 import ctypes
 import json
 import string
+from pathlib import Path
 from collections.abc import Iterable
 from xml.etree import ElementTree as et
 from typing import Tuple
 import psutil
+from typing import Generator
 from psutil import NoSuchProcess, AccessDenied
+from lib.sys import Logger
 class __BaseSystem:
     # 获取工作目录
     CWDIR = os.getcwd()
@@ -22,8 +25,7 @@ class __BaseSystem:
 
     _disks = []
     
-    
-    PID:dict[str, subprocess.Popen] = {}  # 保存运行进程
+    logger = Logger("system", "executor.log")
 
     def _check_soft_status(self, alias, path):
         # 遍历系统进程池
@@ -33,8 +35,7 @@ class __BaseSystem:
                 # 匹配名称相同的进程
                 if process.exe() == path:
                     yield process
-
-
+        
     def init(self):
         pass
     
@@ -71,12 +72,9 @@ class __BaseSystem:
         # 下载
         pass
     
-    def remove(self, oldPath, newPath=None):
+    def remove(self, path):
         # 移动文件或删除
-        if newPath:
-            pass
-        else:
-            print("del file")
+        pass
             
     def checkfile(self, check_object, base=None):
         # 查找文件
@@ -98,7 +96,11 @@ class __BaseSystem:
                     
         return results
     
-    def executor(self, args, *, cwd=None):
+    def executor(self, args, *,
+                 cwd:Path=None,
+                 stdin: str=None,
+                 timeout:int=None,
+                 ):
         """
         :param label: PID标识
         :param args: 封装的shell指令列表
@@ -113,8 +115,8 @@ class __BaseSystem:
                 stderr=subprocess.PIPE,
                 cwd=cwd
             )
-        msg, err = process.communicate()
-        return  msg, err
+        msg, err = process.communicate(input=stdin, timeout=timeout)
+        return msg, err
     
         
     def report(self, args, msg, err):
@@ -136,7 +138,7 @@ class __BaseSystem:
         pass
     
     
-    def format_params(self, typecode, data):
+    def format_params(self, typecode:int, data: dict|list) -> str:
         types = [
             "instruct",
             "software",
@@ -147,3 +149,11 @@ class __BaseSystem:
             "data": data,    # 携带的data， 软件路径列表 | 错误报文
             "cookie": time.time()
         }, ensure_ascii=False)     
+
+    
+    def record(self, level:int, msg):
+        self.logger.record(level, msg)
+        # logtext = " ".join(map(str, msg))
+        # for other in dmsg:
+        #     logtext = "\n" + other + dmsg[other]
+        # self.logger.record(1, f"{logtext}")

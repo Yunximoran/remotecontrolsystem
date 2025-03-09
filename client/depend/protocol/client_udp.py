@@ -4,8 +4,10 @@ import struct
 from lib import Resolver
 
 resolver = Resolver()
-BROADCAST = ("<broadcast>", resolver("ports", "udp", "broad"))              # 广播地址
-MULTICAST = ("224.25.25.1", resolver("ports", "udp", "multi"))              # 组播地址
+BROADCAST = (resolver("sock", "udp", "ip-broad"), resolver("ports", "udp", "broad"))              # 广播地址
+MULTICAST = (resolver("sock", "udp", "ip-multi"), resolver("ports", "udp", "multi"))              # 组播地址
+
+RECVSIZE = resolver("sock", "recv-size")
 
 class UDP:
     def __init__(self):
@@ -54,8 +56,9 @@ class MultiCast(UDP):
     def init(self):
         self.multi_address, self.multi_port = MULTICAST
         self.sock.bind(("", self.multi_port))
+        self.join_multigroup()
     
-    def settings(self):
+    def join_multigroup(self):
         group = socket.inet_aton(self.multi_address)
         mreq = struct.pack("4sl", group, socket.INADDR_ANY)
         self.sock.setsockopt(socket.IPPROTO_IP, socket.IP_ADD_MEMBERSHIP, mreq)    
@@ -64,6 +67,6 @@ class MultiCast(UDP):
         self.sock.sendto("thi is multicast", MULTICAST)
     
     def recv(self):
-        data, addr = self.sock.recvfrom(1024)
-            # 唯一能获取服务端ip的地方， 可能有用
+        data, addr = self.sock.recvfrom(RECVSIZE)
+        # 唯一能获取服务端ip的地方， 可能有用
         return data.decode()

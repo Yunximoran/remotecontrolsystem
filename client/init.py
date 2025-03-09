@@ -33,7 +33,7 @@ cpu.search("architecture").settext(platform.architecture()[0])
 
 # net.search("ip-server").settext(ip_server)
 # 初始化网络信息
-net_info = NetWork("ens33")
+net_info = NetWork("WLAN")
 net.search("ip").settext(net_info.IPv4)
 net.search("mac").settext(net_info.mac)
 resolver.save()

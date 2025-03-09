@@ -35,14 +35,17 @@
 # time.sleep(10)
 # SYSTEM.close_software("DarkDominance", f"E:\Materail\game material\HA\DarkDominance.exe")
 
-from lib.sys import NetWork
+# from lib.sys import NetWork
 
 
-n = NetWork("WLAN")
-print(n.net)
+# n = NetWork("WLAN")
+# print(n.net)
+# from depend.system import SYSTEM
+# import json
+# from subprocess import Popen, PIPE
+# from pathlib import Path
+
+
 from depend.system import SYSTEM
-import json
-from subprocess import Popen, PIPE
-from pathlib import Path
 
-
+SYSTEM.executor("strings")

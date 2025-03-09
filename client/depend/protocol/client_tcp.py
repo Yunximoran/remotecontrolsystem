@@ -2,10 +2,13 @@ import socket
 
 from lib import Resolver
 resolver = Resolver()
-TIMEOUT = 1
+TIMEOUT = resolver("sock", "tcp", "timeout")
 RECVSIZE = resolver("sock", "recv-size")
+ENCODING = resolver("global", 'encoding')
+
 IP = resolver("network", "ip")
-SERVERIP = '192.168.6.1'
+IPSERVER = resolver("network", "ip-server")
+
 TCPORT = resolver("ports", "tcp", "client")
 TSPORT = resolver("ports", "tcp", "server")
 
@@ -35,25 +38,16 @@ class TCPListen(TCP):
     
     
     def settings(self):
+        # self.sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
         self.sock.settimeout(TIMEOUT)
     
+    def accept(self):
+        return self.sock.accept()
     
-    def listening(self):
-        """
-        :type server_socket: socket.socket
-        :return 
-        """
-        while True:
-            try:
-                server_sock, self.saddr = self.sock.accept()
-                data = server_sock.recv(2048)
-                return (server_sock, data.decode())
-            except TimeoutError:
-                pass
     
     def recv(self):
         server_sock, server_address = self.sock.accept()
-        data = server_sock.recv(2048)
+        data = server_sock.recv(RECVSIZE)
         return (server_sock, data.decode())
 
 class TCPConnect(TCP):
@@ -61,9 +55,8 @@ class TCPConnect(TCP):
         super().__init__()
         
     def send(self, data):
-        # TSPORT: 9095
-        self.sock.connect((SERVERIP, TSPORT))
-        self.sock.sendall(data.encode())
+        self.sock.connect((IPSERVER, TSPORT))
+        self.sock.sendall(data.encode(ENCODING))
         
 
 

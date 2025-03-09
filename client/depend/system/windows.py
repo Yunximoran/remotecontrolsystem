@@ -82,6 +82,7 @@ class Windows(__BaseSystem):
             # 查找应用所在位置
             for item in softwares:
                 if item['ecdis']['name'] == software:
+                    # 获取软件源地址
                     parcpath = item['ecdis']['parc-path']
                     break
         
@@ -124,10 +125,11 @@ class Windows(__BaseSystem):
         #     # 如果需要检查当前权限状态，如无管理员权限则进行提权
         #     __uproot()
          # 是否需要管理员运行,需要检查当前权限状态，如无管理员权限则进行提权
-        _uproot() # if isadmin else None
+        _uproot()  if isadmin else None
         # 执行shell， 获取其输出信息和异常信息
         msg, err =  super().executor(args, cwd=cwd)
         # 返回执行结果， 检查是否由于权限导致的错误，如果是，改用管理员运行
+        self.record(1, f"exec {args} results:\n{msg}")
         return self.report(args, msg, err)\
         if not re.match("权限", err)\
         else self.executor(args, isadmin=True, cwd=cwd)
