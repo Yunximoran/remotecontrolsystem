@@ -1,14 +1,15 @@
+try:
+    import platform
+    import psutil
+    from lib.sys import NetWork
+    from lib import Resolver
+except ImportError:
+    import os
+    os.system(f"conda install --file lib/env/requirements.txt")
 
-import platform
-import psutil
 
-
-from lib.sys import NetWork
-from lib import Resolver
-
-
-ip_server = input("请输入服务端地址:")
-netname = input("请输入网络适配器名称")
+ip_server = input("请输入服务端地址:\t")
+netname = input("请输入网络适配器名称:\t")
 
 resolver = Resolver()
 net = resolver("network")

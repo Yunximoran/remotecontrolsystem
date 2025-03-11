@@ -32,4 +32,8 @@
 		<level>info</level>
 		<logpath>logs</logpath>
 	</log-default>
+	<environment>
+		<li>python=3.11.10</li>
+		<li>psutil</li>
+	</environment>
 </root>

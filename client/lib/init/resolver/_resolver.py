@@ -5,7 +5,7 @@ from typing import List, AnyStr, ByteString
 from xml.etree import ElementTree as et
 from xml.etree.ElementTree import Element
 
-from ._node import Node
+from ._node import Node, PathNode
     
     
 WORKDIR = Path.cwd()
@@ -18,7 +18,7 @@ class _Resolver:
         self.__file = file
         self.__conf = et.parse(file)
         self.__root = self.__conf.getroot()
-    
+
         self.root = self.deep(self.__root)
         
         
@@ -27,10 +27,6 @@ class _Resolver:
         et.indent(self.__conf, space="\t", level=0)
         # 写入修改
         self.__conf.write(self.__file)
-    
-    def annotation(self, node:Element, msg):
-        annotated = et.Comment(msg)
-        node.append(annotated)
         
     def deep(self, root: Element, parent: Node = None) -> Node:
         """
@@ -43,11 +39,9 @@ class _Resolver:
         node = Node(root, parent)
         
         # 解析路径配置
-        if "struct" in node.attrib.keys():
-            struct = self.__struct_options(root)
-            node.data = struct
-            return node
-        
+        if "struct" in root.attrib.keys():
+            return PathNode(root, parent)
+
         # 校验校验是否包含列表数据
         list_data = self.__list_options(root)
         if list_data != []:
@@ -63,25 +57,6 @@ class _Resolver:
         # 获取配置文件原始文档
         return self.__encoding(et.tostring(node))
     
-    def __struct_options(self, node:Element, path:Path = None):
-        res = {}
-        if path is None:
-            path = Path(node.tag)
-            res['path'] = path
-
-        else:
-            path = path.joinpath(node.attrib["name"])
-            res['path'] = path
-        
-            
-        for dir in node.findall("dir"):
-            driname = dir.attrib["name"]
-            res[driname] = {
-                "dir": self.__struct_options(dir, path)
-                } 
-
-        res['file'] = self.__list_options(node)
-        return res
     
     def __list_options(self, node:Element) -> List[AnyStr]:
         # 解析列表类型配置
@@ -108,10 +83,9 @@ class _Resolver:
             setpath = " - ".join(args)
             raise Exception(f"Setting not Exist: {setpath}")
         else:
-            node.check(tree)
-            if tree:
+            if node.type() in ["struct", "tree"]:
                 return node
-            
+    
             return node.data
 
 __all__ = [
