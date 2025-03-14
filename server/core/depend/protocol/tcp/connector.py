@@ -33,8 +33,8 @@ class Connector(TCP):
     
     # @catch.timeout
     def recv(self):
-        data = self.sock.recv(2048)
-        return json.loads(data.decode(ENCODING))
+        data = self.sock.recv(RECVSIZE).decode(ENCODING)
+        return data
     
     def close(self):
         self.sock.close()

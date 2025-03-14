@@ -58,10 +58,4 @@
 		<ip>192.168.31.176</ip>
 		<mac>20-1E-88-F5-05-B9</mac>
 	</network>
-	<build struct="ture">
-		<dir name="log">
-			<li>log.log</li>
-		</dir>
-		<li>logs.log</li>
-	</build>
 </root>

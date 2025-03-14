@@ -7,6 +7,7 @@ from fastapi import APIRouter
 from lib import Resolver
 from lib.ui.explorer import choose_file
 from datamodel import WaitDesposeResults
+from datamodel.transfer_data import Software
 from core.depend.control import Control
 from gloabl import DB
 
@@ -37,27 +38,26 @@ async def magic_client(toclients:Annotated[list, None] = []):
 # ========= 默认事件========== #
 # 添加软件清单
 @router.put("/addsoftwarelist")
-async def addsoftwarelist(
-        softwarename: Annotated[str, None], 
-        version: Annotated[str, None] = None
-    ):
+async def addsoftwarelist(software: Software):
     """
-   softwarename: 软件名称
-   version: 软件版本[可选]
+        software model
     """
-    # 打开资源管理器，选择添加软件
-    executablefile, softwarepath = choose_file()
-    software = {
-        "ecdis": {
-            "name": softwarename,
-            "executable": executablefile,
-            "path": softwarepath,
-            "version": version
-        },
-        "conning": False
-    }
-    DB.lpush("softwarelist", json.dumps(software))
-    return {"OK", softwarename}
+    info = software.model_dump_json()
+    DB.lpush("softwarelist", info)
+    return {"OK", info["ecdis"]["name"]}
+    # # 打开资源管理器，选择添加软件
+    # executablefile, softwarepath = choose_file()
+    # software = {
+    #     "ecdis": {
+    #         "name": softwarename,
+    #         "executable": executablefile,
+    #         "path": softwarepath,
+    #         "version": version
+    #     },
+    #     "conning": False
+    # }
+    # DB.lpush("softwarelist", json.dumps(software))
+    # return {"OK", softwarename}
 
 @router.put("/popsoftwarelist")
 async def popsoftwarelist(software):

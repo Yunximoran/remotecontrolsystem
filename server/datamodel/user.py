@@ -4,6 +4,7 @@ from fastapi import Query
 from pydantic import BaseModel
 
 
+# 用户模型
 class Credentils(BaseModel):
     """
         登录凭证

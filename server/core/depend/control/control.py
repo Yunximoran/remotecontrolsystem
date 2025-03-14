@@ -1,5 +1,6 @@
 import socket
 import struct
+import re
 import json
 from functools import partial
 
@@ -94,15 +95,15 @@ class Control:
         conn.connect(ip)
         logger.record(1, f"send: {instructs} to {ip}")
         conn.send(json.dumps(instructs, ensure_ascii=False, indent=4))
-        report = conn.recv()
-
-        if report['err'] == "<No error output>":
-            logger.record(1, f"{ip} exec {instructs}: OK")
-        else:
-            logger.record(3, f"{ip} exec {instructs}: ERROR")
-            
-        DB.hset("reports", mapping={ip: json.dumps(report, ensure_ascii=False, indent=4)})
-        print("hello world")
+        reports = conn.recv()
+        DB.hset("reports", ip, reports)
+        for report in json.loads(reports):
+            instruct = report['instruct']
+            if reports['err'] == "<No error output>":
+                logger.record(1, f"{ip} exec {instruct} OK")
+            else:
+                logger.record(3, f"{ip} exec {instruct} ERROR")
+        print(reports)
         conn.close()
 
     @staticmethod
