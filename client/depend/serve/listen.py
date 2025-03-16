@@ -55,12 +55,12 @@ class ListenServe(BaseServe):
         path = SYSTEM.checkfile(software_name, software_path)
             
         
-        # 格式化表单
-        params = SYSTEM.format_params(1, allpath)
+        # # 格式化表单
+        # params = SYSTEM.format_params(1, allpath)
         
-        # 建立TCP连接服务器，发送匹配列表，等待服务器回应,后去实际地址
-        logger.record(1, f"related to {software_name}, path: {allpath}")
-        softwares['ecdis']["prac-path"] = self._wait_response(params)
+        # # 建立TCP连接服务器，发送匹配列表，等待服务器回应,后去实际地址
+        # logger.record(1, f"related to {software_name}, path: {allpath}")
+        # softwares['ecdis']["prac-path"] = self._wait_response(params)
         
         # 解析服务器回应结果，保存软件位置，并建立软链接
         softwares['ecdis']['path'], report = SYSTEM.build_hyperlink(software_name, softwares['ecdis']["prac-path"])
