@@ -27,7 +27,7 @@
 		<li>npm --prefix view run serve</li>
 	</dependon>
 	<sock>
-		<udp describe="UDP配置">
+		<udp describe="UDP&#37197;&#32622;">
 			<ip-broad>255.255.255.255</ip-broad>
 			<ip-multi>224.25.25.1</ip-multi>
 		</udp>
@@ -62,9 +62,12 @@
 				<li>softwares.json</li>
 				<li>shells.json</li>
 			</dir>
-			<dir name="file" />
-			<dir name="logs" />
-			<dir name="soft" />
+			<dir name="file">
+			</dir>
+			<dir name="logs">
+			</dir>
+			<dir name="soft">
+			</dir>
 		</local>
 		<logs struct="true">
 		</logs>

@@ -1,31 +1,41 @@
-class A:
-    def __init__(self, a):
-        self.__a = a
-        
-    def itera(self):
-
-        for i in self.__a:
-            print(i)
-            
-            
-
-class B(A):
-    def __init__(self):
-        self.__a = []
-        super().__init__(self.__a)
-        
+class World:
+    def __init__(self, countries):
+        self.countries = countries
     
-    def add_a(self, i):
-        self.__a.append(i)
-        
+    def __getattr__(self, key):
+        print(f"__getattr__ called: unexisted key {key}")
+        return None
     
-        
-        
-    
-    
-b = B()
+    def __getattribute__(self, key):
+        print(f"__getattribute__ called: key {key}")
+        return super(World, self).__getattribute__(key)
 
-b.add_a(1)
-b.add_a(2)
+    def __setattr__(self, key, value):
+        if key in self.__dict__:
+            print(f"__setattr__ called: key existed {key}")
+        else:
+            print(f"__setattr__ called: key unexisted {key}")
+        self.__dict__[key] = value
+    
+    def __delattr__(self, key):
+        print(f"__delattr__ called: key {key}")
+        del self.__dict__[key]
 
-b.itera()
+w = World(256)
+w.oceans = 5
+del w.countries
+"""
+deepseek api key: sk-be83a1d93d1d4e05afd15e3ca6b3d5a9
+Output:
+# __getattribute__ called: key __dict__
+#__setattr__ called: key unexisted countries
+# __getattribute__ called: key __dict__
+
+# __getattribute__ called: key __dict__
+# __setattr__ called: key unexisted oceans
+# __getattribute__ called: key __dict__
+
+# __delattr__ called: key countries
+# __getattribute__ called: key __dict__
+"""
+

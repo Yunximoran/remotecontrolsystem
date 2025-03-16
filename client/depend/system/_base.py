@@ -10,6 +10,7 @@ import sys
 import ctypes
 import json
 import string
+from typing import List
 from pathlib import Path
 from collections.abc import Iterable
 from xml.etree import ElementTree as et
@@ -76,26 +77,50 @@ class __BaseSystem:
         # 移动文件或删除
         pass
             
-    def checkfile(self, check_object, base=None):
-        # 查找文件
-        results = []
-        if base is None:
-            # 默认全盘搜索
-            base = self._disks
-        elif base not in self._disks:
-            # 校验非法磁盘
-            raise "disk is not exist"
+    def checkfile(self, check_object, path:Path=None, base=None):
         
-        for root, dirs, files in os.walk(base):
+        """
+            # 查找文件
+        check_object: 查找对象
+        path: 文件目录
+        base: 查找目录
+        """
+        if path:
+            if path.exists():
+                # 如果路径本地本地存在方法它
+                return path
+            else:
+                pass
+        else:
+            results: List[Path] = []
+            if base is None:
+                # 默认全盘搜索
+                base = self._disks
+            elif base not in self._disks:
+                # 校验非法磁盘
+                raise "disk is not exist"
+            
+            for root, dirs, files in os.walk(base):
+                for file in files:
+                    if file == check_object:
+                        results.append(os.path.join(root, file))
+                for dir in dirs:
+                    if dir == check_object:
+                        results.append(os.path.join(root, dir))
+                        
+            return results
+    def _global_searc(self, obj, root):
+        if root is None:
+            root = self._disks
+        
+        for node, dirs, files in os.walk(root):
             for file in files:
-                if file == check_object:
-                    results.append(os.path.join(root, file))
+                if file == obj:
+                    pass
             for dir in dirs:
-                if dir == check_object:
-                    results.append(os.path.join(root, dir))
-                    
-        return results
-    
+                if dir == obj:
+                    pass
+                
     def executor(self, args, *,
                  cwd:Path=None,
                  stdin: str=None,
@@ -127,7 +152,7 @@ class __BaseSystem:
             "msg": msg if msg else "<No output>",
             "err": err if err else "<No error output>",
             "time": time.time()
-        }, ensure_ascii=False)   
+        }, ensure_ascii=False, indent=4)   
     
     
     def build_hyperlink(self, alias, frompath):

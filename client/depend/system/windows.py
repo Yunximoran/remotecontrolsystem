@@ -96,7 +96,10 @@ class Windows(__BaseSystem):
             process.kill()
         
         return self.report(software, f"{software} is killed", False)
-
+    
+    def search(self, obj, if_gloabl=False):
+        pass
+    
     def checkfile(self, check_object):
         results = []
         for root in self._disks:

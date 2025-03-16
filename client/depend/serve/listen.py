@@ -1,6 +1,6 @@
 from ._base import *
 from lib.sys import Logger
-
+import re
 logger = Logger("ListenServer", "listen.log")
 
 
@@ -10,9 +10,6 @@ class ListenServe(BaseServe):
         self.multi_conn = MultiCast()  
         
     def serve(self):
-        # 服务入口
-        # 加载组播插件
-        # multi_conn = MultiCast() 
         
         # 创建进程池
         pool = multiprocessing.Pool()
@@ -26,31 +23,7 @@ class ListenServe(BaseServe):
             # 更新本地软件清单
             # multiprocessing.Process(self._update_softwares)
             pool.map_async(self._update_softwares, newitem, callback=self._write_local_softwares).get()
-            """
-            with open(PATH_MAP_SOFTWARES, 'r', encoding='utf-8') as f:
-                # 导入本地软件清单数据
-                local_softwares: list[dict] = json.load(f)
-                
-                # 添加新项目
-                for item in softwares:
-                    itemname = item['ecdis']['name']
-                    isexist = False
-                    
-                    # 如果软件已存在更新/不修改
-                    for localitem in local_softwares:
-                        localname = localitem['ecdis']['name']
-                        if itemname == localname:
-                            isexist = True
-                            break
-                        
-                    # 软件为新软件添加项目
-                    if not isexist:
-                        logger.record(1, f"add new soft {itemname}")
-                        newitem.append(item)
-                        
-            # 保存更新后的数据
-            pool.map_async(self._update_softwares, newitem, callback=self._write_local_softwares).get()            
-            """
+
 
     def _check_softwares(self, softwares):
         newitem = []
@@ -77,9 +50,10 @@ class ListenServe(BaseServe):
     def _update_softwares(self, softwares):
         # 更新软件清单
         software_name = softwares['ecdis']['name']
-        
+        software_path = softwares['ecdis']['path']
         # 全盘搜索软件所在位置，获取所有匹配项目
-        allpath = SYSTEM.checkfile(software_name)
+        path = SYSTEM.checkfile(software_name, software_path)
+            
         
         # 格式化表单
         params = SYSTEM.format_params(1, allpath)

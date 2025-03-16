@@ -1,15 +1,10 @@
-"""
-需要保存的数据
-    shell
-    softwarelist
-"""
-
 # 客户端代码
 import json
 import multiprocessing
 
 from depend.serve import ListenServe, SelectServe, ConnectServe
 from depend.path import *
+
 class Client:
     # 注册服务
     servers: list[multiprocessing.Process] = [
@@ -18,6 +13,7 @@ class Client:
         multiprocessing.Process(target=ListenServe)     # 监听服务： 接受服务端，处理待办事件
     ]
     def __init__(self):
+        print("client runing")
         self.build()
         self.start_server()
         

@@ -39,7 +39,7 @@ class _Resolver:
         node = Node(root, parent)
         
         # 解析路径配置
-        if "struct" in root.attrib.keys():
+        if "struct" in root.attrib:
             return PathNode(root, parent)
 
         # 校验校验是否包含列表数据
@@ -87,6 +87,12 @@ class _Resolver:
                 return node
     
             return node.data
+        
+    def __enter__(self):
+        return self
+    
+    def __exit__(self, *_):
+        self.save()
 
 __all__ = [
     "PRIVATECONF",

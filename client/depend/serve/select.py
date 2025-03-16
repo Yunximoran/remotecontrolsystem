@@ -1,7 +1,10 @@
 import re, socket
 from ._base import *
 from depend.system import SYSTEM
+from lib import Resolver
 
+resolver = Resolver()
+ENCODING = resolver("global", "encoding")
 
 
 logger = Logger("Select", log_file="select.log")
@@ -31,14 +34,14 @@ class SelectServe(BaseServe):
         while True:
             try: 
                 # 等待服务器发送shell指令            
-                sock, addr = tcp_conn.accept()
+                sock, _ = tcp_conn.accept()
                 
                 # 创建接受任务
-                multiprocessing.Process(target=self.select, args=(sock, addr)).start()
+                multiprocessing.Process(target=self.select, args=(sock,)).start()
             except TimeoutError:
                 pass
             
-    def select(self, sock:socket.socket, addr):
+    def select(self, sock:socket.socket):
         reports = []
         instructs = sock.recv(1024).decode()
         logger.record(1, f"recv instruct:{instructs}")
@@ -52,13 +55,12 @@ class SelectServe(BaseServe):
             reports.append(report)
             
             
-        self.report_results(sock, addr, report)
+        self.report_results(sock, reports)
         
 
     def executor_instruct(self, type, instruct, isadmin):
             # 指令分流
             if type == "close": # OK
-                print(0)
                 report = SYSTEM.close()
                 
             elif type == "close -s":
@@ -95,6 +97,6 @@ class SelectServe(BaseServe):
         with open(os.path.join(LOCAL_DIR_FILE, filename), "wb") as f:
             f.write(fileobj)      
                
-    def report_results(self, conn:socket.socket, addr,report:str):
-        conn.sendall(report.encode())
-        return report
+    def report_results(self, conn:socket.socket, reports:list):
+        conn.sendall(json.dumps(reports, ensure_ascii=False, indent=4).encode(ENCODING))
+        return reports
