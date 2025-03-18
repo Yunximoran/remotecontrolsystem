@@ -5,7 +5,7 @@ from typing import Dict, Tuple, AnyStr
 from ._prototype import TCP, socket
 from gloabl import DB
 from lib import CatchSock
-from lib.sys.processing import MultiProcess
+from lib.sys.processing import Process
 from lib import Resolver
 
 resolver = Resolver()
@@ -42,7 +42,7 @@ class Listener(TCP):
             if conn is False:
                 continue
             else:
-                task = MultiProcess(target=self.__task, args=(conn, ))
+                task = Process(target=self.__task, args=(conn, ))
                 task.start()
 
              
@@ -51,13 +51,13 @@ class Listener(TCP):
         """
             解析连接对象
         """
-        sock, _, data = conn
+        sock, addr, data = conn
         
         # 解析TCP数据，获取事件类型和cookie
         type, cookie = self._parse(data)
         
         # 事件分流
-        self._event_brench(type, cookie, sock, data)
+        self._event_brench(sock, addr, type, cookie, data)
         
     def _parse(data):
         """
@@ -69,24 +69,29 @@ class Listener(TCP):
         cookie = msg['cookie']
         return event_type, cookie
 
-    def _event_brench(self, type, cookie, sock, data):
+    def _event_brench(self, sock, addr, type, cookie, data):
         """
             事件分支
         区分不同类型事件，执行对应事件
         """
         if type == "instruct":
+            # 这里将来执行交互式shell时可能会用到
             pass
-                
+        
         if type == "software":
-            # 添加待办事件， 将事件标识和事件信息写入redis， 发送客户端，等待客户端处理
-            self._add_waitdone(cookie, data)
+            # 取消软件待办事件
+            # 直接获取软件相关错误信息
+            DB.lpush(addr, data)
             
-            # 等待处理待办事件，定期搜索事件标识，如果找到，获取处理结果，返回客户端，关闭连接
-            is_OK = self._dps_waitdone(cookie, sock)
-            if not is_OK:
-                # 在这里写入日志
-                # 删除待办事项
-                pass      
+             # 添加待办事件， 将事件标识和事件信息写入redis， 发送客户端，等待客户端处理
+            # self._add_waitdone(cookie, data)
+            
+            # # 等待处理待办事件，定期搜索事件标识，如果找到，获取处理结果，返回客户端，关闭连接
+            # is_OK = self._dps_waitdone(cookie, sock)
+            # if not is_OK:
+            #     # 在这里写入日志
+            #     # 删除待办事项
+            #     pass      
                 
         if type == "report":
             # 将汇报结果保存数据库，执行日志

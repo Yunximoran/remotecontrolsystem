@@ -39,7 +39,7 @@ class _Resolver:
         node = Node(root, parent)
         
         # 解析路径配置
-        if "struct" in root.attrib.keys():
+        if "struct" in root.attrib:
             return PathNode(root, parent)
 
         # 校验校验是否包含列表数据
@@ -77,16 +77,22 @@ class _Resolver:
         except AttributeError:
             return context.decode(encoding)
     
-    def __call__(self, *args, tree=False):
+    def __call__(self, *args, is_node=False) -> Node|PathNode|AnyStr:
         node = self.root.search(*args)
         if node is None:
             setpath = " - ".join(args)
             raise Exception(f"Setting not Exist: {setpath}")
         else:
-            if node.type() in ["struct", "tree"]:
+            if node.type() in ["struct", "tree"] or is_node:
                 return node
     
             return node.data
+        
+    def __enter__(self):
+        return self
+    
+    def __exit__(self, *_):
+        self.save()
 
 __all__ = [
     "PRIVATECONF",

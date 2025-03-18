@@ -4,7 +4,7 @@ import uvicorn
 from core.depend.protocol.tcp import Listener
 from core.depend.protocol.udp import BroadCastor
 
-from lib.sys.processing import MultiProcess, Manager
+from lib.sys.processing import Process
 from lib import Resolver
 
 resolver = Resolver()
@@ -26,7 +26,7 @@ BROADCAST = (resolver("sock", "udp", "ip-broad"), resolver("ports", "udp", "broa
 
 
 class Start:
-    Tasks: List[MultiProcess] = []
+    Tasks: List[Process] = []
     def __init__(self) -> None:
         self.__registry((
             self._tcplisten,
@@ -46,7 +46,7 @@ class Start:
     def __registry(self, tasks: Tuple[Any]):
         # 注册依赖任务 
         for task in tasks:
-            self.Tasks.append(MultiProcess(target=task))
+            self.Tasks.append(Process(target=task))
 
     def __starttasks(self):
         for server in self.Tasks:

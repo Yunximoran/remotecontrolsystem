@@ -2,18 +2,17 @@ import os
 import json
 from redis import StrictRedis
 
-from lib.init.resolver import _resolver
+from lib.init.resolver import __resolver
 from lib.catch import _CatchDataBase
 
 catch = _CatchDataBase()
 
 
-HOST = _resolver("redis", "host")
-PORT = _resolver("redis", "port")
-DB = _resolver("redis", "db")
-DATAS = _resolver("redis", "datas")
+HOST = __resolver("redis", "host")
+PORT = __resolver("redis", "port")
+DB = __resolver("redis", "db")
 
-# 
+
 class Connector(StrictRedis):
     """
         Redis操作模块，只在redis服务启动后可用
@@ -35,13 +34,6 @@ class Connector(StrictRedis):
 
     def save(self, **kwargs):
         return super().save(**kwargs)
-    
-    def init_start(self):
-        """
-            启动初始化
-        """
-        for data in DATAS:
-            pass
         
     @catch.redis
     def execute_command(self, *args, **options):

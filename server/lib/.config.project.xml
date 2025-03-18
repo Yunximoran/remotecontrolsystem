@@ -30,32 +30,44 @@
 			<li>http://localhost:8080</li>
 		</cors>
 	</server>
-	<sock>
-		<udp>
+	<sock describe="通信配置">
+		<udp describe="配置组播组和广播地址">
 			<ip-broad>0.0.0.0</ip-broad>
 			<ip-multi>224.255.255.1</ip-multi>
 		</udp>
-		<tcp>
+		<tcp describe="配置TCP性能参数">
 			<listenes>5</listenes>
 			<timeout>1</timeout>
 		</tcp>
-		<recv-size>1024</recv-size>
+		<recv-size describe="设置接受字节">1024</recv-size>
 	</sock>
-	<ports>
+	<ports describe="端口配置">
 		<udp>
 			<server>8081</server>
-			<broad>8082</broad>
-			<multi>8083</multi>
+			<broad describe="广播端口，心跳包传输">8082</broad>
+			<multi describe="组播端口，软件清单传输">8083</multi>
 			<client>8084</client>
 		</udp>
 		<tcp>
-			<client>8085</client>
-			<client-file>8086</client-file>
-			<server>9095</server>
+			<client describe="客户端指令监听端口">8085</client>
+			<client-file describe="客户端TCP文件接收端口">8086</client-file>
+			<server describe="服务端，结果监听端口">9095</server>
 		</tcp>
 	</ports>
-	<network>
+	<network describe="局域网IP和MAC">
 		<ip>192.168.31.176</ip>
 		<mac>20-1E-88-F5-05-B9</mac>
 	</network>
+	<data>
+		<redis-tables>
+			<li describe="客户端状态">client_status</li>
+			<li describe="客户端信息">client_message</li>
+			<li describe="心跳包">heart_packages</li>
+			<li describe="软件清单">softwarelist</li>
+			<li describe="指令执行结果">reports</li>
+			<li describe="系统日志">logs</li>
+			<li describe="待办事件信息">waitdones</li>
+			<li describe="账户信息">accounts</li>
+		</redis-tables>
+	</data>
 </root>

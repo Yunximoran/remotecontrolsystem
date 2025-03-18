@@ -1,6 +1,6 @@
 import re
-text = "WindowsLinux"
+text = "e"
 
-s = re.match("^(Windows)$|^(Linux)$|^(MacOS)$", text)
+s = re.match("^(3|e|(error))$", text)
 
 print(s)

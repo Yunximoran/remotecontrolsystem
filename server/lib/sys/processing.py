@@ -1,16 +1,13 @@
 from functools import partial
-from multiprocessing import Process
-from multiprocessing.pool import Pool
-
+from multiprocessing import Process as _Process
+from multiprocessing.pool import Pool as _Pool
 from multiprocessing import (
-    Value,
-    Array,
     Lock,
-    Manager,
-    Queue
+    Queue,
+    Value,
 )
 
-from lib.init.resolver import _resolver
+from lib.init.resolver import __resolver
 from lib.catch import _CatchProcess
 
 
@@ -18,14 +15,14 @@ Catch = _CatchProcess()
 
 
 @Catch.process
-def worker(target, *args, **kwargs):
+def worker(func, *args, **kwargs):
     """
         包装工作函数
     func: 目标函数
     args: 函数实参元组
     kwargs: 函数实参字典
     """
-    return target(*args, **kwargs)
+    return func(*args, **kwargs)
 
 # 获取进程输出信息
 def stdout(res):
@@ -36,7 +33,7 @@ def stderr(err):
     print(err)
 
 
-class MultiPool(Pool):
+class Pool(_Pool):
     
     def __init__(self, processes = None, initializer = None, initargs = (), maxtasksperchild = None, context = None):
         """
@@ -44,17 +41,17 @@ class MultiPool(Pool):
         定义进程数范围
         """
         if processes is None or processes < 5:
-            processes = _resolver("preformance", "min-processes") 
+            processes = __resolver("preformance", "min-processes") 
         elif processes > 10:
-            processes = _resolver("preformance", "max-processes")
+            processes = __resolver("preformance", "max-processes")
         super().__init__(processes, initializer, initargs, maxtasksperchild, context)
         
-    def map_async(self, func, iterable, *, attribute={}, chunksize = None, callback = None, error_callback = None):
-        _worker = partial(worker, func, attr=attribute)
+    def map_async(self, func, iterable, chunksize = None, callback = None, error_callback = None):
+        _worker = partial(worker, func)
         return super().map_async(_worker, iterable, chunksize, callback, error_callback)
 
-    def apply_async(self, func, args=(), kwds={}, *, attribute={}, callback=None, error_callback=None):
-        _worker = partial(worker, func, attr=attribute)
+    def apply_async(self, func, args=(), kwds={}, callback=None, error_callback=None):
+        _worker = partial(worker, func)
         return super().apply_async(_worker, args, kwds, callback, error_callback)
 
     def join(self):
@@ -65,10 +62,10 @@ class MultiPool(Pool):
 
     
 
-class MultiProcess(Process):
-    def __init__(self, group=None, target=None, name=None, args=(), kwargs={}, *, attribute={}, daemon = None):
+class Process(_Process):
+    def __init__(self, group=None, target=None, name=None, args=(), kwargs={}, *, daemon = None):
         super().__init__(group, name=name, args=args, kwargs=kwargs, daemon=daemon)
-        self._target = partial(worker, target, attr=attribute)
+        self._target = partial(worker, target)
     
     def start(self):
         return super().start()

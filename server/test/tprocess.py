@@ -25,5 +25,4 @@ ips = ["110222", "2dwwddwd"]
 if __name__ == "__main__":
     with MultiPool() as pool:
         sendto = partial(send, d=ds)
-        # setattr(sendto, "__name__", send.__name__)
         pool.map_async(sendto, ips, attribute={"__name__": send.__name__}).get()

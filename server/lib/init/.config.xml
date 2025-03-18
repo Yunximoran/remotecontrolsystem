@@ -28,8 +28,10 @@
 		<max-processes>10</max-processes>
 		<tcp-listenes>5</tcp-listenes>
 	</preformance>
-	<log-default>
-		<level>info</level>
-		<logpath>logs</logpath>
-	</log-default>
+	<default>
+		<log-settings>
+			<level>info</level>
+		</log-settings>
+		<encoding>utf-8</encoding>
+	</default>
 </root>

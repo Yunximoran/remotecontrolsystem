@@ -1,8 +1,5 @@
-from core.depend.control import Control
+from lib.init.resolver import __resolver
 
 
-controlor = Control()
-
-
-if __name__ == "__main__":
-    controlor.sendtoclient([], instructs="hello")
+db = __resolver("database")
+print("redis" in db)

@@ -22,7 +22,12 @@ class _Node:
         self.__node = node
         self.__childs = childs  
 
-            
+    def __contains__(self, item):
+        if isinstance(item, str):
+            return item in [child.tag for child in self.__childs]
+        else:
+            return item in self.__childs
+    
     def __iter__(self) -> Generator[Union[Node, PathNode], None, None]:
         for elem in self.__childs:
             yield elem
@@ -75,12 +80,17 @@ class _Node:
         else:
             raise KeyError(f"{self}not attribute {key}")
     
-    def addelement(self, tag, text="\n", attrib = {}, **extra) -> Node:
+    def addelement(self, tag, text="\n", attrib = {}, index:int=None, **extra) -> Node:
         # 如果子节点已存在，返回子节点
         # 创建新Element
-        newelem = SubElement(self.__node, tag, attrib, **extra)
+        if isinstance(index, int):
+            newelem = Element(tag, attrib, **extra)
+            self.__node.insert(index, newelem)
+        else:
+            newelem = SubElement(self.__node, tag, attrib, **extra)
         # 设置默认文本， 没有设置会成为单标签文件报错
         newelem.text = text + "\t" * self.level if text == "\n" else text
+
         return newelem
 
     def delelement(self, node: Node):
@@ -90,9 +100,10 @@ class _Node:
         # 获取原始Element
         return self.__node
     
-    def settext(self, text:Any):
-        self.__node.text = str(text)
-    
+    @staticmethod
+    def __set_default_context(text, level):
+        # 设置默认文本
+        return text + "\t" * level if text == "\n" else text
     
 class Node(_Node):
     def __init__(self, node:Element, parent:Node = None):
@@ -137,8 +148,9 @@ class Node(_Node):
     
     def settext(self, text):
         if self.type() == "val":
-            super().settext(text)
-            self.setdata(text)
+            node = self.getelement()
+            node.text = str(text)
+            self.setdata(node.text)
         else:
             raise "must be a val node to set text"
         
@@ -156,12 +168,10 @@ class Node(_Node):
         
         # 创建新Element
         newelem = super().addelement(tag, text="\n", attrib = {}, **extra)
-
-
-        # 生成新Node， 绑定父Node为self
-        newnode = Node(newelem, self) if "struct" not in attrib.keys() else PathNode(newelem, self)
         
-
+        # 生成新Node， 绑定父Node为self, 如果attrib中包含struct属性，创建PathNode，并绑定父元素为self
+        newnode = Node(newelem, self) if "struct" not in attrib else PathNode(newelem, self)
+        
         # 绑定子Node为新Node
         self.__childs.append(newnode)
         
@@ -234,8 +244,9 @@ class PathNode(_Node):
         tag: 目录名称
         describe: 目录描述
         """
-        if parent is None:
-            raise "path node must in Node"
+        # parent 必要参数，且必须为 Node 或 PathNode
+        if not isinstance(parent, Node|PathNode):
+            raise "path node must a Node or PathNode"
         
         self.parent = parent        # 绑定 父目录 [父节点]
         if isinstance(self.parent, Node):
@@ -246,7 +257,7 @@ class PathNode(_Node):
             self.tag = node.attrib["name"]  # 目录名称
             self.describe = node.attrib["describe"] if "describe" in node.attrib.keys() else None
             self.path = parent.path.joinpath(self.tag)
-            
+        self.path.exists()
         # 设置节点索引    
         self.addr = parent.addr.copy()
         self.addr.append(self.tag)            
@@ -257,11 +268,13 @@ class PathNode(_Node):
             child = PathNode(dir, self)
             self.dirs.append(child)
         
-        # 添加子文件
-        self.files: Dict[Path] = {}
+        # 添加子文件, 保存子文件节点
+        self.files: Dict[AnyStr, Path] = {}
+        self.__files: Dict[AnyStr, Element] = {}
         for li in node.findall("li"):
             file_path = self.path.joinpath(li.text)
-            self.files[file_path.name] = file_path          
+            self.files[file_path.name] = file_path 
+            self.__files[file_path.name] = li       
 
         super().__init__(
             self.tag,
@@ -271,19 +284,124 @@ class PathNode(_Node):
             level=len(self.addr)
             )
         
-    def touch(self, file, isdir=False, isall=False):
-        pass
+    def clean(self):
+        glob = self.path.glob("*")
+        for child in glob:
+            if child.name not in self.files and child.name not in self.dirs:
+                if child.is_dir():
+                    child.rmdir()
+                else:
+                    child.unlink()
+                    
+    def exists(self, iter=False):
+        """
+            判断路径是否存在
+        """
+        state = self.path.exists()
+        if not state:
+            return self.tag, state
+        if iter:
+            results = []
+            for child in self:
+                results.append((child.tag, child.exists(iter=True)))
+            
+            for file in self.files:
+                results.append((file, self.files[file].exists()))
+            return results
+        else:
+            return self.tag, state     
+                
+    def resetfilename(self, old_fn, new_fn):
+        """
+            设置文件名
+        old_fn: 原名称
+        new_fn: 新名称
+        """
+        if not self.__check_filename(new_fn):
+            raise 
+        if old_fn in self.__files:
+            # 获取对应文件节点，重新赋值
+            fp = self.__files[old_fn]
+            fp.text = new_fn
+            
+            # 修该files and __files 中的引用
+            self.__files[new_fn] = fp
+            self.files[new_fn] = self.path.joinpath(new_fn)
+            del self.__files[old_fn]
+            del self.files[old_fn]
+            
+        else:
+            raise KeyError(f"without this file, create it first: {old_fn}")
+        
+    def resetdirname(self, name):
+        """
+            设置目录名
+        """
+        node = self.getelement()
+        if self.tag == name:
+            return
+        elif isinstance(self.parent, Node):
+            node.tag = name
+        elif isinstance(self.parent, PathNode):
+            node.attrib['name'] = name
+        else:
+            raise "current node is not a PathNode"
+        self.tag = name
+        
+    def touch(self, file=None, *, iter=False, parents=False):
+        """
+            创建文件
+        file: 要创建的文件
+        iter: 是否遍历字节点
+        """
+        if not file and not iter:
+            raise "please input file name or set iter is true"
+        if not parents and self.parent.exists():
+            raise "parent path not exist"
+        
+        if iter:
+            for child in self:
+                child.touch(iter=iter, parents=parents)
+                
+            for file in self.files.values():
+                file.touch(exist_ok=True)
+        else:
+            if file not in self.files:
+                raise "file not in self"
+            self.files[file].touch(parents=parents, exist_ok=True)
     
-    def exits(self):
-        pass
+    def mkdir(self, iter=False):
+        """
+            创建目录
+        """
+        self.path.mkdir(exist_ok=True)
+        if iter:
+            for dir in self.dirs:
+                dir.mkdir(iter=iter)
+            
+
+    
+    def rmdir(self):
+        """
+            删除目录， 只能删除当前， 要删除目录必须找到对应节点
+        """
+        self.path.rmdir()
+        
+    def rmfile(self, fn):
+        """
+            删除文件， 只能删除当前节点的内容， 要删除文件必须找到所在节点
+        """
+        if fn not in self.__files:
+            KeyError(f"without this file, create it first: {fn}")
+        else:
+            node = self.getelement()
+            node.remove(self.__files[fn])
+            del self.__files[fn]
+            del self.files[fn]
     
     def addfiles(self, filename, describe:str=None):
         # 添加文件
-        attrib = {}
-        if describe:
-            attrib["describe"] = describe
-            
-        self.addelement("li", filename, attrib=attrib)
+        self.addelement("li", filename, describe=describe)
         
         # 获取节点路径
         newfile = self.path.joinpath(filename)
@@ -299,27 +417,35 @@ class PathNode(_Node):
         if describe:
             attrib["describe"] = describe
             
-        dir = self.addelement("dir", attrib=attrib)  # 创建一个新的Element节点
+        dir = self.addelement("dir", dirname, describe=describe)  # 创建一个新的Element节点
         dirnode = PathNode(dir, self)
         self.dirs.append(dirnode)
         
-        
     def addelement(self, tag, text, describe=None):
-        if tag != "dir" or tag != "li":
+        """
+            添加元素节点
+        PathNode中只能创建 li 和 dir 标签
+        根节点只会在 Node中被创建
+        """
+        if tag not in ["dir", "li"]:
             raise "pathnode, must a dir or li"
-        attrib = {}
+        print(text in self.dirs)
+        if text in self or text in self.files:
+            print(f"dir or file: {text}")
+            raise "dir or file is exist"
         
         # 设置节点描述
+        attrib = {}
         if describe:
             attrib["describe"] = describe
         
         # 创建目录节点
         if tag == "dir":
             attrib['name'] = text
-            return super().addelement(tag, attrib=attrib)
+            return super().addelement(tag, attrib=attrib, index=0)
         
         # 创建文件节点
-        if tag == "li" and not re.match("^[^\\\/]+?\.[^\\\/]+$", text):
+        if tag == "li" and not self.__check_filename(text):
             raise "Invalid filename"
         else:
             return super().addelement(tag, text, attrib=attrib)
@@ -331,9 +457,11 @@ class PathNode(_Node):
     def delattrib(self):
         # 删除文件描述
         super().delattrib("describe")
-        
-    def settext(self, text):
-        return super().settext(text)
+    
+    @staticmethod
+    def __check_filename(text):
+        return re.match("^[^\\\/]+?\.[^\\\/]+$", text)
+    
     def __str__(self):
         return f"Path: {self.tag}"
     
@@ -341,15 +469,15 @@ class PathNode(_Node):
         if key in self.files.keys():
             return self.files[key]
         else:
-            raise f"there is no such file in directory"
+            raise "there is no such file in directory"
+        
 
 class ItemsNode(Node):
     pass
 
 if __name__ == "__main__":
     from lib import Resolver
-    resolver = Resolver()
-    datapath = resolver("path", "local")
-    addr = datapath.addr
-    for dir in datapath:
-        print(dir)
+    with Resolver() as resolver:
+        local = resolver("path", "local")
+        s = local.exists(iter=True)
+        local.mkdir(True)

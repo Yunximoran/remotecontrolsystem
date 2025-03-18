@@ -36,9 +36,6 @@ class NetWork(__NetWorkTools):
         # 绑定网卡
         self.__all_local_network = self.__checknet()
 
-        if bind not in self.__all_local_network.keys():
-            raise KeyError(f"bind must be in {self.__all_local_network.keys()}")
-        
         self.net = self.__all_local_network[bind]
         self.mac = self.net['mac']
         self.IPv4 = self.net["IPv4"]

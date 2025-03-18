@@ -5,11 +5,11 @@ import json
 from functools import partial
 
 from lib.sys.processing import(
-    MultiPool,
-    MultiProcess,
+    Pool,
+    Process,
 )
 from lib import Resolver
-from lib.sys.logger import Logger
+from lib.manager._logger import Logger
 from gloabl import DB
 from lib.sys.network import NetWork as NET
 from core.depend.protocol.tcp import Connector
@@ -35,7 +35,7 @@ class Control:
     sendtofile
     sendtowol
     """
-    process:list[MultiProcess] = []
+    process:list[Process] = []
     waittasks: dict[str, socket.socket] = {}
     
     def __init__(self):
@@ -54,7 +54,7 @@ class Control:
         connings, breaks = self.__checkclientstatus(toclients)
         logger.record(1, f"{instructs}")
         # 向正在连接的指定客户端发送数据包
-        with MultiPool() as pool:
+        with Pool() as pool:
             if instructs is not None:
                 # 发送指令数据
                 sendto = partial(self.sendtoshell, instructs=instructs)
