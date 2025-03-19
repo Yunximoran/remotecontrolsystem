@@ -1,4 +1,0 @@
-
-
-class MYEXCEPTION(Exception):
-    pass

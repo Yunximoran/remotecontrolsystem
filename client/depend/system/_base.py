@@ -77,7 +77,7 @@ class __BaseSystem:
         # 移动文件或删除
         pass
             
-    def checkfile(self, check_object, path:Path=None, base=None):
+    def checkfile(self, check_object, path=None, base=None):
         
         """
             # 查找文件
@@ -86,11 +86,12 @@ class __BaseSystem:
         base: 查找目录
         """
         if path:
+            # 如果不是Path转化为Path
+            if not isinstance(path, Path):
+                path = Path(path)
+            # 如果路径本地本地存在方法它， 校验路径是否存在
             if path.exists():
-                # 如果路径本地本地存在方法它
                 return path
-            else:
-                pass
         else:
             results: List[Path] = []
             if base is None:
@@ -109,17 +110,7 @@ class __BaseSystem:
                         results.append(os.path.join(root, dir))
                         
             return results
-    def _global_searc(self, obj, root):
-        if root is None:
-            root = self._disks
-        
-        for node, dirs, files in os.walk(root):
-            for file in files:
-                if file == obj:
-                    pass
-            for dir in dirs:
-                if dir == obj:
-                    pass
+    
                 
     def executor(self, args, *,
                  cwd:Path=None,
@@ -164,6 +155,7 @@ class __BaseSystem:
     
     
     def format_params(self, typecode:int, data: dict|list) -> str:
+        # 预定义表单类型
         types = [
             "instruct",
             "software",

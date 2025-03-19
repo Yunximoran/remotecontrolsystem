@@ -1,6 +1,7 @@
 from ._base import *
 from lib.sys import Logger
 import re
+from pathlib import Path
 logger = Logger("ListenServer", "listen.log")
 
 
@@ -46,24 +47,26 @@ class ListenServe(BaseServe):
                 if not isexist:
                     logger.record(1, f"add new soft {itemname}")
                     newitem.append(item)
-        return newitem        
+        return newitem  
+          
     def _update_softwares(self, softwares):
         # 更新软件清单
         software_name = softwares['ecdis']['name']
-        software_path = softwares['ecdis']['path']
-        # 全盘搜索软件所在位置，获取所有匹配项目
-        path = SYSTEM.checkfile(software_name, software_path)
+        software_path = Path(softwares['ecdis']['path'])
+        localpath = SYSTEM.checkfile(software_name, software_path)
+        
+        if isinstance(localpath, list):
+            # 格式化软件表单
+            params = SYSTEM.format_params(1, localpath)
             
-        
-        # # 格式化表单
-        # params = SYSTEM.format_params(1, allpath)
-        
-        # # 建立TCP连接服务器，发送匹配列表，等待服务器回应,后去实际地址
-        # logger.record(1, f"related to {software_name}, path: {allpath}")
-        # softwares['ecdis']["prac-path"] = self._wait_response(params)
-        
-        # 解析服务器回应结果，保存软件位置，并建立软链接
-        softwares['ecdis']['path'], report = SYSTEM.build_hyperlink(software_name, softwares['ecdis']["prac-path"])
+            # 建立TCP连接服务器，发送匹配列表，等待服务器回应,获取实际地址
+            logger.record(1, f"related to {software_name}, path: {localpath}")
+            localpath = self.waitpath(params)
+
+        # 本机映射地址
+        softwares['ecdis']['prac-path'] = localpath
+        # 创建软连接
+        softwares['ecdis']['path'], report = SYSTEM.build_hyperlink(software_name, localpath) 
         
         # 汇报结果
         self._report_results(report)
@@ -83,17 +86,17 @@ class ListenServe(BaseServe):
         # 汇报结果
         # 创建TCP连接
         conn = TCPConnect()
-        # 格式化汇报表单
+        
+        # 格式化汇报表单，并发送汇报结果
         params = SYSTEM.format_params(2, report)
-        # 发送汇报结果
         conn.send(params)
-        # 回收TCP占用
+
+        # 发送完成后回收内存
         conn.close()
         del conn
-        
-    def _wait_response(self, param:str):
-        # 等待返回结果
-        # 创建TCP连接
+
+    def waitpath(self, param:str) -> Path:
+        # 等待服务器回应，客户端与服务端交互时使用
         logger.record(1, f"wait resp: {param}")
         conn = TCPConnect()
         # 发送数据
@@ -103,4 +106,4 @@ class ListenServe(BaseServe):
         # 回收TCP占用
         conn.close()
         logger.record(1, f"")
-        return data.decode()
+        return Path(data.decode())

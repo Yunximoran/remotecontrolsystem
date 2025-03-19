@@ -1,12 +1,11 @@
-import os
 from pathlib import Path
 
 from typing import List, AnyStr, ByteString
 from xml.etree import ElementTree as et
 from xml.etree.ElementTree import Element
 
-from ._node import Node, PathNode
-    
+from ._node import Node, PathNode, ItemsNode
+from ..exception import *
     
 WORKDIR = Path.cwd()
 PRIVATECONF = WORKDIR.joinpath("lib", "init", ".config.xml")
@@ -26,9 +25,9 @@ class _Resolver:
         # 设置缩进
         et.indent(self.__conf, space="\t", level=0)
         # 写入修改
-        self.__conf.write(self.__file)
+        self.__conf.write(self.__file, encoding=ENCODING)
         
-    def deep(self, root: Element, parent: Node = None) -> Node:
+    def deep(self, root: Element, parent: Node = None) -> Node|PathNode|ItemsNode:
         """
             解析器
         返回字典数据
@@ -41,11 +40,9 @@ class _Resolver:
         # 解析路径配置
         if "struct" in root.attrib:
             return PathNode(root, parent)
-
-        # 校验校验是否包含列表数据
-        list_data = self.__list_options(root)
-        if list_data != []:
-            node.data = list_data
+        # 解析集合配置
+        elif "items" in root.attrib:
+            return ItemsNode(root, parent)
         else:
             # 遍历子元素，创建Node绑定父节点为当前节点
             for elem in root:
@@ -77,15 +74,14 @@ class _Resolver:
         except AttributeError:
             return context.decode(encoding)
     
-    def __call__(self, *args, tree=False):
+    def __call__(self, *args, is_node=False) -> Node|PathNode|ItemsNode|AnyStr:
         node = self.root.search(*args)
         if node is None:
             setpath = " - ".join(args)
             raise Exception(f"Setting not Exist: {setpath}")
         else:
-            if node.type() in ["struct", "tree"]:
+            if node.type() in ["struct", "tree", "items"] or is_node:
                 return node
-    
             return node.data
         
     def __enter__(self):
