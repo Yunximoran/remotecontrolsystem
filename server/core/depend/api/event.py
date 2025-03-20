@@ -5,7 +5,6 @@ from typing import Annotated
 from fastapi import APIRouter
 
 from lib import Resolver
-from lib.ui.explorer import choose_file
 from datamodel import WaitDesposeResults
 from datamodel.transfer_data import Software
 from core.depend.control import Control
@@ -83,22 +82,6 @@ async def popsoftwarelist(software):
 
     return {"OK", f"POP {software}"}
 
-# 下载文件
-@router.put("/download")
-async def download(toclients=[]):
-    """
-    toclients: 指定向哪些客户端发送数据【默认向所有连接中的客户端发送数据】
-    
-        从服务端下载文件
-    打开资源管理器
-    查找需要下载至客户端的文件
-    发送文件至客户端
-    """
-    # 打开资源管理器， 选择下载文件
-    filename, filepath = choose_file()
-    with open(filepath, "rb") as f:
-        # 二进制打开文件
-        controlor.sendtoclient(toclients, files=[filename, f])
 
     
 
