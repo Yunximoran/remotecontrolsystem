@@ -6,7 +6,7 @@ import multiprocessing
 
 
 from lib import Resolver
-from lib import Logger
+from lib.manager import Logger
 from depend.protocol import TCPListen, TCPConnect
 from depend.protocol import BroadCast, MultiCast
 from depend.path import (

@@ -18,7 +18,7 @@ from typing import Tuple
 import psutil
 from typing import Generator
 from psutil import NoSuchProcess, AccessDenied
-from lib import Logger
+from lib.manager import Logger
 class __BaseSystem:
     # 获取工作目录
     CWDIR = os.getcwd()
