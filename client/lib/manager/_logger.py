@@ -1,19 +1,36 @@
 import logging
 from logging.handlers import RotatingFileHandler
 import os
+import re
 from pathlib import Path
+from ..init.resolver import __resolver
 
+levelnode = __resolver("default", "log-settings", "level", is_node=True)
+
+if re.match("^(0|d|(debug))$", levelnode.data.lower()):
+    level = logging.INFO
+elif re.match("^(1|i|(info))$", levelnode.data.lower()):
+    level = logging.INFO
+elif re.match("^(2|w|(warning))$", levelnode.data.lower()):
+    level = logging.WARNING
+elif re.match("^(3|e|(error))$", levelnode.data.lower()):
+    level = logging.INFO
+elif re.match("^(4|c|(critical))$", levelnode.data.lower()):
+    level = logging.CRITICAL
+else:
+    raise KeyError(f"Invalid log settings {levelnode.tag}: {levelnode.data}, address:{levelnode.addr}")
 
 WROKDIR = Path.cwd()
 LOGDIR = WROKDIR.joinpath("logs")
 LOGDIR.mkdir(parents=True, exist_ok=True)
-LEVEL = logging.INFO
-IFCONSOLE = False
 
 class Logger:
     # 日志管理器只在despose中使用吗？
     CWD = os.getcwd()
-    def __init__(self, name, log_file='.log', level=LEVEL, max_bytes=10485760, backup_count=5):
+    def __init__(self, name, log_file='.log', level=level,*,
+                 console=False,
+                 max_bytes=10485760, 
+                 backup_count=5):
         """
         name: 日志记录器名称（通常使用模块名__name__）
         log_file: 日志文件名（默认app.log）
@@ -33,7 +50,7 @@ class Logger:
         # 创建日志格式器
         formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
         
-        if IFCONSOLE:
+        if console:
             self.addconsole(formatter)
         
         # 创建滚动文件处理器

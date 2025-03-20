@@ -1,4 +1,4 @@
 # 自定义默认组件
 
-from .logger import Logger
+from ..manager._logger import Logger
 from .network import NetWork

@@ -9,7 +9,7 @@ from depend.path import *
 
 
 resolver = Resolver()
-ROOTPASS = resolver("computer", tree=True)["password"]
+ROOTPASS = resolver("computer")["password"]
 
 class Linux(__BaseSystem):
     def __init__(self):

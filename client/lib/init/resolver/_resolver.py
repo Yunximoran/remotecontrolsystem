@@ -78,7 +78,7 @@ class _Resolver:
         node = self.root.search(*args)
         if node is None:
             setpath = " - ".join(args)
-            raise Exception(f"Setting not Exist: {setpath}")
+            raise NodeExistError(f"Setting not Exist: {setpath}")
         else:
             if node.type() in ["struct", "tree", "items"] or is_node:
                 return node

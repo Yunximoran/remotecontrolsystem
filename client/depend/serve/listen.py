@@ -1,6 +1,4 @@
 from ._base import *
-from lib.sys import Logger
-import re
 from pathlib import Path
 logger = Logger("ListenServer", "listen.log")
 

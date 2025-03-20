@@ -20,11 +20,13 @@ class _Node:
                 ):
         self.tag = tag
         self.parent = parent
+        self.address = self.__set_address()
+        
         self.__node = node
         self.__childs = childs  
         
-        self.address = self.__set_address()
-        self.level = len(self.address) - 1
+        
+        self.__level = len(self.address) - 1
         if 'describe' in node.attrib:
             self.setdescribe(node.attrib["describe"])
         
@@ -98,7 +100,7 @@ class _Node:
         else:
             newelem = SubElement(self.__node, tag, attrib, **extra)
         # 设置默认文本， 没有设置会成为单标签文件报错
-        newelem.text = text + "\t" * self.level if text == "\n" else text
+        newelem.text = text + "\t" * self.__level if text == "\n" else text
 
         return newelem
 
@@ -180,7 +182,7 @@ class Node(_Node):
     def addelement(self, tag, text="\n", attrib:Dict = {}, **extra) -> Node:
         # 如果子节点已存在，返回子节点
         fount = self.search(tag)
-        if fount is not None and abs(fount.level - self.level) == 1:
+        if fount is not None and abs(fount.__level - self.__level) == 1:
             return fount
         
         # 创建新Element
@@ -438,12 +440,6 @@ class PathNode(_Node):
         dir = self._addelement("dir", dirname, describe=describe)  # 创建一个新的Element节点
         dirnode = PathNode(dir, self)
         self.dirs.append(dirnode)
-    
-    def setdescribe(self, describe):
-        self._setattrib(describe)
-        
-    def deldescribe(self):
-        self._delattrib()
         
     def _addelement(self, tag, text, describe=None):
         """
@@ -538,8 +534,4 @@ if __name__ == "__main__":
     from lib import Resolver
     
     with Resolver() as resolver:
-        path = resolver("path")
         print(resolver.root.address)
-        print(path.type())
-        local = path.search("local")
-        print(local.address)

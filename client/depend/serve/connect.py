@@ -1,5 +1,4 @@
 from ._base import *
-from lib.sys import Logger
 
 logger = Logger("ConnectServe", "connect.log")
 class ConnectServe(BaseServe):
