@@ -1,13 +1,7 @@
 
+class ResolverError(Exception): ...
+class ChildExistError(Exception): ...
 
-class MYEXCEPTION(Exception):
-    pass
-
-
-class NODEERROR(Exception):
-    def __init__(self, *args):
-        super().__init__(*args)
-        
-class RESOLVERERROR(Exception):
-    def __init__(self, *args):
-        super().__init__(*args)
+class NODEERR(Exception): ...
+class NodeExistError(NODEERR): ...
+class NodeSecurity(NODEERR): ...

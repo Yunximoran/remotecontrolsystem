@@ -12,7 +12,7 @@ class Ecdis(BaseModel):
         软件状态
     """
     name: Annotated[str, None]
-    path:Annotated[Path, None] = None
+    path:Annotated[str, None] = None
     
 
 class Software(BaseModel):

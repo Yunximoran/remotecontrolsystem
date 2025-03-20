@@ -11,14 +11,23 @@ catch = _CatchDataBase()
 HOST = __resolver("redis", "host")
 PORT = __resolver("redis", "port")
 DB = __resolver("redis", "db")
-
-
+try:
+    PASSWORD = __resolver("redis")["password"]
+except Exception:
+    PASSWORD = None
+    
+    
 class Connector(StrictRedis):
     """
         Redis操作模块，只在redis服务启动后可用
     """
     def __init__(self, *args, **kwargs):
-        super().__init__(host=HOST, port=PORT, db=DB, decode_responses=True)
+        super().__init__(
+            host=HOST,
+            port=PORT, 
+            password=PASSWORD, 
+            db=DB, 
+            decode_responses=True)
         
     @catch.ping
     def status(self):

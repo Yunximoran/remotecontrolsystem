@@ -1,10 +1,10 @@
 <root>
 	<database>
-		<redis>
+		<redis password="123465">
 			<host>localhost</host>
 			<port>6379</port>
 			<db>0</db>
-			<datas>
+			<datas items="Redis数据表">
 				<li>client_status</li>
 				<li>client_message</li>
 				<li>heart_packages</li>
@@ -14,11 +14,11 @@
 				<li>accounts</li>
 			</datas>
 		</redis>
-		<mysql user="root" password="ranxi160259">
+		<mysql user="root" password="redis">
 			<host>localhost</host>
 			<port>3306</port>
 			<db>test</db>
-			<datas>
+			<datas items="MySQL数据表">
 				<li>test</li>
 			</datas>
 		</mysql>

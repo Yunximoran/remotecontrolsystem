@@ -1,4 +1,4 @@
-from lib.sys.processing import MultiPool
+from lib.sys.processing import Pool
 import multiprocessing
 from functools import partial, wraps
 
@@ -23,6 +23,6 @@ def send(ip, d):
 ds = [(1, 2), (2, 3), (3, 4), (4, 5)]
 ips = ["110222", "2dwwddwd"]
 if __name__ == "__main__":
-    with MultiPool() as pool:
+    with Pool() as pool:
         sendto = partial(send, d=ds)
         pool.map_async(sendto, ips, attribute={"__name__": send.__name__}).get()

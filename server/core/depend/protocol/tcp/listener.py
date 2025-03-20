@@ -79,19 +79,12 @@ class Listener(TCP):
             pass
         
         if type == "software":
-            # 取消软件待办事件
-            # 直接获取软件相关错误信息
-            DB.lpush(addr, data)
-            
              # 添加待办事件， 将事件标识和事件信息写入redis， 发送客户端，等待客户端处理
-            # self._add_waitdone(cookie, data)
+            self._add_waitdone(cookie, data)
             
-            # # 等待处理待办事件，定期搜索事件标识，如果找到，获取处理结果，返回客户端，关闭连接
-            # is_OK = self._dps_waitdone(cookie, sock)
-            # if not is_OK:
-            #     # 在这里写入日志
-            #     # 删除待办事项
-            #     pass      
+            # 等待处理待办事件，定期搜索事件标识，如果找到，获取处理结果，返回客户端，关闭连接
+            Process(target=self._dps_waitdone, args=(cookie, sock)).start()
+   
                 
         if type == "report":
             # 将汇报结果保存数据库，执行日志
@@ -104,12 +97,12 @@ class Listener(TCP):
     
     
     @catch.checksockconning
-    def _dps_waitdone(self, sock:socket.socket, cookie):
+    def _dps_waitdone(self, cookie:str, sock:socket.socket) -> bool:
         while True:
             if DB.hget("waitdones", cookie):
                 # 校验待办事项是否被删除
                 break
-
+            
             results: str = DB.hget("waitdone_despose_results", cookie)
             if results:
                 # 如果为空

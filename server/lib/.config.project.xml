@@ -5,18 +5,18 @@
 			<level>info</level>
 		</logs>
 	</global>
-	<computer username="yunximoran" password="ranxi">
+	<computer username="yunximoran" password="ranxi160259">
 		<name>DESKTOP-4UTP93R</name>
 		<os>Windows</os>
 		<version>11 professional</version>
 		<cpu>11th Gen Intel(R) Core(TM) i7-11800H @ 2.30GHz   2.30 GHz</cpu>
 		<gpu>nvidia rtx3050</gpu>
 		<ram>16</ram>
-		<disk>
+		<disk items="#">
 			<li>C:</li>
 		</disk>
 	</computer>
-	<dependon>
+	<dependon items="#">
 		<li>redis-server ./databasetoo./conf/redis-service.conf</li>
 		<li>npm --prefix view run serve</li>
 	</dependon>
@@ -25,9 +25,11 @@
 		<host>127.0.0.1</host>
 		<port>8000</port>
 		<reload>yes</reload>
-		<cors>
+		<cors items="跨域资源">
 			<li>https://localhost:8080</li>
 			<li>http://localhost:8080</li>
+			<li>https://127.0.0.1:8080</li>
+			<li>http://127.0.0.1:8080</li>
 		</cors>
 	</server>
 	<sock describe="通信配置">
@@ -58,16 +60,4 @@
 		<ip>192.168.31.176</ip>
 		<mac>20-1E-88-F5-05-B9</mac>
 	</network>
-	<data>
-		<redis-tables>
-			<li describe="客户端状态">client_status</li>
-			<li describe="客户端信息">client_message</li>
-			<li describe="心跳包">heart_packages</li>
-			<li describe="软件清单">softwarelist</li>
-			<li describe="指令执行结果">reports</li>
-			<li describe="系统日志">logs</li>
-			<li describe="待办事件信息">waitdones</li>
-			<li describe="账户信息">accounts</li>
-		</redis-tables>
-	</data>
 </root>

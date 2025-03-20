@@ -8,13 +8,18 @@ class _CatchProcess(__CatchBase):
     
     def process(self, func):
         @wraps(func)
-        def wrapper(*args, **kwargs):
+        def wrapper(target, *args, **kwargs):
+            if "attribute" in kwargs:
+                attribute: dict = kwargs['attribute']
+                for opt, val in attribute.items():
+                    setattr(target, opt, val)
+                del kwargs['attribute']
             try:
-                self.record(args[0])
-                return func(*args, **kwargs)
+                self.record(target)
+                return target(*args, **kwargs)
             except KeyboardInterrupt:
-                self.record(args[0], "The Ctrl C", 3)
-                return "强制退出"
+                self.record(target, "The Ctrl C", 3)
+                return False
         return wrapper
     
     

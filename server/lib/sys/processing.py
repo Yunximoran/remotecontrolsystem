@@ -12,17 +12,18 @@ from lib.catch import _CatchProcess
 
 
 Catch = _CatchProcess()
-
+MINPROCESSES = __resolver("preformance", "min-processes") 
+MAXPROCESSES = __resolver("preformance", "max-processes")
 
 @Catch.process
-def worker(func, *args, **kwargs):
+def worker(target, *args, **kwargs):
     """
         包装工作函数
     func: 目标函数
     args: 函数实参元组
     kwargs: 函数实参字典
     """
-    return func(*args, **kwargs)
+    return target
 
 # 获取进程输出信息
 def stdout(res):
@@ -41,17 +42,17 @@ class Pool(_Pool):
         定义进程数范围
         """
         if processes is None or processes < 5:
-            processes = __resolver("preformance", "min-processes") 
+            processes = MINPROCESSES 
         elif processes > 10:
-            processes = __resolver("preformance", "max-processes")
+            processes = MAXPROCESSES
         super().__init__(processes, initializer, initargs, maxtasksperchild, context)
         
-    def map_async(self, func, iterable, chunksize = None, callback = None, error_callback = None):
-        _worker = partial(worker, func)
+    def map_async(self, func, iterable, *, attribute={}, chunksize = None, callback = None, error_callback = None):
+        _worker = partial(worker, func, attribute=attribute)
         return super().map_async(_worker, iterable, chunksize, callback, error_callback)
 
-    def apply_async(self, func, args=(), kwds={}, callback=None, error_callback=None):
-        _worker = partial(worker, func)
+    def apply_async(self, func, args=(), kwds={}, *, attribute={}, callback=None, error_callback=None):
+        _worker = partial(worker, func, attribute=attribute)
         return super().apply_async(_worker, args, kwds, callback, error_callback)
 
     def join(self):
@@ -63,9 +64,9 @@ class Pool(_Pool):
     
 
 class Process(_Process):
-    def __init__(self, group=None, target=None, name=None, args=(), kwargs={}, *, daemon = None):
+    def __init__(self, group=None, target=None, name=None, args=(), kwargs={}, *, attribute={}, daemon = None):
         super().__init__(group, name=name, args=args, kwargs=kwargs, daemon=daemon)
-        self._target = partial(worker, target)
+        self._target = partial(worker, target, attribute=attribute)
     
     def start(self):
         return super().start()

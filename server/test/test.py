@@ -1,5 +1,6 @@
-from lib.init.resolver import __resolver
+from lib import Resolver
 
 
-db = __resolver("database")
-print("redis" in db)
+with Resolver() as r:
+    net = r("network")
+    print(net.describe)

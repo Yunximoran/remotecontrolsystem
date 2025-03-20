@@ -3,6 +3,11 @@ import re
 from pathlib import Path
 from typing import List, AnyStr, Any, Generator, Dict, Union
 from xml.etree.ElementTree import Element, SubElement
+
+try:
+    from ..exception import *
+except ImportError:
+    from lib.init.exception import *
 """
     
 """
@@ -12,35 +17,30 @@ class _Node:
     def __init__(self, tag, node:Element, 
                  parent: Node|PathNode,
                  childs: List[Node|PathNode],
-                 level: int,
                 ):
         self.tag = tag
-        self.parent=parent
-        self.level = level    
+        self.parent = parent
+        self.address = self.__set_address()
         
-         
         self.__node = node
         self.__childs = childs  
-
-    def __contains__(self, item):
-        if isinstance(item, str):
-            return item in [child.tag for child in self.__childs]
-        else:
-            return item in self.__childs
-    
-    def __iter__(self) -> Generator[Union[Node, PathNode], None, None]:
-        for elem in self.__childs:
-            yield elem
+        
+        
+        self.__level = len(self.address) - 1
+        if 'describe' in node.attrib:
+            self.setdescribe(node.attrib["describe"])
+        
+    def getelement(self) -> Element:
+        # 获取原始Element
+        return self.__node   
     
     def type(self):
         # 获取节点类型，[树节点、结构节点， 列表节点， 选项节点]
         if isinstance(self, Node):
             if self.data is None:
                 return "tree"
-            elif isinstance(self.data, list):
-                return "list"
             else:
-                return "val"
+                return "val"     
         elif isinstance(self, PathNode):
             return "struct"
         elif isinstance(self, ItemsNode):
@@ -48,39 +48,50 @@ class _Node:
         else:
             raise f"type node error, {self}"
         
-    def search(self, *tags) -> Node|PathNode:
+    def setdescribe(self, describe=None):
+        self.describe = describe
+        if describe:
+            self._setattrib("describe", describe)
+        
+    def deldescribe(self):
+        if self.describe:
+            self._delattrib("describe")
+        
+    def search(self, *tags) -> Node|PathNode|ItemsNode:
         # 创建指针，只想当前节点
         current = self
         for tag in tags:
             # 遍历标签， 逐级定位到指定节点
             current = current._search(tag)
             # 如果为空，定位错误，返回None
-            if current is None:
+            if not current:
                 break
         return current
 
-    def _search(self, tag) -> Node|PathNode:
+    def _search(self, tag) -> _Node:
         if self.tag == tag:
             return self
+        elif self.type() in ['items', "val"]:
+            return False
         else:
             for next in self.__childs:
                 res = next._search(tag)
-                if res is not None:
+                if res:
                     return res
-            return None
+        return False
     
-    def setattrib(self, key, val):
+    def _setattrib(self, key, val):
         # 为当前元素设置属性，并同步Node属性
         self.__node.set(key, str(val))
     
-    def delattrib(self, key):
+    def _delattrib(self, key):
         # 删除当前元素的某个属性，并同步Node属性
         if key in self.__node.attrib.keys():
             del self.__node.attrib[key]
         else:
-            raise KeyError(f"{self}not attribute {key}")
+            raise KeyError(f"{self} not attribute {key}")
     
-    def addelement(self, tag, text="\n", attrib = {}, index:int=None, **extra) -> Node:
+    def _addelement(self, tag, text="\n", attrib = {}, index:int=None, **extra) -> Node:
         # 如果子节点已存在，返回子节点
         # 创建新Element
         if isinstance(index, int):
@@ -89,21 +100,37 @@ class _Node:
         else:
             newelem = SubElement(self.__node, tag, attrib, **extra)
         # 设置默认文本， 没有设置会成为单标签文件报错
-        newelem.text = text + "\t" * self.level if text == "\n" else text
+        newelem.text = text + "\t" * self.__level if text == "\n" else text
 
         return newelem
 
-    def delelement(self, node: Node):
+    def _delelement(self, node: Node):
         self.__node.remove(node.getelement())
         
-    def getelement(self) -> Element:
-        # 获取原始Element
-        return self.__node
-    
+    def __set_address(self):
+        if self.parent:
+            addr = self.parent.__set_address()
+            addr.append(self.tag)
+        else:
+            return [self.tag]
+        return addr
+        
     @staticmethod
     def __set_default_context(text, level):
         # 设置默认文本
-        return text + "\t" * level if text == "\n" else text
+        return text + "\t" * level if text == "\n" else text  
+          
+    def __contains__(self, item):
+        if isinstance(item, str):
+            return item in [child.tag for child in self.__childs]
+        else:
+            return item in self.__childs
+
+    def __iter__(self) -> Generator[Union[Node, PathNode], None, None]:
+        for elem in self.__childs:
+            yield elem
+    
+
     
 class Node(_Node):
     def __init__(self, node:Element, parent:Node = None):
@@ -124,21 +151,13 @@ class Node(_Node):
         if "describe" in node.attrib.keys():
             self.describe = node.attrib["describe"]
         else:
-            self.describe = None  
-               
-        # 设置节点索引
-        if parent is not None:
-            self.addr = parent.addr.copy()
-        else:
-            self.addr = []
-        self.addr.append(self.tag)    
+            self.describe = None    
                    
         super().__init__(
             self.tag,
             node,
             parent,
             self.__childs, 
-            len(self.addr)
             )
         
 
@@ -156,18 +175,18 @@ class Node(_Node):
         
     def addchild(self, node):
         # 添加子元素
-        self.__size += 1
+        # node = self._addelement(tag, text, attrib, **extra)
         self.__childs.append(node)
-    
-    
+        self.__size += 1
+        
     def addelement(self, tag, text="\n", attrib:Dict = {}, **extra) -> Node:
         # 如果子节点已存在，返回子节点
         fount = self.search(tag)
-        if fount is not None and abs(fount.level - self.level) == 1:
+        if fount is not None and abs(fount.__level - self.__level) == 1:
             return fount
         
         # 创建新Element
-        newelem = super().addelement(tag, text="\n", attrib = {}, **extra)
+        newelem = super()._addelement(tag, text="\n", attrib = {}, **extra)
         
         # 生成新Node， 绑定父Node为self, 如果attrib中包含struct属性，创建PathNode，并绑定父元素为self
         newnode = Node(newelem, self) if "struct" not in attrib else PathNode(newelem, self)
@@ -188,7 +207,12 @@ class Node(_Node):
             # 否则报错目标Node不是当前Node的子元素
             raise ValueError("node not in childs")
     
-        
+    def setattrib(self, key, val):
+        return super()._setattrib(key, val)
+    
+    def delattrib(self, key):
+        return super()._delattrib(key)
+    
     def __retype(self, context: AnyStr) -> int|float|str:
         """
             对数据进行转换
@@ -227,6 +251,7 @@ class Node(_Node):
             raise "struct is safe attribute, plcess get it for the cls"
         return self.attrib[key]
 
+
 # 特殊节点处理
 class PathNode(_Node):
     """
@@ -257,12 +282,7 @@ class PathNode(_Node):
             self.tag = node.attrib["name"]  # 目录名称
             self.describe = node.attrib["describe"] if "describe" in node.attrib.keys() else None
             self.path = parent.path.joinpath(self.tag)
-        self.path.exists()
-        # 设置节点索引    
-        self.addr = parent.addr.copy()
-        self.addr.append(self.tag)            
 
-        
         self.dirs: List[PathNode] =[]
         for dir in node.findall("dir"):
             child = PathNode(dir, self)
@@ -281,7 +301,6 @@ class PathNode(_Node):
             node, 
             parent,
             self.dirs, 
-            level=len(self.addr)
             )
         
     def clean(self):
@@ -399,9 +418,10 @@ class PathNode(_Node):
             del self.__files[fn]
             del self.files[fn]
     
+    
     def addfiles(self, filename, describe:str=None):
         # 添加文件
-        self.addelement("li", filename, describe=describe)
+        self._addelement("li", filename, describe=describe)
         
         # 获取节点路径
         newfile = self.path.joinpath(filename)
@@ -417,11 +437,11 @@ class PathNode(_Node):
         if describe:
             attrib["describe"] = describe
             
-        dir = self.addelement("dir", dirname, describe=describe)  # 创建一个新的Element节点
+        dir = self._addelement("dir", dirname, describe=describe)  # 创建一个新的Element节点
         dirnode = PathNode(dir, self)
         self.dirs.append(dirnode)
         
-    def addelement(self, tag, text, describe=None):
+    def _addelement(self, tag, text, describe=None):
         """
             添加元素节点
         PathNode中只能创建 li 和 dir 标签
@@ -442,21 +462,21 @@ class PathNode(_Node):
         # 创建目录节点
         if tag == "dir":
             attrib['name'] = text
-            return super().addelement(tag, attrib=attrib, index=0)
+            return super()._addelement(tag, attrib=attrib, index=0)
         
         # 创建文件节点
         if tag == "li" and not self.__check_filename(text):
             raise "Invalid filename"
         else:
-            return super().addelement(tag, text, attrib=attrib)
+            return super()._addelement(tag, text, attrib=attrib)
     
-    def setattrib(self, describe):
+    def _setattrib(self, describe):
         # 设置文件描述
-        return super().setattrib("describe", describe)
+        return super()._setattrib("describe", describe)
     
-    def delattrib(self):
+    def _delattrib(self):
         # 删除文件描述
-        super().delattrib("describe")
+        super()._delattrib("describe")
     
     @staticmethod
     def __check_filename(text):
@@ -472,12 +492,46 @@ class PathNode(_Node):
             raise "there is no such file in directory"
         
 
-class ItemsNode(Node):
-    pass
+class ItemsNode(_Node):
+    def __init__(self, node:Element, parent:Node):
+        self.tag = node.tag
+        self.__li = node.findall("li")
+        self.data = [li.text for li in self.__li]
+        super().__init__(
+            self.tag,
+            node=node,
+            parent=parent,
+            childs=self.data
+        )
+    
+    def push(self, item, describe=None):
+        self._addelement(item, describe)
+        
+    def pop(self, item):
+        self._delelement(item)
+        
+    def _addelement(self,text, describe=None):
+        if text in self.data:
+            raise ChildExistError(f"{text} is existed")
+        attrib = {}
+        if describe:
+            attrib['describe'] = describe
+        self.data.append(text)
+        return super()._addelement("li", text, attrib)
+    
+    def _delelement(self, item):
+        node = self.getelement()
+        if item in self.data:
+            index = self.data.index(item)
+            node.remove(self.__li.pop(index))
+            return self.data.pop(index)
+        raise ChildExistError(f"{item} is not a child")
+    
+    def __str__(self):
+        return f"{self.tag}: {self.data}"
 
 if __name__ == "__main__":
     from lib import Resolver
+    
     with Resolver() as resolver:
-        local = resolver("path", "local")
-        s = local.exists(iter=True)
-        local.mkdir(True)
+        print(resolver.root.address)

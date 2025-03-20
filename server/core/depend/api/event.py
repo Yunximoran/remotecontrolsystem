@@ -33,31 +33,37 @@ async def magic_client(toclients:Annotated[list, None] = []):
         发送唤醒魔术包
     toclients: 指定发送目标IP
     """
-    controlor.sendtoclient(toclients, wol=True)
+    try:
+        controlor.sendtoclient(toclients, wol=True)
+    except Exception:
+        return {"ERROR", "wol err"}
+    
 
 # ========= 默认事件========== #
 # 添加软件清单
 @router.put("/addsoftwarelist")
 async def addsoftwarelist(software: Software):
     """
-        software model
+        let data = {
+            software: {
+                ecdis: {
+                    "name": "XXX",
+                    "path": "xxx"
+                },
+                "conning": false
+            }
+        }
     """
     info = software.model_dump_json()
+    
+    # 移除就得软件信息
+    for i, sf in enumerate(DB.lrange("softwarelist")):
+        item = json.loads(sf)
+        if item['ecdis']["name"] == software.ecdis.name:
+            DB.lpop("softwarelist", i)
+            
     DB.lpush("softwarelist", info)
-    return {"OK", info["ecdis"]["name"]}
-    # # 打开资源管理器，选择添加软件
-    # executablefile, softwarepath = choose_file()
-    # software = {
-    #     "ecdis": {
-    #         "name": softwarename,
-    #         "executable": executablefile,
-    #         "path": softwarepath,
-    #         "version": version
-    #     },
-    #     "conning": False
-    # }
-    # DB.lpush("softwarelist", json.dumps(software))
-    # return {"OK", softwarename}
+    return {"OK", software.ecdis.name}
 
 @router.put("/popsoftwarelist")
 async def popsoftwarelist(software):

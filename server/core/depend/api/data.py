@@ -30,8 +30,11 @@ async def get_realtime_data():
     实时更新数据，需要定期调用
         从redis中获取数据
     """
-    return {"data":{
-        "client_status": DB.hgetall("client_status"),
-        "client_reports": DB.hgetall("reports"),
-        "client_waitdones": DB.hgetall("waitdones"),
-    }}
+    return {
+        "data": {
+            "client_status": DB.hgetall("client_status"),
+            "client_reports": DB.hgetall("reports"),
+            "client_waitdones": DB.hgetall("waitdones"),
+            "softwarelist": DB.lrange("softwarelist")
+        }
+    }
