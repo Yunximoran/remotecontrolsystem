@@ -38,7 +38,7 @@ class TCPListen(TCP):
     
     
     def settings(self):
-        # self.sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+        self.sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
         self.sock.settimeout(TIMEOUT)
     
     def accept(self):

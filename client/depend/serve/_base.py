@@ -22,6 +22,6 @@ MAC = resolver("network", "mac")
 class BaseServe:
     def __init__(self):
         self.serve()
-    
+
     def serve(self):
         pass

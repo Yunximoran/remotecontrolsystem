@@ -5,22 +5,19 @@ logger = Logger("ListenServer", "listen.log")
 
 class ListenServe(BaseServe): 
     # 监听组播端口， 获取软件清单
-    def __init__(self):
-        self.multi_conn = MultiCast()  
-        
+
     def serve(self):
-        
-        # 创建进程池
+        print("Listen Serve Started")
+        multi_conn = MultiCast()
         pool = multiprocessing.Pool()
         while True:
             # 接受组播数据： 软件清单
-            data = self.multi_conn.recv()
+            data = multi_conn.recv()
             # 使用json格式加载数据
             softwares = json.loads(data)
             logger.record(1, f"accpet softwarelist: {softwares}")
             newitem = self._check_softwares(softwares)
             # 更新本地软件清单
-            # multiprocessing.Process(self._update_softwares)
             pool.map_async(self._update_softwares, newitem, callback=self._write_local_softwares).get()
 
 
@@ -47,10 +44,11 @@ class ListenServe(BaseServe):
                     newitem.append(item)
         return newitem  
           
-    def _update_softwares(self, softwares):
+    def _update_softwares(self, soft):
         # 更新软件清单
-        software_name = softwares['ecdis']['name']
-        software_path = Path(softwares['ecdis']['path'])
+        print("dispose up task")
+        software_name = soft['ecdis']['name']
+        software_path = Path(soft['ecdis']['path'])
         localpath = SYSTEM.checkfile(software_name, software_path)
         
         if isinstance(localpath, list):
@@ -61,23 +59,27 @@ class ListenServe(BaseServe):
             logger.record(1, f"related to {software_name}, path: {localpath}")
             localpath = self.waitpath(params)
 
-        # 本机映射地址
-        softwares['ecdis']['prac-path'] = localpath
         # 创建软连接
-        softwares['ecdis']['path'], report = SYSTEM.build_hyperlink(software_name, localpath) 
+        soft['ecdis']['path'], soft['ecdis']['prac-path'], report = SYSTEM.build_hyperlink(software_name, localpath) 
         
         # 汇报结果
         self._report_results(report)
         
-        # 返回修改后的清单
-        return softwares
+        # # 返回修改后的清单
+        # self._write_local_softwares(softwares)
+        return soft
+        
 
      
-    def _write_local_softwares(self, nvals):
+    def _write_local_softwares(self, softs):
         # 保存json数据
-        lcoal_softwares: list[dict]= json.load(open(PATH_MAP_SOFTWARES, 'r'))
-        lcoal_softwares.extend(nvals)
-        json.dump(lcoal_softwares, open(PATH_MAP_SOFTWARES, 'w', encoding='utf-8'), ensure_ascii=False, indent=4)
+        print(softs)
+        with open(PATH_MAP_SOFTWARES, 'r', encoding='utf-8') as f:
+            lcoal_softwares: list[dict]= json.load(f)
+            lcoal_softwares.extend(softs)
+        
+        with open(PATH_MAP_SOFTWARES, 'w', encoding='utf-8') as f:
+            json.dump(lcoal_softwares, f, ensure_ascii=False, indent=4)
         logger.record(1, "softwarelist is updated")
             
     def _report_results(self, report):

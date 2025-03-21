@@ -9,7 +9,6 @@ ENCODING = resolver("global", "encoding")
 
 logger = Logger("Select", log_file="select.log")
 class SelectServe(BaseServe):
-
     def serve(self):
         """
             监听tcp  接受server发送的shell指令并启动
@@ -27,10 +26,8 @@ class SelectServe(BaseServe):
         }
         """
         # 启动TCP家庭
+        print("Connect Serve Started")
         tcp_conn =  TCPListen()
-        # while True:
-        #     sock, addr = tcp_conn.sock.accept()
-            
         while True:
             try: 
                 # 等待服务器发送shell指令            
@@ -64,15 +61,15 @@ class SelectServe(BaseServe):
                 report = SYSTEM.close()
                 
             elif type == "close -s":
-                # instruct == software name
-                report = SYSTEM.close_software(instruct)
+                pracpath = self.search_software(instruct)
+                report = SYSTEM.close_software(instruct, pracpath)
                 
             elif type == "restart": # OK
                 report = SYSTEM.restart()
                 
             elif type == "start -s":
-                # instruct == software name
-                report = SYSTEM.start_software(instruct)
+                pracpath = self.search_software(instruct)
+                report = SYSTEM.start_software(instruct, pracpath)
                 
             elif type == "wget":
                 report = SYSTEM.wget()
@@ -91,6 +88,14 @@ class SelectServe(BaseServe):
                 report = SYSTEM.executor(instruct, isadmin=isadmin)
             return report
         
+    def search_software(self, softname):
+        with open(PATH_MAP_SOFTWARES, 'r', encoding="utf-8") as f:
+            softwares = json.load(f)
+            for soft in softwares:
+                if softname == soft['ecdis']['name']:
+                    return soft['ecdis']['prac-path']
+        return False
+    
     def savefile(self, filename, conn):
         fileobj = conn.recv(1024)
         conn.close()

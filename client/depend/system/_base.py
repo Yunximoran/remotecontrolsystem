@@ -35,7 +35,10 @@ class __BaseSystem:
             if re.match(alias, process.name()):
                 # 匹配名称相同的进程
                 if process.exe() == path:
-                    yield process
+                    return process
+                else:
+                    continue
+        return False
         
     def init(self):
         pass
@@ -85,7 +88,7 @@ class __BaseSystem:
         path: 文件目录
         base: 查找目录
         """
-        if path:
+        if path is not None:
             # 如果不是Path转化为Path
             if not isinstance(path, Path):
                 path = Path(path)
@@ -101,14 +104,14 @@ class __BaseSystem:
                 # 校验非法磁盘
                 raise "disk is not exist"
             
-            for root, dirs, files in os.walk(base):
-                for file in files:
-                    if file == check_object:
-                        results.append(os.path.join(root, file))
-                for dir in dirs:
-                    if dir == check_object:
-                        results.append(os.path.join(root, dir))
-                        
+            for disk in self._disks:
+                for root, dirs, files in os.walk(disk):
+                    for file in files:
+                        if file == check_object:
+                            results.append(os.path.join(root, file))
+                    for dir in dirs:
+                        if dir == check_object:
+                            results.append(os.path.join(root, dir))     
             return results
     
                 
