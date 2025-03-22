@@ -6,7 +6,6 @@ from core.depend.api import (
     alter,
     data,
     event,
-    login,
     send
 )
 
@@ -46,12 +45,6 @@ APP.include_router(
     event.router,
     prefix=event.prefix,
     tags=event.tags
-)
-
-APP.include_router(
-    login.router,
-    prefix=login.prefix,
-    tags=login.tags
 )
 
 APP.include_router(

@@ -1,6 +1,6 @@
 # ===== 通信模型 ===== #
 
-from typing import Annotated
+from typing import Annotated, List
 
 from fastapi import Query
 from pydantic import BaseModel
@@ -28,7 +28,7 @@ class SoftwareList(BaseModel):
     """
         软件清单
     """
-    items: list[Software]
+    items: list[Software] = []
     
 
 
@@ -38,5 +38,5 @@ class HeartPkgs(BaseModel):
         Query(pattern="([0-9A-Fa-f]{2}[:-]){5}([0-9A-Fa-f]{2})")
     ip: Annotated[str, None] = \
         Query(pattern="((1\d{2}\.)|(2[0-5]{2}\.)|(\d{1,2}\.)){3}((1\d{2}\.)|(\d{3}\.))")
-    softwares: Annotated[SoftwareList, None] = None
+    softwares: Annotated[List[Software], None] = None
     

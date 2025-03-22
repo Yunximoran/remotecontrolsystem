@@ -21,7 +21,7 @@ LISTENES = resolver("sock", "tcp", "listenes")
 
 
 # 广播设置常量
-BROADCAST = (resolver("sock", "udp", "ip-broad"), resolver("ports", "udp", "broad"))    # 配置UDP广播地址
+BROADCAST = (resolver("sock", "udp", "ip-broad"), resolver("ports", "udp", "broad"))
 
 
 

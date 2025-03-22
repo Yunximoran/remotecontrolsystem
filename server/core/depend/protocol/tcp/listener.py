@@ -42,11 +42,11 @@ class Listener(TCP):
             if conn is False:
                 continue
             else:
-                task = Process(target=self.__task, args=(conn, ))
+                task = Process(target=self._task, args=(conn, ))
                 task.start()
 
              
-    def __task(self, conn: Dict[AnyStr, Tuple[socket.socket, AnyStr]]):
+    def _task(self, conn: Dict[AnyStr, Tuple[socket.socket, AnyStr]]):
         # 任务包装器
         """
             解析连接对象

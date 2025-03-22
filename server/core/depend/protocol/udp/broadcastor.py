@@ -63,7 +63,7 @@ class BroadCastor(UDP):
             logger.record(1, f"conning for client: {ip}")
             
             # 保存/更新 广播数据
-            DB.set(ip, "true")
+            DB.set(ip, "null")
             DB.expire(ip, 1)
             
             DB.hset("client_status", ip, "true")
@@ -75,6 +75,7 @@ class BroadCastor(UDP):
                 
     def _timer(self, ip):
         time.sleep(3)
-        if not DB.get(ip):
+        if not DB.get(ip) and DB.hget("client_status", ip) == "true":
+            DB.hset("client_status", ip, "false")
             logger.record(1, f"The client Disconnected:{ip}")
         

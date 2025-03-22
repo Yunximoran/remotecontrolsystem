@@ -42,11 +42,12 @@ async def send_software_checklist(checklist: SoftwareList):
         发送软件清单
     checklist: 软件列表
     """
-    software = json.dumps([item.model_dump() for item in checklist.items])
+    
+    softwares = json.dumps([item.model_dump() for item in checklist.items], ensure_ascii=False)
     
     try:
-        multiter.send(software)  
-        return {"OK": "send software checklist"}
+        multiter.send(softwares)  
+        return {"OK": f"send software checklist {softwares}"}
     except Exception as e:
         return {"ERROR": e}
     

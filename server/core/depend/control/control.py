@@ -51,9 +51,18 @@ class Control:
         # 检查链接客户端链接状体
         
         # 校验客户端连接, 对目标地址群进行状态分类
-        connings, breaks = self.__checkclientstatus(toclients)
+        toclients = self.__checkclientstatus(toclients)
         logger.record(1, f"{instructs}")
         # 向正在连接的指定客户端发送数据包
+        Process(target=self._send_tasks, args=(toclients, ), kwargs={
+            "instructs": instructs,
+            "files": files,
+            "wol": wol
+        }).start()
+        
+    
+    def _send_tasks(self, toclients, instructs=None, files=None, wol=False):
+        connings, breaks = toclients
         with Pool() as pool:
             if instructs is not None:
                 # 发送指令数据

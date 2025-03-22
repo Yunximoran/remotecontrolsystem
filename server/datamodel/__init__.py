@@ -4,7 +4,7 @@ from pydantic import BaseModel
 
 from .user import User, UserResponse, NewUser, Credentils
 from .transfer_data import *
-
+from .classify import Classify
 
 
 class ShellList(BaseModel):

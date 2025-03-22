@@ -1,6 +1,6 @@
-from lib import Resolver
+from lib.init.resolver import __resolver
+from pathlib import Path
 
-resolver = Resolver()
-
-
-d = resolver.root.search("build")
+path = __resolver("logs")
+db = path.search("db")
+print(db.path)
