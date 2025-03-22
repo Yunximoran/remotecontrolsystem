@@ -34,6 +34,7 @@ class __BaseSystem:
             # 匹配项目
             if re.match(alias, process.name()):
                 # 匹配名称相同的进程
+                print(process.name(), process.exe())
                 if process.exe() == path:
                     return process
                 else:

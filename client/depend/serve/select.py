@@ -61,15 +61,15 @@ class SelectServe(BaseServe):
                 report = SYSTEM.close()
                 
             elif type == "close -s":
-                pracpath = self.search_software(instruct)
+                _, pracpath = self.search_software(instruct)
                 report = SYSTEM.close_software(instruct, pracpath)
                 
             elif type == "restart": # OK
                 report = SYSTEM.restart()
                 
             elif type == "start -s":
-                pracpath = self.search_software(instruct)
-                report = SYSTEM.start_software(instruct, pracpath)
+                path, _ = self.search_software(instruct)
+                report = SYSTEM.start_software(path)
                 
             elif type == "wget":
                 report = SYSTEM.wget()
@@ -93,8 +93,12 @@ class SelectServe(BaseServe):
             softwares = json.load(f)
             for soft in softwares:
                 if softname == soft['ecdis']['name']:
-                    return soft['ecdis']['prac-path']
+                    return soft['ecdis']['path'], soft['ecdis']['prac-path']
         return False
+    
+    def set_software_process_address(path):
+        with open(PATH_MAP_SOFTWARES, 'w', encoding='utf-8') as f:
+            pass
     
     def savefile(self, filename, conn):
         fileobj = conn.recv(1024)

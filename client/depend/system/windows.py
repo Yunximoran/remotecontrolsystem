@@ -40,24 +40,27 @@ class Windows(__BaseSystem):
         os.system("shutdown /r /t 3")
         return self.report(["shutdown", "/r", "/t", 1], "restarted", False)
     
-    def start_software(self, softname, pracpath):
+    def start_software(self, path):
         # 读取本地软件清单
-
-        report = self.executor(["start", pracpath])
+        report = self.executor(["start", path])
+        p = self._check_soft_status('geek', path)
+        print(p)
         return report
 
             
-    def close_software(self, software, pracpath):
+    def close_software(self, softname, pracpath):
         """
             目标软件的唯一路径[实际地址]
         遍历进程池
         
         """
         # 执行关闭软件命令
-        process = self._check_soft_status(software, pracpath)
-        process.kill()
+        process = self._check_soft_status(softname, pracpath)
+        print(process, pracpath)
+        if process:
+            process.kill()
         
-        return self.report(software, f"{software} is killed", False)
+        return self.report(softname, f"{softname} is killed", False)
     
     def search(self, obj, if_gloabl=False):
         pass
