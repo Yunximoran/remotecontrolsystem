@@ -1,0 +1,144 @@
+{
+    "server/event/wol": {
+        "description": "发送唤醒魔术包",
+        "mode": "put",
+        "params": {
+            "toclients": ["list", "[]", "指定发送目标IP, 默认为空列表，向所有非连接的客户端发送"]
+        },
+        "responses": {}
+    },
+    "server/event/add/softwarelist":{
+        "description": "修改服务端软件清单 -> 添加软件",
+        "mode": "put",
+        "return": "",
+        "params": {
+            "software": {
+                "description": "",
+                "model":[
+                    {
+                        "name": "SoftWare",
+                        "feild":{
+                            "ecdis": ["Ecdis", "", "软件信息"],
+                            "conning": ["bool", "False", "软件的运行状态"]
+                        }
+                    },
+                    {
+                        "name": "Ecdis",
+                        "feild":{
+                            "name": ["string", "", "软件名称"],
+                            "path": ["Path", "", "软件路径"]
+                        }
+                    }
+                ]
+            }
+        },
+        "responses":{
+            "OK": "[softwarename]"
+        }
+    },
+    "server/event/pop/softwarelist":{
+        "description": "修改服务端软件清单 -> 删除软件",
+        "mode": "put",
+        "params": {
+            "software": ["string", "", "要删除的软件名"]
+        },
+        "responses":{
+            "ok":[
+                {"OK": "POP [softwarename]"}
+            ]
+        }
+    },
+    "server/event/add/classify":{
+        "description": "创建或者添加分类数据",
+        "mode": "put",
+        "params":{
+            "classify": {
+                "description": "分类模型",
+                "model":[
+                    {
+                        "name": "Classify",
+                        "feild": {
+                            "name": ["string", "", "分类名称"],
+                            "items": ["List[ClassTable]", "", "包含软件名和ip的字典列表"]
+                        }
+                    },
+                    {
+                        "soft": ["string", "",  "软件名称"],
+                        "ip": ["ip string", "", "ip地址"]
+                    }
+                ]
+            }
+        },
+        "responses": {
+            "OK": [
+                {"OK": "created classify: {classify.name}"},
+                {"OK": "update: {clndata}"}
+            ],
+            "ERROR": [
+
+            ]
+        }
+    },
+    "server/event/pop/classify":{
+        "description": "删除分类数据",
+        "mode": "put",
+        "params": {
+            "cln": ["string", "", "分类名称"],
+            "key": ["string", "", "要删除的值(可以是软件名或者IP)"]
+        },
+        "responses": {
+            "OK": [
+                {"OK": "remove {obj} form classify: {cln}"}
+            ],
+            "ERROR": [
+                {"ERROR": "classify: {cln} not exists"},
+                {"ERROR": "ip not in classify: {cln}"}
+            ]
+        }
+    },
+    "server/event/add/st_of_prestored_instructions":{
+        "description": "",
+        "mode": "put",
+        "params": {
+            "alias": [],
+            "instructlist":{
+                "val": ["InstructList", "", "指令列表"],
+                "model":[
+                    {
+                        "name": "InstructList",
+                        "feild": {
+                            "item":["List[Instruct]","","包含Instruct模型的列表"]
+                        }
+                    },
+                    {
+                        "name": "Instruct",
+                        "feild":{
+                            "type": ["string", "", "指令标识，说明指令的作用"],
+                            "shell": ["string", "", "要执行的shell指令"],
+                            "isadmin": ["bool", "false", "是否以管理员运行"],
+                            "os": ["string", "Windows", "运行指令的系统环境"],
+                            "kwargs": ["dict", "{}", "指令需要携带的额外参数"]
+                        }
+                    }
+                ] 
+            }
+        },
+        "responses": {
+            "OK": [
+                {"OK": "add prestored instruct: {alias} -> {context}"}
+            ]
+        }
+    },
+    "server/event/pop/set_of_prestored_instructions":{
+        "description": "",
+        "mode": "put",
+        "params": {
+            "alias": ["string", "", "预存指令名称"]
+        },
+        "responses": {
+            "OK": [
+                {"OK": "remove prestored instruct: {alias}"}
+            ]
+        }
+    }
+}

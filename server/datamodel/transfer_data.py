@@ -28,7 +28,7 @@ class SoftwareList(BaseModel):
     """
         软件清单
     """
-    items: list[Software] = []
+    items: list[Software]
     
 
 

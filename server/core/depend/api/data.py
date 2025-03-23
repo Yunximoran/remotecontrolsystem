@@ -6,7 +6,7 @@ from fastapi import(
     Query
 )
 
-from gloabl import DB
+from static import DB
 from lib import Resolver
 from lib.strtool import pattern
 
@@ -21,9 +21,9 @@ tags = ["data"]
 
 @router.get("/info")
 async def get_client_info(
-    cln:str, 
-    softname:str,
-    ip: Annotated[str, None] = Query(pattern=pattern.IP)
+    cln: Annotated[str, "分类名称"], 
+    softname: Annotated[str, "软件名称"],
+    ip: Annotated[str, Query(pattern=pattern.NET_IP)]
     ):
     """
         获取不同分类下的软件信息
@@ -55,6 +55,17 @@ async def get_client_info(
                     continue
     return results
 
+@router.get("/not_classified")
+async def get_not_classified():
+    classified = set(DB.hgetall("classified"))
+    allclients = set(DB.hgetall("client_status"))
+    noclassified = allclients - classified
+    return {
+        "classified": classified,
+        "notclassified": noclassified
+    }
+
+
 @router.get("/realtime")
 async def get_realtime_data():
     """
@@ -62,12 +73,11 @@ async def get_realtime_data():
         从redis中获取数据
     """
     return {
-        "data": {
-            "client_status": DB.hgetall("client_status"),
-            "client_reports": DB.hgetall("reports"),
-            "client_waitdones": DB.hgetall("waitdones"),
-            "softwarelist": DB.hgetall("softwarelist"),
-            "classify": DB.hgetall("classify"),
-            "classifylist": DB.smembers("classifylist")
-        }
+        "client_status": DB.hgetall("client_status"),   # 客户端连接状态
+        "client_reports": DB.hgetall("reports"),        # 客户端控制运行结果汇报
+        "client_waitdones": DB.hgetall("waitdones"),    # 客户端待办事项信息
+        "instructlist": DB.hgetall("instructlist"),     # 预存指令列表
+        "softwarelist": DB.hgetall("softwarelist"),     # 软件列表
+        "classify": DB.hgetall("classify"),             # 分类数据
+        "classifylist": DB.smembers("classifylist")     # 分类索引
     }

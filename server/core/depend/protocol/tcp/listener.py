@@ -2,34 +2,43 @@ import json
 import time
 from typing import Dict, Tuple, AnyStr
 
-from ._prototype import TCP, socket
-from gloabl import DB
+from core.depend.protocol.tcp._prototype import TCP, socket
+from static import DB
 from lib import CatchSock
-from lib.sys.processing import Process
+from lib.sys.processing import Process, Value
 from lib import Resolver
 
 resolver = Resolver()
 catch = CatchSock()
 
+# ADDRESS = resolver("network", "ip")
+# PORT = resolver("ports", "tcp", "server")
 ENCODING = resolver("global", "encoding")
 RECVSIZE = resolver("sock", "recv-size")
 TIMEOUT = resolver("sock", "tcp", "timeout")
+LISTENES = resolver("sock", "tcp", "listenes")
 DELAY = 1
 
 class Listener(TCP):
     def settings(self):
         self.sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
         self.sock.settimeout(TIMEOUT)
-        
+        self.sock.listen(LISTENES)
+    
     @catch.timeout
-    def recv(self) -> Dict[AnyStr, Tuple[socket.socket, AnyStr]]:
+    def accept(self):
         sock, addr = self.sock.accept()
-        # 是否需要阻塞，客户端连接
+        return sock, addr
 
-        # 格式化TCP数据
-        data = sock.recv(RECVSIZE)
-        return sock, addr, data.decode(ENCODING)
-
+    @catch.sock
+    def recv(self) -> Dict[AnyStr, Tuple[socket.socket, AnyStr]]:
+        conn = self.accept()
+        if conn:
+            sock, addr = conn
+            data = sock.recv(RECVSIZE)
+            return sock, addr, data.decode(ENCODING)
+        return False
+    
     def listen(self):
         """
             TCP监听器
@@ -38,14 +47,14 @@ class Listener(TCP):
         """
         while True:
             # 接受客户端连接
-            conn = self.recv()
-            if conn is False:
-                continue
-            else:
-                task = Process(target=self._task, args=(conn, ))
-                task.start()
-
-             
+            try:
+                conn = self.recv()
+                if conn:
+                    task = Process(target=self._task, args=(conn, ))
+                    task.start()
+            except KeyboardInterrupt:
+                exit()
+     
     def _task(self, conn: Dict[AnyStr, Tuple[socket.socket, AnyStr]]):
         # 任务包装器
         """
@@ -59,7 +68,7 @@ class Listener(TCP):
         # 事件分流
         self._event_brench(sock, addr, type, cookie, data)
         
-    def _parse(data):
+    def _parse(self, data):
         """
             解析TCP数据
         返回 事件类型 和 Cookie
@@ -85,7 +94,6 @@ class Listener(TCP):
             # 等待处理待办事件，定期搜索事件标识，如果找到，获取处理结果，返回客户端，关闭连接
             Process(target=self._dps_waitdone, args=(cookie, sock)).start()
    
-                
         if type == "report":
             # 将汇报结果保存数据库，执行日志
             DB.lpush("logs", data)
@@ -96,14 +104,13 @@ class Listener(TCP):
         return cookie
     
     
-    @catch.checksockconning
     def _dps_waitdone(self, cookie:str, sock:socket.socket) -> bool:
         while True:
-            if DB.hget("waitdones", cookie):
+            if DB.hget("waitdones", cookie) or self._check_status():
                 # 校验待办事项是否被删除
                 break
             
-            results: str = DB.hget("waitdone_despose_results", cookie)
+            results: str = DB.hget("waitdone_dispose_results", cookie)
             if results:
                 # 如果为空
                 sock.sendall(results.encode())
@@ -112,4 +119,11 @@ class Listener(TCP):
             
             time.sleep(DELAY)
         return False
-
+    
+    @catch.status
+    def _check_status(self, sock:socket.socket=None):
+        try:
+            sock.getpeername()
+            return True
+        except:
+            return False

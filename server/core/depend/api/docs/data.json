@@ -1,0 +1,41 @@
+{
+    "server/data/info":{
+        "description": "",
+        "mode": "get",
+        "params": {
+            "cln": ["string", "", "分类名称"],
+            "softname": ["string", "", "软件名称"],
+            "ip": ["string", "", "IP地址"]
+        },
+        "responses": {
+            
+        }
+    },
+    "server/data/not_classified":{
+        "description": "",
+        "mode": "get",
+        "params": {},
+        "responses":{
+            "OK": {
+                "classified": ["set", "", "已分类IP"],
+                "noclassified": ["set", "", "未分类IP"]
+            }
+        }
+    },
+    "server/data/realtime":{
+        "description": "",
+        "mode": "get",
+        "params": {},
+        "responses": {
+            "OK": {
+                "client_status": ["dict", "", "客户端连接状态"],
+                "client_reports": ["dict", "", "客户端控制运行结果汇报"],
+                "client_waitdones": ["dict", "", "客户端待办事项信息"],
+                "instructlist": ["dict", "", "预存指令列表"],
+                "softwarelist": ["dict", "", "软件列表"],
+                "classify": ["dict", "", "分类数据"],
+                "classifylist": ["set", "", "分类索引"]
+            }
+        }
+    }
+}

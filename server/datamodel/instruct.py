@@ -1,13 +1,15 @@
 from typing import Annotated, List, Dict
-from fastapi import Query
 
+from fastapi import Query
 from pydantic import BaseModel
 
+from lib.strtool import pattern
+
 class Instruct(BaseModel):
-    type: Annotated[str, None]
-    shell: Annotated[str, None]
+    label: Annotated[str, None]
+    instruct: Annotated[str, None]
     isadmin: Annotated[bool, None] = False
-    os: Annotated[str, None] = Query(pattern="^(Windows)$|^(Linux)$|^(MacOS)$", default="Windows")
+    os: Annotated[str, Query(pattern=pattern.TAG_OS, default="Windows")]
     kwargs: Annotated[Dict, None] = {}
     
 class InstructList(BaseModel):

@@ -1,8 +1,7 @@
 {
     "fastapi":{
         "server/send/instruct":{
-            "description":{
-            },
+            "description": "",
             "mode": "post",
             "return": "",
             "params":{
@@ -109,7 +108,7 @@
             },
             "responses": {}
         },
-        "server/event/addsoftwarelist":{
+        "server/event/add/softwarelist":{
             "description": "修改服务端软件清单 -> 添加软件",
             "mode": "put",
             "return": "",
@@ -140,7 +139,7 @@
                 }
             }
         },
-        "server/event/popsoftwarelist":{
+        "server/event/pop/softwarelist":{
             "description": "修改服务端软件清单 -> 删除软件",
             "mode": "put",
             "return": "",
@@ -151,6 +150,37 @@
                 "ok":{
                     "OK": "POP [softwarename]"
                 }
+            }
+        },
+        "server/event/add/classify":{
+            "description": "创建或者添加分类数据",
+            "mode": "put",
+            "return":"",
+            "params":{
+                "classify": {
+                    "description": "分类模型",
+                    "model":[
+                        {
+                            "name": "Classify",
+                            "feild": {
+                                "name": ["string", "", "分类名称"],
+                                "items": ["List[ClassTable]", "", "包含软件名和ip的字典列表"]
+                            }
+                        },
+                        {
+                            "soft": ["string", "",  "软件名称"],
+                            "ip": ["ip string", "", "ip地址"]
+                        }
+                    ]
+                }
+            }
+        },
+        "server/event/pop/classify":{
+            "description": "删除分类数据",
+            "return": "",
+            "params": {
+                "cln": ["string", "", "分类名称"],
+                "key": ["string", "", "要删除的值(可以是软件名或者IP)"]
             }
         },
         "server/event/download":{

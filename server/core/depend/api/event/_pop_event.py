@@ -2,13 +2,13 @@
 import re
 import json
 from typing import Annotated, List, AnyStr
-from fastapi import APIRouter
+from fastapi import APIRouter, Query
 
 from lib import Resolver
-from datamodel.classify import ClassTable
-from datamodel.transfer_data import Software
+from lib.strtool import pattern
 from core.depend.control import Control
-from gloabl import DB
+from datamodel.classify import ClassIndex
+from static import DB
 
 resolver = Resolver()
 controlor = Control()
@@ -20,8 +20,8 @@ tags = ["pop event"]
 
 
 # ========= 移除事件 ========== #
-@router.put("/pop/softwarelist")
-async def popsoftwarelist(software):
+@router.put("/softwarelist")
+async def popsoftwarelist(software: Annotated[str, None]):
     """
         # 移除软件清单
     software: 软件名    
@@ -37,24 +37,51 @@ async def popsoftwarelist(software):
     return {"OK", f"POP {software}"}
 
 
-@router.put("/pop/clissify")
-async def popclassify(cln, key):
+@router.put("/clissify")
+async def popclassify(
+        cln: Annotated[str, None],
+        item: Annotated[ClassIndex, None]
+    ):
     # 检查分类是否存在
     classifylist = DB.smembers("classifylist")
     if not cln in classifylist:
         return {"ERROR": f"classify: {cln} not exists"}
-    
-    
-    # 读取分类数据
-    clndata: List = json.loads(DB.hget("clissify", cln))
-    for i, item in enumerate(clndata):
-        # 遍历数据表
-        if key in (item['soft'], item['ip']):
-           obj = clndata.pop(i) 
-           DB.hset("classify", cln, json.dumps(clndata, ensure_ascii=False))
-           return {"OK": f"remove {obj} form classify: {cln}"}
 
-    return {"ERROR": f"ip not in classify: {cln}"}
+    # 读取分类数据
+    clndata: List[str] = json.loads(DB.hget("classify", cln))
+    context: str = item.model_dump_json()
+    if context not in clndata:
+        # 检查引用计数, 将移除引用计数归零的客户端IP
+        count:int = DB.hget("classified", item.ip)
+        DB.hdel("classified", item.ip) if int(count) == 0 else DB.hset("classified", item.ip, int(count) - 1)
+        
+        # 更新修改后的数据
+        index = clndata.index(context)
+        clndata.pop(index)
+        return {"OK": f"remove {context} from classify: {cln}"}
+    
+    return {"ERROR": f"item not in classify: {cln}"}
+
+    # for i, item in enumerate(items):
+    #     # 遍历数据表
+    #     soft = item['soft']
+    #     ip = item['ip']
+    #     if key in (soft, ip):
+    #         # 检查引用计数
+    #         count = DB.hget("classified", ip)
+    #         # 将移除引用计数归零的客户端IP
+    #         DB.hdel("classified", ip) if int(count) == 0 else DB.hset("classified", ip, int(count) - 1)
+            
+    #         obj = clndata.pop(i) 
+    #         DB.hset("classify", cln, json.dumps(clndata, ensure_ascii=False))
+    #         return {"OK": f"remove {obj} form classify: {cln}"}
+
+    # return {"ERROR": f"ip not in classify: {cln}"}
+
+@router.put("/set_of_prestored_instructions")
+async def pop_instructions(alias: Annotated[str, None]):
+    DB.hdel("instructlist", alias)
+    return {"OK": f"remove prestored instruct: {alias}"}
     
 
 

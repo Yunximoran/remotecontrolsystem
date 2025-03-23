@@ -1,3 +1,6 @@
+import sys
+import signal
+
 from typing import Tuple, Any, List
 import uvicorn
 
@@ -15,12 +18,10 @@ FASTHOST = resolver("server", "host")
 FASTPORT = resolver("server", "port")
 ISRELOAD = resolver("server", "reload")
 
-# 监听设置常量
+# 监听设置
 SERVERADDRESS =(resolver("network", "ip"), resolver("ports", "tcp", "server"))
-LISTENES = resolver("sock", "tcp", "listenes")
 
-
-# 广播设置常量
+# 广播设置
 BROADCAST = (resolver("sock", "udp", "ip-broad"), resolver("ports", "udp", "broad"))
 
 
@@ -31,16 +32,23 @@ class Start:
         self.__registry((
             self._tcplisten,
             self._udplisten,
+            self._start
         ))
         
         self.__starttasks()
-        uvicorn.run(app=FASTAPP, host=FASTHOST, port=FASTPORT, reload=ISRELOAD)
         self.__jointasks()
+
+        # fesfsfefsefsef
+    @staticmethod
+    def _start():
+        uvicorn.run(app=FASTAPP, host=FASTHOST, port=FASTPORT, reload=ISRELOAD)
     
-    def _tcplisten(self):
-        Listener(SERVERADDRESS, LISTENES).listen()
+    @staticmethod
+    def _tcplisten():
+        Listener(SERVERADDRESS).listen()
     
-    def _udplisten(self):
+    @staticmethod
+    def _udplisten():
         BroadCastor(BROADCAST).listen()
         
     def __registry(self, tasks: Tuple[Any]):

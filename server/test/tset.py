@@ -1,7 +1,4 @@
 import json
-
-a = {"123457"}
-
-b = {"23232323"}
-for i in a:
-    print(list(a | b))
+a = {1, 3, 4 ,5}
+b = {2, 4, 5}
+print(a -b )

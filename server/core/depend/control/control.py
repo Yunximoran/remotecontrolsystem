@@ -10,7 +10,7 @@ from lib.sys.processing import(
 )
 from lib import Resolver
 from lib.manager._logger import Logger
-from gloabl import DB
+from static import DB
 from lib.sys.network import NetWork as NET
 from core.depend.protocol.tcp import Connector
 
@@ -106,13 +106,6 @@ class Control:
         conn.send(json.dumps(instructs, ensure_ascii=False, indent=4))
         reports = conn.recv()
         DB.hset("reports", ip, reports)
-        for report in json.loads(reports):
-            instruct = report['instruct']
-            if reports['err'] == "<No error output>":
-                logger.record(1, f"{ip} exec {instruct} OK")
-            else:
-                logger.record(3, f"{ip} exec {instruct} ERROR")
-        print(reports)
         conn.close()
 
     @staticmethod

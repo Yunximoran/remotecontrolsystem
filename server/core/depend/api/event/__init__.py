@@ -2,20 +2,29 @@ from typing import Annotated, List
 
 from fastapi import APIRouter
 
-from ._add_event import router as addevent
-from ._pop_event import router as popevent
-
 from core.depend.control import Control
 from datamodel import WaitDesposeResults
-from gloabl import DB
+from static import DB
+
+
+from . import _add_event as add
+from . import _pop_event as pop
 
 controlor = Control()
 router = APIRouter()
 prefix="/server/event"
 tags = ["event"]
 
-router.include_router(addevent)
-router.include_router(popevent)
+router.include_router(
+    router=add.router,
+    prefix=add.prefix,
+    tags=add.tags
+)
+router.include_router(
+    router=pop.router,
+    prefix=pop.prefix,
+    tags=pop.tags
+)
 
 
 # 激活客户端
@@ -26,8 +35,10 @@ async def magic_client(toclients:Annotated[List, None] = []):
     toclients: 指定发送目标IP
     """
     try:
+        print("WOL")
         controlor.sendtoclient(toclients, wol=True)
     except Exception:
+        print("WOL ERROR")
         return {"ERROR", "wol err"}
 
 # 待办事件已处理事件

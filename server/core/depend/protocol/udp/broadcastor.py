@@ -7,7 +7,7 @@ from core.depend.protocol.udp._prototype import UDP
 from lib.sys.processing import Process, Value, Lock
 from lib import Resolver
 from lib.sys import Logger
-from gloabl import DB
+from static import DB
 
 
 logger = Logger("udp", log_file="udp.log")
@@ -30,13 +30,11 @@ class BroadCastor(UDP):
         self.sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
         self.sock.setsockopt(socket.SOL_SOCKET, socket.SO_BROADCAST, 1)
     
-    
     def listen(self):
         """
             注册监听任务
         """
         nowtasks = Value("i", 0, lock=True)
-        
         logger.record(1, "UDP Listening")
         while True:
             if nowtasks.value < MAXTASKS:
@@ -54,25 +52,33 @@ class BroadCastor(UDP):
         # recvfrom 会阻塞进程，直到接收到数据
         try:
             # 接收心跳包广播
-            res = self.sock.recvfrom(RECVSIZE)
-
+            data, address = self.sock.recvfrom(RECVSIZE)
             
             # 解析广播数据
-            data = res[0].decode(ENCODING)
-            ip = json.loads(data)['ip']
-            logger.record(1, f"conning for client: {ip}")
+            logger.record(1, f"conning for client: {address}")
+            data, ip = self.parse(data, address)
             
             # 保存/更新 广播数据
-            DB.set(ip, "null")
-            DB.expire(ip, 1)
+            self.update_client_messages(ip, data)
             
-            DB.hset("client_status", ip, "true")
-            DB.hset("heart_packages", mapping={ip: data}) # ip地址和心跳包数据
+            # 启动计时器，检测客户端是否断开连接
             Process(target=self._timer, args=(ip, )).start()
         finally:
             with nowtasks.get_lock():
                 nowtasks.value -= 1
-                
+    
+    def parse(self, data:bytes, addr:str):
+        data = data.decode(ENCODING)
+        ip = json.loads(data)['ip']
+        return data, ip
+    
+    def update_client_messages(self, ip, data):
+        DB.hset("client_status", ip, "true")
+        DB.hset("heart_packages", mapping={ip: data}) # ip地址和心跳包数据
+    
+        DB.set(ip, "null")
+        DB.expire(ip, 1)
+    
     def _timer(self, ip):
         time.sleep(3)
         if not DB.get(ip) and DB.hget("client_status", ip) == "true":

@@ -16,7 +16,6 @@ router = APIRouter()
 prefix = "/server/send"
 tags = ["send"]
 
-
 @router.post("/instruct") 
 async def send_control_shell(instructlist: InstructList, toclients: List[AnyStr] = []):
     """

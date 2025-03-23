@@ -1,0 +1,71 @@
+{
+    "server/send/instruct":{
+        "description":{
+        },
+        "mode": "post",
+        "return": "",
+        "params":{
+            "instructlist":{
+                "val": ["InstructList", "", "指令列表"],
+                "model":[
+                    {
+                        "name": "InstructList",
+                        "feild": {
+                            "item":["List[Instruct]","","包含Instruct模型的列表"]
+                        }
+                    },
+                    {
+                        "name": "Instruct",
+                        "feild":{
+                            "type": ["string", "", "指令标识，说明指令的作用"],
+                            "shell": ["string", "", "要执行的shell指令"],
+                            "isadmin": ["bool", "false", "是否以管理员运行"],
+                            "os": ["string", "Windows", "运行指令的系统环境"],
+                            "kwargs": ["dict", "{}", "指令需要携带的额外参数"]
+                        }
+                    }
+                ] 
+            },
+            "toclients": ["list", "[]", "指定发送目标IP， 默认为空列表，向所有连接中的客户端发送"]
+        },
+        "responses":{
+            "OK": "send software checklist",
+            "ERROR" : "Exception: 后端ERROR信息"
+        }
+    },
+    "server/send/softwarelist":{
+        "description": "",
+        "mode": "post",
+        "params":{
+            "checklist": {
+                "val": ["SoftWareList", "", "软件列表"],
+                "model": [
+                    {
+                        "name": "SoftWareList",
+                        "feild": {
+                            "item": ["List[SoftWare]", "", "包含SoftWare模型的列表"]
+                        }
+                    },
+                    {
+                        "name": "SoftWare",
+                        "feild":{
+                            "ecdis": ["Ecdis", "", "软件信息"],
+                            "conning": ["bool", "False", "软件的运行状态"]
+                        }
+                    },
+                    {
+                        "name": "Ecdis",
+                        "feild":{
+                            "name": ["string", "", "软件名称"],
+                            "path": ["Path", "", "软件路径"]
+                        }
+                    }
+                ]
+            }
+        },
+        "responses":{
+            "OK": "instructions have been sent to the client",
+            "ERROR" : "Exception: 后端ERROR信息"    
+        }
+    }
+}
