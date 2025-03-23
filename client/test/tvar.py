@@ -1,4 +1,6 @@
-from typing import List
+import json
 
+from depend.path import *
 
-b: List[int] = [1, 'q']
+with open(PATH_MAP_SOFTWARES, "r", encoding="utf-8") as f:
+    print(json.load(f))

@@ -1,4 +1,5 @@
 import re, socket
+from pathlib import Path
 from ._base import *
 from depend.system import SYSTEM
 from lib import Resolver
@@ -57,19 +58,18 @@ class SelectServe(BaseServe):
 
     def executor_instruct(self, label: str, instruct:str, isadmin:bool, kwargs:dict):
             # 指令分流
-            tags = label.split(" ")
             if label == "close": # OK
                 report = SYSTEM.close()
                 
             elif label == "close -s":
-                _, pracpath = self.search_software(instruct)
-                report = SYSTEM.close_software(instruct)
+                path = self.search_software(instruct)
+                report = SYSTEM.close_software(path.name())
                 
             elif label == "restart": # OK
                 report = SYSTEM.restart()
                 
             elif label == "start -s":
-                path, _ = self.search_software(instruct)
+                path = self.search_software(instruct)
                 report = SYSTEM.start_software(path)
                 
             elif label == "wget":
@@ -93,7 +93,8 @@ class SelectServe(BaseServe):
             softwares = json.load(f)
             for soft in softwares:
                 if softname == soft['ecdis']['name']:
-                    return soft['ecdis']['path'], soft['ecdis']['prac-path']
+                    pracpath = soft['ecdis']['prac-path']
+                    return Path(pracpath)
         return False
     
     def set_software_process_address(path):
