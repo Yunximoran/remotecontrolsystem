@@ -1,10 +1,11 @@
 from multiprocessing import Process
 
+from lib import Resolver
 from ._base import *
 from ..system import SYSTEM
 
-
 logger = Logger("ConnectServe", "connect.log")
+
 class ConnectServe(BaseServe):
 
     def serve(self):
@@ -26,7 +27,6 @@ class ConnectServe(BaseServe):
         """
         with open(PATH_MAP_SOFTWARES, "r") as f:
             softwares = json.load(f)
-            
         return {
             "ip": IP,
             "mac": MAC,
@@ -39,8 +39,7 @@ class ConnectServe(BaseServe):
                 info = soft['ecdis']
                 alias = info['name']
                 pracpath = info['prac-path']
-                soft['conning'] = True if SYSTEM._check_soft_status(alias, pracpath) else False
+                soft['conning'] = True if SYSTEM._check_soft_status(alias) else False
         
         with open(PATH_MAP_SOFTWARES, 'w', encoding='utf-8') as f:
             json.dump(softwares, f, ensure_ascii=False, indent=4)
-                

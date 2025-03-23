@@ -32,8 +32,6 @@ class SelectServe(BaseServe):
             try: 
                 # 等待服务器发送shell指令            
                 sock, _ = tcp_conn.accept()
-                
-                # 创建接受任务
                 multiprocessing.Process(target=self.select, args=(sock,)).start()
             except TimeoutError:
                 pass
@@ -42,48 +40,50 @@ class SelectServe(BaseServe):
         reports = []
         instructs = sock.recv(1024).decode()
         logger.record(1, f"recv instruct:{instructs}")
-        for instruct in json.loads(instructs):
-            
-            item = json.loads(instruct)
-            type = item['type']
-            shell = item["shell"]
+        for data in json.loads(instructs):
+            # 解析指令模型
+            item = json.loads(data)
+            label = item['label']
+            instruct = item["instruct"]
             isadmin = item["isadmin"]
-            report = self.executor_instruct(type, shell, isadmin)
+            kwargs = item['kwargs']
+            
+            # 指令分流，获取全部报文
+            report = self.executor_instruct(label, instruct, isadmin, kwargs)
             reports.append(report)
-            
-            
+
         self.report_results(sock, reports)
         
 
-    def executor_instruct(self, type, instruct, isadmin):
+    def executor_instruct(self, label: str, instruct:str, isadmin:bool, kwargs:dict):
             # 指令分流
-            if type == "close": # OK
+            tags = label.split(" ")
+            if label == "close": # OK
                 report = SYSTEM.close()
                 
-            elif type == "close -s":
+            elif label == "close -s":
                 _, pracpath = self.search_software(instruct)
-                report = SYSTEM.close_software(instruct, pracpath)
+                report = SYSTEM.close_software(instruct)
                 
-            elif type == "restart": # OK
+            elif label == "restart": # OK
                 report = SYSTEM.restart()
                 
-            elif type == "start -s":
+            elif label == "start -s":
                 path, _ = self.search_software(instruct)
                 report = SYSTEM.start_software(path)
                 
-            elif type == "wget":
+            elif label == "wget":
                 report = SYSTEM.wget()
                 
-            elif type == "compress":
+            elif label == "compress":
                 report = SYSTEM.compress()
                 
-            elif type == "uncompress":
+            elif label == "uncompress":
                 report = SYSTEM.uncompress()
                 
-            elif type == "remove":
+            elif label == "remove":
                 # 将instruct 处理成 topath
                 report = SYSTEM.remove(instruct)
-                
             else:
                 report = SYSTEM.executor(instruct, isadmin=isadmin)
             return report
@@ -99,7 +99,7 @@ class SelectServe(BaseServe):
     def set_software_process_address(path):
         with open(PATH_MAP_SOFTWARES, 'w', encoding='utf-8') as f:
             pass
-    
+                
     def savefile(self, filename, conn):
         fileobj = conn.recv(1024)
         conn.close()

@@ -1,6 +1,4 @@
-a = {"1": 1}
-b = a
+from typing import List
 
-print(b)
-a['2'] = 3
-print(b)
+
+b: List[int] = [1, 'q']

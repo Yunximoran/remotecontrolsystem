@@ -42,29 +42,25 @@ class Windows(__BaseSystem):
     
     def start_software(self, path):
         # 读取本地软件清单
-        report = self.executor(["start", path])
-        p = self._check_soft_status('geek', path)
-        print(p)
+        if not isinstance(path, Path):
+            path = Path(path)
+        report = self.executor(["start", path.name], cwd=path.parent)
         return report
 
             
-    def close_software(self, softname, pracpath):
+    def close_software(self, softname):
         """
             目标软件的唯一路径[实际地址]
         遍历进程池
         
         """
         # 执行关闭软件命令
-        process = self._check_soft_status(softname, pracpath)
-        print(process, pracpath)
-        if process:
+        processes = self._check_soft_status(softname)
+        for process in processes:
             process.kill()
         
         return self.report(softname, f"{softname} is killed", False)
-    
-    def search(self, obj, if_gloabl=False):
-        pass
-    
+
     
     def build_hyperlink(self, alias, frompath):
         """

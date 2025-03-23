@@ -99,6 +99,8 @@ class ListenServe(BaseServe):
         # 等待服务器回应，客户端与服务端交互时使用
         logger.record(1, f"wait resp: {param}")
         conn = TCPConnect()
+        # 设置超时时间是30分钟
+        conn.sock.timeout(1800)
         # 发送数据
         conn.send(param)
         # 等待服务器回应

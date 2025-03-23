@@ -28,18 +28,14 @@ class __BaseSystem:
     
     logger = Logger("system", "executor.log")
 
-    def _check_soft_status(self, alias, path):
+    def _check_soft_status(self, alias) -> List[psutil.Process]:
         # 遍历系统进程池
+        processes = []
         for process in psutil.process_iter():
             # 匹配项目
-            if re.match(alias, process.name()):
-                # 匹配名称相同的进程
-                print(process.name(), process.exe())
-                if process.exe() == path:
-                    return process
-                else:
-                    continue
-        return False
+            if re.match(alias, process.name().lower()):
+                processes.append(process)
+        return processes
         
     def init(self):
         pass
@@ -55,11 +51,11 @@ class __BaseSystem:
     
     
     # 软件相关
-    def start_software(self, software):
+    def start_software(self, path):
         # 启动软件
         pass
     
-    def close_software(self, software, path):
+    def close_software(self, softname):
         # 关闭软件
         pass
     
