@@ -43844,3 +43844,137 @@ module: core.depend.protocol.udp.broadcastor
 module: core.depend.protocol.udp.broadcastor
 2025-03-23 23:53:28,214 - process - INFO - _task	success
 module: core.depend.protocol.udp.broadcastor
+2025-03-24 17:43:05,351 - process - INFO - _tcplisten	success
+module: __mp_main__
+2025-03-24 17:43:05,398 - process - INFO - _start	success
+module: __mp_main__
+2025-03-24 17:43:05,409 - process - INFO - _udplisten	success
+module: __mp_main__
+2025-03-24 17:43:07,926 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-24 17:43:08,079 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-24 17:43:08,232 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-24 17:43:08,372 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-24 17:43:08,526 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-24 17:43:08,649 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-24 17:43:08,755 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-24 17:43:08,893 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-24 17:43:09,077 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-24 17:43:09,214 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-25 19:34:39,618 - process - INFO - _udplisten	success
+module: __mp_main__
+2025-03-25 19:34:39,676 - process - INFO - _start	success
+module: __mp_main__
+2025-03-25 19:34:39,682 - process - INFO - _tcplisten	success
+module: __mp_main__
+2025-03-25 19:34:41,950 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-25 19:34:42,058 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-25 19:34:42,262 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-25 19:34:42,432 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-25 19:34:42,588 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-25 19:34:42,694 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-25 19:34:42,803 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-25 19:34:42,911 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-25 19:34:43,020 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-25 19:34:43,177 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-25 19:35:11,669 - process - ERROR - _udplisten	The Ctrl C
+module: __mp_main__
+2025-03-25 21:58:17,477 - process - INFO - _start	success
+module: __mp_main__
+2025-03-25 21:58:17,528 - process - INFO - _tcplisten	success
+module: __mp_main__
+2025-03-25 21:58:17,531 - process - INFO - _udplisten	success
+module: __mp_main__
+2025-03-25 21:58:30,461 - process - INFO - _start	success
+module: __mp_main__
+2025-03-25 21:58:30,476 - process - INFO - _udplisten	success
+module: __mp_main__
+2025-03-25 21:58:30,482 - process - INFO - _tcplisten	success
+module: __mp_main__
+2025-03-25 22:08:42,212 - process - INFO - _tcplisten	success
+module: __mp_main__
+2025-03-25 22:08:42,246 - process - INFO - _udplisten	success
+module: __mp_main__
+2025-03-25 22:08:42,252 - process - INFO - _start	success
+module: __mp_main__
+2025-03-25 22:09:38,702 - process - INFO - _tcplisten	success
+module: __mp_main__
+2025-03-25 22:09:38,712 - process - INFO - _start	success
+module: __mp_main__
+2025-03-25 22:09:38,718 - process - INFO - _udplisten	success
+module: __mp_main__
+2025-03-25 22:12:25,421 - process - INFO - _udplisten	success
+module: __mp_main__
+2025-03-25 22:12:25,442 - process - INFO - _start	success
+module: __mp_main__
+2025-03-25 22:12:25,445 - process - INFO - _tcplisten	success
+module: __mp_main__
+2025-03-25 22:12:27,667 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-25 22:12:27,824 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-25 22:12:27,979 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-25 22:12:28,104 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-25 22:12:28,319 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-25 22:12:28,430 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-25 22:12:28,539 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-25 22:12:28,680 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-25 22:12:28,805 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-25 22:12:28,933 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-25 22:14:10,174 - process - ERROR - _udplisten	The Ctrl C
+module: __mp_main__
+2025-03-25 22:15:00,029 - process - INFO - _udplisten	success
+module: __mp_main__
+2025-03-25 22:15:00,072 - process - INFO - _start	success
+module: __mp_main__
+2025-03-25 22:15:00,073 - process - INFO - _tcplisten	success
+module: __mp_main__
+2025-03-25 22:15:02,401 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-25 22:15:02,584 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-25 22:15:02,755 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-25 22:15:02,912 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-25 22:15:03,066 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-25 22:15:03,205 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-25 22:15:03,393 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-25 22:15:03,517 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-25 22:15:03,641 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-25 22:15:03,735 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-25 22:17:56,690 - process - ERROR - _udplisten	The Ctrl C
+module: __mp_main__

@@ -15,7 +15,7 @@ controlor = Control()
 
 # 事件接口
 router = APIRouter()
-prefix = "/server/event/pop"
+prefix = "/pop"
 tags = ["pop event"]
 
 

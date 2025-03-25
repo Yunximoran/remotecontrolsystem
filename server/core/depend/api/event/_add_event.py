@@ -16,7 +16,7 @@ controlor = Control()
 
 # 事件接口
 router = APIRouter()
-prefix = "/server/event/add"
+prefix = "/add"
 tags = ["add"]
 
     
@@ -55,7 +55,7 @@ async def addclissify(classify: Annotated[Classify, None]):
     context = DB.hget("classify", classify.name)
     # 检查当前分类是否为空
     if context:
-        clndata = set(json.loads(clndata))  # 解析json， 并转化为集合
+        clndata = set(json.loads(context))  # 解析json， 并转化为集合
         clndata = list(clndata | items)     # 合并两个集合，转化类列表
     else:
         clndata = list(items)

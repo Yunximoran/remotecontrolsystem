@@ -73,11 +73,11 @@ async def get_realtime_data():
         从redis中获取数据
     """
     return {
-        "client_status": DB.hgetall("client_status"),   # 客户端连接状态
-        "client_reports": DB.hgetall("reports"),        # 客户端控制运行结果汇报
-        "client_waitdones": DB.hgetall("waitdones"),    # 客户端待办事项信息
-        "instructlist": DB.hgetall("instructlist"),     # 预存指令列表
-        "softwarelist": DB.hgetall("softwarelist"),     # 软件列表
-        "classify": DB.hgetall("classify"),             # 分类数据
+        "client_status": DB.loads(DB.hgetall("client_status")),   # 客户端连接状态
+        "client_reports": DB.loads(DB.hgetall("reports")),        # 客户端控制运行结果汇报
+        "client_waitdones": DB.loads(DB.hgetall("waitdones")),    # 客户端待办事项信息
+        "instructlist": DB.loads(DB.hgetall("instructlist")),     # 预存指令列表
+        "softwarelist": DB.loads(DB.hgetall("softwarelist")),     # 软件列表
+        "classify": DB.loads(DB.hgetall("classify")),             # 分类数据
         "classifylist": DB.smembers("classifylist")     # 分类索引
     }
