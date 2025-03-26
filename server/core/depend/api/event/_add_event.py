@@ -7,7 +7,7 @@ from fastapi import APIRouter
 from lib import Resolver
 from lib.math import decimal_to_baseX, baseX_to_decimal
 from datamodel import Classify
-from datamodel.transfer_data import Software
+from datamodel.transfer_data import Software, SoftwareList
 from datamodel.instruct import Instruct, InstructList
 from core.depend.control import Control
 from static import DB
@@ -24,13 +24,15 @@ tags = ["add"]
 
 # ========= 添加事件 ========== #
 @router.put("/softwarelist")    # 添加软件清单
-async def addsoftwarelist(software: Annotated[Software, None]):
+async def addsoftwarelist(softwares: Annotated[SoftwareList, None]):
     """
         添加软件清单
     """
-    info = software.model_dump_json()
-    DB.hset("softwarelist", software.ecdis.name, info)
-    return {"OK", software.ecdis.name}
+    softs = []
+    for info in softwares.items:
+        softs.append(info.ecdis.name)
+        DB.hset("softwarelist", info.ecdis.name, json.dumps(info))
+    return {"OK": softs}
     
 @router.put("/classify")
 async def addclissify(classify: Annotated[Classify, None]):

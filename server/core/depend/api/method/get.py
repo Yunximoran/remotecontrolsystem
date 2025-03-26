@@ -14,10 +14,6 @@ def get_client_info(
     mac = None
     status = False
     conning = False
-    results = {
-        "softname": softname,
-        "status": False
-    }
     classifylist = DB.smembers("classifylist")
     if cln not in classifylist:
         return None, None, None # {"ERROR": f"classify: {cln} is not exists"}
