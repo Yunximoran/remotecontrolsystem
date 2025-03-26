@@ -1,5 +1,6 @@
 
 import json
+import re
 from typing import Annotated, List, Set
 from fastapi import APIRouter
 
@@ -34,6 +35,8 @@ async def addsoftwarelist(software: Annotated[Software, None]):
 @router.put("/classify")
 async def addclissify(classify: Annotated[Classify, None]):
     # 检查分类是否存在，否则新建分类
+    # return classify.items
+    # classify.items: 不重复列表
     classifylist = DB.smembers("classifylist")
     if classify.name not in classifylist:
         DB.sadd("classifylist", classify.name)
@@ -42,16 +45,21 @@ async def addclissify(classify: Annotated[Classify, None]):
     if classify.items is {}:
         return {"OK": f"created classify: {classify.name}"}
 
-    items: Set[str] = set()
-    for item in classify.items:
-        # 检查引用计数
-        count = DB.hget("classified", item.ip)
-        # 设置初次引用的值为0， 每次引用 计数器加1
-        DB.hset("classified", item.ip, int(count) + 1) if count else DB.hset("classified", item.ip, 0)
+    # counts = {}
+    # items: Set[str] = set()
+    # for item in classify.items:
+    #     # # 检查引用计数
+    #     # count = DB.hget("classified", item.ip)
+    #     # # 设置初次引用的值为0， 每次引用 计数器加1
+    #     # DB.hset("classified", item.ip, int(count) + 1) if count else DB.hset("classified", item.ip, 0)
+    #     if item.ip in counts:
+    #         counts[item.ip] += 1
+    #     else:
+    #         counts[item.ip] = 0
+    #     # 另存为集合，防止重复值
+    #     items.add(item.model_dump_json())
         
-        # 另存为集合，防止重复值
-        items.add(item.model_dump_json())
-        
+    items = set([item.model_dump_json() for item in classify.items])
     context = DB.hget("classify", classify.name)
     # 检查当前分类是否为空
     if context:
@@ -59,9 +67,22 @@ async def addclissify(classify: Annotated[Classify, None]):
         clndata = list(clndata | items)     # 合并两个集合，转化类列表
     else:
         clndata = list(items)
+    
+    # 更新引用计数
+    count = {}   
+    for data in clndata:
+        item = json.loads(data)
+        ip = item['ip']
+        if ip in count:
+            count[ip] +=1 
+        else:
+            count[ip] = 0
+    
+    for ip in count:
+        DB.hset("classified", ip, count[ip])
+        
     # 更新数据
     DB.hset("classify", classify.name, json.dumps(clndata, ensure_ascii=False))
-
     return {"OK": f"update: {clndata}"}
 
 

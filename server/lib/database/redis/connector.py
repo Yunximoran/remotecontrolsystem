@@ -81,7 +81,8 @@ class Connector(StrictRedis):
             return self.loads(data)
         except Exception:
             return data
-            
+    
+
 Redis = Connector() 
 
 if __name__ == "__main__":

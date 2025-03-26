@@ -12,7 +12,8 @@ class Ecdis(BaseModel):
         软件状态
     """
     name: Annotated[str, None]
-    path:Annotated[str, None] = None
+    executable: Annotated[str, None]
+    path:Annotated[str, None]
     
 
 class Software(BaseModel):

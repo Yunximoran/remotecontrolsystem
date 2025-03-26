@@ -48,35 +48,21 @@ async def popclassify(
         return {"ERROR": f"classify: {cln} not exists"}
 
     # 读取分类数据
-    clndata: List[str] = json.loads(DB.hget("classify", cln))
-    context: str = item.model_dump_json()
-    if context not in clndata:
-        # 检查引用计数, 将移除引用计数归零的客户端IP
+    clndata: List[str] = DB.loads(DB.hget("classify", cln))
+    # return {"ok": item.model_dump() in clndata}
+    context: dict = item.model_dump()
+    if context in clndata:
+        # # 检查引用计数, 将移除引用计数归零的客户端IP
         count:int = DB.hget("classified", item.ip)
         DB.hdel("classified", item.ip) if int(count) == 0 else DB.hset("classified", item.ip, int(count) - 1)
         
         # 更新修改后的数据
         index = clndata.index(context)
         clndata.pop(index)
+        DB.hset("classify", cln, json.dumps([json.dumps(item) for item in clndata]))
         return {"OK": f"remove {context} from classify: {cln}"}
-    
     return {"ERROR": f"item not in classify: {cln}"}
 
-    # for i, item in enumerate(items):
-    #     # 遍历数据表
-    #     soft = item['soft']
-    #     ip = item['ip']
-    #     if key in (soft, ip):
-    #         # 检查引用计数
-    #         count = DB.hget("classified", ip)
-    #         # 将移除引用计数归零的客户端IP
-    #         DB.hdel("classified", ip) if int(count) == 0 else DB.hset("classified", ip, int(count) - 1)
-            
-    #         obj = clndata.pop(i) 
-    #         DB.hset("classify", cln, json.dumps(clndata, ensure_ascii=False))
-    #         return {"OK": f"remove {obj} form classify: {cln}"}
-
-    # return {"ERROR": f"ip not in classify: {cln}"}
 
 @router.put("/set_of_prestored_instructions")
 async def pop_instructions(alias: Annotated[str, None]):
@@ -85,6 +71,57 @@ async def pop_instructions(alias: Annotated[str, None]):
     
 
 
+"""
+// 关闭所有软件
+[
+    {
+        "label": "close -s",
+        "instruct": soft1,
+        ...
+    },
+    {
+        "label": "close -s",
+        "instruct": soft2,
+        ...
+    },
+    {
+        "label": "close -s",
+        "instruct": soft3,
+        ...
+    },
+    {
+        "label": "close -s",
+        "instruct": soft4,
+        ...
+    },
+    ...
+]
+
+// 开启所有软件
+[
+    {
+        "label": "start -s",
+        "instruct": soft1,
+        ...
+    },
+    {
+        "label": "start -s",
+        "instruct": soft2,
+        ...
+    },
+    {
+        "label": "start -s",
+        "instruct": soft3,
+        ...
+    },
+    {
+        "label": "start -s",
+        "instruct": soft4,
+        ...
+    },
+    ...
+]
+"""
     
 
 
