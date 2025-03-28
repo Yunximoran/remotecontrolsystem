@@ -80,15 +80,11 @@ class Control:
                                attribute={  # 使用偏函数后对丢失某些属性，通过attribute参数手动设置
                                    "__name__": self.sendtofile.__name__
                                    }
-                               ).wait()
+                               ).get()
                 
             if wol:
                 # 发送唤醒魔术包
-                pool.map_async(self.sendtowol, breaks, 
-                               attribute={  # 使用偏函数后对丢失某些属性，通过attribute参数手动设置
-                                   "__name__": self.sendtowol.__name__
-                                   }
-                               ).wait()
+                pool.map_async(self.sendtowol, breaks).get()
  
     @staticmethod                           
     def sendtofile(ip, file):
@@ -116,7 +112,7 @@ class Control:
         
         # 创建唤醒魔术包
         hreart_package = json.loads(DB.hget("hreart_packages", ip))
-        MAC:str = hreart_package["MAC"]
+        MAC:str = hreart_package["mac"]
         magic_pack = NET.create_magic_packet(MAC)
         
         # 发送广播
@@ -134,14 +130,22 @@ class Control:
         breaks = []
         
         # 如果toclients是空列表，默认获取所有客户端
-        clients = toclients if toclients != [] else DB.hgetall("client_status")
-        
-        # 遍历地址群 返回 连接指定状态的客户端
-        for ip in clients:
-            if clients[ip] == "true":
-                connings.append(ip)
-            else:
-                breaks.append(ip)
+        if toclients == []:
+            clients = DB.hgetall("client_status")
+            
+            # 遍历地址群 返回 连接指定状态的客户端
+            for ip in clients:
+                if clients[ip] == "true":
+                    connings.append(ip)
+                else:
+                    breaks.append(ip)
+        else:
+            for ip in toclients:
+                if DB.hget("client_status", ip) == "true":
+                    connings.append(ip)
+                else:
+                    breaks.append(ip)
+                    
         return connings, breaks
     
 

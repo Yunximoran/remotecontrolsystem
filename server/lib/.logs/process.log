@@ -44168,3 +44168,1020 @@ module: core.depend.protocol.udp.broadcastor
 module: core.depend.protocol.udp.broadcastor
 2025-03-26 22:46:31,076 - process - ERROR - _udplisten	The Ctrl C
 module: __mp_main__
+2025-03-27 20:42:54,073 - process - INFO - _tcplisten	success
+module: __mp_main__
+2025-03-27 20:42:54,081 - process - INFO - _start	success
+module: __mp_main__
+2025-03-27 20:42:54,089 - process - INFO - _udplisten	success
+module: __mp_main__
+2025-03-27 20:42:56,548 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 20:42:56,736 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 20:42:56,907 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 20:42:57,033 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 20:42:57,188 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 20:42:57,391 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 20:42:57,551 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 20:42:57,691 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 20:42:57,815 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 20:42:57,971 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 20:47:50,086 - process - INFO - _tcplisten	success
+module: __mp_main__
+2025-03-27 20:47:50,120 - process - INFO - _udplisten	success
+module: __mp_main__
+2025-03-27 20:47:50,121 - process - INFO - _start	success
+module: __mp_main__
+2025-03-27 20:47:52,510 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 20:47:52,664 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 20:47:52,789 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 20:47:52,977 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 20:47:53,132 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 20:47:53,272 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 20:47:53,488 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 20:47:53,597 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 20:47:53,773 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 20:47:53,927 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 20:48:26,780 - process - INFO - _udplisten	success
+module: __mp_main__
+2025-03-27 20:48:26,796 - process - INFO - _start	success
+module: __mp_main__
+2025-03-27 20:48:26,797 - process - INFO - _tcplisten	success
+module: __mp_main__
+2025-03-27 20:48:31,937 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 20:48:31,999 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 20:48:32,185 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 20:48:32,341 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 20:48:32,493 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 20:48:32,671 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 20:48:32,672 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 20:48:32,702 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 20:48:32,764 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 20:48:32,856 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 20:52:37,890 - process - ERROR - _udplisten	The Ctrl C
+module: __mp_main__
+2025-03-27 21:05:21,946 - process - INFO - _send_tasks	success
+module: core.depend.control.control
+2025-03-27 21:05:30,056 - process - INFO - sendtowol	success
+module: core.depend.control.control
+2025-03-27 21:06:13,799 - process - INFO - _send_tasks	success
+module: core.depend.control.control
+2025-03-27 21:06:18,213 - process - INFO - sendtowol	success
+module: core.depend.control.control
+2025-03-27 21:08:38,818 - process - INFO - _send_tasks	success
+module: core.depend.control.control
+2025-03-27 21:08:41,680 - process - INFO - sendtowol	success
+module: core.depend.control.control
+2025-03-27 21:09:07,533 - process - INFO - _send_tasks	success
+module: core.depend.control.control
+2025-03-27 21:09:29,502 - process - INFO - sendtowol	success
+module: core.depend.control.control
+2025-03-27 21:38:43,869 - process - INFO - _udplisten	success
+module: __mp_main__
+2025-03-27 21:38:43,886 - process - INFO - _start	success
+module: __mp_main__
+2025-03-27 21:38:43,886 - process - INFO - _tcplisten	success
+module: __mp_main__
+2025-03-27 21:38:46,454 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:38:46,611 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:38:46,831 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:38:46,997 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:38:47,199 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:38:47,369 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:38:47,524 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:38:47,711 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:38:47,882 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:38:48,068 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:39:12,864 - process - INFO - _send_tasks	success
+module: core.depend.control.control
+2025-03-27 21:39:27,652 - process - INFO - _timer	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:39:27,774 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:39:28,760 - process - INFO - _timer	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:39:28,831 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:39:29,723 - process - INFO - _timer	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:39:29,817 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:39:30,846 - process - INFO - _timer	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:39:31,003 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:39:31,863 - process - INFO - _timer	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:39:32,004 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:39:33,201 - process - INFO - _timer	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:39:33,299 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:39:34,174 - process - INFO - _timer	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:39:34,332 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:39:35,115 - process - INFO - _timer	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:39:35,195 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:39:36,337 - process - INFO - _timer	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:39:36,424 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:39:37,212 - process - INFO - _timer	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:39:37,359 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:39:38,326 - process - INFO - _timer	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:39:38,429 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:39:39,368 - process - INFO - _timer	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:39:39,526 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:39:40,482 - process - INFO - _timer	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:39:40,635 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:39:41,347 - process - INFO - _timer	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:39:41,457 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:39:42,533 - process - INFO - _timer	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:39:42,656 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:39:43,567 - process - INFO - _timer	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:39:43,667 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:39:44,676 - process - INFO - _timer	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:39:44,791 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:39:45,860 - process - INFO - _timer	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:39:46,040 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:39:46,870 - process - INFO - _send_tasks	success
+module: core.depend.control.control
+2025-03-27 21:39:47,064 - process - INFO - _timer	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:39:47,173 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:39:48,061 - process - INFO - _timer	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:39:48,136 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:39:48,953 - process - INFO - _timer	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:39:49,103 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:39:49,953 - process - INFO - _timer	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:39:50,066 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:39:51,047 - process - INFO - _timer	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:39:51,176 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:39:52,054 - process - INFO - _timer	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:39:52,160 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:39:53,075 - process - INFO - _timer	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:39:53,199 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:39:54,300 - process - INFO - _timer	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:39:54,432 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:39:55,361 - process - INFO - _timer	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:39:55,512 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:39:56,455 - process - INFO - _timer	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:39:56,586 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:39:57,509 - process - INFO - _timer	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:39:57,681 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:39:58,699 - process - INFO - _timer	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:39:58,815 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:39:59,702 - process - INFO - _timer	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:39:59,848 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:40:00,777 - process - INFO - _timer	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:40:00,856 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:40:01,943 - process - INFO - _timer	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:40:02,057 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:40:02,955 - process - INFO - _timer	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:40:03,029 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:40:04,097 - process - INFO - _timer	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:40:04,193 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:40:05,004 - process - INFO - _timer	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:40:05,193 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:40:06,048 - process - INFO - _timer	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:40:06,191 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:40:07,277 - process - INFO - _timer	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:40:07,353 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:40:08,468 - process - INFO - _timer	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:40:08,583 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:40:09,506 - process - INFO - _timer	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:40:09,611 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:40:10,424 - process - INFO - _timer	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:40:10,526 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:40:11,439 - process - INFO - _timer	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:40:11,582 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:40:12,475 - process - INFO - _timer	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:40:12,645 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:40:13,545 - process - INFO - _timer	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:40:13,631 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:40:14,678 - process - INFO - _timer	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:40:14,766 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:40:15,665 - process - INFO - _timer	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:40:15,797 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:40:16,830 - process - INFO - _timer	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:40:16,929 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:40:17,901 - process - INFO - _timer	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:40:17,999 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:40:18,903 - process - INFO - _timer	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:40:18,964 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:40:19,944 - process - INFO - _timer	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:40:20,134 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:40:20,972 - process - INFO - _timer	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:40:21,143 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:40:22,039 - process - INFO - _timer	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:40:22,153 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:40:23,115 - process - INFO - _timer	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:40:23,251 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:40:24,237 - process - INFO - _timer	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:40:24,353 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:40:25,160 - process - INFO - _timer	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:40:25,306 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:40:26,279 - process - INFO - _timer	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:40:26,353 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:40:27,289 - process - INFO - _timer	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:40:27,403 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:40:28,376 - process - INFO - _timer	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:40:28,444 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:40:29,459 - process - INFO - _timer	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:40:29,555 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:40:30,490 - process - INFO - _timer	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:40:30,621 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:40:31,474 - process - INFO - _timer	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:40:31,611 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:40:32,680 - process - INFO - _timer	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:40:32,774 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:40:33,804 - process - INFO - _timer	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:40:34,010 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:40:34,782 - process - INFO - _timer	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:40:34,930 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:40:35,844 - process - INFO - _timer	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:40:35,893 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:40:36,624 - process - ERROR - _timer	The Ctrl C
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:40:36,624 - process - ERROR - _timer	The Ctrl C
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:40:36,624 - process - ERROR - _udplisten	The Ctrl C
+module: __mp_main__
+ol.udp.broadcastor
+2025-03-27 21:40:37,647 - process - ERROR - _task	The Ctrl C
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:40:38,688 - process - ERROR - _task	The Ctrl C
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:40:39,732 - process - ERROR - _task	The Ctrl C
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:40:40,776 - process - ERROR - _task	The Ctrl C
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:40:41,814 - process - ERROR - _task	The Ctrl C
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:40:42,853 - process - ERROR - _task	The Ctrl C
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:40:43,897 - process - ERROR - _task	The Ctrl C
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:40:44,938 - process - ERROR - _task	The Ctrl C
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:41:21,983 - process - INFO - _send_tasks	success
+module: core.depend.control.control
+2025-03-27 21:41:23,384 - process - INFO - sendtoclient	success
+module: functools
+2025-03-27 21:42:02,920 - process - INFO - _send_tasks	success
+module: core.depend.control.control
+2025-03-27 21:42:04,205 - process - INFO - sendtoclient	success
+module: functools
+2025-03-27 21:43:00,165 - process - INFO - _send_tasks	success
+module: core.depend.control.control
+2025-03-27 21:43:01,553 - process - INFO - sendtoclient	success
+module: functools
+2025-03-27 21:46:26,427 - process - INFO - _send_tasks	success
+module: core.depend.control.control
+2025-03-27 21:46:27,788 - process - INFO - sendtoclient	success
+module: functools
+2025-03-27 21:47:09,598 - process - INFO - _send_tasks	success
+module: core.depend.control.control
+2025-03-27 21:47:10,974 - process - INFO - sendtoclient	success
+module: functools
+2025-03-27 21:47:52,874 - process - INFO - _send_tasks	success
+module: core.depend.control.control
+2025-03-27 21:50:16,733 - process - INFO - _udplisten	success
+module: __mp_main__
+2025-03-27 21:50:16,741 - process - INFO - _tcplisten	success
+module: __mp_main__
+2025-03-27 21:50:16,742 - process - INFO - _start	success
+module: __mp_main__
+2025-03-27 21:50:19,591 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:50:19,640 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:50:19,641 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:50:19,650 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:50:19,651 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:50:19,655 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:50:19,657 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:50:19,657 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:50:19,659 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:50:21,603 - process - INFO - _timer	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:50:21,635 - process - INFO - _timer	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:50:21,645 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:50:21,812 - process - INFO - _timer	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:50:21,860 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:50:22,034 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:50:22,671 - process - INFO - _timer	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:50:22,780 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:50:23,690 - process - INFO - _timer	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:50:23,809 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:50:24,919 - process - INFO - _timer	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:50:24,964 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:50:26,144 - process - INFO - _timer	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:50:26,210 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:50:27,092 - process - INFO - _timer	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:50:27,222 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:50:28,003 - process - INFO - _timer	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:50:28,110 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:50:29,069 - process - INFO - _timer	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:50:29,217 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:50:30,279 - process - INFO - _timer	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:50:30,491 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:50:31,347 - process - INFO - _timer	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:50:31,455 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:50:32,499 - process - INFO - _timer	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:50:32,625 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:50:33,505 - process - INFO - _timer	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:50:33,607 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:50:34,483 - process - INFO - _timer	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:50:34,589 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:50:35,576 - process - INFO - _timer	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:50:35,667 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:50:36,693 - process - INFO - _timer	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:50:36,791 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:50:37,786 - process - INFO - _timer	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:50:37,866 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:50:38,922 - process - INFO - _timer	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:50:39,037 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:50:40,101 - process - INFO - _timer	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:50:40,169 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:50:41,144 - process - INFO - _timer	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:50:41,261 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:50:42,199 - process - INFO - _timer	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:50:42,352 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:50:43,366 - process - INFO - _timer	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:50:43,470 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:50:44,551 - process - INFO - _timer	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:50:44,608 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:50:45,510 - process - INFO - _timer	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:50:45,634 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:50:46,743 - process - INFO - _timer	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:50:46,864 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:50:47,808 - process - INFO - _timer	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:50:47,893 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:50:48,928 - process - INFO - _timer	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:50:49,030 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:50:49,886 - process - INFO - _timer	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:50:49,984 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:50:51,057 - process - INFO - _timer	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:50:51,168 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:50:52,210 - process - INFO - _timer	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:50:52,342 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:50:53,262 - process - INFO - _timer	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:50:53,386 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:50:54,364 - process - INFO - _timer	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:50:54,433 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:50:55,470 - process - INFO - _timer	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:50:55,586 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:50:56,578 - process - INFO - _timer	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:50:56,649 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:50:57,736 - process - INFO - _timer	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:50:57,835 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:50:58,752 - process - INFO - _timer	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:50:58,823 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:50:59,981 - process - INFO - _timer	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:51:00,103 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:51:01,020 - process - INFO - _timer	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:51:01,136 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:51:02,084 - process - INFO - _timer	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:51:02,212 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:51:03,140 - process - INFO - _timer	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:51:03,287 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:51:04,165 - process - INFO - _timer	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:51:04,240 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:51:05,425 - process - INFO - _timer	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:51:05,501 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:51:06,458 - process - INFO - _timer	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:51:06,561 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:51:07,507 - process - INFO - _timer	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:51:07,641 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:51:08,564 - process - INFO - _timer	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:51:08,624 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:51:09,566 - process - INFO - _timer	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:51:09,659 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:51:10,770 - process - INFO - _timer	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:51:10,855 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:51:11,832 - process - INFO - _timer	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:51:11,922 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:51:13,049 - process - INFO - _timer	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:51:13,138 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:51:14,093 - process - INFO - _timer	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:51:14,217 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:51:15,248 - process - INFO - _timer	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:51:15,328 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:51:16,440 - process - INFO - _timer	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:51:16,572 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:51:17,515 - process - INFO - _timer	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:51:17,605 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:51:18,635 - process - INFO - _timer	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:51:18,739 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:51:19,732 - process - INFO - _timer	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:51:19,847 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:51:20,847 - process - INFO - _timer	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:51:20,942 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:51:21,964 - process - INFO - _timer	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:51:22,062 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:51:22,976 - process - INFO - _timer	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:51:23,065 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:51:24,129 - process - INFO - _timer	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:51:24,251 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:51:25,242 - process - INFO - _timer	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:51:25,373 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:51:26,331 - process - INFO - _timer	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:51:26,465 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:51:27,525 - process - INFO - _timer	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:51:27,644 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:51:28,669 - process - INFO - _timer	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:51:28,834 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:51:29,793 - process - INFO - _timer	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:51:29,846 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:51:30,788 - process - INFO - _timer	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:51:30,877 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:51:31,836 - process - INFO - _timer	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:51:31,950 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:51:32,870 - process - INFO - _timer	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:51:32,978 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:51:33,996 - process - INFO - _timer	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:51:34,102 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:51:35,062 - process - INFO - _timer	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:51:35,133 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:51:36,289 - process - INFO - _timer	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:51:36,395 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:51:37,434 - process - INFO - _timer	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:51:37,524 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:51:38,510 - process - INFO - _timer	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:51:38,611 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:51:39,642 - process - INFO - _timer	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:51:39,737 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:51:40,777 - process - INFO - _timer	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:51:40,830 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:51:41,871 - process - INFO - _timer	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:51:41,967 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:51:43,014 - process - INFO - _timer	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:51:43,093 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:51:44,111 - process - INFO - _timer	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:51:44,251 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:51:45,322 - process - INFO - _timer	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:51:45,475 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:51:46,383 - process - INFO - _timer	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:51:46,474 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:51:47,457 - process - INFO - _timer	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:51:47,508 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:51:48,616 - process - INFO - _timer	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:51:48,705 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:51:49,725 - process - INFO - _timer	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:51:49,813 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:51:50,872 - process - INFO - _timer	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:51:50,943 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:51:51,982 - process - INFO - _timer	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:51:52,102 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:51:53,158 - process - INFO - _timer	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:51:53,287 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:51:54,231 - process - INFO - _timer	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:51:54,316 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:51:55,354 - process - INFO - _timer	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:51:55,533 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:51:56,435 - process - INFO - _timer	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:51:56,578 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:51:57,568 - process - INFO - _timer	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:51:57,704 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:51:58,703 - process - INFO - _timer	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:51:58,829 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:51:59,784 - process - INFO - _timer	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:51:59,890 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:52:00,827 - process - INFO - _timer	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:52:00,967 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:52:02,020 - process - INFO - _timer	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:52:02,158 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:52:03,066 - process - INFO - _timer	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:52:03,162 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:52:04,160 - process - INFO - _timer	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:52:04,237 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:52:05,295 - process - INFO - _timer	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:52:05,393 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:52:06,367 - process - INFO - _timer	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:52:06,514 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:52:07,507 - process - INFO - _timer	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:52:07,618 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:52:08,654 - process - INFO - _timer	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:52:08,804 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:52:09,810 - process - INFO - _timer	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:52:09,929 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:52:10,878 - process - INFO - _timer	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:52:10,972 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:52:11,954 - process - INFO - _timer	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:52:12,063 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:52:13,058 - process - INFO - _timer	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:52:13,183 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:52:14,185 - process - INFO - _timer	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:52:14,370 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:52:15,279 - process - INFO - _timer	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:52:15,431 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:52:16,481 - process - INFO - _timer	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:52:16,590 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:52:17,642 - process - INFO - _timer	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:52:17,807 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:52:18,686 - process - INFO - _timer	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:52:18,805 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:52:19,815 - process - INFO - _timer	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:52:19,948 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:52:20,873 - process - INFO - _timer	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:52:20,995 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:52:21,948 - process - INFO - _timer	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:52:22,057 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:52:23,059 - process - INFO - _timer	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:52:23,214 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:52:24,227 - process - INFO - _timer	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:52:24,321 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:52:25,464 - process - INFO - _timer	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:52:25,554 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:52:26,555 - process - INFO - _timer	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:52:26,706 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:52:27,686 - process - INFO - _timer	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:52:27,800 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:52:28,934 - process - INFO - _timer	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:52:29,032 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:52:29,852 - process - INFO - _timer	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:52:29,935 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:52:30,970 - process - INFO - _timer	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:52:31,108 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:52:32,210 - process - INFO - _timer	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:52:32,358 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:52:33,335 - process - INFO - _timer	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:52:33,432 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:52:34,423 - process - INFO - _timer	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:52:34,571 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:52:35,503 - process - INFO - _timer	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:52:35,615 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:52:36,263 - process - ERROR - _timer	The Ctrl C
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:52:36,263 - process - ERROR - _timer	The Ctrl C
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:52:36,263 - process - ERROR - _timer	The Ctrl C
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:52:36,263 - process - ERROR - _udplisten	The Ctrl C
+module: __mp_main__
+2025-03-27 21:55:13,900 - process - ERROR - _task	The Ctrl C
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:55:13,900 - process - ERROR - _task	The Ctrl C
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:55:13,900 - process - ERROR - _task	The Ctrl C
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:55:13,900 - process - ERROR - _task	The Ctrl C
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:55:13,900 - process - ERROR - _task	The Ctrl C
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:55:13,900 - process - ERROR - _task	The Ctrl C
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:55:13,900 - process - ERROR - _task	The Ctrl C
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:55:13,900 - process - ERROR - _task	The Ctrl C
+module: core.depend.protocol.udp.broadcastor
+2025-03-27 21:55:27,372 - process - INFO - _send_tasks	success
+module: core.depend.control.control
+2025-03-27 21:55:27,376 - process - INFO - _send_tasks	success
+module: core.depend.control.control
+2025-03-27 21:55:27,386 - process - INFO - _send_tasks	success
+module: core.depend.control.control
+2025-03-27 21:57:57,760 - process - INFO - _send_tasks	success
+module: core.depend.control.control
+2025-03-27 21:57:59,231 - process - INFO - sendtoclient	success
+module: functools
+2025-03-27 22:00:59,809 - process - INFO - _send_tasks	success
+module: core.depend.control.control
+2025-03-27 22:00:59,820 - process - INFO - _send_tasks	success
+module: core.depend.control.control
+2025-03-27 22:00:59,824 - process - INFO - _send_tasks	success
+module: core.depend.control.control
+2025-03-27 22:00:59,824 - process - INFO - _send_tasks	success
+module: core.depend.control.control
+2025-03-27 22:01:01,271 - process - INFO - sendtoclient	success
+module: functools
+2025-03-27 22:01:58,635 - process - INFO - _send_tasks	success
+module: core.depend.control.control
+2025-03-27 22:01:58,640 - process - INFO - _send_tasks	success
+module: core.depend.control.control
+2025-03-27 22:01:58,643 - process - INFO - _send_tasks	success
+module: core.depend.control.control
+2025-03-27 22:01:58,647 - process - INFO - _send_tasks	success
+module: core.depend.control.control
+2025-03-27 22:02:00,065 - process - INFO - sendtoclient	success
+module: functools
+2025-03-27 22:03:23,351 - process - INFO - _send_tasks	success
+module: core.depend.control.control
+2025-03-27 22:03:24,760 - process - INFO - sendtoclient	success
+module: functools
+2025-03-27 22:05:14,110 - process - INFO - _send_tasks	success
+module: core.depend.control.control
+2025-03-27 22:05:14,122 - process - INFO - _send_tasks	success
+module: core.depend.control.control
+2025-03-27 22:05:14,122 - process - INFO - _send_tasks	success
+module: core.depend.control.control
+2025-03-27 22:05:15,447 - process - INFO - sendtoclient	success
+module: functools

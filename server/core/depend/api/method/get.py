@@ -24,6 +24,7 @@ def get_client_info(
     else:
         mac = info['mac']
         conning = DB.hget("client_status", ip) == "true"
+        
         # 客户端连接时，软件才去检查软件是否启动
         if conning:
             softwares = info['softwares']
@@ -32,6 +33,7 @@ def get_client_info(
                     status = True
                 else:
                     continue
+                
     return mac, status, conning
 
 def get_classify():

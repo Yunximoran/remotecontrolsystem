@@ -3,9 +3,11 @@ from typing import List, AnyStr
 from fastapi import APIRouter
 
 from datamodel import SoftwareList
-from datamodel.instruct import InstructList
+from datamodel.instruct import InstructList, Instruct
 from core.depend.protocol.udp import MultiCastor
 from core.depend.control import Control
+
+from static import DB
 
 
 multiter = MultiCastor()
@@ -49,4 +51,43 @@ async def send_software_checklist(checklist: SoftwareList):
         return {"OK": f"send software checklist {softwares}"}
     except Exception as e:
         return {"ERROR": e}
+
+@router.post("/start_all_softwares")
+async def start_all_softwares():
+    context = DB.hgetall("classify")
+    classify = DB.loads(context)
+    ip_soft: dict[str, list] = {}
     
+    # 遍历所有分类
+    for cln in classify:
+        data = classify[cln]
+        for item in data:
+            soft = item['soft']
+            ip = item['ip']
+            # 统计每个ip 对应的软件构造成指令列表
+            if ip not in ip_soft:
+                ip_soft[ip] = []
+            ip_soft[ip].append(Instruct(label="start -s", instruct=soft).model_dump_json())
+    
+    for ip in ip_soft:
+        controlor.sendtoclient([ip], instructs=ip_soft[ip])
+
+@router.post("/close_all_softwares")
+async def close_all_softwares():
+    context = DB.hgetall("classify")
+    classify = DB.loads(context)
+    ip_soft: dict[str, list] = {}
+    
+    # 遍历所有分类
+    for cln in classify:
+        data = classify[cln]
+        for item in data:
+            soft = item['soft']
+            ip = item['ip']
+            # 统计每个ip 对应的软件构造成指令列表
+            if ip not in ip_soft:
+                ip_soft[ip] = []
+            ip_soft[ip].append(Instruct(label="close -s", instruct=soft).model_dump_json())
+    
+    for ip in ip_soft:
+        controlor.sendtoclient([ip], instructs=ip_soft[ip])

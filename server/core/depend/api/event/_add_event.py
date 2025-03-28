@@ -31,46 +31,31 @@ async def addsoftwarelist(softwares: Annotated[SoftwareList, None]):
     softs = []
     for info in softwares.items:
         softs.append(info.ecdis.name)
-        DB.hset("softwarelist", info.ecdis.name, json.dumps(info))
+        DB.hset("softwarelist", info.ecdis.name, info.model_dump_json())
     return {"OK": softs}
     
 @router.put("/classify")
 async def addclissify(classify: Annotated[Classify, None]):
-    # 检查分类是否存在，否则新建分类
-    # return classify.items
     # classify.items: 不重复列表
     classifylist = DB.smembers("classifylist")
     if classify.name not in classifylist:
+        # 如果分类不存在，新建分类
         DB.sadd("classifylist", classify.name)
             
-    # 检查ips是否为空，否则只创建分类
     if classify.items is {}:
+        # 如果items没空，只创建分类
         return {"OK": f"created classify: {classify.name}"}
 
-    # counts = {}
-    # items: Set[str] = set()
-    # for item in classify.items:
-    #     # # 检查引用计数
-    #     # count = DB.hget("classified", item.ip)
-    #     # # 设置初次引用的值为0， 每次引用 计数器加1
-    #     # DB.hset("classified", item.ip, int(count) + 1) if count else DB.hset("classified", item.ip, 0)
-    #     if item.ip in counts:
-    #         counts[item.ip] += 1
-    #     else:
-    #         counts[item.ip] = 0
-    #     # 另存为集合，防止重复值
-    #     items.add(item.model_dump_json())
-        
+    # 转化为集合，排除重复项
     items = set([item.model_dump_json() for item in classify.items])
     context = DB.hget("classify", classify.name)
-    # 检查当前分类是否为空
     if context:
         clndata = set(json.loads(context))  # 解析json， 并转化为集合
         clndata = list(clndata | items)     # 合并两个集合，转化类列表
     else:
         clndata = list(items)
     
-    # 更新引用计数
+    # 检查IP引用计数
     count = {}   
     for data in clndata:
         item = json.loads(data)
@@ -80,6 +65,7 @@ async def addclissify(classify: Annotated[Classify, None]):
         else:
             count[ip] = 0
     
+    # 更新引用计数
     for ip in count:
         DB.hset("classified", ip, count[ip])
         

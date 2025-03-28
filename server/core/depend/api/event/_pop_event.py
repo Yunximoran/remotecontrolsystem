@@ -49,10 +49,10 @@ async def popclassify(
 
     # 读取分类数据
     clndata: List[str] = DB.loads(DB.hget("classify", cln))
-    # return {"ok": item.model_dump() in clndata}
+    
     context: dict = item.model_dump()
     if context in clndata:
-        # # 检查引用计数, 将移除引用计数归零的客户端IP
+        # 检查引用计数, 将移除引用计数归零的客户端IP
         count:int = DB.hget("classified", item.ip)
         DB.hdel("classified", item.ip) if int(count) == 0 else DB.hset("classified", item.ip, int(count) - 1)
         
@@ -69,59 +69,3 @@ async def pop_instructions(alias: Annotated[str, None]):
     DB.hdel("instructlist", alias)
     return {"OK": f"remove prestored instruct: {alias}"}
     
-
-
-"""
-// 关闭所有软件
-[
-    {
-        "label": "close -s",
-        "instruct": soft1,
-        ...
-    },
-    {
-        "label": "close -s",
-        "instruct": soft2,
-        ...
-    },
-    {
-        "label": "close -s",
-        "instruct": soft3,
-        ...
-    },
-    {
-        "label": "close -s",
-        "instruct": soft4,
-        ...
-    },
-    ...
-]
-
-// 开启所有软件
-[
-    {
-        "label": "start -s",
-        "instruct": soft1,
-        ...
-    },
-    {
-        "label": "start -s",
-        "instruct": soft2,
-        ...
-    },
-    {
-        "label": "start -s",
-        "instruct": soft3,
-        ...
-    },
-    {
-        "label": "start -s",
-        "instruct": soft4,
-        ...
-    },
-    ...
-]
-"""
-    
-
-

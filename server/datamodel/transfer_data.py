@@ -5,6 +5,7 @@ from typing import Annotated, List
 from fastapi import Query
 from pydantic import BaseModel
 from pathlib import Path
+from lib.strtool import pattern
 
 # 软件模型
 class Ecdis(BaseModel):
@@ -32,6 +33,8 @@ class SoftwareList(BaseModel):
     items: list[Software]
     
 
+class SendSoftWares(SoftwareList):
+    multicast: Annotated[str, Query(pattern.NET_IP)]
 
 # 心跳包模型
 class HeartPkgs(BaseModel):

@@ -1,8 +1,9 @@
-from typing import Annotated, List
+from typing import Annotated, List, AnyStr
 
 from fastapi import APIRouter
 
 from core.depend.control import Control
+from datamodel.instruct import Instruct
 from datamodel import WaitDesposeResults
 from static import DB
 
@@ -29,17 +30,17 @@ router.include_router(
 
 # 激活客户端
 @router.put("/wol")
-async def magic_client(toclients:Annotated[List, None] = []):
+async def magic_client(toclients:List[AnyStr] = []):
     """
         发送唤醒魔术包
-    toclients: 指定发送目标IP
+    toclients: 指定发送目标IP列表
     """
     try:
-        print("WOL")
         controlor.sendtoclient(toclients, wol=True)
-    except Exception:
-        print("WOL ERROR")
-        return {"ERROR", "wol err"}
+        return {"OK": f"Sent WOL packets to clients"}
+    except Exception as e:
+        print(f"WOL ERROR: {str(e)}")
+        return {"ERROR": f"Failed to send WOL: {str(e)}"}
 
 # 待办事件已处理事件
 @router.put("/desposedsoftware")
@@ -47,3 +48,4 @@ async def despose_waitdones(res: WaitDesposeResults):
     # 将待办实现处理结果保存redis
     DB.hset("waitdone_despose_results", res.cookie, res.results)
     return {"OK": f"disposed: {res.cookie}"}
+
