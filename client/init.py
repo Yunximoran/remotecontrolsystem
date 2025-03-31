@@ -9,8 +9,9 @@ except ImportError:
     os.system(f"conda install --file requirements.txt")
     sys.exit(0)
     
-IP_SERVER = "192.168.31.176"
-NET =  NetWork("WLAN")
+IP_SERVER = "192.168.31.176"    # 服务端地址
+BROADCAST = "192.168.31.255"    # 广播域名
+NET =  NetWork("WLAN")          # 指定网卡
 
 
 if __name__ == "__main__":
@@ -18,6 +19,7 @@ if __name__ == "__main__":
         net = resolver("network")
         computer = resolver("computer") 
         cpu = resolver("computer", "cpu")
+        sock = resolver("sock")
 
         # 初始本机信息
         computer.search("name").settext(platform.node())
@@ -38,3 +40,6 @@ if __name__ == "__main__":
         # 初始化网络信息
         net.search("ip").settext(NET.IPv4)
         net.search("mac").settext(NET.mac)
+        
+        # 设置SOCK
+        sock.search("ip-broad").settext(BROADCAST)

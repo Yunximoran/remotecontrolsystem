@@ -1,19 +1,20 @@
 from multiprocessing import Process
 
 from lib import Resolver
+from lib.sys.sock.udp import BroadCastor
 from ._base import *
 from ..system import SYSTEM
 
 logger = Logger("ConnectServe", "connect.log")
+BROADADDR = resolver("sock", 'udp', "ip-broad")
 
-
-
+USENET = resolver("network", "ip")
 class ConnectServe(BaseServe):
 
     def serve(self):
         # 每秒广播心跳包数据
         print("Connect Serve Started")
-        udp_conn = BroadCast(LISTENPORT_1)
+        udp_conn = BroadCastor((USENET, LISTENPORT_1))    # 发送端广播
         while True:
             time.sleep(1)
             self.update_soft_status()

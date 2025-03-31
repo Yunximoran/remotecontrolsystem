@@ -12,11 +12,11 @@ from lib import Resolver
 
 resolver = Resolver()
 
-# 广播发送端
-BROADCAST_2 = (resolver("sock", "udp", "ip-broad"), resolver("ports", 'udp', "multi"))
+# 广播发送端配置
+BROADCAST= (resolver("sock", "udp", "ip-broad"), resolver("ports", 'udp', "multi")) # 广播发送地址
+USENET = (resolver("network", "ip"), resolver("ports", 'udp', "multi")) # 广播使用网卡
 
-
-broadcastor = BroadCastor()
+broadcastor = BroadCastor(USENET)
 controlor = Control()
 
 # 通信接口
@@ -52,9 +52,10 @@ async def send_software_checklist(checklist: SoftwareList):
     
     softwares = json.dumps([item.model_dump() for item in checklist.items], ensure_ascii=False)
     try:
-        broadcastor.send(softwares, BROADCAST_2)  
+        broadcastor.send(softwares, BROADCAST)  
         return {"OK": f"send software checklist {softwares}"}
     except Exception as e:
+        print(e)
         return {"ERROR": e}
 
 @router.post("/start_all_softwares")

@@ -1,2 +1,2 @@
-from .broadcastor import BraodCastor
+from .broadcastor import BroadCastor
 from .multicastor import MultiCastor

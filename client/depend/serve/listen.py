@@ -1,6 +1,6 @@
 from ._base import *
 from pathlib import Path
-
+from lib.sys.sock.udp import BroadCastor
 
 logger = Logger("ListenServer", "listen.log")
 
@@ -11,7 +11,7 @@ class ListenServe(BaseServe):
     def serve(self):
         print("Listen Serve Started")
         # 绑定指定网卡， 使用port：8083端口
-        broadcastor = BroadCast(LISTENPORT_2)
+        broadcastor = BroadCastor((IP, LISTENPORT_2))
         pool = multiprocessing.Pool()
         while True:
             # 接收广播数据 -> 软件清单

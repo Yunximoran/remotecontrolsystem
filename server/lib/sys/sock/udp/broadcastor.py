@@ -3,7 +3,7 @@ import socket
 from ._udp import _ProtoType
 
 
-class BraodCastor(_ProtoType):
+class BroadCastor(_ProtoType):
 
     def settings(self):
         self.sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)

@@ -4,31 +4,77 @@ from lib.sys import NetWork
 import time, re
 resolver = Resolver()
 
+# 网络配置选项
 NET = NetWork("WLAN")
-CORS = [
+BROADCAST = "192.168.31.255"    # 广播域
+
+# 服务器配置选项
+CORS = [    # 跨域资源
     "https://127.0.0.1:8080",
     "http://127.0.0.1:8080"
 ]
-PASSWORD = {
-    "computer": "ranxi160259"
-}
-_PASSWORD = {
-    "mysql": "redis",
-    "redis": "123465"
+
+# 主机配置选项
+PASSWORD = {     # 计算机账户密码
+    "computer": "ranxi160259"  
 }
 
-def setpassword():
-    for option in PASSWORD:
-        conf = resolver(option)
-        conf.setattrib('password', PASSWORD[option])
+COMPUTER = {
+    "username": "yunximoran",
+    "password": "ranxi160259"
+}
 
-    for option in _PASSWORD:
-        conf = __resolver(option)
-        conf.setattrib('password', _PASSWORD[option])
+# 数据库配置选项
+DATABASE = {
+    "redis": {
+        "host": "localhost",
+        "port": 6379,
+        "password": "123456",
+        "usedb": 0
+    },
+    "mysql": {
+        "host": "localhost",
+        "port": 3306,
+        "user": "root",
+        "password": "ranxi",
+        "usedb": "test"
+    }
+}
+
+
+# 初始化数据库配置
+def set_database():
+    for database in DATABASE:
+        data = DATABASE[database]
+        conf = __resolver("database", database)
+        if "host" in data:
+            conf.search("host").settext(data["host"])
+        if "port" in data:
+            conf.search("port").settext(data["port"])
+            
+        if "password" in data:
+            conf.setattrib("password", data["password"])
+            
+        if "user" in data:
+            conf.setattrib("user", data["user"])
+            
+        if "db" in data:
+            conf.search("host").settext(data["db"])
+
+# 初始化主机配置      
+def set_computer():
+    # for option in COMPUTER:
+    conf = resolver("computer")
+    if "username" in COMPUTER:
+        conf.setattrib("username", COMPUTER["username"])
     
+    if "password" in COMPUTER:
+        conf.setattrib("password", COMPUTER["password"])
         
-def setnetwork():
+# 初始化网络配置
+def set_network():
     net = resolver("network")
+    sock = resolver("sock")
     ip = net.search("ip")
     mac = net.search("mac")
     
@@ -41,8 +87,11 @@ def setnetwork():
         net.addelement("mac", text=NET.mac)
     else:
         mac.settext(NET.mac)
+        
+    sock.search("ip-broad").settext(BROADCAST)
 
-def setcors():
+# 初始化服务器配置
+def set_server():
     server = resolver("server")
     cors = server.search('cors')
     if cors:
@@ -53,14 +102,16 @@ def setcors():
                 continue
             
 
+# 保存更改
 def close():
     resolver.save()
     __resolver.save()
 
 def init():
-    setcors()
-    setnetwork()
-    setpassword()
+    set_server()
+    set_network()
+    set_database()
+    set_computer()
     close() 
 
 

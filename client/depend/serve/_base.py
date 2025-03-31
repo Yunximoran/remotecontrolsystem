@@ -8,7 +8,7 @@ import multiprocessing
 from lib import Resolver
 from lib.manager import Logger
 from depend.protocol import TCPListen, TCPConnect
-from depend.protocol import BroadCast, MultiCast
+from depend.protocol import BroadCast
 from depend.protocol.client_udp import *
 from depend.path import (
     LOCAL_DIR_FILE,

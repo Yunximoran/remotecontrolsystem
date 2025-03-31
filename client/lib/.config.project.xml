@@ -28,7 +28,7 @@
 	</dependon>
 	<sock>
 		<udp describe="UDP配置">
-			<ip-broad>255.255.255.255</ip-broad>
+			<ip-broad>192.168.31.255</ip-broad>
 			<ip-multi>224.25.25.1</ip-multi>
 		</udp>
 		<tcp>
@@ -52,7 +52,7 @@
 		</tcp>
 	</ports>
 	<network>
-		<ip-server>111.111.111.111</ip-server>
+		<ip-server>192.168.31.176</ip-server>
 		<ip>192.168.31.176</ip>
 		<mac>20-1E-88-F5-05-B9</mac>
 	</network>

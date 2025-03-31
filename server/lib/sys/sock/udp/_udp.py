@@ -1,7 +1,7 @@
 import socket
 
 RECVSIZE = 1024
-ENCODING = "uft-8"
+ENCODING = "utf-8"
 
 class _ProtoType:
     def __init__(self, cast=None):

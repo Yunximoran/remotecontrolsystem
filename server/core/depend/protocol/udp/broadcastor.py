@@ -3,7 +3,7 @@ import time
 from typing import Dict
 
 from lib.sys.processing import Process, Value
-from lib.sys.sock.udp import BraodCastor as UDP
+from lib.sys.sock.udp import BroadCastor as UDP
 from lib import Resolver
 from lib.sys import Logger
 from static import DB
