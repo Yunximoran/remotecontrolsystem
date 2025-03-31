@@ -28,15 +28,31 @@ class __BaseSystem:
     
     logger = Logger("system", "executor.log")
 
-    def _check_soft_status(self, alias) -> List[psutil.Process]:
+    def _check_soft_status(self, path, *, pid=None) -> List[psutil.Process]:
         # 遍历系统进程池
+        path = self._path(path) # str -> Path
         processes = []
         for process in psutil.process_iter():
             # 匹配项目
-            if re.match(alias, process.name().lower()):
-                processes.append(process)
+            try:
+                curpath = Path(process.exe())
+                if re.match(path.stem, process.name().lower()):
+                    # 进程路径包含 软件名
+                    exe_depend_path = [parent.exe() for parent in process.parents()]
+                    exe_depend_path.append(process.exe())
+                    if str(path) in exe_depend_path:
+                        processes.append(process)
+                elif path.parent in curpath.parents:
+                    processes.append(process)
+            except psutil.AccessDenied:
+                pass
         return processes
-        
+    
+    def _path(self, path:str|Path) -> Path:
+        if isinstance(path, str):
+            path = Path(path)
+        return path
+    
     def init(self):
         pass
     
@@ -170,7 +186,3 @@ class __BaseSystem:
     
     def record(self, level:int, msg):
         self.logger.record(level, msg)
-        # logtext = " ".join(map(str, msg))
-        # for other in dmsg:
-        #     logtext = "\n" + other + dmsg[other]
-        # self.logger.record(1, f"{logtext}")

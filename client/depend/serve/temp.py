@@ -6,16 +6,15 @@ logger = Logger("ListenServer", "listen.log")
 
 
 class ListenServe(BaseServe): 
-    # 监听广播端口， 获取软件清单
+    # 监听组播端口， 获取软件清单
 
     def serve(self):
         print("Listen Serve Started")
-        # 绑定指定网卡， 使用port：8083端口
-        broadcastor = BroadCast(LISTENPORT_2)
+        multi_conn = MultiCast()
         pool = multiprocessing.Pool()
         while True:
-            # 接收广播数据 -> 软件清单
-            data, _ = broadcastor.recv()
+            # 接受组播数据： 软件清单
+            data = multi_conn.recv()
             # 使用json格式加载数据
             softwares = json.loads(data)
             logger.record(1, f"accpet softwarelist: {softwares}")

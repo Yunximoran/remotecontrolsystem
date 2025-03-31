@@ -9,6 +9,7 @@ from lib import Resolver
 from lib.manager import Logger
 from depend.protocol import TCPListen, TCPConnect
 from depend.protocol import BroadCast, MultiCast
+from depend.protocol.client_udp import *
 from depend.path import (
     LOCAL_DIR_FILE,
     PATH_LOG_SHELLS,

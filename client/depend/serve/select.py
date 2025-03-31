@@ -63,7 +63,7 @@ class SelectServe(BaseServe):
                 
             elif label == "close -s":
                 path = self.search_software(instruct)
-                report = SYSTEM.close_software(path.name())
+                report = SYSTEM.close_software(path)
                 
             elif label == "restart": # OK
                 report = SYSTEM.restart()

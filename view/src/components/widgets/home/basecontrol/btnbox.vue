@@ -64,24 +64,27 @@ export default{
 
                 addSoftware: ()=>{
                     // alert("add new software")
-                    axios.put("/servers/event/addsoftwarelist", null,{
-                        params: {
-                            alter: "push"
-                        }
-                    })
-                    .then((res)=>{
-                        console.log(res.data)
+                    const sf = {
+                        ecdis: {
+                            name: "geek",
+                            path: "D://geek"
+                        },
+                        conning: false
+                    }
+                    axios.put("/server/event/addsoftwarelist", sf)
+                    // .then((res)=>{
+                    //     console.log(res.data)
 
-                        // 新加入的软件默认为未连接状态
-                        const software = {
-                            "ecdis":{
-                                "name": res.data.OK,
-                                "version": "none"
-                            },
-                            "conning": false
-                        }
-                        this.rootStore.add_software(software)
-                    })
+                    //     // 新加入的软件默认为未连接状态
+                    //     const software = {
+                    //         "ecdis":{
+                    //             "name": res.data.OK,
+                    //             "path": null
+                    //         },
+                    //         "conning": null
+                    //     }
+                    //     this.rootStore.add_software(software)
+                    // })
                     .catch((error)=>{
                         console.log(error)
                     })

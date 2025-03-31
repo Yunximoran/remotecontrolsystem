@@ -5,13 +5,15 @@ try:
     from lib import Resolver
 except ImportError:
     import os
+    import sys
     os.system(f"conda install --file requirements.txt")
+    sys.exit(0)
+    
+IP_SERVER = "192.168.31.176"
+NET =  NetWork("WLAN")
 
 
 if __name__ == "__main__":
-    ip_server = input("请输入服务端地址:\t")
-    netname = input("请输入网络适配器名称:\t")
-
     with Resolver() as resolver:
         net = resolver("network")
         computer = resolver("computer") 
@@ -31,9 +33,8 @@ if __name__ == "__main__":
         cpu.search("architecture").settext(platform.architecture()[0])
 
         # 设置服务端IP
-        net.search("ip-server").settext(ip_server)
+        net.search("ip-server").settext(IP_SERVER)
         
         # 初始化网络信息
-        net_info = NetWork(netname)
-        net.search("ip").settext(net_info.IPv4)
-        net.search("mac").settext(net_info.mac)
+        net.search("ip").settext(NET.IPv4)
+        net.search("mac").settext(NET.mac)

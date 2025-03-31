@@ -1,18 +1,15 @@
 import socket
 import time
 
-from lib import Resolver
+MCAST_GRP = '224.3.29.71'
+MCAST_PORT = 20002
 
-resolver = Resolver()
+# 创建UDP socket
+sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM, socket.IPPROTO_UDP)
+sock.setsockopt(socket.IPPROTO_IP, socket.IP_MULTICAST_TTL, 32)
 
-SERVERIP = resolver("network", "ip-server")
-TSPORT = resolver("ports", "tcp", "server")
-print(SERVERIP, TSPORT)
-sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-sock.connect((SERVERIP, TSPORT))
 while True:
-    
-    sock.send(b"hello world")
-
-    d2 = sock.recv(1024)
-    print("回复", d2.decode())
+    message = f"Multicast message at {time.strftime('%Y-%m-%d %H:%M:%S')}"
+    sock.sendto(message.encode(), (MCAST_GRP, MCAST_PORT))
+    print(f"Sent: {message}")
+    time.sleep(2)

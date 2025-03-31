@@ -52,7 +52,7 @@
 		</tcp>
 	</ports>
 	<network>
-		<ip-server>192.168.31.176</ip-server>
+		<ip-server>111.111.111.111</ip-server>
 		<ip>192.168.31.176</ip>
 		<mac>20-1E-88-F5-05-B9</mac>
 	</network>
