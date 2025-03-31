@@ -22,7 +22,7 @@ ISRELOAD = resolver("server", "reload")
 SERVERADDRESS =(resolver("network", "ip"), resolver("ports", "tcp", "server"))
 
 # 广播设置
-BROADCAST = (resolver("sock", "udp", "ip-broad"), resolver("ports", "udp", "broad"))
+BROADCAST_1 = (resolver("network", "ip"), resolver("ports", "udp", "broad"))
 
 
 
@@ -49,7 +49,7 @@ class Start:
     
     @staticmethod
     def _udplisten():
-        BroadCastor(BROADCAST).listen()
+        BroadCastor(BROADCAST_1).listen()
         
     def __registry(self, tasks: Tuple[Any]):
         # 注册依赖任务 

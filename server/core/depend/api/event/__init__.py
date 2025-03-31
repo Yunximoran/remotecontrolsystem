@@ -10,6 +10,7 @@ from static import DB
 
 from . import _add_event as add
 from . import _pop_event as pop
+from . import _set_event as set
 
 controlor = Control()
 router = APIRouter()
@@ -27,6 +28,11 @@ router.include_router(
     tags=pop.tags
 )
 
+router.include_router(
+    router=set.router,
+    prefix=set.prefix,
+    tags=set.tags
+)
 
 # 激活客户端
 @router.put("/wol")

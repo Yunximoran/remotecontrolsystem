@@ -4,13 +4,19 @@ from fastapi import APIRouter
 
 from datamodel import SoftwareList
 from datamodel.instruct import InstructList, Instruct
-from core.depend.protocol.udp import MultiCastor
+from core.depend.protocol.udp import BroadCastor
 from core.depend.control import Control
 
 from static import DB
+from lib import Resolver
+
+resolver = Resolver()
+
+# 广播发送端
+BROADCAST_2 = (resolver("sock", "udp", "ip-broad"), resolver("ports", 'udp', "multi"))
 
 
-multiter = MultiCastor()
+broadcastor = BroadCastor()
 controlor = Control()
 
 # 通信接口
@@ -45,49 +51,72 @@ async def send_software_checklist(checklist: SoftwareList):
     """
     
     softwares = json.dumps([item.model_dump() for item in checklist.items], ensure_ascii=False)
-    
     try:
-        multiter.send(softwares)  
+        broadcastor.send(softwares, BROADCAST_2)  
         return {"OK": f"send software checklist {softwares}"}
     except Exception as e:
         return {"ERROR": e}
 
 @router.post("/start_all_softwares")
-async def start_all_softwares():
+async def start_all_softwares(cln:str=None):
     context = DB.hgetall("classify")
     classify = DB.loads(context)
     ip_soft: dict[str, list] = {}
     
     # 遍历所有分类
-    for cln in classify:
+    if cln is not None:
+        # 指定分类
+        if cln not in classify:
+            return {"ERROR": f"{cln} is not exists"}
         data = classify[cln]
         for item in data:
             soft = item['soft']
             ip = item['ip']
-            # 统计每个ip 对应的软件构造成指令列表
             if ip not in ip_soft:
                 ip_soft[ip] = []
             ip_soft[ip].append(Instruct(label="start -s", instruct=soft).model_dump_json())
-    
+    # 遍历所有分类
+    else:
+        for cln in classify:
+            data = classify[cln]
+            for item in data:
+                soft = item['soft']
+                ip = item['ip']
+                # 统计每个ip 对应的软件构造成指令列表
+                if ip not in ip_soft:
+                    ip_soft[ip] = []
+                ip_soft[ip].append(Instruct(label="start -s", instruct=soft).model_dump_json())
+                
     for ip in ip_soft:
         controlor.sendtoclient([ip], instructs=ip_soft[ip])
 
 @router.post("/close_all_softwares")
-async def close_all_softwares():
+async def close_all_softwares(cln:str=None):
     context = DB.hgetall("classify")
     classify = DB.loads(context)
     ip_soft: dict[str, list] = {}
     
-    # 遍历所有分类
-    for cln in classify:
+    if cln is not None:
+        if cln not in classify:
+            return {"ERROR": f"{cln} is not exists"}
         data = classify[cln]
         for item in data:
             soft = item['soft']
             ip = item['ip']
-            # 统计每个ip 对应的软件构造成指令列表
             if ip not in ip_soft:
                 ip_soft[ip] = []
             ip_soft[ip].append(Instruct(label="close -s", instruct=soft).model_dump_json())
+    # 遍历所有分类
+    else:
+        for cln in classify:
+            data = classify[cln]
+            for item in data:
+                soft = item['soft']
+                ip = item['ip']
+                # 统计每个ip 对应的软件构造成指令列表
+                if ip not in ip_soft:
+                    ip_soft[ip] = []
+                ip_soft[ip].append(Instruct(label="close -s", instruct=soft).model_dump_json())
     
     for ip in ip_soft:
         controlor.sendtoclient([ip], instructs=ip_soft[ip])

@@ -10,7 +10,7 @@ from static import DB
 from lib import Resolver
 from lib.strtool import pattern
 
-from .method.get import get_classify
+from ._method.get import get_classify
 
 resolver = Resolver()
 

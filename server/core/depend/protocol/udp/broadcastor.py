@@ -1,10 +1,9 @@
 import json
 import time
-import socket
 from typing import Dict
 
-from core.depend.protocol.udp._prototype import UDP
-from lib.sys.processing import Process, Value, Lock
+from lib.sys.processing import Process, Value
+from lib.sys.sock.udp import BraodCastor as UDP
 from lib import Resolver
 from lib.sys import Logger
 from static import DB
@@ -26,11 +25,8 @@ class BroadCastor(UDP):
         注册每次接收到广播的任务
     """
     timers: Dict[str, Process] = {}  # 使用Manager共享字典
-    def settings(self):
-        self.sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
-        self.sock.setsockopt(socket.SOL_SOCKET, socket.SO_BROADCAST, 1)
     
-    def listen(self):
+    def listen(self):   # 启用
         """
             注册监听任务
         """
@@ -46,8 +42,7 @@ class BroadCastor(UDP):
                 with nowtasks.get_lock():  # 显式获取锁确保复合操作安全
                     nowtasks.value += 1
 
-    
-    def _task(self, nowtasks):
+    def _task(self, nowtasks):  # 创建监听任务
         # 接受广播数据
         # recvfrom 会阻塞进程，直到接收到数据
         try:
@@ -67,19 +62,19 @@ class BroadCastor(UDP):
             with nowtasks.get_lock():
                 nowtasks.value -= 1
     
-    def parse(self, data:bytes, addr:str):
+    def parse(self, data:bytes, addr:str):  # 解析UDP数据包
         data = data.decode(ENCODING)
         ip = json.loads(data)['ip']
         return data, ip
     
-    def update_client_messages(self, ip, data):
+    def update_client_messages(self, ip, data): # 更新客户端信息
         DB.hset("client_status", ip, "true")
         DB.hset("heart_packages", mapping={ip: data}) # ip地址和心跳包数据
     
         DB.set(ip, "null")
         DB.expire(ip, 1)
     
-    def _timer(self, ip):
+    def _timer(self, ip): # 创建计时器
         time.sleep(3)
         if not DB.get(ip) and DB.hget("client_status", ip) == "true":
             DB.hset("client_status", ip, "false")
