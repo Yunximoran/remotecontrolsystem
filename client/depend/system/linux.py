@@ -24,11 +24,18 @@ class Linux(__BaseSystem):
         os.system("sudo shutdown -r")
         return self.executor(["sudo", "shutdown", "-r"], isadmin=True)
         
-    def start_software(self, software):
-        return self.executor(["start", software])
+    def start_software(self, path):
+        path = self._path(path)
+        report = self.executor([path.name], cwd=path.parent)
+        return report
+        # return self.executor(["start", software])
     
     def close_software(self, software):
-        self.PID[software].kill()
+        path = self._path(software)
+        processes = self._check_soft_status(path)
+        for process in processes:
+            process.kill()
+
     
     def compress(self, ftype, f, t):
         """
