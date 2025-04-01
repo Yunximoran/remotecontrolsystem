@@ -6,7 +6,7 @@ from lib import Resolver
 
 resolver = Resolver()
 ENCODING = resolver("global", "encoding")
-
+OSLABEL = resolver("computer", "os")
 
 logger = Logger("Select", log_file="select.log")
 class SelectServe(BaseServe):
@@ -45,14 +45,18 @@ class SelectServe(BaseServe):
             # 解析指令模型
             item = json.loads(data)
             label = item['label']
+            oslabel = item['os']
             instruct = item["instruct"]
             isadmin = item["isadmin"]
             kwargs = item['kwargs']
             
             # 指令分流，获取全部报文
-            report = self.executor_instruct(label, instruct, isadmin, kwargs)
+            if oslabel == OSLABEL:
+                report = self.executor_instruct(label, instruct, isadmin, kwargs)
+            else:
+                report= SYSTEM.report(f"{oslabel} instructions are not allowed to execute in {OSLABEL}", True, False)
+                
             reports.append(report)
-
         self.report_results(sock, reports)
         
 

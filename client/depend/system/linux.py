@@ -28,7 +28,6 @@ class Linux(__BaseSystem):
         path = self._path(path)
         report = self.executor([path.name], cwd=path.parent)
         return report
-        # return self.executor(["start", software])
     
     def close_software(self, software):
         path = self._path(software)
