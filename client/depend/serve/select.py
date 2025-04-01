@@ -54,7 +54,7 @@ class SelectServe(BaseServe):
             if oslabel == OSLABEL:
                 report = self.executor_instruct(label, instruct, isadmin, kwargs)
             else:
-                report= SYSTEM.report(f"{oslabel} instructions are not allowed to execute in {OSLABEL}", True, False)
+                report= SYSTEM.report(instructs, f"{oslabel} instructions are not allowed to execute in {OSLABEL}", False)
                 
             reports.append(report)
         self.report_results(sock, reports)
