@@ -1,7 +1,6 @@
 import re, socket
 from pathlib import Path
 from ._base import *
-from depend.system import SYSTEM
 from lib import Resolver
 
 resolver = Resolver()
@@ -41,6 +40,7 @@ class SelectServe(BaseServe):
         reports = []
         instructs = sock.recv(1024).decode()
         logger.record(1, f"recv instruct:{instructs}")
+        
         for data in json.loads(instructs):
             # 解析指令模型
             item = json.loads(data)
@@ -67,14 +67,20 @@ class SelectServe(BaseServe):
                 
             elif label == "close -s":
                 path = self.search_software(instruct)
-                report = SYSTEM.close_software(path)
+                if path:
+                    report = SYSTEM.close_software(path)
+                else:
+                    report = SYSTEM.report(instruct, False, "软件清单中没有加入这个软件")
                 
             elif label == "restart": # OK
                 report = SYSTEM.restart()
                 
             elif label == "start -s":
                 path = self.search_software(instruct)
-                report = SYSTEM.start_software(path)
+                if path:
+                    report = SYSTEM.start_software(path)
+                else:
+                    report = SYSTEM.report(instruct, False, "软件清单中没有加入这个软件")
                 
             elif label == "wget":
                 report = SYSTEM.wget()
@@ -101,9 +107,6 @@ class SelectServe(BaseServe):
                     return Path(pracpath)
         return False
     
-    def set_software_process_address(path):
-        with open(PATH_MAP_SOFTWARES, 'w', encoding='utf-8') as f:
-            pass
                 
     def savefile(self, filename, conn):
         fileobj = conn.recv(1024)

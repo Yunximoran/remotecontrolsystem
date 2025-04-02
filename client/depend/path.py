@@ -10,3 +10,11 @@ LOCAL_DIR_FILE = LOCAL_PATH.joinpath("file")
 
 PATH_MAP_SOFTWARES = LOCAL_DIR_DATA.joinpath("softwares.json")
 PATH_LOG_SHELLS = LOCAL_DIR_DATA.joinpath("shells.json")
+
+
+# a =  set(LOCAL_DIR_SOFT.rglob("*"))
+
+# # print(a, type(a))
+# b = 'local/soft/geek'
+# if Path(b) in a:
+#     print(b)

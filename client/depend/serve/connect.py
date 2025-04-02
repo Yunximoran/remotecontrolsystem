@@ -3,7 +3,6 @@ from multiprocessing import Process
 from lib import Resolver
 from lib.sys.sock.udp import BroadCastor
 from ._base import *
-from ..system import SYSTEM
 
 logger = Logger("ConnectServe", "connect.log")
 BROADADDR = resolver("sock", 'udp', "ip-broad")
@@ -34,6 +33,7 @@ class ConnectServe(BaseServe):
         return {
             "ip": IP,
             "mac": MAC,
+            "os": OS,
             "softwares": softwares
         }
         

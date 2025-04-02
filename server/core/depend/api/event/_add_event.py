@@ -5,10 +5,9 @@ from typing import Annotated, List, Set
 from fastapi import APIRouter
 
 from lib import Resolver
-from lib.math import decimal_to_baseX, baseX_to_decimal
 from datamodel import Classify
-from datamodel.transfer_data import Software, SoftwareList
-from datamodel.instruct import Instruct, InstructList
+from datamodel.transfer_data import SoftwareList
+from datamodel.instruct import InstructList
 from core.depend.control import Control
 from static import DB
 
@@ -47,7 +46,22 @@ async def addclissify(classify: Annotated[Classify, None]):
         return {"OK": f"created classify: {classify.name}"}
 
     # 转化为集合，排除重复项
-    items = set([item.model_dump_json() for item in classify.items])
+    allconn= DB.hgetall("client_status")
+    allsoft = DB.hgetall("softwarelist")
+    ignore_conn = []
+    ignore_soft = []
+    items = []
+    if allconn is None:
+        return {"ERROR", "没有链接你跟谁绑定"}
+    for item in classify.items:
+        if item.ip not in allconn:
+            ignore_conn.append(item.ip)
+            continue
+        if item.soft not in allsoft:
+            ignore_soft.append(item.soft)
+            continue
+        items.append(item.model_dump_json())
+    items = set(items)
     context = DB.hget("classify", classify.name)
     if context:
         clndata = set(json.loads(context))  # 解析json， 并转化为集合
@@ -71,7 +85,7 @@ async def addclissify(classify: Annotated[Classify, None]):
         
     # 更新数据
     DB.hset("classify", classify.name, json.dumps(clndata, ensure_ascii=False))
-    return {"OK": f"update: {clndata}"}
+    return {"OK": f"update: {clndata}, ignore conn: {ignore_conn}, ignore_soft: {ignore_soft}"}
 
 
 @router.put("/set_of_prestored_instructions")

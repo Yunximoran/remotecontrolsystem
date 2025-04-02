@@ -76,7 +76,7 @@ async def start_all_softwares(cln:str=None):
             if ip not in ip_soft:
                 ip_soft[ip] = []
                 
-            HeartPackages =DB.loads(DB.hgetall("heart_packages", ip))
+            HeartPackages =DB.loads(DB.hget("heart_packages", ip))
             ip_soft[ip].append(Instruct(label="start -s", instruct=soft, os=HeartPackages['os']).model_dump_json())
     # 遍历所有分类
     else:
@@ -89,7 +89,7 @@ async def start_all_softwares(cln:str=None):
                 if ip not in ip_soft:
                     ip_soft[ip] = []
                     
-                HeartPackages =DB.loads(DB.hgetall("heart_packages", ip))
+                HeartPackages =DB.loads(DB.hget("heart_packages", ip))
                 ip_soft[ip].append(Instruct(label="start -s", instruct=soft, os=HeartPackages['os']).model_dump_json())
                 
     for ip in ip_soft:
@@ -111,7 +111,7 @@ async def close_all_softwares(cln:str=None):
             if ip not in ip_soft:
                 ip_soft[ip] = []
                 
-            HeartPackages =DB.loads(DB.hgetall("heart_packages", ip))
+            HeartPackages =DB.loads(DB.hget("heart_packages", ip))
             ip_soft[ip].append(Instruct(label="close -s", instruct=soft, os=HeartPackages["os"]).model_dump_json())
     # 遍历所有分类
     else:
@@ -124,7 +124,7 @@ async def close_all_softwares(cln:str=None):
                 if ip not in ip_soft:
                     ip_soft[ip] = []
                     
-                HeartPackages =DB.loads(DB.hgetall("heart_packages", ip))
+                HeartPackages =DB.loads(DB.hget("heart_packages", ip))
                 ip_soft[ip].append(Instruct(label="close -s", instruct=soft, os=HeartPackages["os"]).model_dump_json())
     
     for ip in ip_soft:
