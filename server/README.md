@@ -1,87 +1,82 @@
-# Remote Control System Projcet
+# 远程控制系统服务端部署说明
 
-## Start：启动入口
+## 项目依赖
+- anaconda3  
+- python3.11.10  
+- redis  
 
-    读取配置文件，启动项目依赖
+## 下载项目
+```bash
+git clone https://github.com/Yunximoran/remotecontrolsystem.git
+```
 
-## Core：核心
+## 运行前准备
+### 安装anaconda3
+[https://www.anaconda.com/download/success](https://www.anaconda.com/download/success)
 
-* [api模块](Core/api.py)
+#### Linux:
+```bash
+bash /path/to/anaconda3-xxxxx-Linux-x86_64.sh
+sudo vim ~/.bashrc  # 最后一行输入: export PATH:/path/to/anaconda3:$PATH
+source ~/.bashrc
+```
 
-  * servers/send_control_shell
-  * servers/send_software_checklist
-  * clients/send_heart_pkgs
-* [udp模块](Core/udp.py)
+#### Windows:
+运行 `/path/to/anaconda3-xxxxx-Windows-x86_64.exe`
 
-  * UDP
+### 创建虚拟环境
+```bash
+conda create --n remotecontrol python=3.11.10
+```
 
-    * def run(self)
-  * Reception
+## 修改Init.py文件
+### 网络配置选项
+```python
+NET = NetWork("WLAN")  # 指定服务端网卡
+BROADCAST = "192.168.31.255"  # 广播域
+```
 
-    * async def reception(self)
+### 服务器配置选项
+```python
+CORS = [ 
+    "https://127.0.0.1:8080",
+    "http://127.0.0.1:8080"
+]
+```
 
-    ```python
-    # 创建接收数据任务
-    while True:
-        if len(self.CHECK_CONNSTART) > MAXCONNNUM:
-            continue
-        coroutine = self.__reception()
-        self.loop.create_task(coroutine)
-    ```
-
-    * async def __reception(self)
-
-    ```python
-    # 实现接受数据任务
-    rec = self.udp_socket.recvfrom(1024)
-
-    data = rec[0].decode(ENCODING)
-    ip, port = rec[1]
-
-    await self.__check_connection(ip, data)
-
-    return data
-    ```
-
-    * async def __check_connection(self, ip, data)
-      校验客户端的连接状态：
-
-    ```python
-    # True 为连接则创建计时器并启动，False 重置计时器
-    if ip not in CLIENTSTART:
-        timer = self.__timer(ip)
-        self.CHECK_CONNECTION[ip] = (True, data, timer)
-    else:
-        timer = self.CHECK_CONNECTION[ip][2]
-        timer.cancel()
-    await timer
-
-    ```
-
-    async def __timer(self, ip)[-](Core/udp.py)
-    等待3秒后，删除客户端连接
-  * MultiCast: 实现组播UDP，向client发送软件清单
-* ### [control模块](Core/control.py)
-
-
-  * sendtoclient(): api接口触发后从数据库中提取正在连接的客户端地址
-    通过tcp将处理后的shell列表发送至client
-* ### tcp模块
-
-## view：系统控制台
+### 数据库配置选项
+```python
+DATABASE = {
+    "redis": {
+        "host": "localhost",
+        "port": 6379,
+        # "password": "123456",  # 设置redis密码，如果没有设置密码则注释
+        "usedb": 0
+    },
+    "mysql": {    # 设置mysql，可忽略
+        "host": "localhost",
+        "port": 3306,
+        "user": "root",
+        "password": "ranxi",
+        "usedb": "test"
+    }
+}
+```
 
 
-## DataBaseTool： 数据库工具
+***
 
-* [redis_conn](DataBaseTool/redisConnector.py)：redis连接器
 
-## DataModels： API数据模型
 
-* heart_pkgs
-* software_checklist
+## 初始化项目
+### 激活虚拟环境
+```bash
+conda activate remotecontrol
+conda install -r requirements.txt
+```
 
-## ProjectDesposeTool： 项目工具
-
-* parse：解析config.xml
-* start_server：启动项目服务
-* communication： 通信模块（未实现）
+### 终端运行
+```bash
+python init.py  # 初次部署时运行
+python start.py
+```

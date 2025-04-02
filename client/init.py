@@ -1,17 +1,27 @@
+import sys
+import argparse
 try:
     import platform
     import psutil
     from lib.sys import NetWork
     from lib import Resolver
+    
 except ImportError:
     import os
     import sys
-    os.system(f"conda install --file requirements.txt")
+    os.system(f"conda create --file requirements.txt")
     sys.exit(0)
-    
-IP_SERVER = "192.168.31.176"    # 服务端地址
-BROADCAST = "192.168.31.255"    # 广播域名
-NET =  NetWork("WLAN")          # 指定网卡
+
+# 解析命令行参数
+parser = argparse.ArgumentParser()
+parser.add_argument('--ip_server', help='设置服务端IPIP')
+parser.add_argument('--broadcast', help='设置广播域')
+parser.add_argument('--net', help="设置客户端网卡")
+args = parser.parse_args()
+
+IP_SERVER = args.ip_server    # 服务端地址
+BROADCAST = args.broadcast    # 广播域名
+NET = NetWork(args.net)       # 指定网卡
 
 
 if __name__ == "__main__":

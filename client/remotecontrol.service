@@ -1,0 +1,12 @@
+[Unit]
+Description=remotecontrol
+After=network.target
+
+[Service]
+ExecStart=[/path/to/python] [/path/to/client/main.py] # 指定python解释器路径，python启动程序
+WorkingDirectory=[/path/to/client]  # 可选：设置工作目录
+Restart=always  # 可选：脚本崩溃后自动重启
+User=root  # 可选：指定运行用户
+
+[Install]
+WantedBy=multi-user.target
