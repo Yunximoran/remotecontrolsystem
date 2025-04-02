@@ -40,26 +40,3 @@ git clone https://github.com//Yunximoran/remotecontrolsystem.git
     * python init.py --ip_server=192.168.31.176 --broadcast=192.168.31.255 --net=WLAN
   * python main.py
 ```
-
-
-# 设置开机启动
-
-# ！！！ 确保正确修改后在执行
-# ！！！ 确保正确修改后在执行
-# ！！！ 确保正确修改后在执行
-### Linux:
-###### ExecStart=__[/path/to/python]__ __[/path/to/client/main.py]__ # 指定python解释器路径，python启动程序
-###### WorkingDirectory=__[/path/to/client]__  # 可选：设置工作目录
-```bash
-# 修改remotecontrol.service 中 [] 
-sudo systemctl daemon-reload
-sudo systemctl enable remotecontrol.service  # 启用开机自启
-sudo systemctl start remotecontrol.service   # 立即启动
-```
-
-### Windows:
-###### reg add "HKEY_LOCAL_MACHINE\Software\Microsoft\Windows\CurrentVersion\Run" /v remotecontrol /t REG_SZ /d "\"__[C:\Python39\python.exe\]__" \"__[D:\scripts\script.py\]__"" /f
-```bash
-# 修改remotecontrol.bat 中 []
-运行bat文件
-```
