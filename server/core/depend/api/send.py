@@ -75,7 +75,9 @@ async def start_all_softwares(cln:str=None):
             ip = item['ip']
             if ip not in ip_soft:
                 ip_soft[ip] = []
-            ip_soft[ip].append(Instruct(label="start -s", instruct=soft).model_dump_json())
+                
+            HeartPackages =DB.loads(DB.hgetall("heart_packages", ip))
+            ip_soft[ip].append(Instruct(label="start -s", instruct=soft, os=HeartPackages['os']).model_dump_json())
     # 遍历所有分类
     else:
         for cln in classify:
@@ -86,7 +88,9 @@ async def start_all_softwares(cln:str=None):
                 # 统计每个ip 对应的软件构造成指令列表
                 if ip not in ip_soft:
                     ip_soft[ip] = []
-                ip_soft[ip].append(Instruct(label="start -s", instruct=soft).model_dump_json())
+                    
+                HeartPackages =DB.loads(DB.hgetall("heart_packages", ip))
+                ip_soft[ip].append(Instruct(label="start -s", instruct=soft, os=HeartPackages['os']).model_dump_json())
                 
     for ip in ip_soft:
         controlor.sendtoclient([ip], instructs=ip_soft[ip])
@@ -106,7 +110,9 @@ async def close_all_softwares(cln:str=None):
             ip = item['ip']
             if ip not in ip_soft:
                 ip_soft[ip] = []
-            ip_soft[ip].append(Instruct(label="close -s", instruct=soft).model_dump_json())
+                
+            HeartPackages =DB.loads(DB.hgetall("heart_packages", ip))
+            ip_soft[ip].append(Instruct(label="close -s", instruct=soft, os=HeartPackages["os"]).model_dump_json())
     # 遍历所有分类
     else:
         for cln in classify:
@@ -117,7 +123,9 @@ async def close_all_softwares(cln:str=None):
                 # 统计每个ip 对应的软件构造成指令列表
                 if ip not in ip_soft:
                     ip_soft[ip] = []
-                ip_soft[ip].append(Instruct(label="close -s", instruct=soft).model_dump_json())
+                    
+                HeartPackages =DB.loads(DB.hgetall("heart_packages", ip))
+                ip_soft[ip].append(Instruct(label="close -s", instruct=soft, os=HeartPackages["os"]).model_dump_json())
     
     for ip in ip_soft:
         controlor.sendtoclient([ip], instructs=ip_soft[ip])

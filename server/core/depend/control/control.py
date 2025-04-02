@@ -111,7 +111,7 @@ class Control:
         sock.setsockopt(socket.SOL_SOCKET, socket.SO_BROADCAST, 1)
         
         # 创建唤醒魔术包
-        hreart_package = json.loads(DB.hget("hreart_packages", ip))
+        hreart_package = json.loads(DB.hget("heart_packages", ip))
         MAC:str = hreart_package["mac"]
         magic_pack = NET.create_magic_packet(MAC)
         

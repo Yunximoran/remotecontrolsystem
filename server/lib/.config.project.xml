@@ -5,21 +5,6 @@
 			<level>info</level>
 		</logs>
 	</global>
-	<computer username="yunximoran" password="ranxi160259">
-		<name>DESKTOP-4UTP93R</name>
-		<os>Windows</os>
-		<version>11 professional</version>
-		<cpu>11th Gen Intel(R) Core(TM) i7-11800H @ 2.30GHz   2.30 GHz</cpu>
-		<gpu>nvidia rtx3050</gpu>
-		<ram>16</ram>
-		<disk items="#">
-			<li>C:</li>
-		</disk>
-	</computer>
-	<dependon items="#">
-		<li>redis-server ./databasetoo./conf/redis-service.conf</li>
-		<li>npm --prefix view run serve</li>
-	</dependon>
 	<server>
 		<app>core:app</app>
 		<host>127.0.0.1</host>

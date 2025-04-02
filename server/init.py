@@ -5,7 +5,7 @@ import time, re
 resolver = Resolver()
 
 # 网络配置选项
-NET = NetWork("WLAN")
+NET = NetWork("WLAN")           # 指定服务端网卡
 BROADCAST = "192.168.31.255"    # 广播域
 
 # 服务器配置选项
@@ -14,22 +14,12 @@ CORS = [    # 跨域资源
     "http://127.0.0.1:8080"
 ]
 
-# 主机配置选项
-PASSWORD = {     # 计算机账户密码
-    "computer": "ranxi160259"  
-}
-
-COMPUTER = {
-    "username": "yunximoran",
-    "password": "ranxi160259"
-}
-
 # 数据库配置选项
 DATABASE = {
     "redis": {
         "host": "localhost",
         "port": 6379,
-        "password": "123456",
+        # "password": "123456", # 设置redis密码， 如果没有设置密码则
         "usedb": 0
     },
     "mysql": {
@@ -60,17 +50,7 @@ def set_database():
             
         if "db" in data:
             conf.search("host").settext(data["db"])
-
-# 初始化主机配置      
-def set_computer():
-    # for option in COMPUTER:
-    conf = resolver("computer")
-    if "username" in COMPUTER:
-        conf.setattrib("username", COMPUTER["username"])
-    
-    if "password" in COMPUTER:
-        conf.setattrib("password", COMPUTER["password"])
-        
+   
 # 初始化网络配置
 def set_network():
     net = resolver("network")
@@ -111,7 +91,6 @@ def init():
     set_server()
     set_network()
     set_database()
-    set_computer()
     close() 
 
 
