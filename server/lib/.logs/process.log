@@ -1,0 +1,24 @@
+2025-04-06 14:04:50,843 - process - INFO - _tcplisten	success
+module: __mp_main__
+2025-04-06 14:04:50,843 - process - INFO - _udplisten	success
+module: __mp_main__
+2025-04-06 14:04:53,230 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+2025-04-06 14:04:53,254 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+2025-04-06 14:04:53,256 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+2025-04-06 14:04:53,256 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+2025-04-06 14:04:53,280 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+2025-04-06 14:04:53,280 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+2025-04-06 14:04:53,283 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+2025-04-06 14:04:53,283 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+2025-04-06 14:04:53,354 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+2025-04-06 14:04:53,377 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
