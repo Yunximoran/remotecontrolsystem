@@ -20,6 +20,18 @@ from typing import Generator
 from psutil import NoSuchProcess, AccessDenied
 from lib.manager import Logger
 
+
+class Process:
+    def __init__(self, process:psutil.Process):
+        self.name = process.name().lower()
+        self.pid = process.pid
+        try:
+            self.exe = process.exe()
+        except (NoSuchProcess, AccessDenied):
+            self.exe = None
+        
+        
+
 class __BaseSystem:
     # 获取工作目录
     CWDIR = os.getcwd()
@@ -37,14 +49,17 @@ class __BaseSystem:
             # 匹配项目
             try:
                 curpath = Path(process.exe())
-                if re.match(path.stem, process.name().lower()):
+                item = Process(process)
+                if re.match(path.stem, item.name):
                     # 进程路径包含 软件名
-                    exe_depend_path = [parent.exe() for parent in process.parents()]
-                    exe_depend_path.append(process.exe())
+                    exe_depend_path = [Process(parent).exe for parent in process.parents()]
+                    exe_depend_path.append(item.exe)
                     if str(path) in exe_depend_path:
                         processes.append(process)
-                elif path.parent in curpath.parents:
+                        continue
+                if path.parent in curpath.parents:
                     processes.append(process)
+                    continue
             except psutil.AccessDenied:
                 pass
         return processes

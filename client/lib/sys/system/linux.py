@@ -26,7 +26,7 @@ class Linux(__BaseSystem):
         
     def start_software(self, path):
         path = self._path(path)
-        report = self.executor([path.name], cwd=path.parent, iswait=False)
+        report = self.executor(f"./{path.name}", cwd=path.parent, iswait=False)
         return report
     
     def close_software(self, software):
@@ -128,5 +128,5 @@ class Linux(__BaseSystem):
         else:
             self.record(1, f"exec {args} results:\n{msg}")
         return  self.report(args, msg, err)\
-        if not re.match("[(权限)|(password)|(密码)]", err)\
+        if not re.match("[(权限)|(password)|(密码)]", f"{err}")\
         else self.executor(args, True)
