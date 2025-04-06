@@ -50,9 +50,8 @@ class BroadCastor(UDP):
             data, address = self.sock.recvfrom(RECVSIZE)
             
             # 解析广播数据
-            logger.record(1, f"conning for client: {address}")
             data, ip = self.parse(data, address)
-            
+            logger.record(1, f"conning for client: {ip}")
             # 保存/更新 广播数据
             self.update_client_messages(ip, data)
             

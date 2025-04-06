@@ -32,35 +32,34 @@ class Start:
         self.__registry((
             self._tcplisten,
             self._udplisten,
-            self._start
         ))
         
         self.__starttasks()
-        self.__jointasks()
-
-        # fesfsfefsefsef
-    @staticmethod
-    def _start():
         uvicorn.run(app=FASTAPP, host=FASTHOST, port=FASTPORT, reload=ISRELOAD)
+        self.__jointasks()
     
     @staticmethod
     def _tcplisten():
+        # 启动TCP监听服务：
         Listener(SERVERADDRESS).listen()
     
     @staticmethod
     def _udplisten():
+        # 启动广播监听服务：
         BroadCastor(BROADCAST_1).listen()
         
+    # 注册服务
     def __registry(self, tasks: Tuple[Any]):
         # 注册依赖任务 
         for task in tasks:
             self.Tasks.append(Process(target=task))
 
+    # 启动服务
     def __starttasks(self):
         for server in self.Tasks:
             server.start()
             
-        
+    # 等待服务
     def __jointasks(self):
         for server in self.Tasks:
             server.join()
