@@ -5,15 +5,19 @@ from lib.sys.sock.udp import BroadCastor
 from ._base import *
 
 logger = Logger("ConnectServe", "connect.log")
+
+# 广播地址
 BROADADDR = resolver("sock", 'udp', "ip-broad")
 
-USENET = resolver("network", "ip")
+# 绑定广播使用网卡
+LISTENPORT_1 = resolver("ports", "udp", "broad")
+
 class ConnectServe(BaseServe):
 
     def serve(self):
         # 每秒广播心跳包数据
         print("Connect Serve Started")
-        udp_conn = BroadCastor((USENET, LISTENPORT_1))    # 发送端广播
+        udp_conn = BroadCastor((IP, LISTENPORT_1))    # 发送端广播
         while True:
             time.sleep(1)
             self.update_soft_status()

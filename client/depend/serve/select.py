@@ -2,12 +2,14 @@ import re, socket
 from pathlib import Path
 from ._base import *
 from lib import Resolver
-
+from lib.sys.sock.tcp import Listener
 resolver = Resolver()
+
+PORT = resolver("ports", "tcp", "client")
 ENCODING = resolver("global", "encoding")
 OSLABEL = resolver("computer", "os")
-
 logger = Logger("Select", log_file="select.log")
+
 class SelectServe(BaseServe):
     def serve(self):
         """
@@ -27,7 +29,14 @@ class SelectServe(BaseServe):
         """
         # 启动TCP家庭
         print("Connect Serve Started")
-        tcp_conn =  TCPListen()
+        tcp_conn = Listener(
+                (IP, PORT),
+                listens=5,
+                timeout=1,
+                settings=[
+                (socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+                ]
+            )
         while True:
             try: 
                 # 等待服务器发送shell指令            
@@ -35,6 +44,7 @@ class SelectServe(BaseServe):
                 multiprocessing.Process(target=self.select, args=(sock,)).start()
             except TimeoutError:
                 pass
+            
             
     def select(self, sock:socket.socket):
         reports = []
@@ -116,4 +126,5 @@ class SelectServe(BaseServe):
                
     def report_results(self, conn:socket.socket, reports:list):
         conn.sendall(json.dumps(reports, ensure_ascii=False, indent=4).encode(ENCODING))
-        return reports
+        return reports     
+    

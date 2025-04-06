@@ -1,9 +1,14 @@
 from ._base import *
 from pathlib import Path
 from lib.sys.sock.udp import BroadCastor
+from lib.sys.sock.tcp import Connector
 
 logger = Logger("ListenServer", "listen.log")
 
+PORT = resolver("ports", "tcp", "server")
+LISTENPORT_2 = resolver("ports", "udp", "multi")
+
+ENCODING = "utf-8"
 
 class ListenServe(BaseServe): 
     # 监听广播端口， 获取软件清单
@@ -19,7 +24,6 @@ class ListenServe(BaseServe):
             # 使用json格式加载数据
             softwares = json.loads(data)
             logger.record(1, f"accpet softwarelist: {softwares}")
-            # newitem = self._check_softwares(softwares)
             
             # 更新本地软件清单
             pool.map_async(
@@ -33,7 +37,6 @@ class ListenServe(BaseServe):
         
     def _update_softwares(self, soft):
         # 更新软件清单
-        print("dispose up task")
         software_name = soft['ecdis']['name']
         executable = soft['ecdis']['executable']
         software_path = Path(soft['ecdis']['path']).joinpath(executable)
@@ -63,6 +66,7 @@ class ListenServe(BaseServe):
         old_map_path = set(LOCAL_DIR_SOFT.rglob("*"))
 
         rmobj = old_map_path - new_map_path
+        
         # 删除多余的项目
         for obj in rmobj:
             obj.unlink()
@@ -70,7 +74,7 @@ class ListenServe(BaseServe):
     def _report_results(self, report):
         # 汇报结果
         # 创建TCP连接
-        conn = TCPConnect()
+        conn = Connector((IP, PORT), timeout=1800)
         
         # 格式化汇报表单，并发送汇报结果
         params = SYSTEM.format_params(2, report)
@@ -83,7 +87,7 @@ class ListenServe(BaseServe):
     def waitpath(self, param:str) -> Path:
         # 等待服务器回应，客户端与服务端交互时使用
         logger.record(1, f"wait resp: {param}")
-        conn = TCPConnect()
+        conn = Connector((IP, PORT), timeout=1800)
         # 设置超时时间是30分钟
         conn.sock.timeout(1800)
         # 发送数据
@@ -97,4 +101,4 @@ class ListenServe(BaseServe):
         finally:
             conn.close()
         
-        return Path(data.decode())
+        return Path(data)
