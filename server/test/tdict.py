@@ -1,8 +1,7 @@
-a = {1: 2}
-b = {1: 2}
-c = set()
-c.add(0)
-print(c)
-
-a = set(a)
-print(a)
+t =  {
+    "ecdis": {
+        "name": "firefox",
+        "executable": "firefox-bin",
+        "path": "/home/LENOVO/application/firefox"
+    }
+}

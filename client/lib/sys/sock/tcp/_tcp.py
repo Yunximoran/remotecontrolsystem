@@ -38,4 +38,10 @@ class _ProtoType:
     
     def close(self):
         self.sock.close()
+        
+    def __enter__(self):
+        return self
+    
+    def __exit__(self, *_):
+        self.close()
     

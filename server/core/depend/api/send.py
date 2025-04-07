@@ -1,6 +1,6 @@
 import json
 from typing import List, AnyStr
-from fastapi import APIRouter
+from fastapi import APIRouter, File, UploadFile
 
 from datamodel import SoftwareList
 from datamodel.instruct import InstructList, Instruct
@@ -24,6 +24,19 @@ router = APIRouter()
 prefix = "/server/send"
 tags = ["send"]
 
+
+@router.post("/download")
+async def sendfiles(files:list[UploadFile], toclients: List[AnyStr] = []):
+    fileinfo = {}
+    for file in files:
+        info = fileinfo[file.filename] = {}
+        info['size'] = str(file.size)
+        info['context'] = file.file.read()
+    try:
+        controlor.sendtoclient(toclients=toclients, files=fileinfo)
+    except Exception as e:
+        return {"ERROR": str(e)}
+    
 @router.post("/instruct") 
 async def send_control_shell(instructlist: InstructList, toclients: List[AnyStr] = []):
     """
@@ -40,7 +53,7 @@ async def send_control_shell(instructlist: InstructList, toclients: List[AnyStr]
         return {"OK": "instructions have been sent to the client"}
     except Exception as e:
         print(e)
-        return {"ERROR": e}
+        return {"ERROR": str(e)}
     
 
 @router.post("/softwarelist")    # 发送软件清单
@@ -56,7 +69,7 @@ async def send_software_checklist(checklist: SoftwareList):
         return {"OK": f"send software checklist {softwares}"}
     except Exception as e:
         print(e)
-        return {"ERROR": e}
+        return {"ERROR": str(e)}
 
 @router.post("/start_all_softwares")
 async def start_all_softwares(cln:str=None):
@@ -129,3 +142,4 @@ async def close_all_softwares(cln:str=None):
     
     for ip in ip_soft:
         controlor.sendtoclient([ip], instructs=ip_soft[ip])
+        

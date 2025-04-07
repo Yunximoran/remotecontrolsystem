@@ -1,6 +1,6 @@
 import json
 from typing import Annotated, AnyStr
-
+from pathlib import Path
 from fastapi import(
     APIRouter,
     Query
@@ -50,3 +50,12 @@ async def get_realtime_data():
         "classify": classify,             # 分类数据
         "classifylist": DB.smembers("classifylist")     # 分类索引
     }
+    
+    
+@router.get("/check_dirs")
+async def iter_dir(base:str):
+    path = Path(base)
+    if path.exists() and path.is_dir():
+        return {path.glob("*")}
+    else:
+        return {"ERROR": f"{base} is not exists or not a dir"}

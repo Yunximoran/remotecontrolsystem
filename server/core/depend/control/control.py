@@ -3,7 +3,7 @@ import struct
 import re
 import json
 from functools import partial
-
+from fastapi import UploadFile
 from lib.sys.processing import(
     Pool,
     Process,
@@ -13,6 +13,7 @@ from lib.manager._logger import Logger
 from static import DB
 from lib.sys.network import NetWork as NET
 from core.depend.protocol.tcp import Connector
+from datamodel.instruct import Instruct
 
 
 resolver = Resolver()
@@ -22,7 +23,8 @@ logger = Logger("control", log_file="control.log")
 
 # 广播地址
 BROADCAST = ("", resolver("sock", "udp", "ip-broad"))
-
+SERVERIP = resolver("network", "ip")
+FILEPORT = resolver("ports", "tcp", "client-file")
 class Control:
     """
         控制模块
@@ -41,7 +43,7 @@ class Control:
     def __init__(self):
         pass
     
-    def sendtoclient(self, toclients, *, instructs=None, files=None, wol=False):
+    def sendtoclient(self, toclients, *, instructs=None, files:dict[str, dict[str, str|bytes]] = None, wol=False):
         """
             多进程启动数据链接 依次发送指令
             加载redis中保存的client message
@@ -52,7 +54,6 @@ class Control:
         
         # 校验客户端连接, 对目标地址群进行状态分类
         toclients = self.__checkclientstatus(toclients)
-        logger.record(1, f"{instructs}")
         # 向正在连接的指定客户端发送数据包
         Process(target=self._send_tasks, args=(toclients, ), kwargs={
             "instructs": instructs,
@@ -66,6 +67,7 @@ class Control:
         with Pool() as pool:
             if instructs is not None:
                 # 发送指令数据
+                logger.record(1, f"{instructs}")
                 sendto = partial(self.sendtoshell, instructs=instructs)
                 pool.map_async(sendto, connings, 
                                attribute={  # 使用偏函数后对丢失某些属性，通过attribute参数手动设置
@@ -73,7 +75,7 @@ class Control:
                                    }
                                ).get()
                 
-            if files is not None and len(files) > 1:
+            if files is not None:
                 # 发送文件数据
                 sendto = partial(self.sendtofile, files=files)
                 pool.map_async(sendto, connings, 
@@ -87,12 +89,37 @@ class Control:
                 pool.map_async(self.sendtowol, breaks).get()
  
     @staticmethod                           
-    def sendtofile(ip, file):
-        # 发送文件数据
-        logger.record(1, f"send file: {file}")
+    def sendtofile(ip, files:dict[str, dict[str, str|bytes]]): # 发送文件数据
+        # 创建下载指令
+        heart_packages = DB.loads(DB.hget("heart_packages", ip))
+        instruct = Instruct(label="download", instruct="file", os=heart_packages['os']).model_dump_json()
+        # 发送指令，通知客户端准备接收文件
         conn = Connector()
-        conn.sendfile(ip, file)
-    
+        conn.connect(ip)
+        conn.send(json.dumps([instruct], ensure_ascii=False, indent=4))
+        is_OK = conn.recv()   # 客户端准备就绪
+        if is_OK == "OK":
+            logger.record(1, f"The client: {ip} is ready")
+            # 建立文件传输通道
+            file_conn = Connector()
+            file_conn.sock.connect((ip, FILEPORT))
+            file_conn.send(str(len(files)))
+            for filename in files:
+                logger.record(1, f"send file: {filename} start")
+                file_conn.send(filename)
+                file_conn.send(files[filename]['size'])
+                file_conn.sock.sendall(files[filename]['context'])
+                msg = file_conn.recv()  # 确保当前文件接收完毕
+                logger.record(1, msg)
+            logger.record(1, "All the files have been received")
+        else:
+            logger.record(3, f"Client: {ip} preparation exception")
+        
+        
+        # 关闭套接字
+        file_conn.close()
+        conn.close()
+        
     @staticmethod
     def sendtoshell(ip, instructs):
         # 发送指令包
