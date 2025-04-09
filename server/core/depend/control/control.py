@@ -22,9 +22,9 @@ logger = Logger("control", log_file="control.log")
 
 
 # 广播地址
-BROADCAST = ("", resolver("sock", "udp", "ip-broad"))
 SERVERIP = resolver("network", "ip")
 FILEPORT = resolver("ports", "tcp", "client-file")
+
 class Control:
     """
         控制模块
@@ -144,7 +144,7 @@ class Control:
         
         # 发送广播
         logger.record(1, f"send wol protocol to {ip}")
-        sock.sendto(magic_pack, BROADCAST)    
+        sock.sendto(magic_pack, ("", 9))    
 
     def __checkclientstatus(self, toclients):
         """

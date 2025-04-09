@@ -4,6 +4,7 @@ import sys
 import ctypes
 import string
 import re
+import zipfile, tarfile
 
 from ._base import __BaseSystem
 from depend.path import *
@@ -30,6 +31,34 @@ class Windows(__BaseSystem):
             bitmask >>= 1
         return drives
     
+    def compress(self, topath, frompath):
+        topath = self._path(topath) # 压缩到
+        frompath = self._path(frompath) # 压缩目标
+        if not topath.exists() or not topath.is_dir():
+            raise Exception(f"{topath} not a dir or not exists")
+        topath = topath.joinpath(".".join((frompath.stem, "zip")))
+        with zipfile.ZipFile(topath, "w") as zip:\
+        [zip.write(item, arcname=item.relative_to(frompath)) for item in frompath.rglob("*")]
+                
+    
+    def uncompress(self, topath, frompath, clear=False):
+        topath = self._path(topath, check=True)
+        frompath = self._path(frompath, check=True)
+        if not frompath.exists() or not topath.exists():
+            raise Exception(f"{topath} or {frompath} is not exists")
+        if frompath.suffix != ".zip":
+            raise Exception(f"{frompath} is not a zipfile")
+        
+        topath = topath.joinpath(frompath.stem)
+        topath.mkdir(exist_ok=True)
+        print(topath)
+        with zipfile.ZipFile(frompath, "r") as zip:
+            topath.joinpath(frompath.stem).mkdir(exist_ok=True)
+            zip.extractall(topath)
+        
+        if clear:
+            frompath.unlink()
+            
     def close(self):
         # 关机
         os.system("shutdown /s /t 3")
