@@ -46,6 +46,17 @@ def get_classify():
             item['mac'], item['status'], item['conning'] = get_client_info(cln, soft, ip)
     return classify
 
+def get_heart_packages() -> dict:
+    heart_packages = DB.loads(DB.hgetall("heart_packages"))
+    return heart_packages
+
+def get_net_speed(ip=None):
+    heart_packages = get_heart_packages()
+    if ip:
+        return {ip: heart_packages[ip]['netspeed']}
+    else:
+        return {ip: heart_packages[ip]['netspeed'] for ip in heart_packages}
+    
 
 if __name__ == "__main__":
     print(get_classify())

@@ -9,8 +9,9 @@ from fastapi import(
 from static import DB
 from lib import Resolver
 from lib.strtool import pattern
+from lib.sys.system import OS
 
-from ._method.get import get_classify
+from ._method.get import get_classify, get_net_speed
 
 resolver = Resolver()
 
@@ -23,6 +24,28 @@ tags = ["data"]
 async def get_softwarelist():
     return {"softwarelist": DB.loads(DB.hgetall("softwarelist"))}   # 软件列表
 
+
+@router.get("/iter_local_instructs")    # 遍历脚本目录
+async def get_instructs():
+    if OS == "Windows":
+        suffix = r"*.bat"
+    elif OS == "Linux":
+        suffix = r"*.sh"
+    instructs = resolver("path", "local", "instructs")
+    pracpath = instructs.bind(Path.cwd())
+    if pracpath.exists() and pracpath.is_dir():
+        return pracpath.glob(suffix)
+
+@router.get("/iter_local_packages") # 遍历压缩包目录
+async def get_packages():
+    if OS == "Windows":
+        suffix = r"*.zip"
+    elif OS == "Linux":
+        suffix = r"*.tar"
+    packages = resolver("path", "local", "packs")
+    pracpath = packages.bind(Path.cwd())
+    if pracpath.exists() and pracpath.is_dir():
+        return pracpath.glob(suffix)
 
 @router.get("/not_classified")
 async def get_not_classified():
@@ -48,12 +71,13 @@ async def get_realtime_data():
         "instructlist": DB.loads(DB.hgetall("instructlist")),     # 预存指令列表
         "softwarelist": DB.loads(DB.hgetall("softwarelist")),
         "classify": classify,             # 分类数据
-        "classifylist": DB.smembers("classifylist")     # 分类索引
+        "classifylist": DB.smembers("classifylist"),    # 分类索引
+        "netspeed": get_net_speed()
     }
     
     
 @router.get("/check_dirs")
-async def iter_dir(base:str):
+async def iter_dir(base:str=None):
     path = Path(base)
     if path.exists() and path.is_dir():
         return {path.glob("*")}

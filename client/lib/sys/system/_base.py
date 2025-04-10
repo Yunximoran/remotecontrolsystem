@@ -146,10 +146,17 @@ class __BaseSystem:
         return msg, err
     
     def format_params(self, typecode:int, data: dict|list) -> str:  # 预定义表单类型
+        """
+        0: instruct,
+        1: software,
+        2: report,
+        3: download
+        """
         types = [
             "instruct",
             "software",
-            "report"
+            "report",
+            "download"
         ]
         return json.dumps({
             "type": types[typecode],

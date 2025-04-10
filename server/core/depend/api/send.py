@@ -1,5 +1,6 @@
 import json
 from typing import List, AnyStr
+from pathlib import Path
 from fastapi import APIRouter, File, UploadFile
 
 from datamodel import SoftwareList
@@ -25,19 +26,16 @@ prefix = "/server/send"
 tags = ["send"]
 
 
-@router.post("/download")
-async def sendfiles(files:list[UploadFile], toclients: List[AnyStr] = []):
-    fileinfo = {}
-    for file in files:
-        info = fileinfo[file.filename] = {}
-        info['size'] = str(file.size)
-        info['context'] = file.file.read()
+@router.post("/download")   # 下载文件
+async def sendfiles(files:List[AnyStr], toclients: List[AnyStr] = []):
     try:
-        controlor.sendtoclient(toclients=toclients, files=fileinfo)
+        files = [Path(file) for file in files]
+        # return files
+        controlor.sendtoclient(toclients=toclients, files=files)
     except Exception as e:
         return {"ERROR": str(e)}
     
-@router.post("/instruct") 
+@router.post("/instruct")   # 发送控制指令 
 async def send_control_shell(instructlist: InstructList, toclients: List[AnyStr] = []):
     """
         发送控制指令
@@ -71,7 +69,7 @@ async def send_software_checklist(checklist: SoftwareList):
         print(e)
         return {"ERROR": str(e)}
 
-@router.post("/start_all_softwares")
+@router.post("/start_all_softwares")    # 开启所有软件
 async def start_all_softwares(cln:str=None):
     context = DB.hgetall("classify")
     classify = DB.loads(context)
@@ -108,7 +106,7 @@ async def start_all_softwares(cln:str=None):
     for ip in ip_soft:
         controlor.sendtoclient([ip], instructs=ip_soft[ip])
 
-@router.post("/close_all_softwares")
+@router.post("/close_all_softwares")    # 关闭所有软件
 async def close_all_softwares(cln:str=None):
     context = DB.hgetall("classify")
     classify = DB.loads(context)

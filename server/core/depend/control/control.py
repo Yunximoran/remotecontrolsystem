@@ -1,7 +1,8 @@
 import socket
 import struct
-import re
+import re, time
 import json
+from pathlib import Path
 from functools import partial
 from fastapi import UploadFile
 from lib.sys.processing import(
@@ -25,6 +26,8 @@ logger = Logger("control", log_file="control.log")
 SERVERIP = resolver("network", "ip")
 FILEPORT = resolver("ports", "tcp", "client-file")
 
+LOCALPATH = resolver("path", "local")
+
 class Control:
     """
         控制模块
@@ -43,7 +46,7 @@ class Control:
     def __init__(self):
         pass
     
-    def sendtoclient(self, toclients, *, instructs=None, files:dict[str, dict[str, str|bytes]] = None, wol=False):
+    def sendtoclient(self, toclients, *, instructs=None, files:list[Path] = None, wol=False):
         """
             多进程启动数据链接 依次发送指令
             加载redis中保存的client message
@@ -89,34 +92,45 @@ class Control:
                 pool.map_async(self.sendtowol, breaks).get()
  
     @staticmethod                           
-    def sendtofile(ip, files:dict[str, dict[str, str|bytes]]): # 发送文件数据
+    def sendtofile(ip, files:list[Path]): # 发送文件数据
         # 创建下载指令
         heart_packages = DB.loads(DB.hget("heart_packages", ip))
         instruct = Instruct(label="download", instruct="file", os=heart_packages['os']).model_dump_json()
+        
         # 发送指令，通知客户端准备接收文件
         conn = Connector()
         conn.connect(ip)
         conn.send(json.dumps([instruct], ensure_ascii=False, indent=4))
         is_OK = conn.recv()   # 客户端准备就绪
+        
         if is_OK == "OK":
             logger.record(1, f"The client: {ip} is ready")
             # 建立文件传输通道
             file_conn = Connector()
             file_conn.sock.connect((ip, FILEPORT))
-            file_conn.send(str(len(files)))
-            for filename in files:
-                logger.record(1, f"send file: {filename} start")
-                file_conn.send(filename)
-                file_conn.send(files[filename]['size'])
-                file_conn.sock.sendall(files[filename]['context'])
-                msg = file_conn.recv()  # 确保当前文件接收完毕
-                logger.record(1, msg)
+            file_conn.send(str(len(files))) # 发送的文件数量
+            for file in files:
+                if not file.exists():
+                    # 如果路径不存在就从local目录中查找文件
+                    local = LOCALPATH.bind(Path.cwd())
+                    items = [item for item in local.rglob(file.name) if item.is_file()]
+                    sendata = items[0]
+                else:
+                    sendata = file
+                print(sendata)
+                with open(sendata, "rb") as f:
+                    filename = sendata.name    # 文件名称
+                    filesize = str(sendata.stat().st_size) # 文件大小
+                    logger.record(1, f"send file: {filename} start")    # 开始发送
+                    file_conn.send(filename)    # 发送文件名
+                    file_conn.send(filesize)    # 发送文件大小
+                    file_conn.sock.sendfile(f)  # 发送文件数据
+                    status = file_conn.recv()
+                    logger.record(1, status)
             logger.record(1, "All the files have been received")
         else:
             logger.record(3, f"Client: {ip} preparation exception")
         
-        
-        # 关闭套接字
         file_conn.close()
         conn.close()
         

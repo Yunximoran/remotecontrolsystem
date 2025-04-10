@@ -7,5 +7,8 @@ def get_classify():
         context = classify[cn]
         print(json.loads(context))
         
+    
+def download(files, toclients):
+    pass
 if __name__ == "__main__":
     get_classify()

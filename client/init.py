@@ -49,6 +49,7 @@ if __name__ == "__main__":
         net.search("ip-server").settext(IP_SERVER)
         
         # 初始化网络信息
+        net.setattrib("name", args.net)
         net.search("ip").settext(NET.IPv4)
         net.search("mac").settext(NET.mac)
         

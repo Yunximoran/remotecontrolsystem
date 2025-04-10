@@ -5,8 +5,9 @@ from lib import Resolver
 from lib.sys.sock.tcp import Listener, Connector
 resolver = Resolver()
 
-PORT = resolver("ports", "tcp", "client")
-FILEPORT = resolver("ports", "tcp", "client-file")
+TCPORT = resolver("ports", "tcp", "client")
+TSPORT = resolver("ports", "tcp", "server")
+TCPORT_FILE = resolver("ports", "tcp", "client-file")
 ENCODING = resolver("global", "encoding")
 OSLABEL = resolver("computer", "os")
 logger = Logger("Select", log_file="select.log")
@@ -31,7 +32,7 @@ class SelectServe(BaseServe):
         # 启动TCP家庭
         print("Connect Serve Started")
         tcp_conn = Listener(
-                (IP, PORT),
+                (IP, TCPORT),
                 listens=5,
                 timeout=1,
                 settings=[
@@ -100,10 +101,15 @@ class SelectServe(BaseServe):
                 report = SYSTEM.wget()
                 
             elif label == "compress":
-                report = SYSTEM.compress()
+                path = instruct.split(" ")
+                topath, frompath = path[0], path[1]
+                report = SYSTEM.compress(topath, frompath)
+ 
                 
             elif label == "uncompress":
-                report = SYSTEM.uncompress()
+                path = instruct.split(" ")
+                topath, frompath = path[0], path[1]
+                report = SYSTEM.uncompress(topath, frompath)
                 
             elif label == "download":
                 sock.sendall("OK".encode(ENCODING))
@@ -123,7 +129,7 @@ class SelectServe(BaseServe):
     def recvfile(self):
         # 创建文件接收通道
         file_conn = Listener(
-            (IP, FILEPORT),
+            (IP, TCPORT_FILE),
             listens=5
         )
         conn, _ = file_conn.accept()
@@ -131,7 +137,6 @@ class SelectServe(BaseServe):
         for _ in range(int(filenum)):
             filename = conn.recv(1024).decode(ENCODING) # 接收文件名称
             filesize = conn.recv(1024).decode(ENCODING) # 接收文件大小
-            
             # 开始接收文件
             size = 0
             with open(LOCAL_DIR_FILE.joinpath(filename), 'wb') as f:
@@ -139,10 +144,10 @@ class SelectServe(BaseServe):
                     data = conn.recv(4096)
                     f.write(data) 
                     size += len(data)
-                    print(f"{size} - > {filesize}")
-            # 通知服务端当前文件接收文件完毕，可以发送下一个文件
-            conn.sendall(f"recv: {filename} OK".encode())
+            conn.sendall(f"recv: {filename} finish {IP}".encode(ENCODING))
         return filename
+    
+    
     def search_software(self, softname):
         with open(PATH_MAP_SOFTWARES, 'r', encoding="utf-8") as f:
             softwares = json.load(f)

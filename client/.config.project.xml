@@ -42,7 +42,7 @@
 			<server>9095</server>
 		</tcp>
 	</ports>
-	<network>
+	<network name="WLAN">
 		<ip-server>192.168.31.176</ip-server>
 		<ip>192.168.31.176</ip>
 		<mac>20-1E-88-F5-05-B9</mac>

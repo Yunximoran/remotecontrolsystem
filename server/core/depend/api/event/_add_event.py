@@ -53,14 +53,16 @@ async def addclissify(classify: Annotated[Classify, None]):
     items = []
     if allconn is None:
         return {"ERROR", "没有链接你跟谁绑定"}
+    
     for item in classify.items:
         if item.ip not in allconn:
             ignore_conn.append(item.ip)
             continue
-        if item.soft not in allsoft:
+        if item.soft not in allsoft and item.soft != "":
             ignore_soft.append(item.soft)
             continue
         items.append(item.model_dump_json())
+        
     items = set(items)
     context = DB.hget("classify", classify.name)
     if context:

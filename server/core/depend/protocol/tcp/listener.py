@@ -50,23 +50,24 @@ class Listener(TCP):
             try:
                 conn = self.recv()
                 if conn:
-                    task = Process(target=self._task, args=(conn, ))
+                    sock, addr, data = conn
+                    task = Process(target=self._task, args=(sock, addr, data ))
                     task.start()
             except KeyboardInterrupt:
                 exit()
      
-    def _task(self, conn: Dict[AnyStr, Tuple[socket.socket, AnyStr]]):
+    def _task(self, sock:socket.socket, addr, data):
         # 任务包装器
         """
             解析连接对象
         """
-        sock, addr, data = conn
+        data = json.loads(data)
         
-        # 解析TCP数据，获取事件类型和cookie
-        type, cookie = self._parse(data)
-        
-        # 事件分流
-        self._event_brench(sock, addr, type, cookie, data)
+        if data['label'] == "download":
+            info = data['data']
+            progress = json.loads(sock.recv(1024).decode(ENCODING))
+            DB.set(info['file'], progress['data'])
+            DB.expire(info['file'], 3)
         
     def _parse(self, data):
         """
@@ -77,48 +78,6 @@ class Listener(TCP):
         event_type = msg['type']
         cookie = msg['cookie']
         return event_type, cookie
-
-    def _event_brench(self, sock, addr, type, cookie, data):
-        """
-            事件分支
-        区分不同类型事件，执行对应事件
-        """
-        if type == "instruct":
-            # 这里将来执行交互式shell时可能会用到
-            pass
-        
-        if type == "software":
-             # 添加待办事件， 将事件标识和事件信息写入redis， 发送客户端，等待客户端处理
-            self._add_waitdone(cookie, data)
-            
-            # 等待处理待办事件，定期搜索事件标识，如果找到，获取处理结果，返回客户端，关闭连接
-            Process(target=self._dps_waitdone, args=(cookie, sock)).start()
-   
-        if type == "report":
-            # 将汇报结果保存数据库，执行日志
-            DB.lpush("logs", data)
-
-                      
-    def _add_waitdone(self, cookie, data):
-        DB.hset("waitdones", cookie, data)
-        return cookie
-    
-    
-    def _dps_waitdone(self, cookie:str, sock:socket.socket) -> bool:
-        while True:
-            if DB.hget("waitdones", cookie) or self._check_status():
-                # 校验待办事项是否被删除
-                break
-            
-            results: str = DB.hget("waitdone_dispose_results", cookie)
-            if results:
-                # 如果为空
-                sock.sendall(results.encode())
-                sock.close()
-                return True
-            
-            time.sleep(DELAY)
-        return False
     
     @catch.status
     def _check_status(self, sock:socket.socket=None):

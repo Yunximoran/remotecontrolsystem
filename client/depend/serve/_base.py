@@ -17,6 +17,7 @@ from depend.path import (
 
 resolver = Resolver()
 IP = resolver("network", "ip")
+IP_SERVER = resolver("network", "ip-server")
 MAC = resolver("network", "mac")
 class BaseServe:
     def __init__(self):
