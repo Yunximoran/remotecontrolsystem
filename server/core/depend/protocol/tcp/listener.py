@@ -11,8 +11,6 @@ from lib import Resolver
 resolver = Resolver()
 catch = CatchSock()
 
-# ADDRESS = resolver("network", "ip")
-# PORT = resolver("ports", "tcp", "server")
 ENCODING = resolver("global", "encoding")
 RECVSIZE = resolver("sock", "recv-size")
 TIMEOUT = resolver("sock", "tcp", "timeout")
