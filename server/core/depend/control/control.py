@@ -134,8 +134,7 @@ class Control:
                     logger.record(1, f"send file: {filename} start") 
                     file_conn.sendwait(filename)
                     file_conn.sendwait(filesize)
-                    file_conn.sock.sendfile(fp)  # 发送文件数据
-                    
+                    file_conn.sock.sendfile(fp) # 发送文件数据
                     # 等待接收完成
                     status = file_conn.recv()
                     logger.record(1, status)

@@ -141,14 +141,14 @@ class SelectServe(BaseServe):
         conn, _ = file_conn.accept()    # 等待服务端连接
         
         filenum = conn.recv(1024).decode(ENCODING)   # 接收的文件数量
-        conn.sendall(b"")   # 标记 文件数量接收完毕
+        conn.sendall(b"ok")   # 标记 文件数量接收完毕
         
         for _ in range(int(filenum)):
             filename = conn.recv(1024).decode(ENCODING) # 接收文件名称
-            conn.sendall(b"")    # 标记 文件名称接收完成
+            conn.sendall(b"ok")    # 标记 文件名称接收完成
             
             filesize = conn.recv(1024).decode(ENCODING) # 接收文件大小
-            conn.sendall(b"")    # 标记 文件大小接收完成
+            conn.sendall(b"ok")    # 标记 文件大小接收完成
             
             # 开始接收文件
             size = 0

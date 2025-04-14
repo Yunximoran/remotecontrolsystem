@@ -71,7 +71,7 @@ class BroadCastor(UDP):
         DB.hset("heart_packages", mapping={ip: data}) # ip地址和心跳包数据
     
         DB.set(ip, "null")
-        DB.expire(ip, 1)
+        DB.expire(ip, 3)
     
     def _timer(self, ip): # 创建计时器
         time.sleep(3)
