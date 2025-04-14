@@ -11,8 +11,11 @@ from lib import Resolver
 from lib.strtool import pattern
 from lib.sys.system import OS
 
-from ._method.get import get_classify, get_net_speed
-
+from ._method.get import (
+    get_classify,
+    get_netspeed,
+    get_client_information
+)
 resolver = Resolver()
 
 # 数据接口
@@ -33,19 +36,23 @@ async def get_instructs():
         suffix = r"*.sh"
     instructs = resolver("path", "local", "instructs")
     pracpath = instructs.bind(Path.cwd())
+    allinstructs = []
     if pracpath.exists() and pracpath.is_dir():
-        return pracpath.glob(suffix)
+        allinstructs.extend(pracpath.glob(r"*.bat"))
+        allinstructs.extend(pracpath.glob(r"*.sh"))
+        return allinstructs
 
 @router.get("/iter_local_packages") # 遍历压缩包目录
 async def get_packages():
-    if OS == "Windows":
-        suffix = r"*.zip"
-    elif OS == "Linux":
-        suffix = r"*.tar"
     packages = resolver("path", "local", "packs")
     pracpath = packages.bind(Path.cwd())
+    allpacks = []
     if pracpath.exists() and pracpath.is_dir():
-        return pracpath.glob(suffix)
+        allpacks.extend(pracpath.glob(r"*.zip")) 
+        allpacks.extend(pracpath.glob(r"*.tar")) 
+        allpacks.extend(pracpath.glob(r"*.gz")) 
+        allpacks.extend(pracpath.glob(r"*.bz")) 
+        return allpacks
 
 @router.get("/not_classified")
 async def get_not_classified():
@@ -72,7 +79,8 @@ async def get_realtime_data():
         "softwarelist": DB.loads(DB.hgetall("softwarelist")),
         "classify": classify,             # 分类数据
         "classifylist": DB.smembers("classifylist"),    # 分类索引
-        "netspeed": get_net_speed()
+        "netspeed": get_netspeed(),
+        "client_information": get_client_information()
     }
     
     

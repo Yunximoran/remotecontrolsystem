@@ -100,33 +100,46 @@ class Control:
         # 发送指令，通知客户端准备接收文件
         conn = Connector()
         conn.connect(ip)
-        conn.send(json.dumps([instruct], ensure_ascii=False, indent=4))
-        is_OK = conn.recv()   # 客户端准备就绪
+        
+        
+        is_OK = conn.sendwait(json.dumps([instruct], ensure_ascii=False, indent=4))
+        # 确认客户端准备就绪
         
         if is_OK == "OK":
             logger.record(1, f"The client: {ip} is ready")
             # 建立文件传输通道
             file_conn = Connector()
             file_conn.sock.connect((ip, FILEPORT))
-            file_conn.send(str(len(files))) # 发送的文件数量
+            
+            file_conn.sendwait(str(len(files))) # 发送的文件数量
+        
             for file in files:
+                # 如果不存在从local文件夹中寻找文件
                 if not file.exists():
-                    # 如果路径不存在就从local目录中查找文件
                     local = LOCALPATH.bind(Path.cwd())
                     items = [item for item in local.rglob(file.name) if item.is_file()]
-                    sendata = items[0]
+                    if len(items) > 0:
+                        sendata = items[0]
+                    else:
+                        raise FileExistsError(f"{file.name} not exists")
                 else:
                     sendata = file
-                print(sendata)
-                with open(sendata, "rb") as f:
+                    
+                with open(sendata, "rb") as fp:
+                    # 获取文件信息
                     filename = sendata.name    # 文件名称
                     filesize = str(sendata.stat().st_size) # 文件大小
-                    logger.record(1, f"send file: {filename} start")    # 开始发送
-                    file_conn.send(filename)    # 发送文件名
-                    file_conn.send(filesize)    # 发送文件大小
-                    file_conn.sock.sendfile(f)  # 发送文件数据
+                    
+                    # 开始发送
+                    logger.record(1, f"send file: {filename} start") 
+                    file_conn.sendwait(filename)
+                    file_conn.sendwait(filesize)
+                    file_conn.sock.sendfile(fp)  # 发送文件数据
+                    
+                    # 等待接收完成
                     status = file_conn.recv()
                     logger.record(1, status)
+            
             logger.record(1, "All the files have been received")
         else:
             logger.record(3, f"Client: {ip} preparation exception")
@@ -150,15 +163,15 @@ class Control:
         # 创建UDP广播套接字
         sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
         sock.setsockopt(socket.SOL_SOCKET, socket.SO_BROADCAST, 1)
-        
+        sock.bind((SERVERIP, 9))
         # 创建唤醒魔术包
-        hreart_package = json.loads(DB.hget("heart_packages", ip))
-        MAC:str = hreart_package["mac"]
+        heart_packages = json.loads(DB.hget("heart_packages", ip))
+        MAC:str = heart_packages["mac"]
         magic_pack = NET.create_magic_packet(MAC)
         
         # 发送广播
         logger.record(1, f"send wol protocol to {ip}")
-        sock.sendto(magic_pack, ("", 9))    
+        sock.sendto(magic_pack, ("255.255.255.255", 9))    
 
     def __checkclientstatus(self, toclients):
         """

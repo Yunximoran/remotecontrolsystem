@@ -22,14 +22,12 @@ class Connector(TCP):
         self.sock.connect((ip, TCPORT))
         
     def send(self, data: str):
-        self.sock.sendall(data.encode())
+        self.sock.sendall(data.encode(ENCODING))
         # return None
-
-    def sendfile(self, ip,file):
-        self.sock.connect((ip, TCPORT))
-        # 先发送一个标识
-        self.sock.sendall(file[0])
-        self.sock.sendfile(file[1])
+    
+    def sendwait(self, data):
+        self.send(data)
+        return self.recv()
     
     # @catch.timeout
     def recv(self):

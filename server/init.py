@@ -1,8 +1,7 @@
 from lib import Resolver
 from lib.init.resolver import __resolver
 from lib.sys import NetWork
-import time, re
-resolver = Resolver()
+
 
 # 网络配置选项
 NET = NetWork("WLAN")           # 指定服务端网卡
@@ -32,6 +31,8 @@ DATABASE = {
 }
 
 
+resolver = Resolver()
+
 # 初始化数据库配置
 def set_database():
     for database in DATABASE:
@@ -48,13 +49,13 @@ def set_database():
         if "user" in data:
             conf.setattrib("user", data["user"])
             
-        if "db" in data:
-            conf.search("host").settext(data["db"])
+        if "usedb" in data:
+            conf.search("db").settext(data["usedb"])
    
 # 初始化网络配置
 def set_network():
-    net = resolver("network")
-    sock = resolver("sock")
+    net = resolver("network")  
+    sock = resolver("sock") 
     ip = net.search("ip")
     mac = net.search("mac")
     
@@ -68,6 +69,7 @@ def set_network():
     else:
         mac.settext(NET.mac)
         
+    # 设置广播域
     sock.search("ip-broad").settext(BROADCAST)
 
 # 初始化服务器配置
@@ -81,7 +83,6 @@ def set_server():
             except Exception:
                 continue
             
-
 # 保存更改
 def close():
     resolver.save()
@@ -92,8 +93,6 @@ def init():
     set_network()
     set_database()
     close() 
-
-
 
 if __name__ == "__main__":
     init()
