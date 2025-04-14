@@ -193,15 +193,22 @@ class __BaseSystem:
     def close_software(self, softname): # 关闭软件
         pass
     
-    
     # 文件相关
-    def compress(self, dir_path):
+    def compress(self, topath, frompath, mode):
         # 压缩
         pass
     
-    def uncompress(self, form, to):
-        # 解压
-        pass
+    def uncompress(self, topath, frompath, suffix):
+        topath = self._path(topath, check=True)
+        frompath = self._path(frompath, check=True)
+        
+        if frompath.suffix not in suffix:
+            raise Exception(f"source must in {suffix}, actually gives: {frompath}")
+        
+        packname = frompath.name.split(".")[0] 
+        topath = topath.joinpath(packname)
+        topath.mkdir(exist_ok=True)
+        return topath, frompath
     
     def wget(self, url, path=None):
         # 下载
@@ -219,7 +226,5 @@ class __BaseSystem:
         # 升级root权限
         pass
     
-    
-
     def record(self, level:int, msg):
         self.logger.record(level, msg)

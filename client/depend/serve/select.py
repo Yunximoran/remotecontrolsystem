@@ -101,29 +101,34 @@ class SelectServe(BaseServe):
                 report = SYSTEM.wget()
                 
             elif label == "compress":
-                path = instruct.split(" ")
-                topath, frompath = path[0], path[1]
-                report = SYSTEM.compress(topath, frompath)
+                topath = kwargs['topath']
+                frompath = kwargs['frompath']
+                mode = kwargs['mode']
+                report = SYSTEM.compress(topath, frompath, mode=mode)
  
                 
             elif label == "uncompress":
-                path = instruct.split(" ")
-                topath, frompath = path[0], path[1]
-                report = SYSTEM.uncompress(topath, frompath)
+                topath = kwargs['topath']
+                frompath = kwargs['frompath']
+                mode = kwargs['mode']
+                report = SYSTEM.uncompress(topath, frompath, clear=True if mode != "" else False)
                 
             elif label == "download":
                 sock.sendall("OK".encode(ENCODING))
-                filename = self.recvfile()
+                self.recvfile()
                 report = SYSTEM.report(
-                    [label, filename],
+                    [label],
                     "OK",
                     False
                 )
+                
             elif label == "remove":
                 # 将instruct 处理成 topath
                 report = SYSTEM.remove(instruct)
+         
             else:
                 report = SYSTEM.executor(instruct, isadmin=isadmin)
+            
             return report
     
     def recvfile(self):
@@ -132,11 +137,19 @@ class SelectServe(BaseServe):
             (IP, TCPORT_FILE),
             listens=5
         )
-        conn, _ = file_conn.accept()
+        
+        conn, _ = file_conn.accept()    # 等待服务端连接
+        
         filenum = conn.recv(1024).decode(ENCODING)   # 接收的文件数量
+        conn.sendall(b"")   # 标记 文件数量接收完毕
+        
         for _ in range(int(filenum)):
             filename = conn.recv(1024).decode(ENCODING) # 接收文件名称
+            conn.sendall(b"")    # 标记 文件名称接收完成
+            
             filesize = conn.recv(1024).decode(ENCODING) # 接收文件大小
+            conn.sendall(b"")    # 标记 文件大小接收完成
+            
             # 开始接收文件
             size = 0
             with open(LOCAL_DIR_FILE.joinpath(filename), 'wb') as f:
@@ -145,7 +158,6 @@ class SelectServe(BaseServe):
                     f.write(data) 
                     size += len(data)
             conn.sendall(f"recv: {filename} finish {IP}".encode(ENCODING))
-        return filename
     
     
     def search_software(self, softname):
@@ -161,3 +173,5 @@ class SelectServe(BaseServe):
         conn.sendall(json.dumps(reports, ensure_ascii=False, indent=4).encode(ENCODING))
         return reports     
     
+    def split_tofrom(self, instructs:str):
+        instructs.split(" ")

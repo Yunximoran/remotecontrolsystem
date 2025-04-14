@@ -16,6 +16,7 @@ from depend.path import (
 )
 
 resolver = Resolver()
+PATH = resolver("local")
 IP = resolver("network", "ip")
 IP_SERVER = resolver("network", "ip-server")
 MAC = resolver("network", "mac")

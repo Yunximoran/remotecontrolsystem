@@ -31,31 +31,26 @@ class Windows(__BaseSystem):
             bitmask >>= 1
         return drives
     
-    def compress(self, topath, frompath):
-        topath = self._path(topath) # 压缩到
-        frompath = self._path(frompath) # 压缩目标
-        if not topath.exists() or not topath.is_dir():
-            raise Exception(f"{topath} not a dir or not exists")
+    def compress(self, topath, frompath, mode=None):
+        topath = self._path(topath, check=True) # 压缩到
+        frompath = self._path(frompath, check=True) # 压缩目标
+        
+        if not frompath.is_dir():
+            raise Exception(f"{frompath} must a dir")
+        
+        # 创建压缩文件
         topath = topath.joinpath(".".join((frompath.stem, "zip")))
         with zipfile.ZipFile(topath, "w") as zip:\
-        [zip.write(item, arcname=item.relative_to(frompath)) for item in frompath.rglob("*")]
+        [zip.write(item, arcname=item.relative_to(frompath))\
+            for item in frompath.rglob("*")]
                 
     
     def uncompress(self, topath, frompath, clear=False):
-        topath = self._path(topath, check=True)
-        frompath = self._path(frompath, check=True)
-        if not frompath.exists() or not topath.exists():
-            raise Exception(f"{topath} or {frompath} is not exists")
-        if frompath.suffix != ".zip":
-            raise Exception(f"{frompath} is not a zipfile")
-        
-        topath = topath.joinpath(frompath.stem)
-        topath.mkdir(exist_ok=True)
-        print(topath)
+        # 
+        topath, frompath = super().uncompress(topath, frompath, (r".zip",))
         with zipfile.ZipFile(frompath, "r") as zip:
-            topath.joinpath(frompath.stem).mkdir(exist_ok=True)
             zip.extractall(topath)
-        
+            
         if clear:
             frompath.unlink()
             
@@ -106,8 +101,9 @@ class Windows(__BaseSystem):
             topath.unlink()
             
         # 创建软件映射地址
-        topath = str(topath)# os.path.join(LOCAL_DIR_SOFT, alias)
+        topath = str(topath)
         frompath = str(frompath)
+        
         # mlink 映射地址 实际地址
         report = self.executor(["mklink", topath, frompath], isadmin=True)
         return topath, report

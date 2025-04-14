@@ -21,7 +21,6 @@ class Linux(__BaseSystem):
         return self.executor(["sudo", "shutdown", "now"], isadmin=True)
     
     def restart(self):
-        os.system("sudo shutdown -r")
         return self.executor(["sudo", "shutdown", "-r"], isadmin=True)
         
     def start_software(self, path):
@@ -42,8 +41,9 @@ class Linux(__BaseSystem):
         """
         topath = self._path(topath, check=True)
         frompath = self._path(frompath, check=True)
+        
         if not frompath.is_dir():
-            raise "压缩源必须是一个目录"  
+            raise Exception(f"{frompath} must a dir")  
         
         if mode is not None:
             if mode == "gz":
@@ -62,27 +62,23 @@ class Linux(__BaseSystem):
                 
         
         topath = topath.joinpath(packname)
-        topath.mkdir(parents=True, exist_ok=True)
-        print(mode, topath)
         with tarfile.open(topath, mode=mode) as tar:
-            tar.add(frompath, arcname=frompath.name)
+            tar.add(frompath, arcname=frompath.parent)
 
 
-    def uncompress(self, topath, frompath):
+    def uncompress(self, topath, frompath, clear=False):
         """
             解压缩
         pack 文件地址
         to: 保存位置
         """
-        topath = self._path(topath, check=True)
-        frompath = self._path(frompath, check=True)
-        if not topath.is_dir():
-            raise
-        if frompath.suffix not in ("tar", "gz", "bz", "lxma"):
-            raise
+        topath, frompath = super().uncompress(topath, frompath, (r".tar", r".gz", r".bz", r".lxma"))
         
-        topath = frompath.name()
-        
+        with tarfile.open(frompath, "r:*") as tar:
+            tar.extractall(topath)
+
+        if clear:
+            frompath.unlink()
         
     
     def wget(self, url, path=None):
@@ -106,7 +102,7 @@ class Linux(__BaseSystem):
         if topath.exists():
             topath.unlink()
             
-        topath = str(topath)# Path(LOCAL_DIR_SOFT).joinpath(alias)
+        topath = str(topath)
         frompath = str(frompath)
         report = self.executor(["ln", "-s", frompath, topath])
         return topath, report

@@ -1,4 +1,6 @@
+from pathlib import Path
 from multiprocessing import Process
+
 
 from lib.sys import NetWork
 from lib.sys.sock.udp import BroadCastor
@@ -11,6 +13,8 @@ BROADADDR = resolver("sock", 'udp', "ip-broad")
 
 # 绑定广播使用网卡
 LISTENPORT_1 = resolver("ports", "udp", "broad")
+PATH = resolver("local")
+
 
 class ConnectServe(BaseServe):
 
@@ -31,6 +35,7 @@ class ConnectServe(BaseServe):
         """
             格式化心跳包数据
         """
+        # PATH_MAP_SOFTWARES
         with open(PATH_MAP_SOFTWARES, "r", encoding='utf-8') as f:
             softwares = json.load(f)
         return {
@@ -38,7 +43,8 @@ class ConnectServe(BaseServe):
             "mac": MAC,
             "os": OS,
             "netspeed": NetWork.check_speed(resolver("network").attrib["name"]),
-            "softwares": softwares
+            "softwares": softwares,
+            "working": str(Path.cwd())
         }
         
     def update_soft_status(self):
