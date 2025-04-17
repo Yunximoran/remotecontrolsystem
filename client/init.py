@@ -32,7 +32,6 @@ if __name__ == "__main__":
     with Resolver() as resolver:
         net = resolver("network")
         computer = resolver("computer") 
-        cpu = resolver("computer", "cpu")
         sock = resolver("sock")
 
         # 初始本机信息

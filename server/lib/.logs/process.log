@@ -59837,3 +59837,27 @@ module: core.depend.protocol.udp.broadcastor
 module: core.depend.protocol.udp.broadcastor
 2025-04-15 02:35:02,915 - process - INFO - _task	success
 module: core.depend.protocol.udp.broadcastor
+2025-04-17 21:38:45,112 - process - INFO - _tcplisten	success
+module: __main__
+2025-04-17 21:38:45,113 - process - INFO - _udplisten	success
+module: __main__
+2025-04-17 21:38:45,117 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+2025-04-17 21:38:45,118 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+2025-04-17 21:38:45,119 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+2025-04-17 21:38:45,120 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+2025-04-17 21:38:45,121 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+2025-04-17 21:38:45,122 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+2025-04-17 21:38:45,122 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+2025-04-17 21:38:45,123 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+2025-04-17 21:38:45,124 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
+2025-04-17 21:38:45,125 - process - INFO - _task	success
+module: core.depend.protocol.udp.broadcastor
