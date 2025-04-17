@@ -71,13 +71,12 @@ async def get_realtime_data():
     实时更新数据，需要定期调用
         从redis中获取数据
     """
-    classify = get_classify()
     return {
         "client_reports": DB.loads(DB.hgetall("reports")),        # 客户端控制运行结果汇报
         "client_waitdones": DB.loads(DB.hgetall("waitdones")),    # 客户端待办事项信息
         "instructlist": DB.loads(DB.hgetall("instructlist")),     # 预存指令列表
         "softwarelist": DB.loads(DB.hgetall("softwarelist")),
-        "classify": classify,             # 分类数据
+        "classify": get_classify(),             # 分类数据
         "classifylist": DB.smembers("classifylist"),    # 分类索引
         "netspeed": get_netspeed(),
         "client_information": get_client_information()

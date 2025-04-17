@@ -38,13 +38,18 @@ class ConnectServe(BaseServe):
         # PATH_MAP_SOFTWARES
         with open(PATH_MAP_SOFTWARES, "r", encoding='utf-8') as f:
             softwares = json.load(f)
+
+        with open(PATH_MAP_FILES, 'r', encoding="utf-8") as f:
+            mapfiles = json.load(f)
+        
         return {
             "ip": IP,
             "mac": MAC,
             "os": OS,
             "netspeed": NetWork.check_speed(resolver("network").attrib["name"]),
             "softwares": softwares,
-            "working": str(Path.cwd())
+            "working": str(Path.cwd()),
+            "files": {file: mapfiles[file]['status'] for file in mapfiles}
         }
         
     def update_soft_status(self):

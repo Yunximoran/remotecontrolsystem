@@ -12,7 +12,8 @@ from depend.path import (
     LOCAL_DIR_FILE,
     LOCAL_DIR_SOFT,
     PATH_LOG_SHELLS,
-    PATH_MAP_SOFTWARES
+    PATH_MAP_SOFTWARES,
+    PATH_MAP_FILES
 )
 
 resolver = Resolver()

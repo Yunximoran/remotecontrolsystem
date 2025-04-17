@@ -14,7 +14,13 @@ def get_netspeed(ip=None):  # 获取网络带宽
         return heartpkgs[ip]['netspeed']
     else:
         return {ip: heartpkgs[ip]['netspeed'] for ip in heartpkgs}
-    
+
+def get_files(ip=None):
+    heartpkgs = parse_heartpkgs()
+    if ip:
+        return heartpkgs[ip]['files']
+    else:
+        return {ip:heartpkgs[ip]['files'] for ip in heartpkgs}
 
 def get_working(ip=None):   # 获取工作目录
     heartpkgs = parse_heartpkgs()
@@ -58,14 +64,23 @@ def get_soft_information(   # 获取软件信息
 
 def get_classify(): # 获取分类数据
     classify = DB.loads(DB.hgetall("classify"))
+
     for cln in classify:
         items:list[dict] = classify[cln]
+        index=0
         for item in items:
+            if item['soft'] == "":
+                items.pop(index)
+                continue
+            else:
+                index += 1
+                
             soft = item["soft"]
             ip = item["ip"]
             item['mac'], item['status'], item['conning'] = get_soft_information(cln, soft, ip)
             item['working'] = get_working(ip)
-    return classify
+            item['files'] = get_files(ip)
+    return items
 
 
 

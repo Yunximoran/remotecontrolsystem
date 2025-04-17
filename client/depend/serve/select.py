@@ -66,7 +66,7 @@ class SelectServe(BaseServe):
                 report = self.executor_instruct(sock, label, instruct, isadmin, kwargs)
             else:
                 report= SYSTEM.report(instructs, f"{oslabel} instructions are not allowed to execute in {OSLABEL}", False)
-                
+            
             reports.append(report)
         self.report_results(sock, reports)
 
@@ -135,7 +135,10 @@ class SelectServe(BaseServe):
         # 创建文件接收通道
         file_conn = Listener(
             (IP, TCPORT_FILE),
-            listens=5
+            listens=5,
+            settings=[
+                (socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+            ]
         )
         
         conn, _ = file_conn.accept()    # 等待服务端连接
@@ -153,10 +156,31 @@ class SelectServe(BaseServe):
             # 开始接收文件
             size = 0
             with open(LOCAL_DIR_FILE.joinpath(filename), 'wb') as f:
+                # 初始化文件，加入管理
+                with open(PATH_MAP_FILES, "r", encoding=ENCODING) as fp:
+                    mapfile = json.load(fp)
+                    info = filename.split('.')
+                    mapfile[filename] = {
+                        "size": int(filesize),
+                        "type": info[-1],
+                        "status": "null"
+                    }
+                with open(PATH_MAP_FILES, 'w', encoding='utf-8') as fp:
+                    json.dump(mapfile, fp, ensure_ascii=False, indent=4)
+
                 while size < int(filesize):
                     data = conn.recv(4096)
                     f.write(data) 
                     size += len(data)
+
+                    # 更新文件状态
+                    with open(PATH_MAP_FILES, 'r', encoding=ENCODING) as fp:
+                        mapfile = json.load(fp)
+                        mapfile[filename]["status"] = "{:.2f}%".format((size/int(filesize))*100)
+
+                    with open(PATH_MAP_FILES, 'w', encoding=ENCODING) as fp:
+                        json.dump(mapfile, fp, ensure_ascii=False, indent=4)
+
             conn.sendall(f"recv: {filename} finish {IP}".encode(ENCODING))
     
     

@@ -9,4 +9,5 @@ LOCAL_DIR_SOFT = LOCAL_PATH.joinpath("soft")
 LOCAL_DIR_FILE = LOCAL_PATH.joinpath("file")
 
 PATH_MAP_SOFTWARES = LOCAL_DIR_DATA.joinpath("softwares.json")
+PATH_MAP_FILES = LOCAL_DIR_DATA.joinpath("localfiles.json")
 PATH_LOG_SHELLS = LOCAL_DIR_DATA.joinpath("shells.json")

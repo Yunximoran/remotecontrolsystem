@@ -22,7 +22,7 @@ ISRELOAD = resolver("server", "reload")
 SERVERADDRESS =(resolver("network", "ip"), resolver("ports", "tcp", "server"))
 
 # 广播设置
-BROADCAST_1 = (resolver("network", "ip"), resolver("ports", "udp", "broad"))
+BROADCAST_1 = ("0.0.0.0", resolver("ports", "udp", "broad"))    # resolver("network", "ip")
 
 
 
